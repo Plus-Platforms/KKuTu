@@ -412,7 +412,7 @@ $(document).ready(function(){
 		}
 		$data._injpick = $data.room.opts.injpick;
 		showDialog($d = $stage.dialog.room);
-		$d.find(".dialog-title").html(L['setRoom']);
+		$d.find(".dialog-title").html(L['node lib/Web/cluster.js 1']);
 	});
 	function updateGameOptions(opts, prefix){
 		var i, k;
@@ -559,7 +559,7 @@ $(document).ready(function(){
 	});
 	$stage.menu.practice.on('click', function(e){
 		if(RULE[MODE[$data.room.mode]].ai){
-			$("#PracticeDiag .dialog-title").html(L['practice']);
+			$("#PracticeDiag .dialog-title").html(L['stat_practice']);
 			$("#ai-team").val(0).prop('disabled', true);
 			showDialog($stage.dialog.practice);
 		}else{
@@ -682,7 +682,7 @@ $(document).ready(function(){
 		$stage.dialog.result.hide();
 		delete $data._replay;
 		delete $data._resultRank;
-		$stage.box.room.height(360);
+		$stage.box.room.height(480);
 		playBGM('lobby');
 		forkChat();
 		updateUI();

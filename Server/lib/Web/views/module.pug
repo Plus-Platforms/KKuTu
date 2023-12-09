@@ -26,11 +26,6 @@
 			{ key: 'DB_RUNE', href: "/db/rune" },
 			{ key: 'DB_MASTERY', href: "/db/mastery" }
 		]},*/
-		{ key: 'GAMES', sub: [
-			{ key: 'GAMES_KKUTU', href: "/" },
-			{ key: 'GAMES_FATES', href: "http://jjo.kr/game/fates" }
-		]},
-		{ key: 'GALLERY', href: "http://jjo.kr/gallery" }
 	];
 	const PUBLIC = locals.published;
 	
@@ -38,12 +33,17 @@
 	var LANG = locals.locale;
 	var SESSION = locals.session;
 
-	function L(id){
+	function L(id, want_replacement = true){
 		var R = LANG[id] || "(L#"+id+")", i;
 		
 		R = R.toString();
+		if (want_replacement){
 		for(i=1; arguments[i]; i++) R = R.replace(new RegExp("{V"+i+"}", 'g'), arguments[i]);
 		return R.replace(/FA\{[^\}]+\}/g, _L_Replace);
+		}
+		else{
+			return R.replace(/FA\{[^\}]+\}/g, '');
+		}
 	}
 	function _L_Replace(seq){ return "<i class='fa fa-"+seq.slice(3, seq.length-1)+"'></i>"; }
 	
@@ -66,9 +66,6 @@ mixin Menu()
 					div.menu-sub-separator
 					- for(j in MENU[i].sub)
 						div.menu-sub-btn(onclick='location.href = "'+MENU[i].sub[j].href+'";')!= L(MENU[i].sub[j].key)
-		div#quick-search
-			input#quick-search-tf(placeholder=L('QUICK_HOLDER'))
-			button#quick-search-btn!= L('QUICK_BTN')
 		div#account
 			span#profile= SESSION.profile ? JSON.stringify(SESSION.profile) : '{}'
 			div#account-info
@@ -153,5 +150,5 @@ mixin ChartBar(c, data)
 		- for(i in data)
 			- var r = data[i].last ? total : (data[i].value / sum * 100);
 			- total -= r;
-			div.chart-bar.ellipse(style='width: '+r+'%; background-color: '+data[i].color+';')= data[i].label || ''
+			div.chart-bar.ellipse(style='width: '+r+'%; background-color: '+data[i].color+';')!= data[i].label || ''
 				+Expl(data[i].label ? (data[i].label + ' ' + r.toFixed(1) + '%') : undefined)

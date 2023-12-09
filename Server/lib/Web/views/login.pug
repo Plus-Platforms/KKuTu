@@ -32,6 +32,6 @@ html
 		//볕뉘 수정
 		each val in loginList
 			a(href="/login/" + val.vendor)
-				button(style="color: " + val.fontColor + "; background-color: " + val.color + ";")= L(val.displayName)
+				button(style="color: " + val.fontColor + "; background-color: " + val.color + ";")!= L(val.displayName)
 		//볕뉘 수정 끝
 		div.login-legal!= L('loginLegal')

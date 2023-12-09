@@ -64,11 +64,5 @@ html
 			block Middle
 		div#Bottom
 			block Bottom
-			div.bottom-legal
-				if locals.as_pc
-					a(href='?')= L('AS_MOBILE')
-				br
-				a.bottom-contact(href='http://now.pcor.me', target='_blank') Plus Now
-				a.bottom-contact(href='mailto:plus@sqlare.com', target='_blank') 관리자 문의하기
-			div.bottom-legal!= L('GPL')
+			div.bottom-legal 게임 저작권 정보는 '도움말' 패널을 참고하세요.
 			+separator(10)

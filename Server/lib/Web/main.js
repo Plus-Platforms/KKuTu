@@ -98,7 +98,7 @@ Server.use((req, res, next) => {
 	}
 });
 //볕뉘 수정 끝
-/* use this if you want
+/* use this if you want;*/
 
 DDDoS = new DDDoS({
 	maxWeight: 6,
@@ -115,7 +115,7 @@ DDDoS = new DDDoS({
 DDDoS.rules[0].logFunction = DDDoS.rules[1].logFunction = function(ip, path){
 	JLog.warn(`DoS from IP ${ip} on ${path}`);
 };
-Server.use(DDDoS.express());*/
+Server.use(DDDoS.express());
 
 WebInit.init(Server, true);
 DB.ready = function(){

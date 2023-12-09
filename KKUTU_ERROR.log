@@ -1,2 +1,21 @@
 This is an error log file of the game server.
 You may use like `tail -f KKUTU_ERROR.log` to watch this.
+:8496 [12/7/2023, 6:39:50 AM] ERROR: error: terminating connection due to administrator command
+error: terminating connection due to administrator command
+    at Parser.parseErrorMessage (/var/KKuTu/Server/lib/node_modules/pg-protocol/dist/parser.js:287:98)
+    at Parser.handlePacket (/var/KKuTu/Server/lib/node_modules/pg-protocol/dist/parser.js:126:29)
+    at Parser.parse (/var/KKuTu/Server/lib/node_modules/pg-protocol/dist/parser.js:39:38)
+    at Socket.<anonymous> (/var/KKuTu/Server/lib/node_modules/pg-protocol/dist/index.js:11:42)
+    at Socket.emit (node:events:514:28)
+    at addChunk (node:internal/streams/readable:545:12)
+    at readableAddChunkPushByteMode (node:internal/streams/readable:495:3)
+    at Readable.push (node:internal/streams/readable:375:5)
+    at TCP.onStreamRead (node:internal/stream_base_commons:190:23):8496 [12/7/2023, 6:39:50 AM] ERROR: Error: Connection terminated unexpectedly
+Error: Connection terminated unexpectedly
+    at Connection.<anonymous> (/var/KKuTu/Server/lib/node_modules/pg/lib/client.js:132:73)
+    at Object.onceWrapper (node:events:628:28)
+    at Connection.emit (node:events:514:28)
+    at Socket.<anonymous> (/var/KKuTu/Server/lib/node_modules/pg/lib/connection.js:107:12)
+    at Socket.emit (node:events:526:35)
+    at endReadableNT (node:internal/streams/readable:1589:12)
+    at process.processTicksAndRejections (node:internal/process/task_queues:82:21)
