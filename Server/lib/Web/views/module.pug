@@ -19,7 +19,6 @@
 	* Login 을 Passport 로 수행하기 위한 수정
 -
 	const MENU = [
-		{ key: 'HOME', href: "http://jjo.kr/" },
 		/*{ key: 'DB', sub: [
 			{ key: 'DB_CHAMP', href: "/db/champion" },
 			{ key: 'DB_ITEM', href: "/db/item" },
@@ -58,6 +57,7 @@
 
 mixin Menu()
 	div.Menu
+		img(src='/img/kkutu/logo.svg', style='margin-left: 30px;margin-top: 12px;height: 2.7rem;', alt="로고")
 		- for(i in MENU)
 			- if(MENU[i].href)
 				button.menu-btn(id='menu-item-'+MENU[i].key, onclick='location.href = "'+MENU[i].href+'";')!= L(MENU[i].key)
@@ -75,8 +75,8 @@ mixin MMenu()
 		div.menu-btn(id='menu-item-GAMES')
 			+FA('bars')
 			+separator(10)
-			div.menu-sub-btn(onclick='location.href = "http://jjo.kr/";', style='margin: 7px 0px; height: 25px;')!= L('HOME')
-			div.menu-sub-btn(onclick='location.href = "http://kkutu.kr/";', style='margin: 7px 0px; height: 25px;')!= L('GAMES_KKUTU')
+			div.menu-sub-btn(onclick='location.href = "/";', style='margin: 7px 0px; height: 25px;')!= L('HOME')
+			div.menu-sub-btn(onclick='location.href = "http://kkutu.pcor.me/";', style='margin: 7px 0px; height: 25px;')!= L('GAMES_KKUTU')
 			div.menu-sub-btn(onclick='location.href = "http://jjo.kr/gallery";', style='margin: 7px 0px; height: 25px;')!= L('GALLERY')
 		div#quick-search
 			input#quick-search-tf(placeholder=L('QUICK_HOLDER'))

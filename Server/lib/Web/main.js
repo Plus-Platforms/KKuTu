@@ -248,10 +248,10 @@ Server.get("/", function(req, res){
 			'KO_THEME': Const.KO_THEME,
 			'EN_THEME': Const.EN_THEME,
 			'IJP_EXCEPT': Const.IJP_EXCEPT,
-			'ogImage': "http://kkutu.kr/img/kkutu/logo.png",
-			'ogURL': "http://kkutu.kr/",
-			'ogTitle': "글자로 놀자! 끄투 온라인",
-			'ogDescription': "끝말잇기가 이렇게 박진감 넘치는 게임이었다니!"
+			'ogImage': "https://kkutu.pcor.me/img/kkutu/og.png",
+			'ogURL': "https://kkutu.pcor.me/",
+			'ogTitle': "두근두근 플러스끄투",
+			'ogDescription': "글자로 박진감 넘치는 게임을 즐겨보세요!"
 		});
 	}
 });

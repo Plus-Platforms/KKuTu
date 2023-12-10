@@ -388,13 +388,33 @@ $(document).ready(function(){
 	});
 	$stage.menu.newRoom.on('click', function(e){
 		var $d;
-		
+	
 		$stage.dialog.quick.hide();
-		
+	
+		// 무작위 방 제목을 선택하기 위한 배열
+		var roomTitles = [
+			'기체크로마토그래피질량분석법',
+			'즐거운 끝말잇기~!',
+			'PLUS KKUTU',
+			'레디 누르세요!!!',
+			'들어오세요~ 즐겜해요~',
+			'매칭 그만돌려라',
+			'키보드 부서질라 고만 눌러라',
+			'신나는 플러스끄투!',
+			'오늘도 플끄 내일도 플끄',
+			'오끄감 채우는 방',
+			'귀여운 돼냥이를 쓰다듬는 방'
+		];
+	
+		// 무작위 방 제목 선택
+		var randomTitle = roomTitles[Math.floor(Math.random() * roomTitles.length)];
+	
+		$("#room-title").val(randomTitle);
 		$data.typeRoom = 'enter';
 		showDialog($d = $stage.dialog.room);
 		$d.find(".dialog-title").html(L['newRoom']);
 	});
+	
 	$stage.menu.setRoom.on('click', function(e){
 		var $d;
 		var rule = RULE[MODE[$data.room.mode]];
