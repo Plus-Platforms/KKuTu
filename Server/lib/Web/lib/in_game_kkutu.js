@@ -38,8 +38,40 @@ var OPTIONS;
 var MAX_LEVEL = 360;
 var TICK = 30;
 var EXP = [];
-var BAD = new RegExp([ "느으*[^가-힣]*금마?", "니[^가-힣]*(엄|앰|엠)", "(ㅄ|ㅅㅂ|ㅂㅅ)", "미친(년|놈)?", "(병|븅|빙)[^가-힣]*신", "보[^가-힣]*지", "(새|섀|쌔|썌)[^가-힣]*(기|끼)", "섹[^가-힣]*스", "(시|씨|쉬|쒸)이*입?[^가-힣]*(발|빨|벌|뻘|팔|펄)", "십[^가-힣]*새", "씹", "(애|에)[^가-힣]*미", "자[^가-힣]*지", "존[^가-힣]*나", "좆|죶", "지랄", "창[^가-힣]*(녀|년|놈)", "fuck", "sex" ].join('|'), "g");
-
+var BAD = new RegExp([
+	"느으*[^가-힣]*금마?",
+	"니[^가-힣]*(엄|앰|엠)",
+	"(ㅄ|ㅅㅂ|ㅂㅅ)",
+	"미친(년|놈)?",
+	"(병|븅|빙)[^가-힣]*신",
+	"보[^가-힣]*지",
+	"(새|섀|쌔|썌)[^가-힣]*(기|끼)",
+	"섹[^가-힣]*스",
+	"(시|씨|쉬|쒸)이*입?[^가-힣]*(발|빨|벌|뻘|팔|펄)",
+	"십[^가-힣]*새",
+	"씹",
+	"(애|에)[^가-힣]*미",
+	"자[^가-힣]*지",
+	"존[^가-힣]*나",
+	"좆|죶",
+	"지랄",
+	"창[^가-힣]*(녀|년|놈)",
+	"fuck",
+	"sex",
+	"끄투리오",
+	"분홍끄투",
+	"끄투핑크",
+	"끄투아이오",
+	"분끄",
+	"kkutuio",
+	"kkutu\\.pink",
+	"철팽",
+	"끄코",
+	"끄투코리아",
+	"rfskkutu",
+	"kkutu\\.co\\.kr",
+	"kkutu\\.io"
+  ].join('|'), "g");
 var ws, rws;
 var $stage;
 var $sound = {};
@@ -110,6 +142,7 @@ $(document).ready(function(){
 			help: $("#HelpBtn"),
 			setting: $("#SettingBtn"),
 			community: $("#CommunityBtn"),
+			community2: $("#Community2Btn"),
 			newRoom: $("#NewRoomBtn"),
 			setRoom: $("#SetRoomBtn"),
 			quickRoom: $("#QuickRoomBtn"),
@@ -184,7 +217,8 @@ $(document).ready(function(){
 			chatLog: $("#ChatLogDiag"),
 			obtain: $("#ObtainDiag"),
 				obtainOK: $("#obtain-ok"),
-			help: $("#HelpDiag")
+			help: $("#HelpDiag"),
+			community2: $("#Community2Diag")
 		},
 		box: {
 			chat: $(".ChatBox"),
@@ -425,6 +459,10 @@ $(document).ready(function(){
 	$stage.menu.help.on('click', function(e){
 		$("#help-board").attr('src', "/help");
 		showDialog($stage.dialog.help);
+	});
+	$stage.menu.community2.on('click', function(e){
+		$("#community2").attr('src', "https://discord.com/widget?id=1144989383569715291&theme=dark");
+		showDialog($stage.dialog.community2);
 	});
 	$stage.menu.setting.on('click', function(e){
 		showDialog($stage.dialog.setting);
@@ -4562,7 +4600,7 @@ function forkChat(){
 	$stage.chat.scrollTop(999999999);
 }
 function badWords(text){
-	return text.replace(BAD, "♥♥");
+	return text.replace(BAD, "아잉");
 }
 function chatBalloon(text, id, flag){
 	$("#cb-" + id).remove();

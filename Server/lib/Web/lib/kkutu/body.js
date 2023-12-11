@@ -2669,7 +2669,7 @@ function forkChat(){
 	$stage.chat.scrollTop(999999999);
 }
 function badWords(text){
-	return text.replace(BAD, "♥♥");
+	return text.replace(BAD, "아잉");
 }
 function chatBalloon(text, id, flag){
 	$("#cb-" + id).remove();

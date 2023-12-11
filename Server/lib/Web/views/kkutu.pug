@@ -74,6 +74,9 @@ block Jungle
 		div.kkutu-wrap
 			div.kkutu-left
 				button.icnbtn#HelpBtn.tiny-menu.for-lobby.for-master.for-normal.for-gaming(style='display: none;')!= L('help')
+				button.icnbtn#Community2Btn.tiny-menu.for-lobby.for-master.for-normal.for-gaming(style='display: none;')
+					i.fas.fa-globe
+
 			div.kkutu-center
 				button.mainbtn#SpectateBtn.for-master.for-normal(style='display: none;')!= L('spectate')
 				button.mainbtn#SetRoomBtn.for-master(style='display: none;')!= L('setRoom')
@@ -265,18 +268,22 @@ block Middle
 		div.dialog-bar.tail-button
 			button.primaryBtn#result-ok= L('OK')
 			button#result-save= L('saveReplay')
-	+Dialog('DictionaryDiag', 400, 370, L('dict', false))
+	+Dialog('DictionaryDiag', 400, 540, L('dict', false))
+		h4.opt(style='font-size: 14px; text-align: center; color: #486AA3;')= "저희 플러스끄투는 타 끄투 프리서버의 데이터를 가져올 수 없으므로 여러분들의 기여가 절실히 필요합니다. 우수 기여자 1인에게는 매달 1500핑을 제공 예정이오니 많은 등록 바랍니다."
 		div.dialog-bar
-			h4.opt!= L('wpHere')
+			h4.opt!= "키워드 입력"
 			input#dict-input(style='width: 283px;', placeholder=L('wpInput'), maxlength=200)
-		div.dialog-bar#dict-output(style='height: 195px; overflow-y: scroll; color: #BBBBBB; background-color: #111111;')
-		div.dialog-bar.tail-button
+		div.dialog-bar
+			h4.opt!= "주제 선택"
 			select#dict-theme
 				option(value="")!= L('pickInjeong')
 				- locals.KO_INJEONG.forEach(function(item){
 					option(value=item)!= L('theme_' + item)
 				- });
-			button#dict-search= L('SEARCH')
+		h4.opt(style='font-size: 14px; text-align: center; color: #486AA3;')= "404 오류 발생 시 없는 단어이므로 등록하셔도 좋습니다."
+		div.dialog-bar#dict-output(style='height: 195px; overflow-y: scroll; color: #BBBBBB; background-color: #111111;')
+		div.dialog-bar.tail-button
+			button#dict-search= "중복 확인"
 			button#dict-injeong= L('injeongReq')
 	+Dialog('InviteDiag', 300, 420, L('invite', false))
 		div.invite-board(style='height: 355px; overflow-y: scroll;')
@@ -397,6 +404,8 @@ block Middle
 			button.primaryBtn#obtain-ok= L('OK')
 	+Dialog('HelpDiag', 1000, 540, L('helpText', false))
 		iframe#help-board(width=1000, height=350)
+	+Dialog('Community2Diag', 300, 400, "공식 커뮤니티")
+		iframe#community2(width=300, height=375)
 	+Product('UserList')
 		div 불러오는 중
 	+Product('RoomList')

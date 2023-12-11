@@ -55,6 +55,7 @@ $(document).ready(function(){
 			help: $("#HelpBtn"),
 			setting: $("#SettingBtn"),
 			community: $("#CommunityBtn"),
+			community2: $("#Community2Btn"),
 			newRoom: $("#NewRoomBtn"),
 			setRoom: $("#SetRoomBtn"),
 			quickRoom: $("#QuickRoomBtn"),
@@ -129,7 +130,8 @@ $(document).ready(function(){
 			chatLog: $("#ChatLogDiag"),
 			obtain: $("#ObtainDiag"),
 				obtainOK: $("#obtain-ok"),
-			help: $("#HelpDiag")
+			help: $("#HelpDiag"),
+			community2: $("#Community2Diag")
 		},
 		box: {
 			chat: $(".ChatBox"),
@@ -370,6 +372,10 @@ $(document).ready(function(){
 	$stage.menu.help.on('click', function(e){
 		$("#help-board").attr('src', "/help");
 		showDialog($stage.dialog.help);
+	});
+	$stage.menu.community2.on('click', function(e){
+		$("#community2").attr('src', "https://discord.com/widget?id=1144989383569715291&theme=dark");
+		showDialog($stage.dialog.community2);
 	});
 	$stage.menu.setting.on('click', function(e){
 		showDialog($stage.dialog.setting);
