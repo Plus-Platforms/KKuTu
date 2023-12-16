@@ -15,13 +15,14 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+ @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap');
 
 body{
 	color: #EEEEEE;
 	padding: 0px;
 	margin: 0px;
 	min-width: 360px;
-	font-family: 맑은 고딕, 돋움;
+	font-family: 'Noto Sans KR', 맑은 고딕, 돋움;
 }
 a{
 	color: inherit;
@@ -32,7 +33,6 @@ input, select, textarea{
 	font-family: inherit;
 	padding: 5px;
 	border: 1px solid #AAAAAA;
-	border-radius: 10px;
 	resize: none;
 }
 button{
@@ -41,7 +41,6 @@ button{
 	font-family: inherit;
 	padding: 5px;
 	border: 1px solid #AAAAAA;
-	border-radius: 10px;
 	background-color: #EEEEEE;
 	transition: all 200ms ease;
 }
@@ -125,7 +124,11 @@ span{
 }
 	.autocomp-item{ margin: 1px 0px; }
 	.autocomp-item:hover, .autocomp-select{ color: #FFFFFF; background-color: rgba(50, 50, 50, 0.8); }
-#account{ float: right; margin: 1px; font-size: 11px; color: #444444; }
+#account{ text-align: right;
+    float: right;
+    margin: 1px;
+    font-size: 18px;
+    color: #ffffff; }
 #account-setting{
 	float: left;
 	padding-top: 8px;
@@ -145,9 +148,7 @@ span{
 	padding: 3px 0px;
 	margin-top: 30px;
 	color: #111111;
-	text-align: center;
-	font-weight: bold;
-	background-color: #EEBB33;
+	background-color: #FFFFFF;
 	z-index: 5;
 }
 .searching{
@@ -180,10 +181,10 @@ span{
 	background-color: #232323;
 }
 .product-title{
-	color: #CCCCCC;
-	padding: 3px;
-	border-bottom: 1px solid #333333;
-	margin-bottom: 5px;
+	font-size: 14px;
+    color: #CCCCCC;
+    padding: 7px;
+    margin-bottom: 5px;
 }
 .product-title i{
 	color: #FFFFFF;
@@ -265,11 +266,11 @@ span{
 
 #Top{
 	position: fixed;
-	width: 100%;
-	height: 30px;
-	box-shadow: 0px 2px 2px #111111;
-	background-image: url('/img/topbg.png');
-	z-index: 1;
+    width: 100%;
+    height: 45px;
+    /* box-shadow: 0px 2px 2px #111111; */
+    background-image: url(/img/topbg.png);
+    z-index: 1;
 }
 #Middle{
 	float: left;

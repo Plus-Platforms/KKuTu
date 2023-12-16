@@ -69,6 +69,8 @@ function applyOptions(opt){
 	
 	$("#mute-bgm").attr('checked', $data.muteBGM);
 	$("#mute-effect").attr('checked', $data.muteEff);
+	$("#legacy-bgm").attr('checked', $data.opts.lb);
+
 	$("#deny-invite").attr('checked', $data.opts.di);
 	$("#deny-whisper").attr('checked', $data.opts.dw);
 	$("#deny-friend").attr('checked', $data.opts.df);
@@ -83,7 +85,12 @@ function applyOptions(opt){
 			$data.bgm.stop();
 		}else{
 			$data.bgm.volume = 1;
-			$data.bgm = playBGM($data.bgm.key, true);
+			if ($data.legBGM && $data.bgm.key == "lobby"){
+				$data.bgm = playBGM("legacylobby", true);
+			}
+			else{
+				$data.bgm = playBGM($data.bgm.key, true);
+			}
 		}
 	}
 }
@@ -185,7 +192,7 @@ function checkAge(){
 				alert(str + "\n" + L['checkAgeNo']);
 				continue;
 			}
-			if(lv == 2 && (str < 1 || str > 12)){
+			if(lv == 2 && (str < 1 || str > 9)){
 				alert(str + "\n" + L['checkAgeNo']);
 				continue;
 			}
@@ -785,6 +792,7 @@ function updateUI(myRoom, refresh){
 	$stage.chat.height(120);
 	
 	if(only == "for-lobby"){
+		playBGM('lobby');
 		$data._ar_first = true;
 		$stage.box.userList.show();
 		if($data._shop){
@@ -802,6 +810,7 @@ function updateUI(myRoom, refresh){
 			delete $data._jamsu;
 		}
 	}else if(only == "for-master" || only == "for-normal"){
+		playBGM('ingame');
 		$(".team-chosen").removeClass("team-chosen");
 		if($data.users[$data.id].game.ready || $data.users[$data.id].game.form == "S"){
 			$stage.menu.ready.addClass("toggled");
@@ -903,7 +912,7 @@ function updateMe(){
 	$(".my-stat-record").html(L['globalWin'] + " " + gw + L['W']);
 	$(".my-stat-ping").html(commify(my.money) + L['ping']);
 	$(".my-okg .graph-bar").width(($data._playTime % 600000) / 6000 + "%");
-	$(".my-okg-text").html('누적 플레이 '+prettyTime($data._playTime));
+	$(".my-okg-text").html('오끄감 '+prettyTime($data._playTime));
 	$(".my-level").html(L['LEVEL'] + " " + lv);
 	$(".my-gauge .graph-bar").width((my.data.score-prev)/(goal-prev)*190);
 	$(".my-gauge-text").html(commify(my.data.score) + " / " + commify(goal));
@@ -2601,7 +2610,12 @@ function getAudio(k, url, cb){
 function playBGM(key, force){
 	if($data.bgm) $data.bgm.stop();
 	
-	return $data.bgm = playSound(key, true);
+	if ($data.opts.lb == true && key == 'lobby'){
+		return $data.bgm = playSound("legacylobby", true);
+	}
+	else{
+		return $data.bgm = playSound(key, true);
+	}
 }
 function stopBGM(){
 	if($data.bgm){

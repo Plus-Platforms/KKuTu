@@ -24,6 +24,7 @@
 }
 #logo{
 	margin-top: -20px;
+	opacity:0;
 }
 #kkutu-bulletin{
 	border: 0px;
@@ -43,16 +44,18 @@
 }
 
 #game-start{
-	float: left;
-	width: 315px;
-	height: 70px;
-	font-size: 20px;
-	font-weight: bold;
-	border: none;
-	border-bottom-left-radius: inherit;
-	border-bottom-right-radius: inherit;
+	text-shadow: 2px 2px 0px black;
+    float: left;
+    width: 315px;
+    height: 70px;
+    font-size: 30px;
+    font-style: italic;
+    font-weight: bold;
+    border: none;
+    border-bottom-left-radius: inherit;
+    border-bottom-right-radius: inherit;
 }
-	#game-start:hover{ font-size: 24px; background-color: rgba(0, 0, 0, 0.5); }
+	#game-start:hover{ font-size: 34px; background-color: rgba(0, 0, 0, 0.5); }
 .server-list-box{
 	float: right;
 	width: 320px;

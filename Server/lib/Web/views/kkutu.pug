@@ -74,8 +74,7 @@ block Jungle
 		div.kkutu-wrap
 			div.kkutu-left
 				button.icnbtn#HelpBtn.tiny-menu.for-lobby.for-master.for-normal.for-gaming(style='display: none;')!= L('help')
-				button.icnbtn#Community2Btn.tiny-menu.for-lobby.for-master.for-normal.for-gaming(style='display: none;')
-					i.fas.fa-globe
+				button.icnbtn#Community2Btn.tiny-menu.for-lobby.for-master.for-normal.for-gaming(style='display: none;')!= L('cafe')
 
 			div.kkutu-center
 				button.mainbtn#SpectateBtn.for-master.for-normal(style='display: none;')!= L('spectate')
@@ -103,9 +102,10 @@ block Middle
 	
 	+Dialog('SettingDiag', 400, 400, L('settingsText', false))
 		div.dialog-bar
-			h4.opt!= L('mute')
-			+SettingOption('mute-bgm', L('bgm', false))
-			+SettingOption('mute-effect', L('effect', false))
+			h4.opt!= "배경음악 설정"
+			+SettingOption('legacy-bgm', "원작 BGM")
+			+SettingOption('mute-bgm', "BGM 음소거")
+			+SettingOption('mute-effect', "효과음 음소거")
 		div.dialog-bar
 			h4.opt!= L('denyReq')
 			+SettingOption('deny-invite', L('denyInvite', false))
@@ -168,7 +168,7 @@ block Middle
 			input#room-pw(type='password', placeholder=L('password'), maxlength=20)
 		div.dialog-bar
 			h4.opt!= L('userLimit')
-			input#room-limit(type='number', min=2, max=8, step=1, value=8)
+			input#room-limit(type='number', min=2, max=12, step=1, value=9)
 		div.dialog-bar
 			h4.opt!= L('gameMode')
 			select#room-mode
@@ -193,14 +193,14 @@ block Middle
 			h4#game-mode-expl.dialog-bar-value(style='width: 100%; font-size: 11px;')
 		div.dialog-bar
 			h4.opt!= L('numRound')
-			input#room-round(type='number', min=1, max=10, step=1, value=5)
+			input#room-round(type='number', min=1, max=10, step=1, value=6)
 		div.dialog-bar
 			h4.opt!= L('roundTime')
 			select#room-time
 				option(value=10, style='color: #FF4444')
 				option(value=30)
-				option(value=60, selected)
-				option(value=90)
+				option(value=60)
+				option(value=90, selected)
 				option(value=120)
 				option(value=150)
 		div.dialog-bar
@@ -285,11 +285,11 @@ block Middle
 		div.dialog-bar.tail-button
 			button#dict-search= "중복 확인"
 			button#dict-injeong= L('injeongReq')
-	+Dialog('InviteDiag', 300, 420, L('invite', false))
+	+Dialog('InviteDiag', 300, 445, L('invite', false))
 		div.invite-board(style='height: 355px; overflow-y: scroll;')
 		div.dialog-bar.tail-button
 			button#invite-robot= L('inviteRobot')
-	+Dialog('RoomInfoDiag', 300, 365)
+	+Dialog('RoomInfoDiag', 300, 587)
 		div.dialog-bar.room-info-head
 			h4.opt!= L('roomTitle')
 			h4.dialog-bar-value.ellipse#ri-title
@@ -395,7 +395,7 @@ block Middle
 			button#cf-compose= L('cfCompose')
 	+Dialog('ChatLogDiag', 350, 500, L('chatLog', false))
 		div#chat-log-board(style='height: 475px; font-size: 11px; overflow-y: scroll;')
-	+Dialog('ObtainDiag', 300, 200, L('notice'), true)
+	+Dialog('ObtainDiag', 300, 245, L('notice'), true)
 		div.dialog-bar
 			h4(style='width: 100%;')!= L('obtained') + '!'
 		div.jt-image#obtain-image(style='margin-left: 110px; width: 80px; height: 80px;')
@@ -404,8 +404,8 @@ block Middle
 			button.primaryBtn#obtain-ok= L('OK')
 	+Dialog('HelpDiag', 1000, 540, L('helpText', false))
 		iframe#help-board(width=1000, height=350)
-	+Dialog('Community2Diag', 300, 400, "공식 커뮤니티")
-		iframe#community2(width=300, height=375)
+	+Dialog('Community2Diag', 1280, 750, "공식 커뮤니티")
+		iframe#community2(width=1280, height=700)
 	+Product('UserList')
 		div 불러오는 중
 	+Product('RoomList')
@@ -416,6 +416,12 @@ block Middle
 				- var v = locals.GROUPS[locals.CATEGORIES[i]] || [];
 				div.category-filter.shop-type(id="shop-type-" + locals.CATEGORIES[i], value=v.join(','))!= L('category_' + locals.CATEGORIES[i])
 		div#shop-shelf(style='width: 100%; height: 305px; overflow-y: scroll;')
+		div.goods#plusCoinShop(style="background-position: center; background-size: cover; background-image: url(/img/kkutu/shop/coinshopBG.png); height: 75px; width: 1240px; display: block;")
+			div(style="color: #ffffff; float: none; text-align: center; font-size: 20px;")
+				| PlusCoin 상점
+			div(style="text-shadow: 2px 2px 0px black; color: #ffffff; font-style: italic; float: none; text-align: center; font-size: 30px; font-weight: bold;")
+				| 핑이 부족하다면 PlusCoin 상점에서 구매하세요!
+
 	+Product('Room')
 		div.team-selector
 			div.team-button#team-0.team-0= L('teamSolo')

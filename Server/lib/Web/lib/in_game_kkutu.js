@@ -58,16 +58,18 @@ var BAD = new RegExp([
 	"창[^가-힣]*(녀|년|놈)",
 	"fuck",
 	"sex",
-	"끄투리오",
-	"분홍끄투",
-	"끄투핑크",
-	"끄투아이오",
-	"분끄",
+	"끄[^가-힣]*투[^가-힣]*리[^가-힣]*오",
+	"분[^가-힣]*홍[^가-힣]*끄[^가-힣]*투",
+	"끄[^가-힣]*투[^가-힣]*핑[^가-힣]*크",
+	"끄[^가-힣]*투[^가-힣]*아[^가-힣]*이[^가-힣]*오",
+	"분[^가-힣]*끄",
 	"kkutuio",
 	"kkutu\\.pink",
 	"철팽",
 	"끄코",
-	"끄투코리아",
+	"철덕팽이",
+	"끄투코(2|ㄹ)(ㅣ|1|I|l|i)(0|ㅇ|o)(r|ㅏ)",
+	"끄[^가-힣]*투[^가-힣]*코[^가-힣]*리[^가-힣]*아",
 	"rfskkutu",
 	"kkutu\\.co\\.kr",
 	"kkutu\\.io"
@@ -251,9 +253,13 @@ $(document).ready(function(){
 		alert(L['websocketUnsupport']);
 		return;
 	}
+
 	$data._soundList = [
 		{ key: "k", value: "/media/kkutu/k.mp3" },
-		{ key: "lobby", value: "/media/kkutu/LobbyBGM.mp3" },
+		{ key: "lobby", value: "/media/kkutu/LobbyBGMRe.mp3" },
+		{ key: "legacylobby", value: "/media/kkutu/LobbyBGM.mp3" },
+		{ key: "ingame", value: "/media/kkutu/LobbyBGM2.mp3" },
+		{ key: "shop", value: "/media/kkutu/LobbySeolBGM.mp3" },
 		{ key: "jaqwi", value: "/media/kkutu/JaqwiBGM.mp3" },
 		{ key: "jaqwiF", value: "/media/kkutu/JaqwiFastBGM.mp3" },
 		{ key: "game_start", value: "/media/kkutu/game_start.mp3" },
@@ -407,7 +413,7 @@ $(document).ready(function(){
 		var $target = $(e.currentTarget);
 		var value = $target.val();
 		
-		if(value < 2 || value > 8){
+		if(value < 2 || value > 9){
 			$target.css('color', "#FF4444");
 		}else{
 			$target.css('color', "");
@@ -456,12 +462,14 @@ $(document).ready(function(){
 			$(e.currentTarget).parent().parent().hide();
 		}).hotkey(false, 27));
 	}
+	$("#community2").attr('src', "https://pcor.me/plKkkutuCafe");
+		showDialog($stage.dialog.community2);
 	$stage.menu.help.on('click', function(e){
 		$("#help-board").attr('src', "/help");
 		showDialog($stage.dialog.help);
 	});
 	$stage.menu.community2.on('click', function(e){
-		$("#community2").attr('src', "https://discord.com/widget?id=1144989383569715291&theme=dark");
+		$("#community2").attr('src', "https://pcor.me/plKkkutuCafe");
 		showDialog($stage.dialog.community2);
 	});
 	$stage.menu.setting.on('click', function(e){
@@ -736,6 +744,7 @@ $(document).ready(function(){
 		applyOptions({
 			mb: $("#mute-bgm").is(":checked"),
 			me: $("#mute-effect").is(":checked"),
+			lb: $("#legacy-bgm").is(":checked"),
 			di: $("#deny-invite").is(":checked"),
 			dw: $("#deny-whisper").is(":checked"),
 			df: $("#deny-friend").is(":checked"),
@@ -2000,6 +2009,8 @@ function applyOptions(opt){
 	
 	$("#mute-bgm").attr('checked', $data.muteBGM);
 	$("#mute-effect").attr('checked', $data.muteEff);
+	$("#legacy-bgm").attr('checked', $data.opts.lb);
+
 	$("#deny-invite").attr('checked', $data.opts.di);
 	$("#deny-whisper").attr('checked', $data.opts.dw);
 	$("#deny-friend").attr('checked', $data.opts.df);
@@ -2014,7 +2025,12 @@ function applyOptions(opt){
 			$data.bgm.stop();
 		}else{
 			$data.bgm.volume = 1;
-			$data.bgm = playBGM($data.bgm.key, true);
+			if ($data.legBGM && $data.bgm.key == "lobby"){
+				$data.bgm = playBGM("legacylobby", true);
+			}
+			else{
+				$data.bgm = playBGM($data.bgm.key, true);
+			}
 		}
 	}
 }
@@ -2116,7 +2132,7 @@ function checkAge(){
 				alert(str + "\n" + L['checkAgeNo']);
 				continue;
 			}
-			if(lv == 2 && (str < 1 || str > 12)){
+			if(lv == 2 && (str < 1 || str > 9)){
 				alert(str + "\n" + L['checkAgeNo']);
 				continue;
 			}
@@ -2716,6 +2732,7 @@ function updateUI(myRoom, refresh){
 	$stage.chat.height(120);
 	
 	if(only == "for-lobby"){
+		playBGM('lobby');
 		$data._ar_first = true;
 		$stage.box.userList.show();
 		if($data._shop){
@@ -2733,6 +2750,7 @@ function updateUI(myRoom, refresh){
 			delete $data._jamsu;
 		}
 	}else if(only == "for-master" || only == "for-normal"){
+		playBGM('ingame');
 		$(".team-chosen").removeClass("team-chosen");
 		if($data.users[$data.id].game.ready || $data.users[$data.id].game.form == "S"){
 			$stage.menu.ready.addClass("toggled");
@@ -2834,7 +2852,7 @@ function updateMe(){
 	$(".my-stat-record").html(L['globalWin'] + " " + gw + L['W']);
 	$(".my-stat-ping").html(commify(my.money) + L['ping']);
 	$(".my-okg .graph-bar").width(($data._playTime % 600000) / 6000 + "%");
-	$(".my-okg-text").html('누적 플레이 '+prettyTime($data._playTime));
+	$(".my-okg-text").html('오끄감 '+prettyTime($data._playTime));
 	$(".my-level").html(L['LEVEL'] + " " + lv);
 	$(".my-gauge .graph-bar").width((my.data.score-prev)/(goal-prev)*190);
 	$(".my-gauge-text").html(commify(my.data.score) + " / " + commify(goal));
@@ -4532,7 +4550,12 @@ function getAudio(k, url, cb){
 function playBGM(key, force){
 	if($data.bgm) $data.bgm.stop();
 	
-	return $data.bgm = playSound(key, true);
+	if ($data.opts.lb == true && key == 'lobby'){
+		return $data.bgm = playSound("legacylobby", true);
+	}
+	else{
+		return $data.bgm = playSound(key, true);
+	}
 }
 function stopBGM(){
 	if($data.bgm){

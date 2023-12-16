@@ -164,9 +164,13 @@ $(document).ready(function(){
 		alert(L['websocketUnsupport']);
 		return;
 	}
+
 	$data._soundList = [
 		{ key: "k", value: "/media/kkutu/k.mp3" },
-		{ key: "lobby", value: "/media/kkutu/LobbyBGM.mp3" },
+		{ key: "lobby", value: "/media/kkutu/LobbyBGMRe.mp3" },
+		{ key: "legacylobby", value: "/media/kkutu/LobbyBGM.mp3" },
+		{ key: "ingame", value: "/media/kkutu/LobbyBGM2.mp3" },
+		{ key: "shop", value: "/media/kkutu/LobbySeolBGM.mp3" },
 		{ key: "jaqwi", value: "/media/kkutu/JaqwiBGM.mp3" },
 		{ key: "jaqwiF", value: "/media/kkutu/JaqwiFastBGM.mp3" },
 		{ key: "game_start", value: "/media/kkutu/game_start.mp3" },
@@ -320,7 +324,7 @@ $(document).ready(function(){
 		var $target = $(e.currentTarget);
 		var value = $target.val();
 		
-		if(value < 2 || value > 8){
+		if(value < 2 || value > 9){
 			$target.css('color', "#FF4444");
 		}else{
 			$target.css('color', "");
@@ -369,12 +373,14 @@ $(document).ready(function(){
 			$(e.currentTarget).parent().parent().hide();
 		}).hotkey(false, 27));
 	}
+	$("#community2").attr('src', "https://pcor.me/plKkkutuCafe");
+		showDialog($stage.dialog.community2);
 	$stage.menu.help.on('click', function(e){
 		$("#help-board").attr('src', "/help");
 		showDialog($stage.dialog.help);
 	});
 	$stage.menu.community2.on('click', function(e){
-		$("#community2").attr('src', "https://discord.com/widget?id=1144989383569715291&theme=dark");
+		$("#community2").attr('src', "https://pcor.me/plKkkutuCafe");
 		showDialog($stage.dialog.community2);
 	});
 	$stage.menu.setting.on('click', function(e){
@@ -649,6 +655,7 @@ $(document).ready(function(){
 		applyOptions({
 			mb: $("#mute-bgm").is(":checked"),
 			me: $("#mute-effect").is(":checked"),
+			lb: $("#legacy-bgm").is(":checked"),
 			di: $("#deny-invite").is(":checked"),
 			dw: $("#deny-whisper").is(":checked"),
 			df: $("#deny-friend").is(":checked"),

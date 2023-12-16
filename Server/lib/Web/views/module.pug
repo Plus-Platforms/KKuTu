@@ -72,15 +72,7 @@ mixin Menu()
 
 mixin MMenu()
 	div.Menu
-		div.menu-btn(id='menu-item-GAMES')
-			+FA('bars')
-			+separator(10)
-			div.menu-sub-btn(onclick='location.href = "/";', style='margin: 7px 0px; height: 25px;')!= L('HOME')
-			div.menu-sub-btn(onclick='location.href = "http://kkutu.pcor.me/";', style='margin: 7px 0px; height: 25px;')!= L('GAMES_KKUTU')
-			div.menu-sub-btn(onclick='location.href = "http://jjo.kr/gallery";', style='margin: 7px 0px; height: 25px;')!= L('GALLERY')
-		div#quick-search
-			input#quick-search-tf(placeholder=L('QUICK_HOLDER'))
-			button#quick-search-btn!= L('QUICK_BTN')
+		img(src='/img/kkutu/logo.svg', style='margin-left: 10px;margin-top: 10px;height: 1.7rem;', alt="로고")
 		div#account
 			span#profile= SESSION.profile ? JSON.stringify(SESSION.profile) : '{}'
 			div#account-info

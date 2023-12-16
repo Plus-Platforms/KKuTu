@@ -632,6 +632,7 @@
 		"invite": "FA{user-plus}초대",
 		"inviteRobot": "AI 초대",
 		"dict": "FA{book}단어 등록",
+		"cafe": "FA{mug-hot}",
 		"wordPlus": "단어 추가",
 		"chatLog": "대화 기록",
 		"notice": "알림",
