@@ -131,7 +131,10 @@ $(document).ready(function(){
 			obtain: $("#ObtainDiag"),
 				obtainOK: $("#obtain-ok"),
 			help: $("#HelpDiag"),
-			community2: $("#Community2Diag")
+			community2: $("#Community2Diag"),
+			license: $("#LicenseDiag"),
+			alert: $("#NotificationDiag"),
+				alertOK: $("#alert-ok")
 		},
 		box: {
 			chat: $(".ChatBox"),
@@ -373,8 +376,16 @@ $(document).ready(function(){
 			$(e.currentTarget).parent().parent().hide();
 		}).hotkey(false, 27));
 	}
+	showDialog($stage.dialog.license);
 	$("#community2").attr('src', "https://pcor.me/plKkkutuCafe");
 		showDialog($stage.dialog.community2);
+	
+	window.alert = function (message1) {
+		console.log(message1);
+		$('#alertcon').text(message1)
+		showDialog($stage.dialog.alert);
+	};
+		
 	$stage.menu.help.on('click', function(e){
 		$("#help-board").attr('src', "/help");
 		showDialog($stage.dialog.help);
@@ -927,6 +938,10 @@ $(document).ready(function(){
 		if(obj) drawObtain(obj);
 		else $stage.dialog.obtain.hide();
 	});
+	$stage.dialog.alertOK.on('click', function(e){
+		$stage.dialog.alert.hide();
+	});
+	
 	for(i=0; i<5; i++) $("#team-" + i).on('click', onTeam);
 	function onTeam(e){
 		if($(".team-selector").hasClass("team-unable")) return;

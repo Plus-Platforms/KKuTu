@@ -20,6 +20,9 @@ equ{
 	font-family: consolas;
 	font-style: italic;
 }
+#Bottom{
+	display: none;
+}
 #Intro{
 	position: fixed;
 	z-index: 4;
