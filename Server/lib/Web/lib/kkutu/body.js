@@ -78,7 +78,8 @@ function applyOptions(opt){
 	$("#sort-user").attr('checked', $data.opts.su);
 	$("#only-waiting").attr('checked', $data.opts.ow);
 	$("#only-unlock").attr('checked', $data.opts.ou);
-	
+	$("#copyright-hide").attr('checked', $data.opts.cp);
+
 	if($data.bgm){
 		if($data.muteBGM){
 			$data.bgm.volume = 0;

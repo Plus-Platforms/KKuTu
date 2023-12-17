@@ -376,7 +376,11 @@ $(document).ready(function(){
 			$(e.currentTarget).parent().parent().hide();
 		}).hotkey(false, 27));
 	}
+
+	if($data.opts.cp !== true){
 	showDialog($stage.dialog.license);
+	}
+
 	$("#community2").attr('src', "https://pcor.me/plKkkutuCafe");
 		showDialog($stage.dialog.community2);
 	
@@ -673,7 +677,8 @@ $(document).ready(function(){
 			ar: $("#auto-ready").is(":checked"),
 			su: $("#sort-user").is(":checked"),
 			ow: $("#only-waiting").is(":checked"),
-			ou: $("#only-unlock").is(":checked")
+			ou: $("#only-unlock").is(":checked"),
+			cp: $("#copyright-hide").is(":checked")
 		});
 		$.cookie('kks', JSON.stringify($data.opts));
 		$stage.dialog.setting.hide();

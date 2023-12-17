@@ -199,6 +199,14 @@ iframe{
 	z-index: 2;
 }
 	.dialog-bar{ float: left; margin: 3px 0px; width: 100%; }
+	.d2-bar{
+	display: flex;
+    justify-content: center;
+    align-items: center;
+    float: left;
+    margin: 3px 0px;
+    width: 100%;
+	}
 	.dialog-bar h4{ 
 		padding-left: 7px;
 		padding-top: 2px;

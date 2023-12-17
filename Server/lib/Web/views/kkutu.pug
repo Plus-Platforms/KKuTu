@@ -114,6 +114,7 @@ block Middle
 		div.dialog-bar
 			h4.opt!= L('ingames')
 			+SettingOption('auto-ready', L('autoReady', false))
+			+SettingOption('copyright-hide', "저작권 정보 보지 않기")
 		div.dialog-bar
 			h4.opt!= L('etc')
 			+SettingOption('sort-user', L('sortUser'), "width: 200px;")
@@ -412,7 +413,7 @@ block Middle
 		h4.opt(style='text-align: center;')!= L('GPL')
 	+Dialog('NotificationDiag', 700, 180, "플러스끄투 안내")
 		p#alertcon(style='text-align: center;font-size: 18px;')
-		div.dialog-bar.tail-button
+		div.dialog-bar.d2-bar.tail-button
 			button.primaryBtn#alert-ok= L('OK')
 	+Product('UserList')
 		div 불러오는 중
