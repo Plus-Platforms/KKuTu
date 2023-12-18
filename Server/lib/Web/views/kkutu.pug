@@ -415,10 +415,19 @@ block Middle
 		h4.opt(style='text-align: center;')!= L('dictionarySupport')
 		h4.opt(style='text-align: center;')!= L('etcSupport')
 		h4.opt(style='text-align: center;')!= L('GPL')
+
+
+	//시스템 UI Override
 	+Dialog('NotificationDiag', 700, 180, "플러스끄투 안내")
 		p#alertcon(style='text-align: center;font-size: 18px;')
 		div.dialog-bar.d2-bar.tail-button
 			button.primaryBtn#alert-ok= L('OK')
+	+Dialog('ConfirmDiag', 700, 180, L('OK'))
+		p#confirmcon(style='text-align: center;font-size: 18px;')
+		div.dialog-bar.d2-bar.tail-button
+			button.primaryBtn#confirm-ok= L('OK')
+			button#confirm-cancel= "취소"
+	
 	+Product('UserList')
 		div 불러오는 중
 	+Product('RoomList')

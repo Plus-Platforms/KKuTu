@@ -136,7 +136,10 @@ $(document).ready(function(){
 			community2: $("#Community2Diag"),
 			license: $("#LicenseDiag"),
 			alert: $("#NotificationDiag"),
-				alertOK: $("#alert-ok")
+				alertOK: $("#alert-ok"),
+			confirm: $("#ConfirmDiag"),
+				confirmOK: $("#confirm-ok"),
+				confirmCancel: $("#confirm-cancel")
 		},
 		box: {
 			chat: $(".ChatBox"),
@@ -394,7 +397,7 @@ $(document).ready(function(){
 		$('#alertcon').text(message1)
 		showDialog($stage.dialog.alert);
 	};
-		
+	
 	$stage.menu.help.on('click', function(e){
 		$("#help-board").attr('src', "/help");
 		showDialog($stage.dialog.help);
@@ -950,6 +953,13 @@ $(document).ready(function(){
 	});
 	$stage.dialog.alertOK.on('click', function(e){
 		$stage.dialog.alert.hide();
+	});
+
+	$stage.dialog.confirmOK.on('click', function(e){
+		$stage.dialog.confirm.hide();
+	});
+	$stage.dialog.confirmCancel.on('click', function(e){
+		$stage.dialog.confirm.hide();
 	});
 	
 	for(i=0; i<5; i++) $("#team-" + i).on('click', onTeam);
