@@ -2565,7 +2565,7 @@ function setRoomHead($obj, room){
 	var $rm;
 	
 	$obj.empty()
-		.append($("<h5>").addClass("room-head-number").html("#"+(room.practice ? L['practice'] : room.id)+""))
+		.append($("<h5>").addClass("room-head-number").html((room.practice ? "[연습]" : "#"+room.id)+""))
 		.append($("<h5>").addClass("room-head-title").text(badWords(room.title)))
 		.append($rm = $("<h5>").addClass("room-head-mode").html(opts.join(" ") + "  |"))
 		.append($("<h5>").addClass("room-head-limit").html((mobile ? "" : (L['players'] + " ")) + room.players.length + " / " +room.limit + "  |"))

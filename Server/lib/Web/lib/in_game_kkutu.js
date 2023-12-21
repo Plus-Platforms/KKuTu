@@ -65,12 +65,9 @@ var BAD = new RegExp([
 	"분[^가-힣]*끄",
 	"kkutuio",
 	"kkutu\\.pink",
-	"철팽",
 	"끄코",
-	"철덕팽이",
 	"끄투코(2|ㄹ)(ㅣ|1|I|l|i)(0|ㅇ|o)(r|ㅏ)",
 	"끄[^가-힣]*투[^가-힣]*코[^가-힣]*리[^가-힣]*아",
-	"rfskkutu",
 	"kkutu\\.co\\.kr",
 	"kkutu\\.io"
   ].join('|'), "g");
@@ -271,6 +268,7 @@ $(document).ready(function(){
 		{ key: "legacylobby", value: "/media/kkutu/LobbyBGM.mp3" },
 		{ key: "ingame", value: "/media/kkutu/LobbyBGM2.mp3" },
 		{ key: "shop", value: "/media/kkutu/LobbySeolBGM.mp3" },
+		{ key: "credit", value: "/media/kkutu/Kkutu_Ending_Acoustic.mp3" },
 		{ key: "jaqwi", value: "/media/kkutu/JaqwiBGM.mp3" },
 		{ key: "jaqwiF", value: "/media/kkutu/JaqwiFastBGM.mp3" },
 		{ key: "game_start", value: "/media/kkutu/game_start.mp3" },
@@ -4806,7 +4804,7 @@ function setRoomHead($obj, room){
 	var $rm;
 	
 	$obj.empty()
-		.append($("<h5>").addClass("room-head-number").html("#"+(room.practice ? L['practice'] : room.id)+""))
+		.append($("<h5>").addClass("room-head-number").html((room.practice ? "[연습]" : "#"+room.id)+""))
 		.append($("<h5>").addClass("room-head-title").text(badWords(room.title)))
 		.append($rm = $("<h5>").addClass("room-head-mode").html(opts.join(" ") + "  |"))
 		.append($("<h5>").addClass("room-head-limit").html((mobile ? "" : (L['players'] + " ")) + room.players.length + " / " +room.limit + "  |"))

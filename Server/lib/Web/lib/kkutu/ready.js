@@ -182,6 +182,7 @@ $(document).ready(function(){
 		{ key: "legacylobby", value: "/media/kkutu/LobbyBGM.mp3" },
 		{ key: "ingame", value: "/media/kkutu/LobbyBGM2.mp3" },
 		{ key: "shop", value: "/media/kkutu/LobbySeolBGM.mp3" },
+		{ key: "credit", value: "/media/kkutu/Kkutu_Ending_Acoustic.mp3" },
 		{ key: "jaqwi", value: "/media/kkutu/JaqwiBGM.mp3" },
 		{ key: "jaqwiF", value: "/media/kkutu/JaqwiFastBGM.mp3" },
 		{ key: "game_start", value: "/media/kkutu/game_start.mp3" },

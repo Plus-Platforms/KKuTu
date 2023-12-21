@@ -207,6 +207,14 @@ iframe{
     margin: 3px 0px;
     width: 100%;
 	}
+	.d3-bar{
+		display: flex;
+		justify-content: right;
+		align-items: right;
+		float: left;
+		margin: 3px 0px;
+		width: 100%;
+	}
 	.dialog-bar h4{ 
 		padding-left: 7px;
 		padding-top: 2px;
@@ -226,9 +234,8 @@ iframe{
 		background-color: #EAEAEA;
 		float: left;
 		margin-right: 5px;
-		width: 60px;
-		font-size: 17px;
-		height: 20px;}
+		width: 72px;
+		font-size: 17px;}
 		.dialog-opt{ float: left; margin-right:20px; font-size: 18px;}
 	.tail-button{ margin-top: 7px; }
 	.tail-button button {
@@ -284,6 +291,9 @@ iframe{
 	.ranking-1 td:first-child{ font-weight: bold; background-color: gold; }
 	.ranking-2 td:first-child{ font-weight: bold; background-color: silver; }
 	.ranking-3 td:first-child{ font-weight: bold; background-color: chocolate; }
+	td label {
+		font-size: 15px!important;
+	}
 .moremi{
 	position: relative;
 }
@@ -485,13 +495,13 @@ min-height: 480px;
 	.GameBox .product-title h5{ float: left; font-size:20px; }
 	.GameBox div{ float: left; }
 	.GameBox .product-body{ padding-top: 0px; }
-	.game-replay-controller{ float: right !important; width: 100px; }
+	.game-replay-controller{ float: right !important;}
 	.game-replay-controller button{
 		float: right;
 		margin-top: -2px;
 		padding: 1px;
-		width: 20px;
-		font-size: 11px;
+		width: 30px;
+		font-size: 22px;
 	}
 	.hints{
 		margin: 40px 10px 0px 10px;

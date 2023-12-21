@@ -124,13 +124,13 @@ block Middle
 			+SettingOption('only-waiting', L('onlyWaiting'), "width: 200px;")
 			h4
 			+SettingOption('only-unlock', L('onlyUnlock'), "width: 200px;")
-		div.dialog-bar.tail-button
+		div.dialog-bar.tail-button.d3-bar
 			button.primaryBtn#setting-ok= L('save')
 			button#setting-server= L('changeServer')
 	+Dialog('CommunityDiag', 300, 300)
 		div.dialog-bar(style='height: 225px; overflow-y: scroll;')
 			div#comm-friends
-		div.dialog-bar.tail-button
+		div.dialog-bar.tail-button.d3-bar
 			button#comm-friend-add= L('friendAdd')
 	+Dialog('LeaderboardDiag', 300, 500, L('leaderboard', false))
 		div.dialog-bar(style='height: 350px;'): table#ranking(style='text-align: center;')
@@ -141,7 +141,7 @@ block Middle
 				td(width=100)!= L('recordScore')
 			tbody
 		div.dialog-bar: h4(style='width: 100%;')#lb-page
-		div.dialog-bar.tail-button
+		div.dialog-bar.tail-button.d3-bar
 			button#lb-prev= L('prevPage')
 			button#lb-me= L('myRank')
 			button#lb-next(style='margin-right: 6px;')!= L('nextPage')
@@ -160,7 +160,7 @@ block Middle
 			h4(style='width: 100%; height: 20px;')#quick-status
 		div.dialog-bar
 			h4(style='width: 100%; height: 20px;')#quick-queue
-		div.dialog-bar.tail-button
+		div.dialog-bar.tail-button.d3-bar
 			button.primaryBtn#quick-ok= L('OK')
 	+Dialog('RoomDiag', 310, 720, "방 만들기")
 		div.dialog-bar
@@ -214,7 +214,7 @@ block Middle
 				+GameOption(i, 'room')
 			div.dialog-opt#room-injpick-panel
 				button#room-injeong-pick(style='font-size: 11px;')!= L('pickInjeong')
-		div.dialog-bar.tail-button
+		div.dialog-bar.tail-button.d3-bar
 			button.primaryBtn#room-ok= L('OK')
 	+Dialog('InjPickDiag', 300, 440, L('pickInjeong', false))
 		h4.opt(style='font-size: 16px; text-align: center; color: #486AA3;')!= L('explInjPick')
@@ -238,7 +238,7 @@ block Middle
 						input(id=name, type='checkbox', style='width: auto;')
 						label(for=name)!= LANG['theme_' + item]
 				- });
-		div.dialog-bar.tail-button
+		div.dialog-bar.tail-button.d3-bar
 			button.primaryBtn#injpick-ok= L('OK')
 	+Dialog('PracticeDiag', 300, 250)
 		div.dialog-bar
@@ -257,7 +257,7 @@ block Middle
 				option(value=2) B
 				option(value=3) C
 				option(value=4) D
-		div.dialog-bar.tail-button
+		div.dialog-bar.tail-button.d3-bar
 			button.primaryBtn#practice-ok= L('OK')
 	+Dialog('ResultDiag', 400, 443, L('gameResult'), true)
 		div.result-board
@@ -270,7 +270,7 @@ block Middle
 			+GraphBar('result-me-gauge')
 			div.result-me-score-text
 			div.expl.result-me-expl
-		div.dialog-bar.tail-button
+		div.dialog-bar.tail-button.d3-bar
 			button.primaryBtn#result-ok= L('OK')
 			button#result-save= L('saveReplay')
 	+Dialog('DictionaryDiag', 400, 540, L('dict', false))
@@ -287,12 +287,12 @@ block Middle
 				- });
 		h4.opt(style='font-size: 14px; text-align: center; color: #486AA3;')= "404 오류 발생 시 없는 단어이므로 등록하셔도 좋습니다."
 		div.dialog-bar#dict-output(style='height: 195px; overflow-y: scroll; color: #BBBBBB; background-color: #111111;')
-		div.dialog-bar.tail-button
+		div.dialog-bar.tail-button.d3-bar
 			button#dict-search= "중복 확인"
 			button#dict-injeong= L('injeongReq')
 	+Dialog('InviteDiag', 300, 445, L('invite', false))
 		div.invite-board(style='height: 355px; overflow-y: scroll;')
-		div.dialog-bar.tail-button
+		div.dialog-bar.tail-button.d3-bar
 			button#invite-robot= L('inviteRobot')
 	+Dialog('RoomInfoDiag', 300, 587)
 		div.dialog-bar.room-info-head
@@ -307,7 +307,7 @@ block Middle
 			h4.dialog-bar-value#ri-limit
 		div.dialog-bar(style='height: 190px; overflow-y: scroll;')
 			div#ri-players(style='width: 100%;')
-		div.dialog-bar.tail-button
+		div.dialog-bar.tail-button.d3-bar
 			button#room-info-join= L('join')
 	+Dialog('ProfileDiag', 368,500)
 		div.dialog-bar.profile-head
@@ -320,7 +320,7 @@ block Middle
 				div.profile-field-record= L('record')
 				div.profile-field-score= L('recordScore')
 			div#profile-record
-		div.dialog-bar.tail-button
+		div.dialog-bar.tail-button.d3-bar
 			button#profile-whisper= L('whisper')
 			button#profile-shut= L('shut')
 			button#profile-kick= L('kick')
@@ -332,7 +332,7 @@ block Middle
 		div.dialog-bar(style='text-align: center;')!= L('kickVoteNotice')
 		div.dialog-bar
 			+GraphBar('kick-vote-time')
-		div.dialog-bar.tail-button
+		div.dialog-bar.tail-button.d3-bar
 			button#kick-vote-no= L('disagree')
 			button#kick-vote-yes= L('agree')
 	+Dialog('PurchaseDiag', 300, 600, L('purchase', false))
@@ -353,7 +353,7 @@ block Middle
 			h4#purchase-item-name(style='width: 100%; font-weight: bold;')
 		div.dialog-bar
 			h4#purchase-item-desc(style='width: 100%;')
-		div.dialog-bar.tail-button
+		div.dialog-bar.tail-button.d3-bar
 			button#purchase-no= L('NO')
 			button.primaryBtn#purchase-ok= L('OK')
 	+Dialog('ReplayDiag', 300, 470, L('replay', false))
@@ -366,7 +366,7 @@ block Middle
 		div.dialog-bar
 			h4.opt!= L('replayPlayers')
 			h4.dialog-bar-value#replay-players -
-		div.dialog-bar.tail-button
+		div.dialog-bar.tail-button.d3-bar
 			button.primaryBtn#replay-view= L('replayView')
 	+Dialog('DressDiag', 600, 360, L('dress', false))
 		div.dialog-bar
@@ -381,7 +381,7 @@ block Middle
 					- var v = locals.GROUPS[locals.CATEGORIES[i]] || [];
 					div.category-filter.dress-type(id="dress-type-" + locals.CATEGORIES[i], value=v.join(','))!= L('category_' + locals.CATEGORIES[i])
 			div#dress-goods.goods-box
-		div.dialog-bar.tail-button
+		div.dialog-bar.tail-button.d3-bar
 			button.primaryBtn#dress-ok= L('OK')
 			button#dress-cf= L('charFactory')
 			button(onclick=`alert("${L("paybackHelp")}");`)!= L('payback')
@@ -396,7 +396,7 @@ block Middle
 			div#cf-cost
 		div.dialog-bar
 			div#cf-goods.goods-box
-		div.dialog-bar.tail-button
+		div.dialog-bar.tail-button.d3-bar
 			button#cf-compose= L('cfCompose')
 	+Dialog('ChatLogDiag', 350, 500, L('chatLog', false))
 		div#chat-log-board(style='height: 475px; font-size: 11px; overflow-y: scroll;')
@@ -405,7 +405,7 @@ block Middle
 			h4(style='width: 100%;')!= L('obtained') + '!'
 		div.jt-image#obtain-image(style='margin-left: 110px; width: 80px; height: 80px;')
 		div.dialog-bar#obtain-name(style='text-align: center;')
-		div.dialog-bar.tail-button
+		div.dialog-bar.tail-button.d3-bar
 			button.primaryBtn#obtain-ok= L('OK')
 	+Dialog('HelpDiag', 1000, 540, L('helpText', false))
 		iframe#help-board(width=1000, height=350)
@@ -440,9 +440,9 @@ block Middle
 		div#shop-shelf(style='width: 100%; height: 305px; overflow-y: scroll;')
 		div.goods#plusCoinShop(style="background-position: center; background-size: cover; background-image: url(/img/kkutu/shop/coinshopBG.png); height: 75px; width: 1240px; display: block;")
 			div(style="color: #ffffff; float: none; text-align: center; font-size: 20px;")
-				| PlusCoin 상점
+				| 
 			div(style="text-shadow: 2px 2px 0px black; color: #ffffff; font-style: italic; float: none; text-align: center; font-size: 30px; font-weight: bold;")
-				| 핑이 부족하다면 PlusCoin 상점에서 구매하세요!
+				| 
 
 	+Product('Room')
 		div.team-selector
