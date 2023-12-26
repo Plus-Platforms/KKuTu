@@ -35,7 +35,7 @@ var MOREMI_PART;
 var AVAIL_EQUIP;
 var RULE;
 var OPTIONS;
-var MAX_LEVEL = 360;
+var MAX_LEVEL = 361;
 var TICK = 30;
 var EXP = [];
 var BAD = new RegExp([
@@ -208,6 +208,7 @@ $(document).ready(function(){
 				lbMe: $("#lb-me"),
 				lbPrev: $("#lb-prev"),
 			dress: $("#DressDiag"),
+			dressitem: $("#DressItemDiag"),
 				dressOK: $("#dress-ok"),
 			charFactory: $("#CharFactoryDiag"),
 				cfCompose: $("#cf-compose"),
@@ -264,7 +265,8 @@ $(document).ready(function(){
 
 	$data._soundList = [
 		{ key: "k", value: "/media/kkutu/k.mp3" },
-		{ key: "lobby", value: "/media/kkutu/LobbyBGMRe.mp3" },
+		{ key: "lobby", value: "/media/kkutu/christmas.mp3" },
+		{ key: "dialog", value: "/media/kkutu/dialog.mp3" },
 		{ key: "legacylobby", value: "/media/kkutu/LobbyBGM.mp3" },
 		{ key: "ingame", value: "/media/kkutu/LobbyBGM2.mp3" },
 		{ key: "shop", value: "/media/kkutu/LobbySeolBGM.mp3" },
@@ -374,7 +376,7 @@ $(document).ready(function(){
 		
 		$(".dialog-front").removeClass("dialog-front");
 		$pd.addClass("dialog-front");
-		startDrag($pd, e.pageX, e.pageY);
+		//startDrag($pd, e.pageX, e.pageY);
 	}).on('mouseup', function(e){
 		stopDrag();
 	});
@@ -459,38 +461,72 @@ $(document).ready(function(){
 	function stopDrag($diag){
 		$(window).off('mousemove');
 	}
+	
 	$(".result-me-gauge .graph-bar").addClass("result-me-before-bar");
 	$(".result-me-gauge")
 		.append($("<div>").addClass("graph-bar result-me-current-bar"))
 		.append($("<div>").addClass("graph-bar result-me-bonus-bar"));
-// 메뉴 버튼
-	for(i in $stage.dialog){
-		if($stage.dialog[i].children(".dialog-head").hasClass("no-close")) continue;
-		
-		$stage.dialog[i].children(".dialog-head").append($("<div>").addClass("closeBtn").on('click', function(e){
-			$(e.currentTarget).parent().parent().hide();
+	
+	// 메뉴 버튼
+	for (i in $stage.dialog) {
+		if ($stage.dialog[i].children(".dialog-head").hasClass("no-close")) continue;
+	
+		$stage.dialog[i].children(".dialog-head").append($("<div>").addClass("closeBtn").on('click', function (e) {
+			var $dialog = $(e.currentTarget).parent().parent();
+			$('#dimmer').fadeOut();
+			// Add the opposite effect class
+			$dialog.addClass("closing-effect");
+			// Set a timeout to hide the dialog after the animation completes
+			setTimeout(function () {
+				$dialog.hide().removeClass("closing-effect");
+			}, 500); // Adjust the time based on your animation duration
 		}).hotkey(false, 27));
 	}
-
+	
 	if($data.opts.cp !== true){
 	showDialog($stage.dialog.license);
 	}
 
 	$("#community2").attr('src', "https://pcor.me/plKkkutuCafe");
-		showDialog($stage.dialog.community2);
+	$('#dimmer').fadeIn();
+	showDialog($stage.dialog.community2);
 	
-	window.alert = function (message1) {
-		console.log(message1);
-		$('#alertcon').text(message1)
-		showDialog($stage.dialog.alert);
-	};
+		window.alert = function (message1) {
+			console.log(message1);
+			$('#alertcon').text(message1);
+			$('#dimmer').fadeIn();
+			showDialog($stage.dialog.alert);
+		};
 	
+	checkResolution();
+
+	//window.addEventListener('resize', checkResolution);
+	
+	function checkResolution() {
+			var screenWidth = window.innerWidth;
+			var screenHeight = window.innerHeight;
+			var thresholdWidth = 1600;
+			var thresholdHeight = 900;
+	
+			if (screenWidth < thresholdWidth || screenHeight < thresholdHeight) {
+				try{
+					document.getElementById('dimmer').style.display = 'none';
+					document.getElementById('Community2Diag').style.display = 'none';
+					document.getElementById('Community2Btn').style.display = 'none';
+				}
+				catch(err){
+				}
+				alert('화면 해상도가 1600x900 미만이므로 강제 조정되었습니다.\n정상적인 게임 플레이가 어려울 수 있으므로 외부 디스플레이를 연결하거나 전체화면 (F11)으로 게임을 플레이해주세요.');
+			}
+	}
+ 
 	$stage.menu.help.on('click', function(e){
 		$("#help-board").attr('src', "/help");
 		showDialog($stage.dialog.help);
 	});
 	$stage.menu.community2.on('click', function(e){
 		$("#community2").attr('src', "https://pcor.me/plKkkutuCafe");
+		$('#dimmer').fadeIn();
 		showDialog($stage.dialog.community2);
 	});
 	$stage.menu.setting.on('click', function(e){
@@ -788,6 +824,8 @@ $(document).ready(function(){
 		var team = $("#ai-team").val();
 		
 		$stage.dialog.practice.hide();
+		$('#dimmer').fadeOut();
+
 		if($("#PracticeDiag .dialog-title").html() == L['robot']){
 			send('setAI', { target: $data._profiled, level: level, team: team });
 		}else{
@@ -894,7 +932,8 @@ $(document).ready(function(){
 		requestInvite("AI");
 	});
 	$stage.box.me.on('click', function(e){
-		requestProfile($data.id);
+		$('#dimmer').fadeIn();
+		showDialog($stage.dialog.dress);
 	});
 	$stage.dialog.roomInfoJoin.on('click', function(e){
 		$stage.dialog.roomInfo.hide();
@@ -923,6 +962,7 @@ $(document).ready(function(){
 		if($data.guest) return fail(421);
 		if($data._gaming) return fail(438);
 		if(showDialog($stage.dialog.dress)) $.get("/box", function(res){
+			$('#dimmer').fadeIn();
 			if(res.error) return fail(res.error);
 			
 			$data.box = res;
@@ -946,6 +986,12 @@ $(document).ready(function(){
 		$target.addClass("selected");
 		
 		drawMyGoods(type == 'all' || $target.attr('value'));
+	});
+	$("#dressitembtn").on('click', function(e){
+		showDialog($stage.dialog.dressitem);
+	});
+	$("#infobtn").on('click', function(e){
+		requestProfile($data.id);
 	});
 	$("#dress-cf").on('click', function(e){
 		if($data._gaming) return fail(438);
@@ -1038,8 +1084,10 @@ $(document).ready(function(){
 		if(obj) drawObtain(obj);
 		else $stage.dialog.obtain.hide();
 	});
+
 	$stage.dialog.alertOK.on('click', function(e){
 		$stage.dialog.alert.hide();
+		$('#dimmer').fadeOut();
 	});
 
 	$stage.dialog.confirmOK.on('click', function(e){
@@ -2285,21 +2333,8 @@ function loading(text){
 		}else $stage.loading.show().html(text);
 	}else $stage.loading.hide();
 }
-function showDialog($d, noToggle){
-	var size = [ $(window).width(), $(window).height() ];
-	
-	if(!noToggle && $d.is(":visible")){
-		$d.hide();
-		return false;
-	}else{
-		$(".dialog-front").removeClass("dialog-front");
-		$d.show().addClass("dialog-front").css({
-			'left': (size[0] - $d.width()) * 0.5,
-			'top': (size[1] - $d.height()) * 0.5
-		});
-		return true;
-	}
-}
+
+  
 function applyOptions(opt){
 	$data.opts = opt;
 	
@@ -3149,7 +3184,8 @@ function checkRoom(modify){
 function updateMe(){
 	var my = $data.users[$data.id];
 	var i, gw = 0;
-	var lv = getLevel(my.data.score);
+		var lv = getLevel(my.data.score);
+	
 	var prev = EXP[lv-2] || 0;
 	var goal = EXP[lv-1];
 	
@@ -3866,12 +3902,11 @@ function requestProfile(id){
 	$data._profiled = id;
 	$stage.dialog.profileKick.hide();
 	$stage.dialog.profileShut.hide();
-	$stage.dialog.profileDress.hide();
 	$stage.dialog.profileWhisper.hide();
 	$stage.dialog.profileHandover.hide();
 	
-	if($data.id == id) $stage.dialog.profileDress.show();
-	else if(!o.robot){
+	//if($data.id == id) $stage.dialog.profileDress.show();
+	if(!o.robot){
 		$stage.dialog.profileShut.show();
 		$stage.dialog.profileWhisper.show();
 	}
@@ -4912,6 +4947,24 @@ function stopAllSounds(){
 	var i;
 	
 	for(i in $_sound) $_sound[i].stop();
+}
+function showDialog($d, noToggle) {
+	var size = [$(window).width(), $(window).height()];
+  
+	if (!noToggle && $d.is(":visible")) {
+		$('#dimmer').fadeOut();
+	  $d.hide();
+	  return false;
+	} else {
+	  //playSound('dialog');
+	  $(".dialog-front").removeClass("dialog-front");
+	  $d.addClass("dialog dialog-front").css({
+		left: (size[0] - $d.width()) * 0.5,
+		top: (size[1] - $d.height()) * 0.5
+	  });
+	  $d.show();
+	  return true;
+	}
 }
 function tryJoin(id){
 	var pw;

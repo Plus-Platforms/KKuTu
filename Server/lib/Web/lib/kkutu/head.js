@@ -35,7 +35,7 @@ var MOREMI_PART;
 var AVAIL_EQUIP;
 var RULE;
 var OPTIONS;
-var MAX_LEVEL = 360;
+var MAX_LEVEL = 361;
 var TICK = 30;
 var EXP = [];
 var BAD = new RegExp([

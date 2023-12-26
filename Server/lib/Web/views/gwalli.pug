@@ -14,40 +14,53 @@
 	
 	You should have received a copy of the GNU General Public License
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
-extends layout
+extends dash
 
 block Subject
-	title *** JJO.KR 관리 페이지 ***
+	title 플러스끄투 어드민
 
 block JS
 	script(type="text/javascript", src="/js/in_admin.min.js")
 	
 block Middle
-	fieldset
+	header
+	.mx-auto.max-w-7xl.py-6.px-8
+		h1.text-3xl.font-bold.tracking-tight.text-gray-900 단어 관리
+
+	p 코드 정보
+	
+	fieldset.hidden
 		legend 자격
 		input#db-password(type='password', placeholder='암호')
 		input#db-lang(placeholder='테이블')
 	fieldset
-		legend 추가 요청 받기
+		legend.text-xl.font-bold.py-4 추가 요청 받기
 		div
-			button#injeong-go 조회
+			button#injeong-go(class='mt-3 px-3 bg-blue-500 font-bold text-white text-center py-2 rounded-xl transform ease-in duration-100 active:scale-95 hover:bg-blue-600') 신청받은 단어 조회하기
 			div
 				table
 					thead: tr
 						td 승인?
-						td 링크
-						td #
-						td theme
-						td writer
-						td createdAt
+						td 나무위키
+						td 단어
+						td 주제
+						td 작성자
+						td 생성일시
 					tbody#injeong-data
-			button#injeong-everything 모두 승인
-			button#injeong-nothing 모두 거절
-			button#injeong-apply 적용
-	fieldset
+			div.flex
+				button#injeong-everything.hidden
+				button#injeong-nothing(class='mt-3 px-3 bg-red-500 font-bold text-white text-center py-2 rounded-xl transform ease-in duration-100 active:scale-95 hover:bg-red-600') 전체 거절하기
+				button#injeong-apply(class='mt-3 px-3 bg-green-500 font-bold text-white text-center py-2 rounded-xl transform ease-in duration-100 active:scale-95 hover:bg-green-600') 적용하기
+	fieldset.hidden
+		legend 끄투 DB에 단어 추가하기
+		div
+			input#db-theme(placeholder='주제 (~부터 적으면 검색)')
+			textarea#db-list(rows=20, cols=100)
+			button#db-ok 확인
+	fieldset.hidden
 		legend 상점 DB 다루기
 		div
-			input#shop-word(placeholder='품목 (~ALL)')
+			input#shop-word(placeholder='"~ALL" 입력 시 전 상품이 조회됩니다.')
 			button#shop-go 조회
 			button#shop-hide 숨기기
 			div
@@ -68,28 +81,28 @@ block Middle
 			button#shop-add 추가
 			button#shop-apply 적용
 	fieldset
-		legend 유저 DB 다루기
+		legend.text-xl.font-bold.py-4 사용자 관리
 		div
 			input#user-id(placeholder='ID')
 			input#user-nick(placeholder='닉네임')
-			button#user-go 조회
+			button#user-go(class='mt-3 px-3 bg-blue-500 font-bold text-white text-center py-2 rounded-xl transform ease-in duration-100 active:scale-95 hover:bg-blue-600') 사용자 조회하기
 			div
 				table
 					thead: tr
-						td #
-						td money
-						td kkutu
-						td box
-						td equip
+						td 고유번호
+						td 핑
+						td 계정 스코어
+						td 인벤토리
+						td 장착 아이템
 						td exordial
-						td server
-						td lastLogin
+						td 활동 서버
+						td 마지막 로그인
 						td black
-						td blockedUntil
-						td friends
+						td 계정 제재 기한
+						td 친구
 					tbody#user-data
-			button#user-apply 적용
-	fieldset
+			button#user-apply(class='mt-3 px-3 bg-green-500 font-bold text-white text-center py-2 rounded-xl transform ease-in duration-100 active:scale-95 hover:bg-green-600') 수정하기
+	fieldset.hidden
 		legend 유저 감시하기
 		div
 			input#gamsi-id(placeholder='ID (,로 구분)')
@@ -101,8 +114,8 @@ block Middle
 						td 닉네임
 						td 서버
 					tbody#gamsi-data
-	fieldset
-		legend 끄투 DB 다루기
+	fieldset.hidden
+		legend.text-xl.font-bold.py-4 단어 DB 다루기
 		div
 			input#db-word(placeholder='단어')
 			button#db-go 조회
@@ -121,13 +134,7 @@ block Middle
 			div#word-hit
 			button#word-add 추가
 			button#db-apply 적용
-	fieldset
-		legend 끄투 DB에 단어 추가하기
-		div
-			input#db-theme(placeholder='주제 (~부터 적으면 검색)')
-			textarea#db-list(rows=20, cols=100)
-			button#db-ok 확인
-	fieldset
+	fieldset.hidden
 		legend 끄투에서의 인기 단어
 		button#kpw-query 조회
 		textarea#kpw-html

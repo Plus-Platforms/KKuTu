@@ -1,0 +1,65 @@
+//-
+	Rule the words! KKuTu Online
+	Copyright (C) 2017 JJoriping(op@jjo.kr)
+
+	This program is free software: you can redistribute it and/or modify
+	it under the terms of the GNU General Public License as published by
+	the Free Software Foundation, either version 3 of the License, or
+	(at your option) any later version.
+
+	This program is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	GNU General Public License for more details.
+
+	You should have received a copy of the GNU General Public License
+	along with this program. If not, see <http://www.gnu.org/licenses/>.
+include module
+
+- if(LANG == undefined) LANG = locals.locale;
+
+doctype html
+html
+	head
+		block Subject
+		meta(charset='utf-8')
+		meta(name='viewport', content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no')
+		script(type='text/javascript').
+			function getObject(v, i) {
+				Object.defineProperty(v, i, {value: v[i], writable: false});
+			}
+			getObject(window.WebSocket, "send");
+			getObject(window.WebSocket, "onmessage");
+			getObject(window, "WebSocket");
+
+		block Search
+			meta(name='description', content=LANG['meta_desc'] || L('META_DESC'))
+			meta(name='keywords', content=LANG['meta_keys'] || L('META_KEYS'))
+
+		block OpenGraph
+			meta(property='og:image', content=locals.ogImage || "http://JJo.kr/img/ogImage.png")
+			meta(property='og:url', content=locals.ogURL || "http://JJo.kr/")
+			meta(property='og:title', content=locals.ogTitle || "쪼롤 - League of Legends 정보 검색 사이트")
+			meta(property='og:description', content=locals.ogDescription || "롤 전적검색은 JJO.KR")
+
+		+PageHead()
+			block Preload
+		link(rel='stylesheet', href='https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css')
+		block JS
+
+	body(style='min-width: 640px; color: #000!important;')
+		header.relative.bg-white.px-5.flex.items-center.justify-between.p-4.border-b
+			a.inline-block.text-2xl.font-bold.tracking-wider.text-blue-700.uppercase(href="/")
+				img.h-6(src="/img/logo.png")
+		div#Jungle
+			span#mobile= locals.mobile
+			block Jungle
+		div#Middle
+			div.flex.flex-col.flex-1.min-h-screen.overflow-x-hidden.overflow-y-auto.bg-gray-100
+				block Middle
+		div#Bottom
+			block Bottom
+			h4.opt(style='text-align: center;')!= L('dictionarySupport')
+			h4.opt(style='text-align: center;')!= L('etcSupport')
+			h4.opt(style='text-align: center;')!= L('GPL')
+			+separator(100)

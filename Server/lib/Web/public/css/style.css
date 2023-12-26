@@ -67,7 +67,7 @@ button{
 	font-family: inherit;
 	padding: 5px;
 	border: 1px solid #AAAAAA;
-	background-color: #FFFFFF;
+	background-color: #FFFFFF00;
 	transition: all 200ms ease;
 }
 button:active{

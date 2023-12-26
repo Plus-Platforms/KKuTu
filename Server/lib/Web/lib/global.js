@@ -103,9 +103,6 @@ var L;
 			
 
 			$("#Bottom").width(size[0]);
-		}).on('mousemove', function(e){
-			if(explSize == null) return;
-			$(".expl-active").css({ 'left': Math.min(e.clientX + 5, size[0] - explSize[0] - 12), 'top': Math.min(e.clientY + 23, size[1] - explSize[1] - 12) });
 		}).trigger('resize');
 		
 		$("#quick-search-btn").on('click', function(e){
@@ -138,20 +135,21 @@ var L;
 			requestLogout();
 		}*/
 		global.watchInput($("#quick-search-tf"));
-		(global.expl = function($mother){
+		(global.expl = function ($mother) {
 			var $q = $mother ? $mother.find(".expl") : $(".expl");
-			
-			$q.parent().addClass("expl-mother").on('mouseenter', function(e){
+		
+			$q.parent().addClass("expl-mother").on('mouseenter', function (e) {
 				var $e = $(e.currentTarget).children(".expl");
-				
-				explSize = [ $e.width(), $e.height() ];
+		
+				explSize = [$e.width(), $e.height()];
 				$(".expl-active").removeClass("expl-active");
 				$e.addClass("expl-active");
-			}).on('mouseleave', function(e){
+			}).on('mouseleave', function (e) {
 				$(e.currentTarget).children(".expl").removeClass("expl-active");
 			});
-		})();
+		})();		
 	});
+	
 	function requestLogin(e){
 		var tl = [ (size[0] - 200) * 0.5, (size[1] - 300) * 0.5 ];
 		

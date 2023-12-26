@@ -46,21 +46,8 @@ function loading(text){
 		}else $stage.loading.show().html(text);
 	}else $stage.loading.hide();
 }
-function showDialog($d, noToggle){
-	var size = [ $(window).width(), $(window).height() ];
-	
-	if(!noToggle && $d.is(":visible")){
-		$d.hide();
-		return false;
-	}else{
-		$(".dialog-front").removeClass("dialog-front");
-		$d.show().addClass("dialog-front").css({
-			'left': (size[0] - $d.width()) * 0.5,
-			'top': (size[1] - $d.height()) * 0.5
-		});
-		return true;
-	}
-}
+
+  
 function applyOptions(opt){
 	$data.opts = opt;
 	
@@ -910,7 +897,8 @@ function checkRoom(modify){
 function updateMe(){
 	var my = $data.users[$data.id];
 	var i, gw = 0;
-	var lv = getLevel(my.data.score);
+		var lv = getLevel(my.data.score);
+	
 	var prev = EXP[lv-2] || 0;
 	var goal = EXP[lv-1];
 	
@@ -1627,12 +1615,11 @@ function requestProfile(id){
 	$data._profiled = id;
 	$stage.dialog.profileKick.hide();
 	$stage.dialog.profileShut.hide();
-	$stage.dialog.profileDress.hide();
 	$stage.dialog.profileWhisper.hide();
 	$stage.dialog.profileHandover.hide();
 	
-	if($data.id == id) $stage.dialog.profileDress.show();
-	else if(!o.robot){
+	//if($data.id == id) $stage.dialog.profileDress.show();
+	if(!o.robot){
 		$stage.dialog.profileShut.show();
 		$stage.dialog.profileWhisper.show();
 	}
@@ -2673,6 +2660,24 @@ function stopAllSounds(){
 	var i;
 	
 	for(i in $_sound) $_sound[i].stop();
+}
+function showDialog($d, noToggle) {
+	var size = [$(window).width(), $(window).height()];
+  
+	if (!noToggle && $d.is(":visible")) {
+		$('#dimmer').fadeOut();
+	  $d.hide();
+	  return false;
+	} else {
+	  //playSound('dialog');
+	  $(".dialog-front").removeClass("dialog-front");
+	  $d.addClass("dialog dialog-front").css({
+		left: (size[0] - $d.width()) * 0.5,
+		top: (size[1] - $d.height()) * 0.5
+	  });
+	  $d.show();
+	  return true;
+	}
 }
 function tryJoin(id){
 	var pw;

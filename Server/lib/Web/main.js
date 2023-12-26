@@ -206,7 +206,7 @@ function GameClient(id, url){
 ROUTES.forEach(function(v){
 	require(`./routes/${v}`).run(Server, WebInit.page);
 });
-Server.get("/", function(req, res){
+Server.get("/game", function(req, res){
 	var server = req.query.server;
 	
 	//볕뉘 수정 구문삭제(220~229, 240)

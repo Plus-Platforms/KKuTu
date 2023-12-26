@@ -87,6 +87,7 @@ block Jungle
 				button.mainbtn#DictionaryBtn.for-lobby.for-master.for-normal.for-gaming(style='display: none;')!= L('dict')
 				// button#WordPlusBtn.for-lobby.for-master.for-normal.for-gaming(style='display: none;')!= L('wordPlus')
 				button.mainbtn#InviteBtn.for-master(style='display: none;')!= L('invite')
+				button.mainbtn#profile-dress.for-lobby(style='display: none;')!= L('dress')
 				button.mainbtn#PracticeBtn.for-master.for-normal(style='display: none;')!= L('practice')
 				button.mainbtn#ReadyBtn.for-normal(style='display: none;')!= L('ready')
 				button.mainbtn#StartBtn.for-master(style='display: none;')!= L('start')
@@ -102,6 +103,8 @@ block Middle
 	- var VERSION = L('version');
 	- var nick = SESSION.profile ? (SESSION.profile.title || SESSION.profile.name) : null;
 	
+	div#dimmer(style="display: none;")
+
 	+Dialog('SettingDiag', 400, 400, L('settingsText', false))
 		div.dialog-bar
 			h4.opt!= "배경음악 설정"
@@ -259,7 +262,7 @@ block Middle
 				option(value=4) D
 		div.dialog-bar.tail-button.d3-bar
 			button.primaryBtn#practice-ok= L('OK')
-	+Dialog('ResultDiag', 400, 443, L('gameResult'), true)
+	+Dialog('ResultDiag', 400, 560, L('gameResult'), true)
 		div.result-board
 		div.result-me
 			div.result-me-score
@@ -325,7 +328,6 @@ block Middle
 			button#profile-shut= L('shut')
 			button#profile-kick= L('kick')
 			button#profile-level= L('aiSetting')
-			button#profile-dress= L('dress')
 			button#profile-handover= L('handover')
 	+Dialog('KickVoteDiag', 300, 160, L('kickVote', false))
 		div.dialog-bar#kick-vote-text(style='text-align: center;')
@@ -368,7 +370,23 @@ block Middle
 			h4.dialog-bar-value#replay-players -
 		div.dialog-bar.tail-button.d3-bar
 			button.primaryBtn#replay-view= L('replayView')
-	+Dialog('DressDiag', 600, 360, L('dress', false))
+
+	+Dialog('DressDiag', 1000, 510, L('dress', false))
+		div(style="display:flex;")
+			div
+				img#dressitembtn(src="/img/kkutu/dress/deco.png", alt="꾸미기")
+				+Expl(true)
+					div!= "프로필을 휘장과 여러가지 장식으로 꾸며 보세요"
+			div
+				img#dress-cf(src="/img/kkutu/dress/lab.png" alt="조합소")
+				+Expl(true)
+					div!= "게임에서 수집한 글자 조각을 조합해 보세요"
+			div
+				img#infobtn(src="/img/kkutu/dress/info.png", alt="내 정보")
+				+Expl(true)
+					div!= "내 전적을 확인해 보세요"
+		
+	+Dialog('DressItemDiag', 600, 360, L('dress', false))
 		div.dialog-bar
 			h4(style='width: 150px;')!= L('myExordial')
 			input#dress-exordial(type='textfield', placeholder=L('myExordialX'), style='width: 435px;', maxlength=100)
@@ -383,9 +401,9 @@ block Middle
 			div#dress-goods.goods-box
 		div.dialog-bar.tail-button.d3-bar
 			button.primaryBtn#dress-ok= L('OK')
-			button#dress-cf= L('charFactory')
 			button(onclick=`alert("${L("paybackHelp")}");`)!= L('payback')
-	+Dialog('CharFactoryDiag', 500, 410, L('charFactory', false))
+
+	+Dialog('CharFactoryDiag', 500, 462, L('charFactory', false))
 		div.dialog-bar(style='width: 300px;')
 			div#cf-tray
 			div#cf-dict
@@ -397,7 +415,7 @@ block Middle
 		div.dialog-bar
 			div#cf-goods.goods-box
 		div.dialog-bar.tail-button.d3-bar
-			button#cf-compose= L('cfCompose')
+			button.primaryBtn#cf-compose= L('cfCompose')
 	+Dialog('ChatLogDiag', 350, 500, L('chatLog', false))
 		div#chat-log-board(style='height: 475px; font-size: 11px; overflow-y: scroll;')
 	+Dialog('ObtainDiag', 300, 245, L('notice'), true)
@@ -419,7 +437,7 @@ block Middle
 
 	//시스템 UI Override
 	+Dialog('NotificationDiag', 700, 180, "플러스끄투 안내")
-		p#alertcon(style='text-align: center;font-size: 18px;')
+		p#alertcon(style='text-align: center;font-size: 18px;color: #1F2167;font-weight: 600;')
 		div.dialog-bar.d2-bar.tail-button
 			button.primaryBtn#alert-ok= L('OK')
 	+Dialog('ConfirmDiag', 700, 180, L('OK'))
