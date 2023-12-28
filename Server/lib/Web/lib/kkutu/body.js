@@ -2342,7 +2342,7 @@ function pushDisplay(text, mean, theme, wc){
 				playSound(snd);
 				if($l.html() == $data.mission){
 					playSound('mission');
-					$l.css({ 'color': "#66FF66" });
+					$l.addClass('gradientMission');
 					anim['font-size'] = 24;
 				}else{
 					anim['font-size'] = 20;
@@ -2359,7 +2359,7 @@ function pushDisplay(text, mean, theme, wc){
 				playSound(ta);
 				if(t == $data.mission){
 					playSound('mission');
-					j = "<label style='color: #66FF66;'>" + t + "</label>" + j;
+					j = "<label class='gradientMission'>" + t + "</label>" + j;
 				}else{
 					j = t + j;
 				}
@@ -2371,7 +2371,7 @@ function pushDisplay(text, mean, theme, wc){
 				playSound(ta);
 				if(t == $data.mission){
 					playSound('mission');
-					j += "<label style='color: #66FF66;'>" + t + "</label>";
+					j += "<label class='gradientMission'>" + t + "</label>";
 				}else{
 					j += t;
 				}

@@ -104,7 +104,8 @@ block Middle
 	- var nick = SESSION.profile ? (SESSION.profile.title || SESSION.profile.name) : null;
 	
 	div#dimmer(style="display: none;")
-
+	div#tost_message
+	
 	+Dialog('SettingDiag', 400, 400, L('settingsText', false))
 		div.dialog-bar
 			h4.opt!= "배경음악 설정"
@@ -135,8 +136,8 @@ block Middle
 			div#comm-friends
 		div.dialog-bar.tail-button.d3-bar
 			button#comm-friend-add= L('friendAdd')
-	+Dialog('LeaderboardDiag', 300, 500, L('leaderboard', false))
-		div.dialog-bar(style='height: 350px;'): table#ranking(style='text-align: center;')
+	+Dialog('LeaderboardDiag', 300, 550, L('leaderboard', false))
+		div.dialog-bar(style='height: 400px;'): table#ranking(style='text-align: center;')
 			thead(style='font-weight: bold; background-color: #DDDDDD;'): tr
 				td(width=30) #
 				td(width=55)!= L('LEVEL')

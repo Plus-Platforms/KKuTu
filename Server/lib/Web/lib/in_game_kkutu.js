@@ -491,12 +491,21 @@ $(document).ready(function(){
 	$('#dimmer').fadeIn();
 	showDialog($stage.dialog.community2);
 	
-		window.alert = function (message1) {
+	var tostMessage = document.getElementById('tost_message');
+
+	function tostOn(){
+		tostMessage.classList.add('active');
+		setTimeout(function(){
+			tostMessage.classList.remove('active');
+		}, 5000);
+	}
+
+   
+	window.alert = function (message1) {
+			tostOn();
 			console.log(message1);
-			$('#alertcon').text(message1);
-			$('#dimmer').fadeIn();
-			showDialog($stage.dialog.alert);
-		};
+			$('#tost_message').text(message1);
+	};
 	
 	checkResolution();
 
@@ -551,7 +560,7 @@ $(document).ready(function(){
 	
 		// 무작위 방 제목을 선택하기 위한 배열
 		var roomTitles = [
-			'기체크로마토그래피질량분석법',
+			'기체크로마토질량분석법',
 			'즐거운 끝말잇기~!',
 			'PLUS KKUTU',
 			'레디 누르세요!!!',
@@ -4629,7 +4638,7 @@ function pushDisplay(text, mean, theme, wc){
 				playSound(snd);
 				if($l.html() == $data.mission){
 					playSound('mission');
-					$l.css({ 'color': "#66FF66" });
+					$l.addClass('gradientMission');
 					anim['font-size'] = 24;
 				}else{
 					anim['font-size'] = 20;
@@ -4646,7 +4655,7 @@ function pushDisplay(text, mean, theme, wc){
 				playSound(ta);
 				if(t == $data.mission){
 					playSound('mission');
-					j = "<label style='color: #66FF66;'>" + t + "</label>" + j;
+					j = "<label class='gradientMission'>" + t + "</label>" + j;
 				}else{
 					j = t + j;
 				}
@@ -4658,7 +4667,7 @@ function pushDisplay(text, mean, theme, wc){
 				playSound(ta);
 				if(t == $data.mission){
 					playSound('mission');
-					j += "<label style='color: #66FF66;'>" + t + "</label>";
+					j += "<label class='gradientMission'>" + t + "</label>";
 				}else{
 					j += t;
 				}
