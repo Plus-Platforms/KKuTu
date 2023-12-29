@@ -5,6 +5,21 @@ case `uname` in
     *CYGWIN*) basedir=`cygpath -w "$basedir"`;;
 esac
 
+# Change directory to ../../frontpage
+cd "$basedir/../../frontpage" || exit
+
+# Run npm run build
+npm run build
+ret=$?
+if [ $ret -ne 0 ]; then
+  echo "npm run build failed. Exiting."
+  exit $ret
+fi
+
+# Change directory back to the original basedir
+cd "../Server/lib" || exit
+
+# Run grunt
 if [ -x "$basedir/node" ]; then
   "$basedir/node"  "$basedir/node_modules/grunt/bin/grunt" "$@"
   ret=$?

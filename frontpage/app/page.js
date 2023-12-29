@@ -60,7 +60,7 @@ export default function Home() {
               </p>
             </div>
           </div>
-          <Image
+          <img
             src="/screely-1703772701230.png"
             alt="인게임 화면"
             className="w-[48rem] max-w-none rounded-xl shadow-xl ring-1 ring-gray-400/10 sm:w-[57rem] md:-ml-4 lg:-ml-0"
@@ -78,7 +78,7 @@ export default function Home() {
         </h2>
         <div className="mx-auto mt-10 grid max-w-lg grid-cols-1 items-center gap-x-8 gap-y-10 sm:max-w-xl sm:grid-cols-1 sm:gap-x-10 lg:mx-0 lg:max-w-none lg:grid-cols-1">
           <a href="https://cafe.naver.com/pluskkutu">
-          <Image
+          <img
             className="col-span-2 max-h-12 w-full object-contain lg:col-span-1"
             src="/navercafe.webp"
             alt="NaverCafe"
