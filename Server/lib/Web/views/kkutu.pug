@@ -106,12 +106,16 @@ block Middle
 	div#dimmer(style="display: none;")
 	div#tost_message
 	
-	+Dialog('SettingDiag', 400, 400, L('settingsText', false))
+	+Dialog('SettingDiag', 400, 540, L('settingsText', false))
 		div.dialog-bar
 			h4.opt!= "배경음악 설정"
 			+SettingOption('legacy-bgm', "원작 BGM")
-			+SettingOption('mute-bgm', "BGM 음소거")
-			+SettingOption('mute-effect', "효과음 음소거")
+		div.dialog-bar
+			h4.opt!= "배경음악 볼륨"
+			input#bgm-volume.range-input(type='range' min='0' max='1' value='0.5' step='0.01' style='width:50%;')
+		div.dialog-bar
+			h4.opt!= "효과음 볼륨"
+			input#effect-volume.range-input(type='range' min='0' max='1' value='0.5' step='0.01' style='width:50%;')
 		div.dialog-bar
 			h4.opt!= L('denyReq')
 			+SettingOption('deny-invite', L('denyInvite', false))

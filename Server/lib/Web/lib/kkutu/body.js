@@ -51,11 +51,11 @@ function loading(text){
 function applyOptions(opt){
 	$data.opts = opt;
 	
-	$data.muteBGM = $data.opts.mb;
-	$data.muteEff = $data.opts.me;
+	$data.BGMVolume = parseFloat($data.opts.bv);
+	$data.EffectVolume = parseFloat($data.opts.ev);
 	
-	$("#mute-bgm").attr('checked', $data.muteBGM);
-	$("#mute-effect").attr('checked', $data.muteEff);
+	$("#bgm-volume").val($data.BGMVolume);
+	$("#effect-volume").val($data.EffectVolume);
 	$("#legacy-bgm").attr('checked', $data.opts.lb);
 
 	$("#deny-invite").attr('checked', $data.opts.di);
@@ -68,17 +68,12 @@ function applyOptions(opt){
 	$("#copyright-hide").attr('checked', $data.opts.cp);
 
 	if($data.bgm){
-		if($data.muteBGM){
+		if($data.BGMVolume){
+			$data.bgm.volume = $data.BGMVolume;
+			$data.bgm = playBGM($data.bgm.key, true);
+		}else{
 			$data.bgm.volume = 0;
 			$data.bgm.stop();
-		}else{
-			$data.bgm.volume = 1;
-			if ($data.legBGM && $data.bgm.key == "lobby"){
-				$data.bgm = playBGM("legacylobby", true);
-			}
-			else{
-				$data.bgm = playBGM($data.bgm.key, true);
-			}
 		}
 	}
 }
@@ -464,6 +459,7 @@ function onMessage(data){
 				location.href = "/login?desc=login_kkutu"; */
 			}else if(data.code == 403){
 				loading();
+				playBGM('lobby');
 			}else if(data.code == 406){
 				if($stage.dialog.quick.is(':visible')){
 					$data._preQuick = false;
@@ -906,7 +902,7 @@ function updateMe(){
 	renderMoremi(".my-image", my.equip);
 	// $(".my-image").css('background-image', "url('"+my.profile.image+"')");
 	$(".my-stat-level").replaceWith(getLevelImage(my.data.score).addClass("my-stat-level"));
-	$(".my-stat-name").html(my.profile.title || my.profile.name);
+	$(".my-stat-name").text(my.profile.title || my.profile.name);
 	$(".my-stat-record").html(L['globalWin'] + " " + gw + L['W']);
 	$(".my-stat-ping").html(commify(my.money) + L['ping']);
 	$(".my-okg .graph-bar").width(($data._playTime % 600000) / 6000 + "%");
@@ -970,7 +966,7 @@ function userListBar(o, forInvite){
 		.append($("<div>").addClass("jt-image users-image").css('background-image', "url('"+o.profile.image+"')"))
 		.append(getLevelImage(o.data.score).addClass("users-level"))
 		// .append($("<div>").addClass("jt-image users-from").css('background-image', "url('/img/kkutu/"+o.profile.type+".png')"))
-		.append($("<div>").addClass("users-name").html(o.profile.title || o.profile.name))
+		.append($("<div>").addClass("users-name").text(o.profile.title || o.profile.name))
 		.on('click', function(e){
 			requestInvite($(e.currentTarget).attr('id').slice(12));
 		});
@@ -979,7 +975,7 @@ function userListBar(o, forInvite){
 		.append($("<div>").addClass("jt-image users-image").css('background-image', "url('"+o.profile.image+"')"))
 		.append(getLevelImage(o.data.score).addClass("users-level"))
 		// .append($("<div>").addClass("jt-image users-from").css('background-image', "url('/img/kkutu/"+o.profile.type+".png')"))
-		.append($("<div>").addClass("users-name ellipse").html(o.profile.title || o.profile.name))
+		.append($("<div>").addClass("users-name ellipse").text(o.profile.title || o.profile.name))
 		.on('click', function(e){
 			requestProfile($(e.currentTarget).attr('id').slice(11));
 		});
@@ -1048,7 +1044,7 @@ function normalGameUserBar(o){
 		.append($m = $("<div>").addClass("moremi game-user-image"))
 		.append($("<div>").addClass("game-user-title")
 			.append(getLevelImage(o.data.score).addClass("game-user-level"))
-			.append($bar = $("<div>").addClass("game-user-name ellipse").html(o.profile.title || o.profile.name))
+			.append($bar = $("<div>").addClass("game-user-name ellipse").text(o.profile.title || o.profile.name))
 			.append($("<div>").addClass("expl").html(L['LEVEL'] + " " + getLevel(o.data.score)))
 		)
 		.append($n = $("<div>").addClass("game-user-score"));
@@ -1064,7 +1060,7 @@ function miniGameUserBar(o){
 	var $R = $("<div>").attr('id', "game-user-"+o.id).addClass("game-user")
 		.append($("<div>").addClass("game-user-title")
 			.append(getLevelImage(o.data.score).addClass("game-user-level"))
-			.append($bar = $("<div>").addClass("game-user-name ellipse").html(o.profile.title || o.profile.name))
+			.append($bar = $("<div>").addClass("game-user-name ellipse").text(o.profile.title || o.profile.name))
 		)
 		.append($n = $("<div>").addClass("game-user-score"));
 	if(o.id == $data.id) $bar.addClass("game-user-my-name");
@@ -1132,7 +1128,7 @@ function updateRoom(gaming){
 				)
 				.append($("<div>").addClass("room-user-title")
 					.append(getLevelImage(o.data.score).addClass("room-user-level"))
-					.append($bar = $("<div>").addClass("room-user-name").html(o.profile.title || o.profile.name))
+					.append($bar = $("<div>").addClass("room-user-name").text(o.profile.title || o.profile.name))
 				).on('click', function(e){
 					requestProfile($(e.currentTarget).attr('id').slice(10));
 				})
@@ -1483,7 +1479,7 @@ function drawLeaderboard(data){
 				.append(getLevelImage(item.score).addClass("ranking-image"))
 				.append($("<label>").css('padding-top', 2).html(getLevel(item.score)))
 			)
-			.append($("<td>").html(profile))
+			.append($("<td>").text(profile))
 			.append($("<td>").html(commify(item.score)))
 		);
 	});
@@ -1508,7 +1504,7 @@ function updateCommunity(){
 		$stage.dialog.commFriends.append($("<div>").addClass("cf-item").attr('id', "cfi-" + i)
 			.append($("<div>").addClass("cfi-status cfi-stat-" + (o.server ? 'on' : 'off')))
 			.append($("<div>").addClass("cfi-server").html(o.server ? L['server_' + o.server] : "-"))
-			.append($("<div>").addClass("cfi-name ellipse").html(p ? (p.title || p.name) : L['hidden']))
+			.append($("<div>").addClass("cfi-name ellipse").text(p ? (p.title || p.name) : L['hidden']))
 			.append($("<div>").addClass("cfi-memo ellipse").text(memo))
 			.append($("<div>").addClass("cfi-menu")
 				.append($("<i>").addClass("fa fa-pencil").on('click', requestEditMemo))
@@ -1540,7 +1536,7 @@ function requestRoomInfo(id){
 	
 	$data._roominfo = id;
 	$("#RoomInfoDiag .dialog-title").html(id + L['sRoomInfo']);
-	$("#ri-title").html((o.password ? "<i class='fa fa-lock'></i>&nbsp;" : "") + o.title);
+	$("#ri-title").html((o.password ? "<i class='fa fa-lock'></i>&nbsp;" : "") + o.title.replaceAll(/\<|\>|\"|\'|\%|\;|\(|\)|\&|\+|\-/g, ""));
 	$("#ri-mode").html(L['mode' + MODE[o.mode]]);
 	$("#ri-round").html(o.round + ", " + o.time + L['SECOND']);
 	$("#ri-limit").html(o.players.length + " / " + o.limit);
@@ -1556,7 +1552,7 @@ function requestRoomInfo(id){
 		
 		$pls.append($("<div>").addClass("ri-player")
 			.append($moremi = $("<div>").addClass("moremi rip-moremi"))
-			.append($p = $("<div>").addClass("ellipse rip-title").html(p.profile.title || p.profile.name))
+			.append($p = $("<div>").addClass("ellipse rip-title").text(p.profile.title || p.profile.name))
 			.append($("<div>").addClass("rip-team team-" + rd.t).html($("#team-" + rd.t).html()))
 			.append($("<div>").addClass("rip-form").html(L['pform_' + rd.f]))
 		);
@@ -2017,7 +2013,7 @@ function roundEnd(result, data){
 		$b.append($o = $("<div>").addClass("result-board-item")
 			.append($p = $("<div>").addClass("result-board-rank").html(r.rank + 1))
 			.append(getLevelImage(sc).addClass("result-board-level"))
-			.append($("<div>").addClass("result-board-name").html(o.profile.title || o.profile.name))
+			.append($("<div>").addClass("result-board-name").text(o.profile.title || o.profile.name))
 			.append($("<div>").addClass("result-board-score")
 				.html(data.scores ? (L['avg'] + " " + commify(data.scores[r.id]) + L['kpm']) : (commify(r.score || 0) + L['PTS']))
 			)
@@ -2155,7 +2151,7 @@ function drawRanking(ranks){
 		$b.append($o = $("<div>").addClass("result-board-item")
 			.append($("<div>").addClass("result-board-rank").html(r.rank + 1))
 			.append(getLevelImage(r.score).addClass("result-board-level"))
-			.append($("<div>").addClass("result-board-name").html(o.profile.title || o.profile.name))
+			.append($("<div>").addClass("result-board-name").text(o.profile.title || o.profile.name))
 			.append($("<div>").addClass("result-board-score").html(commify(r.score) + L['PTS']))
 			.append($("<div>").addClass("result-board-reward").html(""))
 			.append($v = $("<div>").addClass("result-board-lvup").css('display', me ? "block" : "none")
@@ -2173,7 +2169,7 @@ function drawRanking(ranks){
 function kickVoting(target){
 	var op = $data.users[target].profile;
 	
-	$("#kick-vote-text").html((op.title || op.name) + L['kickVoteText']);
+	$("#kick-vote-text").text((op.title || op.name) + L['kickVoteText']);
 	$data.kickTime = 10;
 	$data._kickTime = 10;
 	$data._kickTimer = addTimeout(kickVoteTick, 1000);
@@ -2626,23 +2622,28 @@ function stopBGM(){
 }
 function playSound(key, loop){
 	var src, sound;
-	var mute = (loop && $data.muteBGM) || (!loop && $data.muteEff);
+	var bgmMuted = loop && $data.BGMVolume == 0;
+	var effectMuted = !loop && $data.EffectVolume == 0;
 	
 	sound = $sound[key] || $sound.missing;
 	if(window.hasOwnProperty("AudioBuffer") && sound instanceof AudioBuffer){
-		src = audioContext.createBufferSource();
+		var gainNode = audioContext.createGain();
+src = audioContext.createBufferSource();
 		src.startedAt = audioContext.currentTime;
 		src.loop = loop;
-		if(mute){
+		if(bgmMuted || effectMuted){
+			gainNode.gain.value = 0;
 			src.buffer = audioContext.createBuffer(2, sound.length, audioContext.sampleRate);
 		}else{
-			src.buffer = sound;
+			gainNode.gain.value = (loop ? $data.BGMVolume : $data.EffectVolume) || 0.5;
+src.buffer = sound;
 		}
-		src.connect(audioContext.destination);
+		gainNode.connect(audioContext.destination);
+		src.connect(gainNode);
 	}else{
 		if(sound.readyState) sound.audio.currentTime = 0;
 		sound.audio.loop = loop || false;
-		sound.audio.volume = mute ? 0 : 1;
+		sound.audio.volume = mute ? 0 : ((loop ? $data.BGMVolume : $data.EffectVolume) || 0.5);
 		src = sound;
 	}
 	if($_sound[key]) $_sound[key].stop();
@@ -2782,7 +2783,7 @@ function notice(msg, head){
 	stackChat();
 	$("#Chat,#chat-log-board").append($("<div>").addClass("chat-item chat-notice")
 		.append($("<div>").addClass("chat-head").text(head || L['notice']))
-		.append($("<div>").addClass("chat-body").html(msg))
+		.append($("<div>").addClass("chat-body").text(msg))
 		.append($("<div>").addClass("chat-stamp").text(time.toLocaleTimeString()))
 	);
 	$stage.chat.scrollTop(999999999);
@@ -2926,7 +2927,7 @@ function fail(code){
 	return alert(L['error_' + code]);
 }
 function yell(msg){
-	$stage.yell.show().css('opacity', 1).html(msg);
+	$stage.yell.show().css('opacity', 1).text(msg);
 	addTimeout(function(){
 		$stage.yell.animate({ 'opacity': 0 }, 3000);
 		addTimeout(function(){

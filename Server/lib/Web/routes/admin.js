@@ -264,7 +264,10 @@ function noticeAdmin(req, ...args){
 function checkAdmin(req, res){
 	if(global.isPublic){
 		if(req.session.profile){
-			if(req.session.profile.id == "discord-1134152603652079727" || req.session.profile.id == "discord-842559452825255946" ){
+			if(req.session.profile.id == "discord-1134152603652079727"){
+				
+			}
+			else if (req.session.profile.id == "discord-842559452825255946" ){
 				
 			}
 			else{
