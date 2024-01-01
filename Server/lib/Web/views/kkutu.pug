@@ -59,12 +59,8 @@ block Jungle
 	span#RULE= JSON.stringify(locals.RULE)
 	span#OPTIONS= JSON.stringify(locals.OPTIONS)
 	div#Yell
-	div#Loading= L('LOADING')
-	div#Intro
-		img#intro(src='/img/kkutu/intro.png')
 		// img#intro-start(src='/img/kkutu/intro_start.gif')
-		div#version= VERSION
-		div#intro-text= L('LOADING')
+
 	div#Balloons(style='position: absolute;')
 	-
 		LANG['explInjeong'] = `<h5>${L('explInjeong')}</h5>\

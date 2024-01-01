@@ -48,6 +48,11 @@ html
 		block JS
 
 	body(style='min-width: 640px;')
+		div#Loading= L('LOADING')
+		div#Intro
+			img#intro(src='/img/kkutu/intro.png')
+			div#version= VERSION
+			div#intro-text= L('LOADING')
 		div#Top
 			+Menu()
 			div#global-notice
@@ -58,7 +63,7 @@ html
 		div#Jungle
 			span#mobile= locals.mobile
 			span#summonerID= DATA._id
-			img#Background(src='/img/bg/winter.png')
+			img#Background(src='/img/bg/newbg.png')
 			block Jungle
 		div#Middle
 			block Middle

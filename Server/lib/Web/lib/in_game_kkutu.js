@@ -247,7 +247,7 @@ $(document).ready(function(){
 
 	$data._soundList = [
 		{ key: "k", value: "/media/kkutu/k.mp3" },
-		{ key: "lobby", value: "/media/kkutu/LobbyBGMRe.mp3" },
+		{ key: "lobby", value: "/media/kkutu/LobbySeolBGM.mp3" },
 		{ key: "dialog", value: "/media/kkutu/dialog.mp3" },
 		{ key: "legacylobby", value: "/media/kkutu/LobbyBGM.mp3" },
 		{ key: "ingame", value: "/media/kkutu/LobbyBGM2.mp3" },

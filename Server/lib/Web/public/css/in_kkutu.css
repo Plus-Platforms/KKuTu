@@ -640,20 +640,21 @@ min-height: 480px;
 		width: 40px;
 		height: 320px;
 	}
-		.team-button{
-			float: left;
-			padding-top: 20px;
-			margin: 2px 0px;
-			width: 100%;
-			height: 40px;
-			text-align: center;
-			font-size: 13px;
-			cursor: pointer;
-		}
+	.team-button {
+		font-weight: 800;
+		font-family: 'KartGothic';
+		float: left;
+		margin: 2px 0px 2px 0px;
+		width: 100%;
+		height: 40px;
+		text-align: center;
+		font-size: 24px;
+		cursor: pointer;
+	}
 		.team-button:hover{ border-bottom: 4px solid rgba(0, 0, 0, 0.5); margin-top: -2px; }
 		.team-unable div{ background-color: #BBBBBB; cursor: not-allowed; }
 		.team-chosen{ font-weight: bold; }
-		.team-0{ background-color: #D0D0D0; }
+		.team-0{ background-color: #000000; }
 		.team-1{ background-color: #FF5555; }
 		.team-2{ background-color: #FFBF30; }
 		.team-3{ background-color: #88C525; }
@@ -1050,11 +1051,15 @@ min-height: 480px;
 			.game-user-image{ margin: 3px 15px; width: 120px; height: 120px; }
 			.game-user-level{ margin: 1px; width: 18px; height: 18px; }
 			.game-user-name{ padding-left: 3px; margin: 3px 0px; width: 87px; height: 20px; font-size: 15px; }
-			.game-user-score{ padding: 0px 5px; border-radius: 10px;
+			.game-user-score{     font-family: 'KartGothic';
+				padding: 0px 5px;
 				align-items: center;
 				display: flex;
 				justify-content: center;
-				width: 92%;font-size: 30px; font-weight: bold; }
+				width: 92%;
+				font-size: 30px;
+				font-weight: 800;
+			}
 			.game-user-title{align-items: center;
     display: flex;
     justify-content: center;

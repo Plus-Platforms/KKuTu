@@ -15,11 +15,28 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap');
 
+/* Extrabold */
 @font-face {
-	font-family: 'NBGothic';
-	src: url('../media/NanumBarunGothicLight.woff') format('woff');
+	font-family: 'KartGothic';
+	src: url('../media/kart-eb.woff') format('woff');
+	font-weight: 800;
+}
+
+/* Bold */
+@font-face {
+	font-family: 'KartGothic';
+	src: url('../media/kart-bold.woff') format('woff');
+	font-weight: bold;
+}
+
+/* Medium */
+@font-face {
+	font-family: 'KartGothic';
+	src: url('../media/kart-med.woff') format('woff');
+	font-weight: 500;
 }
 
 
@@ -28,7 +45,7 @@ body{
 	padding: 0px;
 	margin: 0px;
 	min-width: 480px;
-	font-family: 'Noto Sans KR', 돋움;
+	font-family: 'Noto Sans KR', sans-serif;
 }
 /* width */
 ::-webkit-scrollbar {
