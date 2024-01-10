@@ -225,7 +225,9 @@ exports.KO_INJEONG = [
 	"KGR", "ESB", "ELW", "OIM", "OVW", "NEX", /*"WOW",*/
 	"YRY", "KPO", "JLN", "JAN", "ZEL", "POK", "HAI",
 	"HSS", "KMV", "HDC", "HOS", "KRT", "SVL", "WAK", "PSK",
-	"BRN", "MUS", "BLU"
+	"BRN", "MUS", "BLU", "AIR", "MOM", "MIN", "BRL", "LOA",
+	"GEN", "MSI", "APP", "BRD", "YHW", "COC", "CKR", "DBP",
+	"PKM", "MIN"
 ];
 exports.EN_INJEONG = [
 	"LOL"

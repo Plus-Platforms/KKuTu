@@ -1,8 +1,10 @@
 import Image from 'next/image'
 
+
 export default function Home() {
   return (
     <>
+    
     <header className="border-b backdrop-blur-lg bg-white/70 sticky top-0 md:shadow-md w-full z-50">
   <nav className="flex items-center justify-between px-4 lg:px-8 lg:py-0" aria-label="Global">
     <div className="flex lg:flex-1">
@@ -98,9 +100,9 @@ export default function Home() {
       <div className="w-full sm:flex">
       
           <p className="text-xs text-center w-full text-gray-500 dark:text-gray-400">
-            <span>© 2021~ Plus (support@pcor.me) All Rights Reserved.<br/>
+            <span>© 2021~ Plus (moremi@pcor.me) All Rights Reserved.<br/>
             WordNet 3.0 Copyright 2006 by Princeton University. All rights reserved.<br/>
-            NXDict Copyright 2023 by Plus Platforms. All rights reserved.<br/><br/>
+            NXDict Copyright 2024 by Plus Platforms. All rights reserved.<br/><br/>
 
             이 프로그램은 제품에 대한 어떠한 형태의 보증도 제공되지 않습니다.<br/>
 이 프로그램은 자유 소프트웨어이며 배포 규정을 만족시키는 조건 아래 자유롭게 재배포할 수 있습니다.<br/>
@@ -109,6 +111,10 @@ export default function Home() {
             <span className="font-bold">사전 정보 제공: WordNet
 <br/></span>
           </p>
+      </div>
+
+      <div className='mx-auto'>
+      <div class="talk_banner_div" data-id="141611" ></div>
       </div>
     </div>
 </footer>

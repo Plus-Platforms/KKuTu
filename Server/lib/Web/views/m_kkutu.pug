@@ -50,6 +50,7 @@ block CSS
 	link(rel='stylesheet', href='/css/in_game_kkutu_shop.css')
 	
 block Jungle
+	div.middleFixer
 	span#PUBLIC= PUBLIC ? "true" : undefined
 	span#URL= `${locals.PROTOCOL}://${locals.HOST}:${locals.PORT}/${locals._id}`
 	span#MOREMI_PART= locals.MOREMI_PART.join(',')
@@ -86,6 +87,10 @@ block Jungle
 block Middle
 	- var VERSION = L('version') + " (모바일)";
 	- var nick = SESSION.profile ? (SESSION.profile.title || SESSION.profile.name) : null;
+	
+	div#dimmer(style="display: none;")
+	div#tost_message
+
 	div#Intro
 		img#intro(src='/img/kkutu/m_intro.png')
 		//- img#intro-start(src='/img/kkutu/intro_start.gif')

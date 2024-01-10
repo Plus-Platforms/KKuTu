@@ -1,6 +1,6 @@
 import { Noto_Sans_KR } from "next/font/google";
 import './globals.css'
-
+import Script from 'next/script'
 const noto = Noto_Sans_KR({
   weight: ["400", "500", "700"],
   preload: false,
@@ -60,6 +60,8 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="ko">
+      
+    <Script src="https://partner.talk.naver.com/banners/script"/>
       <body className={noto.className}>{children}</body>
     </html>
   )

@@ -6,5 +6,6 @@ Server/lib/Web/public/
 Server/lib/Web/public/_next/
 Server/lib/sub/auth.json
 Server/lib/sub/global.json
+Server/lib/sub/logging.json
 node_modules/
 .vscode/

@@ -516,7 +516,7 @@ $(document).ready(function(){
 		}
 		$data._injpick = $data.room.opts.injpick;
 		showDialog($d = $stage.dialog.room);
-		$d.find(".dialog-title").html(L['node lib/Web/cluster.js 1']);
+		$d.find(".dialog-title").html("방 설정하기");
 	});
 	function updateGameOptions(opts, prefix){
 		var i, k;

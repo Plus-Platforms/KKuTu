@@ -17,41 +17,65 @@
  */
 
 // 모듈 호출
+const { Logging } = require('@google-cloud/logging');
+const keyFilename = 'lib/sub/logging.json';
+const logging = new Logging({ keyFilename });
 
-var colors = require('colors');
+const logName = 'kkutu';
+const log = logging.log(logName);
 
-function callLog(text){
-	var date = new Date();
-	var o = {
-		year: 1900 + date.getYear(),
-		month: date.getMonth() + 1,
-		date: date.getDate(),
-		hour: date.getHours(),
-		minute: date.getMinutes(),
-		second: date.getSeconds()
-	}, i;
-	
-	for(i in o){
-		if(o[i] < 10) o[i] = "0"+o[i];
-		else o[i] = o[i].toString();
-	}
-	console.log("["+o.year+"-"+o.month+"-"+o.date+" "+o.hour+":"+o.minute+":"+o.second+"] "+text);
+function callLog(text, severity) {
+  var date = new Date();
+  var o = {
+    year: 1900 + date.getYear(),
+    month: date.getMonth() + 1,
+    date: date.getDate(),
+    hour: date.getHours(),
+    minute: date.getMinutes(),
+    second: date.getSeconds(),
+  };
+
+  for (var i in o) {
+    if (o[i] < 10) o[i] = '0' + o[i];
+    else o[i] = o[i].toString();
+  }
+
+  const logText = `[${o.year}-${o.month}-${o.date} ${o.hour}:${o.minute}:${o.second}] ${text}`;
+
+  // Google Cloud Logging에 로그 기록
+  const entry = log.entry({ severity: severity }, logText);
+  log.write(entry, (err, apiResponse) => {
+    if (err) {
+      console.error('Error writing log entry:', err);
+    } else {
+      console.log(text);
+    }
+  });
+
+  // 콘솔에 로그 출력
+  console.log(logText);
 }
-exports.log = function(text){
-	callLog(text);
+
+exports.log = function (text) {
+  callLog(text, 'DEBUG');
 };
-exports.info = function(text){
-	callLog(text.cyan);
+
+exports.info = function (text) {
+  callLog(text, 'INFO');
 };
-exports.success = function(text){
-	callLog(text.green);
+
+exports.success = function (text) {
+  callLog(text, 'NOTICE');
 };
-exports.alert = function(text){
-	callLog(text.yellow);
+
+exports.alert = function (text) {
+  callLog(text, 'NOTICE');
 };
-exports.warn = function(text){
-	callLog(text.black.bgYellow);
+
+exports.warn = function (text) {
+  callLog(text, 'WARNING');
 };
-exports.error = function(text){
-	callLog(text.bgRed);
+
+exports.error = function (text) {
+  callLog(text, 'CRITICAL');
 };

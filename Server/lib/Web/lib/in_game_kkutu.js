@@ -584,7 +584,7 @@ $(document).ready(function(){
 		}
 		$data._injpick = $data.room.opts.injpick;
 		showDialog($d = $stage.dialog.room);
-		$d.find(".dialog-title").html(L['node lib/Web/cluster.js 1']);
+		$d.find(".dialog-title").html("방 설정하기");
 	});
 	function updateGameOptions(opts, prefix){
 		var i, k;
@@ -3358,7 +3358,7 @@ function getAIProfile(level){
 }
 function updateRoom(gaming){
 	var i, o, $r;
-	var $y, $z;
+	var $y, $z, $userStatus;
 	var $m;
 	var $bar;
 	var rule = RULE[MODE[$data.room.mode]];
@@ -3402,32 +3402,36 @@ function updateRoom(gaming){
 				$data.robots[o.id] = o;
 			}
 			$r.append($("<div>").attr('id', "room-user-"+o.id).addClass("room-user")
-				.append($m = $("<div>").addClass("moremi room-user-image"))
-				.append($("<div>").addClass("room-user-stat")
-					.append($y = $("<div>").addClass("room-user-ready"))
-					.append($z = $("<div>").addClass("room-user-team team-" + o.game.team).html($("#team-" + o.game.team).html()))
-				)
-				.append($("<div>").addClass("room-user-title")
+				.append($("<div>").addClass("room-user-title").addClass("room-user-team nameTeam-" + o.game.team)
 					.append(getLevelImage(o.data.score).addClass("room-user-level"))
 					.append($bar = $("<div>").addClass("room-user-name").text(o.profile.title || o.profile.name))
 				).on('click', function(e){
 					requestProfile($(e.currentTarget).attr('id').slice(10));
 				})
+				.append($m = $("<div>").addClass("moremi room-user-image"))
+				.append($userStatus = $("<div>").addClass("room-user-stat")
+					.append($y = $("<div>").addClass("room-user-ready"))
+				)
 			);
 			renderMoremi($m, o.equip);
-			if(spec) $z.hide();
+			//if(spec) $z.hide();
 			if(o.id == $data.room.master){
 				$y.addClass("room-user-master").html(L['master'] + prac + (spec || ''));
+				$userStatus.addClass("room-masterBg");
 			}else if(spec){
 				$y.addClass("room-user-spectate").html(L['stat_spectate'] + prac);
+				$userStatus.addClass("room-spectateBg");
 			}else if(o.game.ready || o.robot){
 				$y.addClass("room-user-readied").html(L['stat_ready']);
+				$userStatus.addClass("room-readyBg");
 				if(!o.robot) arAcc = true;
 			}else if(o.game.practice){
 				$y.addClass("room-user-practice").html(L['stat_practice']);
+				$userStatus.addClass("room-practiceBg");
 				allReady = false;
 			}else{
 				$y.html(L['stat_noready']);
+				$userStatus.addClass("room-notreadyBg");
 				allReady = false;
 			}
 			addonNickname($bar, o);
