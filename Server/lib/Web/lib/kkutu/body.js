@@ -903,13 +903,13 @@ function updateMe(){
 	// $(".my-image").css('background-image', "url('"+my.profile.image+"')");
 	$(".my-stat-level").replaceWith(getLevelImage(my.data.score).addClass("my-stat-level"));
 	$(".my-stat-name").text(my.profile.title || my.profile.name);
-	$(".my-stat-record").html(L['globalWin'] + " " + gw + L['W']);
-	$(".my-stat-ping").html(commify(my.money) + L['ping']);
+	$(".my-stat-record").html(gw);
+	$(".my-stat-ping").html(commify(my.money));
 	$(".my-okg .graph-bar").width(($data._playTime % 600000) / 6000 + "%");
-	$(".my-okg-text").html('오끄감 '+prettyTime($data._playTime));
-	$(".my-level").html(L['LEVEL'] + " " + lv);
+	$(".my-okg-text").html(prettyTime($data._playTime));
+	$(".my-level").html("Lv. " + lv);
 	$(".my-gauge .graph-bar").width((my.data.score-prev)/(goal-prev)*190);
-	$(".my-gauge-text").html(commify(my.data.score) + " / " + commify(goal));
+	$(".my-gauge-text").html(commify(my.data.score) + "/\n" + commify(goal));
 }
 function prettyTime(time){
 	var min = Math.floor(time / 60000) % 60, sec = Math.floor(time * 0.001) % 60;

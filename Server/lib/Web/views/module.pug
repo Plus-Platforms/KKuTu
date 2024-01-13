@@ -68,7 +68,34 @@ mixin Menu()
 						div.menu-sub-btn(onclick='location.href = "'+MENU[i].sub[j].href+'";')!= L(MENU[i].sub[j].key)
 		div#account
 			span#profile= SESSION.profile ? JSON.stringify(SESSION.profile) : '{}'
-			div#account-info
+			div.accountItem
+				div.flex
+					img.fuckHank(src='/img/kkutu/currency/Ping.svg')
+					span.my-stat-ping.aISub#accping
+					span.fuckSeogom= "핑"
+			div.accountItem
+				div.flex
+					img.fuckHank(src='/img/kkutu/currency/Win.svg')
+					span.my-stat-record.aISub
+					span.fuckSeogom= "승"
+			div.accountItem
+				div.flex
+					img.fuckHank(src='/img/kkutu/currency/XP.svg')
+					span.aISub.my-level
+					span.my-gauge-text.fuckHoSeo.fuckSeogom
+				+GraphBar('my-gauge')
+			div.accountItem
+				div.flex
+					img.fuckHank(src='/img/kkutu/currency/Okg.svg')
+					span.my-okg-text.aISub#accping
+				div
+					+GraphBar('my-okg')
+			div.accountItem
+				div.flex
+					//img.my-stat-level
+					span#account-info.aISub
+					span.fuckSeogom= "님"
+			//div
 
 mixin MMenu()
 	div.Menu

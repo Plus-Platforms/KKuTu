@@ -43,12 +43,12 @@ function callLog(text, severity) {
   const logText = `[${o.year}-${o.month}-${o.date} ${o.hour}:${o.minute}:${o.second}] ${text}`;
 
   // Google Cloud Logging에 로그 기록
-  const entry = log.entry({ severity: severity }, logText);
+  const entry = log.entry({labels: {
+    project: 'kkutu',
+  }, severity: severity}, logText);
   log.write(entry, (err, apiResponse) => {
     if (err) {
       console.error('Error writing log entry:', err);
-    } else {
-      console.log(text);
     }
   });
 

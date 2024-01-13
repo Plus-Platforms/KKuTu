@@ -91,12 +91,13 @@ export default function Home() {
       </div>
     </div>
 <footer className="bg-gray-50 dark:bg-gray-900">
-    <div className="mx-auto w-full p-4 py-6 lg:py-8">
+    <div className="mx-auto max-w-screen-xl p-4 py-6 lg:py-8">
     <a href="https://pcor.me" className="flex items-center justify-center">
         <img src="https://pcor.me/Plus.svg" className="h-8 mr-3" alt="Plus Logo"/>
       <span className="font-semibold self-center text-2xl text-gray-500 whitespace-nowrap dark:text-white">Plus</span>
       </a><br/>
-
+      <a href="https://www.grac.or.kr/Statistics/Popup/Pop_StatisticsDetails.aspx?850c3e6034aa5ae3efd1751a7b1bfabaa6c813a6a053e8e5ec12581d53453bb0" target="_blank" class="flex items-center justify-center"><img src="/grac.png" class="h-12" alt="Rating"/></a>
+      <br/>
       <div className="w-full sm:flex">
       
           <p className="text-xs text-center w-full text-gray-500 dark:text-gray-400">

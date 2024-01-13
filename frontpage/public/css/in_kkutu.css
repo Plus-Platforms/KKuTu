@@ -474,6 +474,9 @@ iframe{
     position: fixed;
     z-index: 3;
 	}
+	.hidden{
+		display: none;
+	}
 		.dialog-head .dialog-title{ text-align: center;float: left; cursor: move; }
 #replay-players{ height: 140px; overflow-y: scroll; }
 	.replay-player-bar{ float: left; width: 100%; }
@@ -1183,27 +1186,34 @@ min-height: 480px;
 		.kick-vote-time .graph-bar{ background-color: #FF6D6D; }
 	.purchase-not-enough{ color: #EE2222; }
 .MeBox{
-	width: 260px;
-	height: 240px;
-	cursor: pointer;
+	box-shadow: none;
+    backdrop-filter: none;
+    background-color: transparent;
+    width: 260px;
+    height: 240px;
+}
+.MeBox .product-title{
+	display:none;
 }
 	.MeBox div{ float: left; }
 	.bar-text{ color: #EEEEEE; text-align: center; text-shadow: 0px 1px 1px #141414; }
-	.my-image{ width: 80px; height: 80px; }
+	.my-image{ margin-left: 35px;
+		margin-top: 40px;width: 180px; height: 180px; }
+	/*
 	.my-stat{ padding-left: 5px; width: calc(100% - 85px); }
 		.my-stat-level{ margin: 1px; width: 22px; height: 22px; }
 		.my-stat-name{ padding-left: 4px;font-weight: bold; }
 		.my-stat-record{ margin-top: 3px; width: 100%; }
-		.my-stat-ping{ margin-top: 3px; width: 100%; }
-		.my-okg{ margin-top: 3px; width: 167px; height: 20px; overflow: hidden; background-color: #995511; }
+		.my-stat-ping{ margin-top: 3px; width: 100%; }*/
+		.my-okg{ width: 100%;min-width: 200px; height: 5px; overflow: hidden; background-color: #995511; }
 			.my-okg .graph-bar{ background-color: #FFBB44; }
-		.my-okg-text{ margin-top: -20px; width: 100%; }
-	.my-level{ margin: 13px 0px; width: 100%; font-size: 15px; text-align: center; }
-	.my-gauge{ margin: 3px 0px; width: 250px; height: 5px; overflow: hidden; background-color: #333333; }
+		/*.my-okg-text{ margin-top: -20px; width: 100%; }
+	.my-level{ margin: 13px 0px; width: 100%; font-size: 15px; text-align: center; }*/
+	.my-gauge{ width: 100%;min-width: 200px; height: 5px; overflow: hidden; background-color: #333333; }
 		.my-gauge .graph-bar{ background-image: url('/img/kkutu/scorebar.png'); }
-	.my-gauge-text{     width: 100%;
+	/*.my-gauge-text{     width: 100%;
 		text-shadow: none;
-		color: #000; }
+		color: #000; }*/
 	.category-filter{
 		text-align: center;
 		font-size: 15px;

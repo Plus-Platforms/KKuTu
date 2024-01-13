@@ -44,6 +44,7 @@ block JS
 	script(type='text/javascript', src='/js/in_game_kkutu.min.js')
 	script(type='text/javascript', src='/js/fabric.min.js')
 	script(type='text/javascript', src='/js/diff-match-patch-compressed.js')
+	script(type='text/javascript', src='/js/vanilla-tilt.min.js')
 	script(src='https://www.google.com/recaptcha/api.js')
 
 block CSS
@@ -94,11 +95,19 @@ block Jungle
 				button.icnbtn#SettingBtn.tiny-menu.for-lobby.for-master.for-normal.for-gaming(style='display: none;')!= L('settings')
 				button.icnbtn#CommunityBtn.tiny-menu.for-lobby.for-master.for-normal.for-gaming(style='display: none;')!= L('community')
 				
+block Top 
+	div#Top
+		+Menu()
+		div#global-notice
+			div#gn-content
+				include ../public/global_notice.html
+		+Expl(L('GLOBAL_NOTICE'))
 
 block Middle
 	- var VERSION = L('version');
 	- var nick = SESSION.profile ? (SESSION.profile.title || SESSION.profile.name) : null;
-	
+
+
 	div#dimmer(style="display: none;")
 	div#tost_message
 	
@@ -536,17 +545,6 @@ block Middle
 			input#game-input(placeholder=L('yourTurn')+' '+L('inputChat'), readonly)
 	+Product('Me')
 		div.moremi.my-image
-		div.my-stat
-			div.jt-image.my-stat-level
-			div.my-stat-name.ellipse
-			div.my-stat-record
-			div.my-stat-ping
-			div
-				+GraphBar('my-okg')
-				div.bar-text.my-okg-text
-		div.my-level
-		+GraphBar('my-gauge')
-		div.bar-text.my-gauge-text
 	+Product('Chat')
 		div#Chat
 		input#Talk(maxlength=200)

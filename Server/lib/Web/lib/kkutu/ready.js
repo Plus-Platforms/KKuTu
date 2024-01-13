@@ -407,13 +407,30 @@ $(document).ready(function(){
 	$("#community2").attr('src', "https://pcor.me/plKkkutuCafe");
 	$('#dimmer').fadeIn();
 	showDialog($stage.dialog.community2);
-	
+
+
+	VanillaTilt.init(document.querySelector('.my-image'), {
+        max: 25,
+        speed: 400,
+        glare: true,
+        "max-glare": 0.5
+      });
+
+      document.querySelector('.my-image').addEventListener('mousemove', function (e) {
+        var x = (e.clientX / window.innerWidth - 0.5) * 2;
+        var y = (e.clientY / window.innerHeight - 0.5) * 2;
+        VanillaTilt.setTiltAngle(document.querySelector('.my-image'), x, y);
+      });
+
+
 	var tostMessage = document.getElementById('tost_message');
 
 	function tostOn(){
+		tostMessage.classList.remove('hidden');
 		tostMessage.classList.add('active');
 		setTimeout(function(){
 			tostMessage.classList.remove('active');
+			setTimeout(function(){tostMessage.classList.add('hidden');}, 500);
 		}, 5000);
 	}
 
@@ -446,6 +463,17 @@ $(document).ready(function(){
 			}
 	}
  
+	var playtime = 0;
+
+	function showGameAlert() {
+	alert('게임을 플레이한지 '+playtime+'시간이 지났습니다. 과도한 게임 이용은 일상생활에 지장을 줄 수 있습니다. 이 게임물은 전체이용가입니다.');
+
+	setTimeout(showGameAlert, 3600000);
+	}
+
+	showGameAlert();
+ 
+
 	$stage.menu.help.on('click', function(e){
 		$("#help-board").attr('src', "/help");
 		showDialog($stage.dialog.help);
@@ -856,10 +884,6 @@ $(document).ready(function(){
 	}).hotkey($("#wp-input"), 13);
 	$stage.dialog.inviteRobot.on('click', function(e){
 		requestInvite("AI");
-	});
-	$stage.box.me.on('click', function(e){
-		$('#dimmer').fadeIn();
-		showDialog($stage.dialog.dress);
 	});
 	$stage.dialog.roomInfoJoin.on('click', function(e){
 		$stage.dialog.roomInfo.hide();

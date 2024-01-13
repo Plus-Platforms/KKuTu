@@ -337,6 +337,7 @@ min-height: 410px;
 				.room-user-spectate{ color: #8160FF; }
 				.room-user-practice{ color: #E1BA2D; }
 				.room-user-master{ color: #E14E2D; }
+				.room-notreadyBg{ opacity: 0; }
 			.room-user-team{ margin-left: 60%; width: 40%; text-align: center; }
 		.room-user-title{ padding: 6px 4px; width: 216px; font-size: 15px; }
 		.room-user-level{ width: 30px; height: 30px; }
@@ -793,8 +794,7 @@ min-height: 410px;
 	.chat-balloon h4{
 		padding: 5px;
 		border: 1px solid #CCCCCC;
-		border-radius: 10px;
-		width: 110px;
+		width: 150px;
 		max-height: 100px;
 		overflow: hidden;
 		background-color: #F4F4F4;

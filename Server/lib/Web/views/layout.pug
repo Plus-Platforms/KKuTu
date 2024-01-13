@@ -54,13 +54,7 @@ html
 			img#intro(src='/img/kkutu/intro.png')
 			div#version= VERSION
 			div#intro-text= L('LOADING')
-		div#Top
-			+Menu()
-			div#global-notice
-				div#gn-content
-					include ../public/global_notice.html
-				+Expl(L('GLOBAL_NOTICE'))
-			block Top
+		block Top
 		div#Jungle
 			span#mobile= locals.mobile
 			span#summonerID= DATA._id
