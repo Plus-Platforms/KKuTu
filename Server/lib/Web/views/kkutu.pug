@@ -57,6 +57,7 @@ block Jungle
 	span#URL= `${locals.PROTOCOL}://${locals.HOST}:${locals.PORT}/${locals._id}`
 	span#MOREMI_PART= locals.MOREMI_PART.join(',')
 	span#AVAIL_EQUIP= locals.AVAIL_EQUIP.join(',')
+	span#NICKNAME_LIMIT= locals.NICKNAME_LIMIT ? JSON.stringify(locals.NICKNAME_LIMIT) : "{}"
 	span#RULE= JSON.stringify(locals.RULE)
 	span#OPTIONS= JSON.stringify(locals.OPTIONS)
 	div#Yell
@@ -105,7 +106,7 @@ block Top
 
 block Middle
 	- var VERSION = L('version');
-	- var nick = SESSION.profile ? (SESSION.profile.title || SESSION.profile.name) : null;
+	- var nick = SESSION.profile && SESSION.profile.nickname;
 
 
 	div#dimmer(style="display: none;")
@@ -398,6 +399,8 @@ block Middle
 		
 	+Dialog('DressItemDiag', 600, 360, L('dress', false))
 		div.dialog-bar
+			h4(style='width: 150px;')= L('myNickname')
+			input#dress-nickname(type='textfield', placeholder=L('myNicknameX'), style='width: 435px;', maxlength=12)
 			h4(style='width: 150px;')!= L('myExordial')
 			input#dress-exordial(type='textfield', placeholder=L('myExordialX'), style='width: 435px;', maxlength=100)
 		div.dialog-bar(style='width: 150px;')
