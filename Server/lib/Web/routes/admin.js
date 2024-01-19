@@ -270,6 +270,9 @@ function checkAdmin(req, res){
 			else if (req.session.profile.id == "discord-842559452825255946" ){
 				
 			}
+			else if (req.session.profile.id == "discord-495798517957394472" ){
+				
+			}
 			else{
 				req.session.admin = false;
 				return res.send({ error: 400 }), false;

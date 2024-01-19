@@ -111,11 +111,7 @@ iframe{
 }
 
 #dimmer{
-	opacity: 0.6;
-    background-color: #000000;
-    inset: 0;
-    position: fixed;
-    z-index: 3;
+	display: none;
 	}
 	
 #ReadyBtn{

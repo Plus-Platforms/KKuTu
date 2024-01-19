@@ -17,7 +17,7 @@ function createWindow() {
 
   originalSize = screen.getPrimaryDisplay().workAreaSize;
 
-  const gameUrl = 'https://kkutu.pcor.me/?server=0';
+  const gameUrl = 'https://kkutu.cc/?server=0';
 
   mainWindow.loadURL(url.format({
     pathname: path.join(__dirname, 'index.html'),

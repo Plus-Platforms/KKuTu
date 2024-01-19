@@ -35,11 +35,11 @@ export const metadata = {
   openGraph: {
     title: '두근두근 플러스끄투',
     description: '플러스끄투에서 끝말잇기, 쿵쿵따와 같은 온라인 단어 게임을 즐겨보세요.',
-    url: 'https://kkutu.pcor.me',
+    url: 'https://kkutu.cc',
     siteName: '플러스끄투',
     images: [
       {
-        url: 'https://kkutu.pcor.me/img/kkutu/og.png',
+        url: 'https://kkutu.cc/img/kkutu/og.png',
         width: 1200,
         height: 630,
         alt: '플러스끄투 텍스트가 적혀있는 파란 배경의 이미지',
@@ -50,10 +50,10 @@ export const metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    site: 'kkutu.pcor.me',
+    site: 'kkutu.cc',
     title: '두근두근 플러스끄투',
     description: '플러스끄투에서 끝말잇기, 쿵쿵따와 같은 온라인 단어 게임을 즐겨보세요.',
-    image: 'https://kkutu.pcor.me/img/kkutu/og.png'
+    image: 'https://kkutu.cc/img/kkutu/og.png'
   }
 }
 

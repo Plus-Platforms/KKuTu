@@ -8,7 +8,7 @@ export default function Home() {
     <header className="border-b backdrop-blur-lg bg-white/70 sticky top-0 md:shadow-md w-full z-50">
   <nav className="flex items-center justify-between px-4 lg:px-8 lg:py-0" aria-label="Global">
     <div className="flex lg:flex-1">
-    <button className="-m-1.5 p-1.5 md:flex"><span className="sr-only">플러스끄투</span><img className="h-8" src="https://kkutu.pcor.me/img/logo.png" alt=""/>&nbsp;<span className="text-xs md:text-xl">OPEN BETA</span></button>
+    <button className="-m-1.5 p-1.5 md:flex"><span className="sr-only">플러스끄투</span><img className="h-8" src="https://kkutu.cc/img/logo.png" alt=""/>&nbsp;<span className="text-xs md:text-xl">OPEN BETA</span></button>
     </div>
 
     <div className="flex flex-1 justify-end">
@@ -98,8 +98,10 @@ export default function Home() {
       </a><br/>
       <a href="https://www.grac.or.kr/Statistics/Popup/Pop_StatisticsDetails.aspx?850c3e6034aa5ae3efd1751a7b1bfabaa6c813a6a053e8e5ec12581d53453bb0" target="_blank" class="flex items-center justify-center"><img src="/grac.png" class="h-12" alt="Rating"/></a>
       <br/>
-      <div className="w-full sm:flex">
-      
+      <div className="w-full">
+      <p className="text-xs text-center w-full text-gray-500 dark:text-gray-400">
+      <a href="https://cafe.naver.com/pluskkutu/43" target='_blank'><span>개인정보처리방침</span></a>
+          </p><br/>
           <p className="text-xs text-center w-full text-gray-500 dark:text-gray-400">
             <span>© 2021~ Plus (moremi@pcor.me) All Rights Reserved.<br/>
             WordNet 3.0 Copyright 2006 by Princeton University. All rights reserved.<br/>

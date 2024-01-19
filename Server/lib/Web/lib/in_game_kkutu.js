@@ -91,9 +91,6 @@ $(document).ready(function(){
 	
 	$data.PUBLIC = $("#PUBLIC").html() == "true";
 	$data.URL = $("#URL").html();
-	$data.NICKNAME_LIMIT = JSON.parse($("#NICKNAME_LIMIT").text());
-	$data.NICKNAME_LIMIT.REGEX.unshift(null);
-	$data.NICKNAME_LIMIT.REGEX = new (Function.prototype.bind.apply(RegExp, $data.NICKNAME_LIMIT.REGEX));
 	$data.version = $("#version").html();
 	$data.server = location.href.match(/\?.*server=(\d+)/)[1];
 	$data.shop = {};
@@ -340,6 +337,7 @@ $(document).ready(function(){
 		$("#intro-start").hide();
 		$("#intro").show();
 	}, 1400);*/
+
 	$(document).on('paste', function(e){
 		if($data.room) if($data.room.gaming){
 			e.preventDefault();
@@ -484,14 +482,16 @@ $(document).ready(function(){
         max: 25,
         speed: 400,
         glare: true,
-        "max-glare": 0.5
+        "max-glare": 0.5,
+		onMove: function(tilt) {
+			var background = document.getElementById('Background');
+			var tiltXPercentage = (tilt.clientX / window.innerWidth - 0.5) * 100;
+			var tiltYPercentage = (tilt.clientY / window.innerHeight - 0.5) * 100;
+			background.style.transform = 'translate(' + tiltXPercentage + '%, ' + tiltYPercentage + '%)';
+		}
       });
+	  
 
-      document.querySelector('.my-image').addEventListener('mousemove', function (e) {
-        var x = (e.clientX / window.innerWidth - 0.5) * 2;
-        var y = (e.clientY / window.innerHeight - 0.5) * 2;
-        VanillaTilt.setTiltAngle(document.querySelector('.my-image'), x, y);
-      });
 
 
 	var tostMessage = document.getElementById('tost_message');
@@ -991,33 +991,13 @@ $(document).ready(function(){
 		});
 	});
 	$stage.dialog.dressOK.on('click', function(e){
-		const data = {};
-		
 		$(e.currentTarget).attr('disabled', true);
-		
-		if($("#dress-nickname").val() && $("#dress-nickname").val() !== $data.nickname) data.nickname = $("#dress-nickname").val();
-		if($("#dress-exordial").val() !== undefined && $("#dress-exordial").val() !== $data.exordial) data.exordial = $("#dress-exordial").val();
-		
-		if(data.nickname && $data.NICKNAME_LIMIT.REGEX.test(data.nickname)) data.nickname = confirm(L.confirmNickPolicy) ? data.nickname.replace($data.NICKNAME_LIMIT.REGEX, "") : undefined;
-		if(!data.nickname && data.exordial === undefined){
-			$stage.dialog.dressOK.attr("disabled", false);
-			$stage.dialog.dress.hide();
-			return;
-		}
-		if(confirm($data.NICKNAME_LIMIT.TERM > 0 ? L.confirmNickChangeLimit.replace("{V1}", $data.NICKNAME_LIMIT.TERM) : L.confirmNickChange)) $.post("/profile", data, function(res){
+		$.post("/exordial", { data: $("#dress-exordial").val() }, function(res){
+			$stage.dialog.dressOK.attr('disabled', false);
 			if(res.error) return fail(res.error);
-			const message = [];
-			if(data.nickname){
-				$("#account-info").text($data.users[$data.id].nickname = $data.users[$data.id].profile.title = $data.users[$data.id].profile.name = $data.nickname = data.nickname);
-				message.push(L.nickChanged.replace("{V1}", data.nickname));
-			}
-			if(data.exordial !== undefined) message.push(L.exorChanged.replace("{V1}", $data.users[$data.id].exordial = $data.exordial = data.exordial));
 			
-			send("updateProfile", data, true);
-			alert(message.join("\n"));
+			$stage.dialog.dress.hide();
 		});
-		$stage.dialog.dressOK.attr("disabled", false);
-		$stage.dialog.dress.hide();
 	});
 	$("#DressDiag .dress-type").on('click', function(e){
 		var $target = $(e.currentTarget);
@@ -2554,8 +2534,6 @@ function onMessage(data){
 			$data._playTime = data.playTime;
 			$data._okg = data.okg;
 			$data._gaming = false;
-			$data.nickname = data.nickname;
-			$data.exordial = data.exordial;
 			$data.box = data.box;
 			if(data.test) alert(L['welcomeTestServer']);
 			if(location.hash[1]) tryJoin(location.hash.slice(1));
@@ -2583,7 +2561,7 @@ function onMessage(data){
 			$target = $data.usersR[data.user.id] = data.user;
 			
 			if($target.id == $data.id) loading();
-			else notice(getDisplayName($target) + L['hasJoined']);
+			else notice(($target.profile.title || $target.profile.name) + L['hasJoined']);
 			updateUserList();
 			break;
 		case 'disconnRoom':
@@ -2591,7 +2569,7 @@ function onMessage(data){
 			
 			if($target){
 				delete $data.usersR[data.id];
-				notice(getDisplayName($target) + L['hasLeft']);
+				notice(($target.profile.title || $target.profile.name) + L['hasLeft']);
 				updateUserList();
 			}
 			break;
@@ -2640,14 +2618,7 @@ function onMessage(data){
 				if($data._rTime != $data.room.time) animModified('.room-head-time');
 			}
 			break;
-		case 'updateUser':
-			if(data.nickname) $data.users[data.id].nickname = $data.users[data.id].profile.title = $data.users[data.id].profile.name = data.nickname;
-			if(data.exordial) $data.users[data.id].exordial = data.exordial;
-			if($data.room) updateUI($data.room.id == data.place);
-			else updateUI(undefined, true);
-			break;
 		case 'user':
-			delete data.type;
 			$data.setUser(data.id, data);
 			if($data.room) updateUI($data.room.id == data.place);
 			break;
@@ -2734,7 +2705,7 @@ function onMessage(data){
 			if($data.id != data.target && $data.id != $data.room.master){
 				kickVoting(data.target);
 			}
-			notice(getDisplayName($data._kickTarget) + L['kickVoting']);
+			notice(($data._kickTarget.profile.title || $data._kickTarget.profile.name) + L['kickVoting']);
 			break;
 		case 'kickDeny':
 			notice(getKickText($data._kickTarget.profile, data));
@@ -2747,7 +2718,7 @@ function onMessage(data){
 			break;
 		case 'inviteNo':
 			$target = $data.users[data.target];
-			notice(getDisplayName($target) + L['inviteDenied']);
+			notice(($target.profile.title || $target.profile.name) + L['inviteDenied']);
 			break;
 		case 'okg':
 			if($data._playTime > data.time){
@@ -2867,16 +2838,38 @@ function onMessage(data){
         ws.send(JSON.stringify({type: 'recaptcha', token: response}));
     }
 }
-function welcome(){
-	playBGM('lobby');
-	$("#Intro").animate({ 'opacity': 1 }, 1000).animate({ 'opacity': 0 }, 1000);
-	$("#intro-text").text(L['welcome']);
-	addTimeout(function(){
-		$("#Intro").hide();
-	}, 2000);
-	
-	if($data.admin) console.log("관리자 모드");
+
+function welcome() {
+	if(mobile){
+		$("#intro-text").text(L['welcome']);
+		$("#Intro").animate({ 'opacity': 1 }, 1000).animate({ 'opacity': 0 }, 1000);
+        addTimeout(function () {
+            playBGM('lobby');
+            $("#Intro").hide();
+        }, 2000);
+	}
+	else{
+    stopBGM();
+    $("#intro-text").text(L['welcome']);
+
+    // 키 입력을 감지하는 이벤트 리스너 추가
+    function keydownHandler() {
+        $("#Intro").animate({ 'opacity': 1 }, 1000).animate({ 'opacity': 0 }, 1000);
+        addTimeout(function () {
+            playBGM('lobby');
+            $("#Intro").hide();
+        }, 2000);
+
+        // 이벤트 리스너 제거
+        $(document).off("keydown", keydownHandler);
+    }
+
+    $(document).on("keydown", keydownHandler);
+	}
+    if ($data.admin) console.log("관리자 모드");
 }
+
+
 function getKickText(profile, vote){
 	var vv = L['agree'] + " " + vote.Y + ", " + L['disagree'] + " " + vote.N + L['kickCon'];
 	if(vote.Y >= vote.N){
@@ -2942,7 +2935,7 @@ function runCommand(cmd){
 				c = 0;
 				cmd[1] = cmd.slice(1).join(' ');
 				for(i in $data.users){
-					if(getDisplayName($data.users[i]) == cmd[1]){
+					if(($data.users[i].profile.title || $data.users[i].profile.name) == cmd[1]){
 						notice("[" + (++c) + "] " + i);
 					}
 				}
@@ -3221,7 +3214,7 @@ function checkRoom(modify){
 	}
 	if($data._master != $data.room.master){
 		u = $data.users[$data.room.master];
-		notice(getDisplayName(u) + L['hasMaster']);
+		notice((u.profile.title || u.profile.name) + L['hasMaster']);
 	}
 	$data._players = $data.room.players.toString();
 	$data._master = $data.room.master;
@@ -3239,7 +3232,7 @@ function updateMe(){
 	renderMoremi(".my-image", my.equip);
 	// $(".my-image").css('background-image', "url('"+my.profile.image+"')");
 	$(".my-stat-level").replaceWith(getLevelImage(my.data.score).addClass("my-stat-level"));
-	$(".my-stat-name").text(getDisplayName(my));
+	$(".my-stat-name").text(my.profile.title || my.profile.name);
 	$(".my-stat-record").html(gw);
 	$(".my-stat-ping").html(commify(my.money));
 	$(".my-okg .graph-bar").width(($data._playTime % 600000) / 6000 + "%");
@@ -3303,7 +3296,7 @@ function userListBar(o, forInvite){
 		.append($("<div>").addClass("jt-image users-image").css('background-image', "url('"+o.profile.image+"')"))
 		.append(getLevelImage(o.data.score).addClass("users-level"))
 		// .append($("<div>").addClass("jt-image users-from").css('background-image', "url('/img/kkutu/"+o.profile.type+".png')"))
-		.append($("<div>").addClass("users-name").text(getDisplayName(o)))
+		.append($("<div>").addClass("users-name").text(o.profile.title || o.profile.name))
 		.on('click', function(e){
 			requestInvite($(e.currentTarget).attr('id').slice(12));
 		});
@@ -3312,7 +3305,7 @@ function userListBar(o, forInvite){
 		.append($("<div>").addClass("jt-image users-image").css('background-image', "url('"+o.profile.image+"')"))
 		.append(getLevelImage(o.data.score).addClass("users-level"))
 		// .append($("<div>").addClass("jt-image users-from").css('background-image', "url('/img/kkutu/"+o.profile.type+".png')"))
-		.append($("<div>").addClass("users-name ellipse").text(getDisplayName(o)))
+		.append($("<div>").addClass("users-name ellipse").text(o.profile.title || o.profile.name))
 		.on('click', function(e){
 			requestProfile($(e.currentTarget).attr('id').slice(11));
 		});
@@ -3381,7 +3374,7 @@ function normalGameUserBar(o){
 		.append($m = $("<div>").addClass("moremi game-user-image"))
 		.append($("<div>").addClass("game-user-title")
 			.append(getLevelImage(o.data.score).addClass("game-user-level"))
-			.append($bar = $("<div>").addClass("game-user-name ellipse").text(getDisplayName(o)))
+			.append($bar = $("<div>").addClass("game-user-name ellipse").text(o.profile.title || o.profile.name))
 			.append($("<div>").addClass("expl").html(L['LEVEL'] + " " + getLevel(o.data.score)))
 		)
 		.append($n = $("<div>").addClass("game-user-score"));
@@ -3397,7 +3390,7 @@ function miniGameUserBar(o){
 	var $R = $("<div>").attr('id', "game-user-"+o.id).addClass("game-user")
 		.append($("<div>").addClass("game-user-title")
 			.append(getLevelImage(o.data.score).addClass("game-user-level"))
-			.append($bar = $("<div>").addClass("game-user-name ellipse").text(getDisplayName(o)))
+			.append($bar = $("<div>").addClass("game-user-name ellipse").text(o.profile.title || o.profile.name))
 		)
 		.append($n = $("<div>").addClass("game-user-score"));
 	if(o.id == $data.id) $bar.addClass("game-user-my-name");
@@ -3460,7 +3453,7 @@ function updateRoom(gaming){
 			$r.append($("<div>").attr('id', "room-user-"+o.id).addClass("room-user")
 				.append($("<div>").addClass("room-user-title").addClass("room-user-team nameTeam-" + o.game.team)
 					.append(getLevelImage(o.data.score).addClass("room-user-level"))
-					.append($bar = $("<div>").addClass("room-user-name").text(getDisplayName(o)))
+					.append($bar = $("<div>").addClass("room-user-name").text(o.profile.title || o.profile.name))
 				).on('click', function(e){
 					requestProfile($(e.currentTarget).attr('id').slice(10));
 				})
@@ -3593,7 +3586,6 @@ function drawMyDress(avGroup){
 	renderMoremi($view, my.equip);
 	$(".dress-type.selected").removeClass("selected");
 	$("#dress-type-all").addClass("selected");
-	$("#dress-nickname").val(my.nickname);
 	$("#dress-exordial").val(my.exordial);
 	drawMyGoods(avGroup || true);
 }
@@ -3894,7 +3886,7 @@ function requestRoomInfo(id){
 		
 		$pls.append($("<div>").addClass("ri-player")
 			.append($moremi = $("<div>").addClass("moremi rip-moremi"))
-			.append($p = $("<div>").addClass("ellipse rip-title").text(getDisplayName(p)))
+			.append($p = $("<div>").addClass("ellipse rip-title").text(p.profile.title || p.profile.name))
 			.append($("<div>").addClass("rip-team team-" + rd.t).html($("#team-" + rd.t).html()))
 			.append($("<div>").addClass("rip-form").html(L['pform_' + rd.f]))
 		);
@@ -3916,11 +3908,11 @@ function requestProfile(id){
 		notice(L['error_405']);
 		return;
 	}
-	$("#ProfileDiag .dialog-title").html(getDisplayName(o) + L['sProfile']);
+	$("#ProfileDiag .dialog-title").html((o.profile.title || o.profile.name) + L['sProfile']);
 	$(".profile-head").empty().append($pi = $("<div>").addClass("moremi profile-moremi"))
 		.append($("<div>").addClass("profile-head-item")
 			.append(getImage(o.profile.image).addClass("profile-image"))
-			.append($("<div>").addClass("profile-title ellipse").html(getDisplayName(o))
+			.append($("<div>").addClass("profile-title ellipse").html(o.profile.title || o.profile.name)
 				.append($("<label>").addClass("profile-tag").html(" #" + o.id.toString().substr(0, 5)))
 			)
 		)
@@ -3975,7 +3967,7 @@ function requestInvite(id){
 	var nick;
 	
 	if(id != "AI"){
-		nick = getDisplayName($data.users[id]);
+		nick = $data.users[id].profile.title || $data.users[id].profile.name;
 		if(!confirm(nick + L['sureInvite'])) return;
 	}
 	send('invite', { target: id });
@@ -4355,7 +4347,7 @@ function roundEnd(result, data){
 		$b.append($o = $("<div>").addClass("result-board-item")
 			.append($p = $("<div>").addClass("result-board-rank").html(r.rank + 1))
 			.append(getLevelImage(sc).addClass("result-board-level"))
-			.append($("<div>").addClass("result-board-name").text(getDisplayName(o)))
+			.append($("<div>").addClass("result-board-name").text(o.profile.title || o.profile.name))
 			.append($("<div>").addClass("result-board-score")
 				.html(data.scores ? (L['avg'] + " " + commify(data.scores[r.id]) + L['kpm']) : (commify(r.score || 0) + L['PTS']))
 			)
@@ -4493,7 +4485,7 @@ function drawRanking(ranks){
 		$b.append($o = $("<div>").addClass("result-board-item")
 			.append($("<div>").addClass("result-board-rank").html(r.rank + 1))
 			.append(getLevelImage(r.score).addClass("result-board-level"))
-			.append($("<div>").addClass("result-board-name").text(getDisplayName(o)))
+			.append($("<div>").addClass("result-board-name").text(o.profile.title || o.profile.name))
 			.append($("<div>").addClass("result-board-score").html(commify(r.score) + L['PTS']))
 			.append($("<div>").addClass("result-board-reward").html(""))
 			.append($v = $("<div>").addClass("result-board-lvup").css('display', me ? "block" : "none")
@@ -4896,7 +4888,7 @@ function setRoomHead($obj, room){
 		.append($("<h5>").addClass("room-head-limit").html((mobile ? "" : (L['players'] + " ")) + room.players.length + " / " +room.limit + "  |"))
 		.append($("<h5>").addClass("room-head-round").html(L['rounds'] + " " + room.round+ "  |"))
 		.append($("<h5>").addClass("room-head-time").html(room.time + L['SECOND']))
-		.append($("<h5>").addClass("room-vendor").html("플러스끄투 kkutu.pcor.me"));
+		.append($("<h5>").addClass("room-vendor").html("플러스끄투 kkutu.cc"));
 	if(rule.opts.indexOf("ijp") != -1){
 		$rm.append($("<div>").addClass("expl").html("<h5>" + room.opts.injpick.map(function(item){
 			return L["theme_" + item];
@@ -4949,12 +4941,7 @@ function getAudio(k, url, cb){
 function playBGM(key, force){
 	if($data.bgm) $data.bgm.stop();
 	
-	if ($data.opts.lb == true && key == 'lobby'){
-		return $data.bgm = playSound("legacylobby", true);
-	}
-	else{
-		return $data.bgm = playSound(key, true);
-	}
+	return $data.bgm = playSound(key, true);
 }
 function stopBGM(){
 	if($data.bgm){
@@ -4963,6 +4950,12 @@ function stopBGM(){
 	}
 }
 function playSound(key, loop){
+
+	if ($data.opts.lb == true){
+		if (key == 'lobby'){
+		key = "legacylobby";
+	}
+	}
 	var src, sound;
 	var bgmMuted = loop && $data.BGMVolume == 0;
 	var effectMuted = !loop && $data.EffectVolume == 0;
@@ -5223,9 +5216,6 @@ function drawObtain(data){
 	$("#obtain-image").css('background-image', "url(" + iImage(data.key) + ")");
 	$("#obtain-name").html(iName(data.key));
 }
-function getDisplayName(user){
-	return user.nickname || user.profile.title || user.profile.name;
-}
 function renderMoremi(target, equip){
 	var $obj = $(target).empty();
 	var LR = { 'Mlhand': "Mhand", 'Mrhand': "Mhand" };
@@ -5300,4 +5290,4 @@ function yell(msg){
  */
 
 delete window.WebSocket;
-delete window.setInterval;
+//delete window.setInterval;

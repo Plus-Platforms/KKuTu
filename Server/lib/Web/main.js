@@ -243,14 +243,13 @@ Server.get("/game", function(req, res){
 			'MODE': Const.GAME_TYPE,
 			'RULE': Const.RULE,
 			'OPTIONS': Const.OPTIONS,
-			'NICKNAME_LIMIT': GLOBAL.NICKNAME_LIMIT,
 			'KO_INJEONG': Const.KO_INJEONG,
 			'EN_INJEONG': Const.EN_INJEONG,
 			'KO_THEME': Const.KO_THEME,
 			'EN_THEME': Const.EN_THEME,
 			'IJP_EXCEPT': Const.IJP_EXCEPT,
-			'ogImage': "https://kkutu.pcor.me/img/kkutu/og.png",
-			'ogURL': "https://kkutu.pcor.me/",
+			'ogImage': "https://kkutu.cc/img/kkutu/og.png",
+			'ogURL': "https://kkutu.cc/",
 			'ogTitle': "두근두근 플러스끄투",
 			'ogDescription': "글자로 박진감 넘치는 게임을 즐겨보세요!"
 		});

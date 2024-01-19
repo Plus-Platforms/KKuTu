@@ -62,13 +62,15 @@ equ{
 		text-shadow: 0px 0px 3px #000000;
 	}
 	#intro-text{
+		font-weight: bold;
+		color: black;
 		position: absolute;
-		top: 480px;
-		left: 0px;
+		top: 10px;
+		right: 10px;
 		width: 100%;
 		font-size: 30px;
-		text-align: center;
-		text-shadow: 0px 0px 3px #000000;
+		text-align: right;
+		text-shadow: 0px 0px 3px #ffffff;
 	}
 #Loading{
 	position: fixed;
@@ -82,7 +84,6 @@ equ{
 }
 #Top{
 	background: rgb(0,0,0);
-background: linear-gradient(180deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%);
 }
 #Top .menu-btn{
 	color: #FFFFFF;
@@ -300,11 +301,10 @@ iframe{
 .kkutu-menu{
 	float: left;
     bottom: 0;
-    position: fixed;
     width: 100vw;
 	min-width: 1600px;
     height: 70px;
-    background: linear-gradient(0deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%);
+    background: linear-gradient(180deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%);
 }
 .kkutu-wrap{
 	max-width: 100rem;
@@ -562,7 +562,7 @@ min-height: 480px;;
 	.invite-item{ margin: 2px 0px; width: 100%; height: 20px; }
 		.invite-item .users-name{ width: 270px; }
 .RoomListBox{
-	width: calc(100% - 280px);
+	width: calc(100% - 560px);
 	max-height: 480px;
 min-height: 480px;
 }

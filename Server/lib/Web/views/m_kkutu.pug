@@ -44,7 +44,8 @@ block JS
 	script(type='text/javascript', src='/js/in_game_kkutu.min.js')
 	script(type='text/javascript', src='/js/fabric.min.js')
 	script(type='text/javascript', src='/js/diff-match-patch-compressed.js')
-	script(src='https://www.google.com/recaptcha/api.js')
+	script(type='text/javascript', src='/js/vanilla-tilt.min.js')
+	script(src='https://challenges.cloudflare.com/turnstile/v0/api.js?compat=recaptcha', async, defer)
 	
 block CSS
 	link(rel='stylesheet', href='/css/in_game_kkutu_shop.css')
@@ -55,7 +56,6 @@ block Jungle
 	span#URL= `${locals.PROTOCOL}://${locals.HOST}:${locals.PORT}/${locals._id}`
 	span#MOREMI_PART= locals.MOREMI_PART.join(',')
 	span#AVAIL_EQUIP= locals.AVAIL_EQUIP.join(',')
-	span#NICKNAME_LIMIT= locals.NICKNAME_LIMIT ? JSON.stringify(locals.NICKNAME_LIMIT) : "{}"
 	span#RULE= JSON.stringify(locals.RULE)
 	span#OPTIONS= JSON.stringify(locals.OPTIONS)
 	div#Yell
@@ -87,7 +87,7 @@ block Jungle
 	
 block Middle
 	- var VERSION = L('version') + " (모바일)";
-	- var nick = SESSION.profile && SESSION.profile.nickname;
+	- var nick = SESSION.profile ? (SESSION.profile.title || SESSION.profile.name) : null;
 	
 	div#dimmer(style="display: none;")
 	div#tost_message
