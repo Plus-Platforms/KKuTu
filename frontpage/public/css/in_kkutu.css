@@ -83,7 +83,8 @@ equ{
 	z-index: 5;
 }
 #Top{
-	background: rgb(0,0,0);
+	background-color: #eeeeeeb0;
+    backdrop-filter: blur(12px);
 }
 #Top .menu-btn{
 	color: #FFFFFF;
@@ -112,6 +113,7 @@ equ{
     transform: translate(0, -50%);
     padding: 10px 10px 10px 5px;
     color: #fff;
+	border-radius: 15px 0px 0px 15px;
     box-shadow: 3px 4px 11px 0px #00000040;
     transition: all 0.5s;
 }
@@ -138,12 +140,13 @@ input[type="checkbox"]+label {
     height: 20px;
     font-size: 15px;
     padding-left: 24px;
-    background: url(/img/kkutu/checkbox/off.png) no-repeat 0 0px / contain;
+    background: url('/img/kkutu/checkbox/off.svg') no-repeat 0 0px / contain;
 }
 
 input[type='checkbox']:checked+label {
-    background: url('/img/kkutu/checkbox/on.png') no-repeat 0 1px / contain;
+    background: url('/img/kkutu/checkbox/on.svg') no-repeat 0 1px / contain;
 }
+
 
 input[type="checkbox"] {
     display: none;
@@ -220,19 +223,19 @@ input[type="checkbox"] {
   
   @keyframes zoomIn {
 	from {
-		transform: translate3d(0, 15%, 0);
+		transform: scale(0.8);
 	}
 	to {
-		transform: translate3d(0, 0%, 0);
+		transform: scale(1);
 	}
   }
 
   @keyframes zoomOut {
 	from {
-		transform: translate3d(0, 0%, 0);
+		transform: scale(1);
 	}
 	to {
-		transform: translate3d(0, 15%, 0);
+		transform: scale(0.8);
 	}
   }
 
@@ -302,17 +305,19 @@ iframe{
 	float: left;
     bottom: 0;
     width: 100vw;
-	min-width: 1600px;
-    height: 70px;
-    background: linear-gradient(180deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%);
+    min-width: 1600px;
+    height: 60px;
+    background: linear-gradient(180deg, #eeeeeeb0, rgba(0,0,0,0) 100%);
+    margin-bottom: 30px;
 }
 .kkutu-wrap{
-	max-width: 100rem;
-	margin-left: auto;
-	margin-right: auto;
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
+	padding-right: 30px;
+    padding-left: 30px;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 .kkutu-center{
 	display: flex;
@@ -321,26 +326,27 @@ iframe{
 }
 
 .kkutu-menu button .fa {
-    display: block;
-    font-size: 25px;
+    margin-right: 15px;
+    font-size: 20px;
 }
 
 .kkutu-menu button{
-	color: #FFFFFF;
-	text-align: center;
+	font-weight: bold;
+    color: #1F2167;
+    text-align: center;
     font-size: 20px;
     float: left;
     border: none;
     border-bottom-left-radius: 0px;
     border-bottom-right-radius: 0px;
-    width: 98px;
-    height: 60px;
+    width: 162px;
+    height: 39px;
 }
 	.kkutu-menu .mainbtn:hover{
-		margin-top: -5px;
-		height: 65px;
-		color: #FFFFFF;
-		background: linear-gradient(180deg, rgba(39,134,255,1) 0%, rgba(21,169,255,1) 100%);
+		margin-top: 5px;
+    height: 34px;
+    color: #FFFFFF;
+    background: linear-gradient(180deg, rgba(39,134,255,1) 0%, rgba(21,169,255,1) 100%);
 	}
 	.kkutu-menu .icnbtn:hover{
 		background: #FFFFFF00;
@@ -368,8 +374,9 @@ iframe{
 	display: none;
 	position: fixed;
 	padding: 5px;
+	border-radius: 10px;
 	color: #111111;
-	box-shadow: 0px 1px 1px #141414;
+	box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.2);
 	background: linear-gradient(180deg, rgba(244,245,250,1) 0%, rgba(203,203,223,1) 80%);
 	z-index: 2;
 }
@@ -396,7 +403,7 @@ iframe{
 		padding-bottom: 2px; }
 	.dialog-bar .opt{
 			color: white;
-			background-color: #546481;
+			background: linear-gradient(90deg, rgba(84,100,129,1) 40%, rgba(84,100,129,0) 100%);
 			padding-left: 7px;
 			padding-top: 2px;
 			padding-bottom: 2px; }
@@ -419,6 +426,7 @@ iframe{
 	background-color: #EAEAEA;
     float: center;
     margin-right: 5px;
+	border-radius: 10px;
     width: 75px;
     height: 25px;
 }
@@ -537,9 +545,6 @@ iframe{
 		.profile-field-name{ width: 35%; text-align: center; }
 		.profile-field-record{ width: 32%; text-align: center; }
 		.profile-field-score{ width: 32%; text-align: center; }
-		#profile-dress{
-			width: 90px!important;
-		}
 #RoomInfoDiag .dialog-body div{ float: left; }
 	.ri-player{ margin: 2px 0px; width: 100%; }
 		.rip-moremi{ margin-right: 3px; width: 40px; height: 40px; }
@@ -547,11 +552,12 @@ iframe{
 		.rip-title{ width: calc(100% - 43px); }
 		.rip-team{ margin: 3px 3px 0px 0px; width: 44px; text-align: center; }
 		.rip-form{ margin-top: 3px; width: calc(100% - 90px); }
-.UserListBox{
+.UserListBox, .SideListBox{
 	width: 260px;
 	max-height: 480px;
 min-height: 480px;;
 }
+
 	.UserListBox div{ float: left; }
 	.UserListBox .product-body{ width: 250px; height: calc(100% - 50px); overflow-x: hidden; overflow-y: scroll; }
 	.users-item{ width: 190px; }
@@ -567,7 +573,7 @@ min-height: 480px;;
 min-height: 480px;
 }
 	.RoomListBox div{ float: left; }
-	.RoomListBox .product-body{ width: calc(100% - 25px); height: 330px; overflow-x: hidden; overflow-y: scroll; }
+	.RoomListBox .product-body{ width: calc(100% - 25px); height: 430px; overflow-x: hidden; overflow-y: scroll; }
 	.rooms-item{
 		padding: 5px;
 		/* border-radius: 10px; */
@@ -731,6 +737,7 @@ min-height: 480px;
 	.GameBox .product-body{ padding-top: 0px; }
 	.game-replay-controller{ float: right !important;}
 	.game-replay-controller button{
+		background-color: #ffffff;
 		float: right;
 		margin-top: -2px;
 		padding: 1px;
@@ -1195,6 +1202,20 @@ min-height: 480px;
 .MeBox .product-title{
 	display:none;
 }
+
+.ChatBox .product-title{
+	display:none;
+}
+.ChatBox{
+	backdrop-filter: none;
+    right: 0;
+    background-color: rgba(0,0,0,0.7);
+    position: absolute;
+    width: 40%;
+    height: 200px;
+    bottom: 0;
+}
+
 	.MeBox div{ float: left; }
 	.bar-text{ color: #EEEEEE; text-align: center; text-shadow: 0px 1px 1px #141414; }
 	.my-image{ margin-left: 35px;
@@ -1321,6 +1342,7 @@ min-height: 480px;
 	margin-top: 5px;
 	width: 60px;
 	font-size: 16px;
+	background-color: #ffffff;
 }
 	#Chat hr, #chat-log-board hr{
 		padding-top: 0px;
@@ -1334,9 +1356,10 @@ min-height: 480px;
 		margin: 1px 0px;
 		width: 100%;
 		overflow: hidden;
+		color: #FFFFFF
 	}
 	.chat-notice{
-		background-color: #CCCCCC;
+		background-color: #000000;
 	}
 		.chat-notice .chat-head{ color: #1767CA; }
 		.chat-stamp{

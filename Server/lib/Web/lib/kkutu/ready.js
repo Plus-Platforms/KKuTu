@@ -145,6 +145,7 @@ $(document).ready(function(){
 		box: {
 			chat: $(".ChatBox"),
 			userList: $(".UserListBox"),
+			sideList: $(".SideListBox"),
 			roomList: $(".RoomListBox"),
 			shop: $(".ShopBox"),
 			room: $(".RoomBox"),
@@ -1036,6 +1037,8 @@ $(document).ready(function(){
 		
 		if(obj) drawObtain(obj);
 		else $stage.dialog.obtain.hide();
+
+		$('#dimmer').fadeOut();
 	});
 
 	$stage.dialog.alertOK.on('click', function(e){

@@ -213,6 +213,7 @@ $(document).ready(function(){
 		box: {
 			chat: $(".ChatBox"),
 			userList: $(".UserListBox"),
+			sideList: $(".SideListBox"),
 			roomList: $(".RoomListBox"),
 			shop: $(".ShopBox"),
 			room: $(".RoomBox"),
@@ -1104,6 +1105,8 @@ $(document).ready(function(){
 		
 		if(obj) drawObtain(obj);
 		else $stage.dialog.obtain.hide();
+
+		$('#dimmer').fadeOut();
 	});
 
 	$stage.dialog.alertOK.on('click', function(e){
@@ -3111,7 +3114,7 @@ function updateUI(myRoom, refresh){
 	$(".kkutu-menu button").hide();
 	for(i in $stage.box) $stage.box[i].hide();
 	$stage.box.me.show();
-	$stage.box.chat.show().css('width', 'calc(100% - 280px)').height(240);
+	$stage.box.chat.show().css('width', '40%').height(200);
 	$stage.chat.height(120);
 	
 	if(only == "for-lobby"){
@@ -3120,9 +3123,11 @@ function updateUI(myRoom, refresh){
 		$stage.box.userList.show();
 		if($data._shop){
 			$stage.box.roomList.hide();
+			$stage.box.sideList.hide();
 			$stage.box.shop.show();
 		}else{
 			$stage.box.roomList.show();
+			$stage.box.sideList.show();
 			$stage.box.shop.hide();
 		}
 		updateUserList(refresh || only != $data._only);
@@ -3162,7 +3167,7 @@ function updateUI(myRoom, refresh){
 		$data._ar_first = true;
 		$stage.box.me.hide();
 		$stage.box.game.show();
-		$(".ChatBox").css('width', '100%').height(240);
+		$(".ChatBox").css('width', '45%').height(200);
 		$stage.chat.height(170);
 		updateRoom(true);
 	}
@@ -4073,6 +4078,7 @@ function replayReady(){
 	}
 	$stage.box.userList.hide();
 	$stage.box.roomList.hide();
+	$stage.box.sideList.hide();
 	$stage.box.game.show();
 	$stage.dialog.replay.hide();
 	gameReady();
