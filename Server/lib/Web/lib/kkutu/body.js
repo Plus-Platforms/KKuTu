@@ -530,8 +530,11 @@ function onMessage(data){
         ws.send(JSON.stringify({type: 'recaptcha', token: response}));
     }
 }
-
+function adBlockFunction(){
+	console.log("TURN OFF");
+}
 function welcome() {
+
 	if(mobile){
 		$("#intro-text").text(L['welcome']);
 		$("#Intro").animate({ 'opacity': 1 }, 1000).animate({ 'opacity': 0 }, 1000);
@@ -989,7 +992,7 @@ function userListBar(o, forInvite){
 		$R = $("<div>").attr('id', "invite-item-"+o.id).addClass("invite-item users-item")
 		.append($("<div>").addClass("jt-image users-image").css('background-image', "url('"+o.profile.image+"')"))
 		.append(getLevelImage(o.data.score).addClass("users-level"))
-		// .append($("<div>").addClass("jt-image users-from").css('background-image', "url('/img/kkutu/"+o.profile.type+".png')"))
+		// .append($("<div>").addClass("jt-image users-from").css('background-image', "url('https://cdn.kkutu.cc/img/kkutu/"+o.profile.type+".png')"))
 		.append($("<div>").addClass("users-name").text(o.profile.title || o.profile.name))
 		.on('click', function(e){
 			requestInvite($(e.currentTarget).attr('id').slice(12));
@@ -998,7 +1001,7 @@ function userListBar(o, forInvite){
 		$R = $("<div>").attr('id', "users-item-"+o.id).addClass("users-item")
 		.append($("<div>").addClass("jt-image users-image").css('background-image', "url('"+o.profile.image+"')"))
 		.append(getLevelImage(o.data.score).addClass("users-level"))
-		// .append($("<div>").addClass("jt-image users-from").css('background-image', "url('/img/kkutu/"+o.profile.type+".png')"))
+		// .append($("<div>").addClass("jt-image users-from").css('background-image', "url('https://cdn.kkutu.cc/img/kkutu/"+o.profile.type+".png')"))
 		.append($("<div>").addClass("users-name ellipse").text(o.profile.title || o.profile.name))
 		.on('click', function(e){
 			requestProfile($(e.currentTarget).attr('id').slice(11));
@@ -1096,7 +1099,7 @@ function miniGameUserBar(o){
 function getAIProfile(level){
 	return {
 		title: L['aiLevel' + level] + ' ' + L['robot'],
-		image: "/img/kkutu/robot.png"
+		image: "https://cdn.kkutu.cc/img/kkutu/robot.png"
 	};
 }
 function updateRoom(gaming){
@@ -2548,10 +2551,10 @@ function getLevelImage(score){
 	var lX = (lv % 25) * -100;
 	var lY = Math.floor(lv * 0.04) * -100;
 	
-	// return getImage("/img/kkutu/lv/lv" + zeroPadding(lv+1, 4) + ".png");
+	// return getImage("https://cdn.kkutu.cc/img/kkutu/lv/lv" + zeroPadding(lv+1, 4) + ".png");
 	return $("<div>").css({
 		'float': "left",
-		'background-image': "url('/img/kkutu/lv/newlv.png')",
+		'background-image': "url('https://cdn.kkutu.cc/img/kkutu/lv/newlv.png')",
 		'background-position': lX + "% " + lY + "%",
 		'background-size': "2560%"
 	});
@@ -2868,10 +2871,10 @@ function iImage(key, sObj){
 	}else if(typeof sObj == "string") sObj = { _id: "def", group: sObj, options: {} };
 	obj = $data.shop[key] || sObj;
 	gif = obj.options.hasOwnProperty('gif') ? ".gif" : ".png";
-	if(obj.group.slice(0, 3) == "BDG") return "/img/kkutu/moremi/badge/" + obj._id + gif;
+	if(obj.group.slice(0, 3) == "BDG") return "https://cdn.kkutu.cc/img/kkutu/moremi/badge/" + obj._id + gif;
 	return (obj.group.charAt(0) == 'M')
-		? "/img/kkutu/moremi/" + obj.group.slice(1) + "/" + obj._id + gif
-		: "/img/kkutu/shop/" + obj._id + ".png";
+		? "https://cdn.kkutu.cc/img/kkutu/moremi/" + obj.group.slice(1) + "/" + obj._id + gif
+		: "https://cdn.kkutu.cc/img/kkutu/shop/" + obj._id + ".png";
 }
 function iDynImage(group, data){
 	var canvas = document.createElement("canvas");
@@ -2934,7 +2937,7 @@ function renderMoremi(target, equip){
 		);
 	}
 	$obj.children(".moremi-back").after($("<img>").addClass("moremies moremi-body")
-		.attr('src', equip.robot ? "/img/kkutu/moremi/robot.png" : "/img/kkutu/moremi/body.png")
+		.attr('src', equip.robot ? "https://cdn.kkutu.cc/img/kkutu/moremi/robot.png" : "https://cdn.kkutu.cc/img/kkutu/moremi/body.png")
 		.css({ 'width': "100%", 'height': "100%" })
 	);
 	$obj.children(".moremi-rhand").css('transform', "scaleX(-1)");

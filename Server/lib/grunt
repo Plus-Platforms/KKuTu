@@ -6,7 +6,7 @@ case `uname` in
 esac
 
 # Change directory to ../../frontpage
-cd "$basedir/../../frontpage" || exit
+cd "$basedir/../../neofront" || exit
 
 # Run npm run build
 npm run build

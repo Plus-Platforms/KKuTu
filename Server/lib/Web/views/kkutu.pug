@@ -41,10 +41,10 @@ block Subject
 	title= L('title')
 
 block JS
-	script(type='text/javascript', src='/js/in_game_kkutu.min.js')
-	script(type='text/javascript', src='/js/fabric.min.js')
-	script(type='text/javascript', src='/js/diff-match-patch-compressed.js')
-	script(type='text/javascript', src='/js/vanilla-tilt.min.js')
+	script(type='text/javascript', src='https://cdn.kkutu.cc/js/in_game_kkutu.min.js')
+	script(type='text/javascript', src='https://cdn.kkutu.cc/js/fabric.min.js')
+	script(type='text/javascript', src='https://cdn.kkutu.cc/js/diff-match-patch-compressed.js')
+	script(type='text/javascript', src='https://cdn.kkutu.cc/js/vanilla-tilt.min.js')
 	script(src='https://challenges.cloudflare.com/turnstile/v0/api.js?compat=recaptcha', async, defer)
 
 block CSS
@@ -60,7 +60,7 @@ block Jungle
 	span#RULE= JSON.stringify(locals.RULE)
 	span#OPTIONS= JSON.stringify(locals.OPTIONS)
 	div#Yell
-		// img#intro-start(src='/img/kkutu/intro_start.gif')
+		// img#intro-start(src='https://cdn.kkutu.cc/img/kkutu/intro_start.gif')
 
 	div#Balloons(style='position: absolute;')
 	-
@@ -384,15 +384,15 @@ block Middle
 	+Dialog('DressDiag', 1000, 510, L('dress', false))
 		div(style="display:flex;")
 			div
-				img#dressitembtn(src="/img/kkutu/dress/deco.png", alt="꾸미기")
+				img#dressitembtn(src="https://cdn.kkutu.cc/img/kkutu/dress/deco.png", alt="꾸미기")
 				+Expl(true)
 					div!= "프로필을 휘장과 여러가지 장식으로 꾸며 보세요"
 			div
-				img#dress-cf(src="/img/kkutu/dress/lab.png" alt="조합소")
+				img#dress-cf(src="https://cdn.kkutu.cc/img/kkutu/dress/lab.png" alt="조합소")
 				+Expl(true)
 					div!= "게임에서 수집한 글자 조각을 조합해 보세요"
 			div
-				img#infobtn(src="/img/kkutu/dress/info.png", alt="내 정보")
+				img#infobtn(src="https://cdn.kkutu.cc/img/kkutu/dress/info.png", alt="내 정보")
 				+Expl(true)
 					div!= "내 전적을 확인해 보세요"
 		
@@ -436,7 +436,7 @@ block Middle
 		div.dialog-bar.tail-button.d3-bar
 			button.primaryBtn#obtain-ok= L('OK')
 	+Dialog('HelpDiag', 1000, 540, L('helpText', false))
-		iframe#help-board(width=1000, height=350)
+		iframe#help-board(width=1000, height=480)
 	+Dialog('Community2Diag', 1280, 750, "공식 커뮤니티")
 		iframe#community2(width=1280, height=700)
 	+Dialog('LicenseDiag', 645, 180, "저작권 정보")
@@ -461,7 +461,7 @@ block Middle
 	+Product('RoomList')
 		div 불러오는 중
 	+Product('SideList')
-		div 불러오는 중
+		ins.adsbygoogle(style="display:inline-block;width:260px;height:400px", data-ad-client="ca-pub-3808496003691786", data-ad-slot="3421914220")
 	+Product('Shop')
 		div.shop-categories
 			- for(var i in locals.CATEGORIES)
@@ -526,9 +526,9 @@ block Middle
 				div.cw-q-body
 			div.b-left.bb(style='display: none;')
 			div.jjoriping
-				img.jjoObj.jjoEyeL(src='/img/jjoeyeL.png')
-				img.jjoObj.jjoNose(src='/img/jjonose.png')
-				img.jjoObj.jjoEyeR(src='/img/jjoeyeR.png')
+				img.jjoObj.jjoEyeL(src='https://cdn.kkutu.cc/img/jjoeyeL.png')
+				img.jjoObj.jjoNose(src='https://cdn.kkutu.cc/img/jjonose.png')
+				img.jjoObj.jjoEyeR(src='https://cdn.kkutu.cc/img/jjoeyeR.png')
 				div.jjoDisplayBar
 					div.jjo-display.ellipse
 					+GraphBar('jjo-turn-time')
@@ -542,8 +542,10 @@ block Middle
 			input#game-input(placeholder=L('yourTurn')+' '+L('inputChat'), readonly)
 	+Product('Me')
 		div.moremi.my-image
+	+Product('AD')
+		ins.adsbygoogle(style="display:inline-block;width:1200px;height:150px", data-ad-client="ca-pub-3808496003691786", data-ad-slot="8845631298")
 	+Product('Chat')
 		div#Chat
 		input#Talk(maxlength=200)
 		button#ChatBtn= L('send')
-	//+Product('AD')
+	script (adsbygoogle = window.adsbygoogle || []).push({});
