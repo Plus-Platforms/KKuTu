@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "electron ."
+    "start": "electron .",
+    "build": "electron-builder build"
   },
   "keywords": [],
   "author": "",
@@ -16,5 +17,32 @@
   },
   "devDependencies": {
     "electron-reload": "^2.0.0-alpha.1"
+  },
+  "build": {
+    "appId": "cc.kkutu",
+    "files": [
+      "나의소중한파일들의경로"
+    ],
+    "win": {
+      "target": [{
+        "target": "nsis",
+        "arch": [
+          "x64",
+          "ia32"
+        ]
+      }],
+      "icon": "나의소중한아이콘경로.ico"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": true,
+      "allowToChangeInstallationDirectory": true,
+      "language": 1042,
+      "include": "build/installer.nsh",
+      "shortcutName": "단축아이콘 이름"
+    },
+    "directories": {
+      "output": "빌드를마친파일이가야할경로"
+    }
   }
 }
