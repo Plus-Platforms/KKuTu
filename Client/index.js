@@ -1,4 +1,4 @@
-const { app, BrowserWindow, screen, globalShortcut, dialog } = require('electron');
+const { app, BrowserWindow, screen, globalShortcut, dialog, session } = require('electron');
 const path = require('path');
 const url = require('url');
 
@@ -8,7 +8,7 @@ let originalSize;
 function createWindow() {
   mainWindow = new BrowserWindow({
     width: 1600,
-    height: 900,
+    height: 950,
     title: 'PlusKKuTu Client',
     maximizable: false,
     icon: __dirname + '/assets/icon.png',
@@ -22,6 +22,16 @@ function createWindow() {
   originalSize = screen.getPrimaryDisplay().workAreaSize;
 
   const gameUrl = 'https://kkutu.cc/game?server=0';
+
+  const filter = {
+    urls: ['https://kkutu.cc/']
+  };
+
+  session.defaultSession.webRequest.onBeforeRequest(filter, (details, callback) => {
+    callback({
+      redirectURL: gameUrl
+    });
+  });
 
   mainWindow.loadURL(gameUrl);
 
