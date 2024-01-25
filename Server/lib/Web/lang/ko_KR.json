@@ -616,8 +616,8 @@
 		
 		"myId": "내 식별 번호: ",
 		"send": "전송",
-		"help": "FA{question-circle}",
-		"helpText": "도움말",
+		"help": "FA{headset}",
+		"helpText": "고객센터",
 		"settings": "FA{gear}",
 		"settingsText": "환경 설정",
 		"community": "FA{comments}",

@@ -1,7 +1,7 @@
 const URL = "/hank/";
 let model, maxPredictions;
 
-async function init() {
+async function initCensorship() {
     const modelURL = URL + "model.json";
     const metadataURL = URL + "metadata.json";
     model = await tmImage.load(modelURL, metadataURL);
@@ -52,4 +52,4 @@ function checkHighProbability(prediction, classesToCheck) {
     return false;
 }
 
-init();
+initCensorship();

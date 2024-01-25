@@ -72,6 +72,7 @@ $(document).ready(function(){
 			exit: $("#ExitBtn"),
 			notice: $("#NoticeBtn"),
 			replay: $("#ReplayBtn"),
+			addBalance: $("#addBalance"),
 			leaderboard: $("#LeaderboardBtn")
 		},
 		dialog: {
@@ -134,6 +135,7 @@ $(document).ready(function(){
 			obtain: $("#ObtainDiag"),
 				obtainOK: $("#obtain-ok"),
 			help: $("#HelpDiag"),
+			pingShop: $("#PingShopDiag"),
 			community2: $("#Community2Diag"),
 			license: $("#LicenseDiag"),
 			alert: $("#NotificationDiag"),
@@ -479,8 +481,12 @@ $(document).ready(function(){
  
 
 	$stage.menu.help.on('click', function(e){
-		$("#help-board").attr('src', "/help");
+		$("#help-board").attr('src', "https://plus.oqupie.com/portal/2568");
 		showDialog($stage.dialog.help);
+	});
+	$stage.menu.addBalance.on('click', function(e){
+		$("#ping-board").attr('src', "https://www.pcor.me/plKKuTuPingShop");
+		showDialog($stage.dialog.pingShop);
 	});
 	$stage.menu.community2.on('click', function(e){
 		$("#community2").attr('src', "https://pcor.me/plKkkutuCafe");

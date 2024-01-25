@@ -8,7 +8,8 @@
       <br/>
       <div class="w-full">
       <p class="text-xs text-center w-full text-gray-500 dark:text-gray-400">
-      <a href="https://cafe.naver.com/pluskkutu/43" target='_blank'><span>개인정보처리방침</span></a>
+      <a href="https://plus.oqupie.com/portal/2568/article/56555" target='_blank'><span>이용 약관</span></a>
+      <a href="https://plus.oqupie.com/portal/2568/article/56556" target='_blank'><span>개인정보처리방침</span></a>
           </p><br/>
           <p class="text-xs text-center w-full text-gray-500 dark:text-gray-400">
             <span>© 2021~ Plus (moremi@pcor.me) All Rights Reserved.<br/>
