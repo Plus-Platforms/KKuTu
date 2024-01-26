@@ -1293,7 +1293,9 @@ min-height: 480px;
 	#cf-tray{ border-bottom: 1px solid #CCCCCC; margin-top: -2px; height: 32px; }
 		#cf-tray div{ width: 30px; height: 30px; cursor: pointer; }
 		.cf-tray-selected{ padding: 0px; border: 2px solid #61B8FF; }
-	#cf-dict{ margin: 2px 0px; height: 166px; color: #BBBBBB; overflow-y: scroll; background-color: #111111; }
+	#cf-dict{ margin: 2px 0px; height: 166px; color: #BBBBBB; overflow-y: scroll;     background-repeat: no-repeat;
+		background-size: cover;
+		background-image: url(/img/kkutu/lettershopBG.png); }
 	#cf-reward{ float: left; width: 100%; height: 148px; overflow-y: scroll; }
 		.cf-rew-item{ float: left; border-bottom: 1px dashed #DDDDDD; margin-bottom: 1px; }
 		.cf-rew-item div{ float: left; }

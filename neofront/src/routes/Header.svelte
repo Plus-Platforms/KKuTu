@@ -12,21 +12,17 @@
 	  <button class="-m-1.5 p-1.5 md:flex"><span class="sr-only">플러스끄투</span><img class="dark:hidden h-8" src="/img/logo.png" alt=""/><img class="hidden dark:block h-8" src="/img/logo_dark.png" alt=""/></button>
 	  </div>
 	  <div class="hidden py-3 lg:flex dark:text-white">
-		<a href="https://cafe.naver.com/pluskkutu"
-					  class="mr-6 text-2xl flex rounded-xl py-2 px-2 transform ease-in duration-100 active:scale-95 hover:bg-gray-100 dark:hover:bg-gray-800 hover:underline hover:font-semibold hover:text-purple-500">
-						  게임소개
-						  </a>
 
 		<a href="https://cafe.naver.com/pluskkutu"
 			  class="mr-6 text-2xl flex rounded-xl py-2 px-2 transform ease-in duration-100 active:scale-95 hover:bg-gray-100 dark:hover:bg-gray-800 hover:underline hover:font-semibold hover:text-purple-500">
 				  카페
 				  </a>
-		<a href="https://cafe.naver.com/pluskkutu"
+		<a href="https://discord.gg/7UBmb4XyBZ"
 				  class="mr-6 text-2xl flex rounded-xl py-2 px-2 transform ease-in duration-100 active:scale-95 hover:bg-gray-100 dark:hover:bg-gray-800 hover:underline hover:font-semibold hover:text-purple-500">
 					  디스코드
 					  </a>
 		
-		<a href="https://cafe.naver.com/pluskkutu"
+		<a href="https://plus.oqupie.com/portal/2568"
 					  class="mr-6 text-2xl flex rounded-xl py-2 px-2 transform ease-in duration-100 active:scale-95 hover:bg-gray-100 dark:hover:bg-gray-800 hover:underline hover:font-semibold hover:text-purple-500">
 						  고객지원
 						  </a>

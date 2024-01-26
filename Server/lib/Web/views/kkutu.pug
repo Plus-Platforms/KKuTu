@@ -140,7 +140,7 @@ block Middle
 		div.dialog-bar.tail-button.d3-bar
 			button.primaryBtn#setting-ok= L('save')
 			button#setting-server= L('changeServer')
-	+Dialog('CommunityDiag', 300, 300)
+	+Dialog('CommunityDiag', 300, 330)
 		div.dialog-bar(style='height: 225px; overflow-y: scroll;')
 			div#comm-friends
 		div.dialog-bar.tail-button.d3-bar
@@ -299,7 +299,7 @@ block Middle
 					option(value=item)!= L('theme_' + item)
 				- });
 		h4.opt(style='font-size: 14px; text-align: center; color: #486AA3;')= "404 오류 발생 시 없는 단어이므로 등록하셔도 좋습니다."
-		div.dialog-bar#dict-output(style='height: 195px; overflow-y: scroll; color: #BBBBBB; background-color: #111111;')
+		div.dialog-bar#dict-output(style='height: 195px; overflow-y: scroll; color: #BBBBBB;background-repeat: no-repeat;background-size: cover;background-image: url(/img/kkutu/lettershopBG.png);')
 		div.dialog-bar.tail-button.d3-bar
 			button#dict-search= "중복 확인"
 			button#dict-injeong= L('injeongReq')
@@ -441,9 +441,9 @@ block Middle
 		iframe#ping-board(width=400, height=700)
 	+Dialog('Community2Diag', 1280, 750, "공식 커뮤니티")
 		iframe#community2(width=1280, height=700)
-	+Dialog('LicenseDiag', 645, 180, "저작권 정보")
+	+Dialog('LicenseDiag', 645, 200, "오픈소스 라이선스 / 이용 약관")
 		h4.opt(style='text-align: center;')!= L('dictionarySupport')
-		h4.opt(style='text-align: center;')!= L('etcSupport')
+		h4.opt(style='text-align: center;')!= "게임 이용약관 및 개인정보 처리방침은 우상단 고객센터 탭에서 확인 가능합니다. 이 창을 닫을 시 이에 동의하는 것으로 간주합니다. (설정 내 저작권정보 보지 않기로 비활성화 가능)"
 		h4.opt(style='text-align: center;')!= L('GPL')
 
 
