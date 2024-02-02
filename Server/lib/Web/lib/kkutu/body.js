@@ -549,10 +549,13 @@ function welcome() {
 
     // 키 입력을 감지하는 이벤트 리스너 추가
     function keydownHandler() {
+		playBGM('lobby');
         $("#Intro").animate({ 'opacity': 1 }, 1000).animate({ 'opacity': 0 }, 1000);
         addTimeout(function () {
-            playBGM('lobby');
             $("#Intro").hide();
+			if ($.cookie('introjs-dontShowAgain') !== "true") {
+			playOnboarding();
+			}
         }, 2000);
 
         // 이벤트 리스너 제거

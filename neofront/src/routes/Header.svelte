@@ -6,28 +6,31 @@
 
 </script>
 
-<header class="py-3 lg:py-0 border-b backdrop-blur-lg bg-white/70 dark:bg-black/70 sticky top-0 md:shadow-md w-full z-50">
+<header class="py-4 lg:py-0 backdrop-blur-lg bg-white/70 dark:bg-black/70 sticky top-0 md:shadow-md w-full z-10">
 	<nav class="max-w-screen-2xl mx-auto flex items-center justify-between px-4 lg:px-8 lg:py-0" aria-label="Global">
 	  <div class="flex lg:flex-1">
-	  <button class="-m-1.5 p-1.5 md:flex"><span class="sr-only">플러스끄투</span><img class="dark:hidden h-8" src="/img/logo.png" alt=""/><img class="hidden dark:block h-8" src="/img/logo_dark.png" alt=""/></button>
+		<a href="/">
+	  <button class="-m-1.5 p-1.5 md:flex"><span class="sr-only">플러스끄투</span><img class="dark:hidden h-6" src="/img/logo.png" alt=""/><img class="hidden dark:block h-6" src="/img/logo_dark.png" alt=""/></button>
+	</a>
 	  </div>
-	  <div class="hidden py-3 lg:flex dark:text-white">
+	  <div class="hidden py-4 lg:flex dark:text-white">
 
 		<a href="https://cafe.naver.com/pluskkutu"
-			  class="mr-6 text-2xl flex rounded-xl py-2 px-2 transform ease-in duration-100 active:scale-95 hover:bg-gray-100 dark:hover:bg-gray-800 hover:underline hover:font-semibold hover:text-purple-500">
+			  class="mr-6 text-xl flex rounded-xl py-2 px-2 transform ease-in duration-100 active:scale-95 hover:bg-gray-100 dark:hover:bg-gray-800 hover:underline hover:font-semibold hover:text-purple-500">
 				  카페
 				  </a>
+		
 		<a href="https://discord.gg/7UBmb4XyBZ"
-				  class="mr-6 text-2xl flex rounded-xl py-2 px-2 transform ease-in duration-100 active:scale-95 hover:bg-gray-100 dark:hover:bg-gray-800 hover:underline hover:font-semibold hover:text-purple-500">
+				  class="mr-6 text-xl flex rounded-xl py-2 px-2 transform ease-in duration-100 active:scale-95 hover:bg-gray-100 dark:hover:bg-gray-800 hover:underline hover:font-semibold hover:text-purple-500">
 					  디스코드
 					  </a>
 		
 		<a href="https://plus.oqupie.com/portal/2568"
-					  class="mr-6 text-2xl flex rounded-xl py-2 px-2 transform ease-in duration-100 active:scale-95 hover:bg-gray-100 dark:hover:bg-gray-800 hover:underline hover:font-semibold hover:text-purple-500">
+					  class="mr-6 text-xl flex rounded-xl py-2 px-2 transform ease-in duration-100 active:scale-95 hover:bg-gray-100 dark:hover:bg-gray-800 hover:underline hover:font-semibold hover:text-purple-500">
 						  고객지원
 						  </a>
 				  </div>
-	  <div class="flex flex-1 justify-end">
+	  <div class="lg:hidden flex flex-1 justify-end">
 					  <div>
 					  <a
 	href="https://kkutu.cc/game?server=0"
@@ -42,6 +45,10 @@
 	  </div>
 	</nav>
   </header>
-  
+  <div class="fixed top-1/3 right-0 transform"><div class="items-end justify-end flex flex-col">
+	<a href="#">
+		<button class="transform ease-in duration-100 bg-black/70 border hover:bg-blue-600/70 hover:px-8 text-white px-4 py-2 text-lg">TOP</button>
+	</a>
+</div></div>
 
   

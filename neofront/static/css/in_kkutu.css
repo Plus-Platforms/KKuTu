@@ -53,6 +53,7 @@ equ{
 	display: none;
 }
 #Intro{
+	min-width: 1600px;
 	position: fixed;
 	z-index: 4;
 }
@@ -154,7 +155,7 @@ input[type='checkbox']:checked+label {
 
 
 input[type="checkbox"] {
-    display: none;
+    display: none!important;
 }
 
 /* 플러스끄투 커스텀 레인지 */
@@ -656,7 +657,7 @@ min-height: 480px;
 	}
 	.team-button {
 		font-weight: 800;
-		font-family: 'KartGothic';
+		font-family: 'KartGothic'!important;
 		float: left;
 		margin: 2px 0px 2px 0px;
 		width: 100%;
@@ -1100,7 +1101,7 @@ min-height: 480px;
 			.game-user-image{ margin: 3px 15px; width: 120px; height: 120px; }
 			.game-user-level{ margin: 1px; width: 18px; height: 18px; }
 			.game-user-name{ padding-left: 3px; margin: 3px 0px; width: 87px; height: 20px; font-size: 15px; }
-			.game-user-score{     font-family: 'KartGothic';
+			.game-user-score{     font-family: 'KartGothic'!important;
 				padding: 0px 5px;
 				align-items: center;
 				display: flex;
@@ -1441,4 +1442,28 @@ min-height: 480px;
 }
 #canvas {
 	background-color: #fff;
+}
+
+/* 온보딩 디자인 개선 */
+.introjs-tooltip {
+    color: #000;
+	border-radius: 0px!important;
+}
+.introjs-nextbutton {
+    border: 1px solid #154792!important;
+    color: white!important;
+    background: linear-gradient(180deg, rgba(39,134,255,1) 0%, rgba(21,169,255,1) 100%);
+    float: right;
+    text-shadow: none;
+}
+.introjs-button {
+    border-radius: 10px!important;
+}
+.introjs-tooltip {
+    border-radius: 10px!important;
+	background-size: cover;
+    background-image: url(/img/kkutu/moremiBG.png);
+}
+.introjs-tooltipReferenceLayer * {
+    font-family: "Noto Sans KR",Helvetica,Arial,sans-serif!important;
 }

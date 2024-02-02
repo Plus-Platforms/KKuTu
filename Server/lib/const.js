@@ -227,7 +227,7 @@ exports.KO_INJEONG = [
 	"HSS", "KMV", "HDC", "HOS", "KRT", "SVL", "WAK", "PSK",
 	"BRN", "MUS", "BLU", "AIR", "MOM", "MIN", "BRL", "LOA",
 	"GEN", "MSI", "APP", "BRD", "YHW", "COC", "CKR", "DBP",
-	"PKM", "MIN"
+	"PKM"
 ];
 exports.EN_INJEONG = [
 	"LOL"

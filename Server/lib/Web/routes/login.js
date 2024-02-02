@@ -81,25 +81,32 @@ exports.run = (Server, page) => {
 	}
 	
 	Server.get("/login", (req, res) => {
-		if(global.isPublic){
-			page(req, res, "login", { '_id': req.session.id, 'text': req.query.desc, 'loginList': strategyList});
-		}else{
+		if (global.isPublic) {
+			page(req, res, "login", { '_id': req.session.id, 'text': req.query.desc, 'loginList': strategyList });
+		} else {
 			let now = Date.now();
 			let id = req.query.id || "ADMIN";
-			let lp = {
-				id: id,
-				title: "LOCAL #" + id,
-				birth: [ 4, 16, 0 ],
-				_age: { min: 20, max: undefined }
-			};
-			MainDB.session.upsert([ '_id', req.session.id ]).set([ 'profile', JSON.stringify(lp) ], [ 'createdAt', now ]).on(function($res){
-				MainDB.users.update([ '_id', id ]).set([ 'lastLogin', now ]).on();
-				req.session.admin = true;
-				req.session.profile = lp;
-				res.redirect("/");
-			});
+	
+			if (!req.session.profile) {
+				res.redirect("/?f=1");
+			} else {
+				let lp = {
+					id: id,
+					title: "LOCAL #" + id,
+					birth: [4, 16, 0],
+					_age: { min: 20, max: undefined }
+				};
+	
+				MainDB.session.upsert(['_id', req.session.id]).set(['profile', JSON.stringify(lp)], ['createdAt', now]).on(function ($res) {
+					MainDB.users.update(['_id', id]).set(['lastLogin', now]).on();
+					req.session.admin = true;
+					req.session.profile = lp;
+					res.redirect("/");
+				});
+			}
 		}
 	});
+	
 
 	Server.get("/logout", (req, res) => {
 		if(!req.session.profile){

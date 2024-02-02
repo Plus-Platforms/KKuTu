@@ -45,7 +45,7 @@ body{
 	padding: 0px;
 	margin: 0px;
 	min-width: 480px;
-	font-family: 'Noto Sans KR', sans-serif;
+	font-family: 'Noto Sans KR', sans-serif!important;
 }
 /* width */
 ::-webkit-scrollbar {

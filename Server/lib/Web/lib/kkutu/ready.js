@@ -47,7 +47,7 @@ $(document).ready(function(){
 			userList: $(".UserListBox .product-body"),
 			roomListTitle: $(".RoomListBox .product-title"),
 			roomList: $(".RoomListBox .product-body"),
-			createBanner: $("<div>").addClass("rooms-item rooms-create").append($("<div>").html(L['newRoom']))
+			createBanner: $("<div>").addClass("rooms-item rooms-create").append($("<div>").html("&nbsp;"))
 		},
 		chat: $("#Chat"),
 		chatLog: $("#chat-log-board"),
@@ -99,6 +99,7 @@ $(document).ready(function(){
 			invite: $("#InviteDiag"),
 				inviteList: $(".invite-board"),
 				inviteRobot: $("#invite-robot"),
+				inviteLink: $("#invite-link"),
 			roomInfo: $("#RoomInfoDiag"),
 				roomInfoJoin: $("#room-info-join"),
 			profile: $("#ProfileDiag"),
@@ -894,6 +895,11 @@ $(document).ready(function(){
 	}).hotkey($("#wp-input"), 13);
 	$stage.dialog.inviteRobot.on('click', function(e){
 		requestInvite("AI");
+	});
+	$stage.dialog.inviteLink.on('click', function(e){
+		  var copyText = "플러스끄투에서 신나는 끄투 한판! 지금 같이 한 판 해요~ \n "+window.location;
+		  navigator.clipboard.writeText(copyText);
+		  alert("초대링크가 복사되었습니다. 원하는 곳에 붙여넣으세요!");
 	});
 	$stage.dialog.roomInfoJoin.on('click', function(e){
 		$stage.dialog.roomInfo.hide();

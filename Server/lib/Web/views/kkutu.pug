@@ -49,6 +49,7 @@ block JS
 
 block CSS
 	link(rel='stylesheet', href='/css/in_game_kkutu_shop.css')
+	link(rel='stylesheet', href='https://unpkg.com/intro.js/introjs.css')
 	
 block Jungle
 	div.middleFixer
@@ -306,6 +307,7 @@ block Middle
 	+Dialog('InviteDiag', 300, 445, L('invite', false))
 		div.invite-board(style='height: 355px; overflow-y: scroll;')
 		div.dialog-bar.tail-button.d3-bar
+			button#invite-link= "링크 공유"
 			button#invite-robot= L('inviteRobot')
 	+Dialog('RoomInfoDiag', 300, 587)
 		div.dialog-bar.room-info-head
@@ -551,3 +553,5 @@ block Middle
 		input#Talk(maxlength=200)
 		button#ChatBtn= L('send')
 	script (adsbygoogle = window.adsbygoogle || []).push({});
+	script(type='text/javascript', src='https://unpkg.com/intro.js/intro.js')
+	script(type='text/javascript', src='https://cdn.kkutu.cc/js/onboarding.js')

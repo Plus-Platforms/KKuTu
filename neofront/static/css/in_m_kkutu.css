@@ -173,13 +173,81 @@ iframe{
 		color: #FFFFFF;
    
 	}
+	@keyframes fadeIn {
+		from {
+		  opacity: 0;
+		  transform: scale(0.8);
+		}
+		to {
+		  opacity: 1;
+		  transform: scale(1);
+		}
+	  }
+	  
+	  @keyframes zoomIn {
+		from {
+			transform: scale(0.8);
+		}
+		to {
+			transform: scale(1);
+		}
+	  }
+	
+	  @keyframes zoomOut {
+		from {
+			transform: scale(1);
+		}
+		to {
+			transform: scale(0.8);
+		}
+	  }
+	
+	 @keyframes fadeOut {
+		from {
+			opacity: 1;
+		}
+		to {
+			opacity: 0;
+		}
+	 }
+	
+		.closing-effect {
+		animation: fadeOut 0.5s ease, zoomOut 0.5s ease!important;
+		}
+	
+	  .dialog-front {
+		animation: fadeIn 0.5s ease, zoomIn 0.5s ease;
+		transform-origin: center;
+		position: fixed;
+	  }
+	  /* 플러스끄투 커스텀 체크박스 */
+input[type="checkbox"]+label {
+    display: block;
+    font-weight: 500;
+    height: 20px;
+    font-size: 15px;
+    padding-left: 24px;
+    background: url('https://cdn.kkutu.cc/img/kkutu/checkbox/off.svg') no-repeat 0 0px / contain;
+}
+
+input[type='checkbox']:checked+label {
+    background: url('https://cdn.kkutu.cc/img/kkutu/checkbox/on.svg') no-repeat 0 0px / contain;
+}
+
+
+input[type="checkbox"] {
+    display: none;
+}
 .dialog{
-	display: none;
-	position: fixed;
-	color: #111111;
-	box-shadow: 0px 1px 1px #141414;
-	background-color: #EEEEEE;
-	z-index: 1;
+    top: 0px!important;
+    left: 0px!important;
+    height: 94vh!important;
+    width: 100vw!important;
+    display: none;
+    position: fixed;
+    color: #111111;
+    box-shadow: 0px 1px 1px #141414;
+    background-color: #EEEEEE;
 }
 	.dialog-bar{ float: left; margin: 3px 0px; width: 100%; }
 	.dialog-bar h4{ float: left; padding-top: 6px; width: 100px; text-align: center; }
@@ -188,7 +256,9 @@ iframe{
 	.dialog-bar label{ font-size: 13px; }
 	.dialog-bar button{ float: left; }
 		.dialog-opt{ float: left; width: 100px; }
-	.tail-button{ margin-top: 7px; }
+	.tail-button{ position: absolute;
+		margin-top: 7px;
+		bottom: 0; }
 	.tail-button button{ float: right; margin-right: 5px; width: 80px; height: 20px; }
 	.dialog .closeBtn{
 		float: right;
@@ -202,15 +272,15 @@ iframe{
 	}
 	.dialog .closeBtn:hover{ color: cyan; }
 	.dialog-head{
-		padding: 3px;
+		padding: 2px 11px 11px 11px;
 		border-bottom: 1px solid #CCCCCC;
 		height: 20px;
 		color: #ffffff;
-		font-size: 16px;
-		background: linear-gradient(180deg, #225CAA 0%, #0E3F8B 100%);
+		font-size: 20px;
+		background: linear-gradient(90deg, #225CAA 0%, #0E3F8B 100%);
 		background-color: #DDDDDD;
 	}
-		.dialog-head .dialog-title{     text-align: center; float: left; cursor: move; }
+		.dialog-head .dialog-title{    float: left; cursor: move; }
 #replay-players{ height: 160px; }
 	.replay-player-bar{ float: left; width: 100%; }
 		.replay-player-bar img{ float: left; margin-right: 3px; width: 20px; height: 20px; }

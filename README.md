@@ -85,6 +85,7 @@ This repository provides you what you have to prepare to play **KKuTu**.
 1. Run the shell script file(`./server-setup.bat`). (It is a batch file for Windows but it will also work on Linux.)
 1. Run these on working directory `./Server` in order:
 	1. (Game server) `node lib/Game/cluster.js 0 1`
+	1. (Adult Server) `node lib/Game/cluster.js 1 1`
 	1. (Web server) `node lib/Web/cluster.js 1`
 
 #### Common
