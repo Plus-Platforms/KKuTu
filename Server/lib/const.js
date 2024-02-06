@@ -226,7 +226,8 @@ exports.KO_INJEONG = [
 	"YRY", "KPO", "JLN", "JAN", "ZEL", "POK", "HAI",
 	"HSS", "KMV", "HDC", "HOS", "KRT", "SVL", "WAK", "PSK",
 	"BRN", "MUS", "BLU", "AIR", "MOM", "MIN", "BRL", "LOA",
-	"GEN", "MSI", "APP", "BRD", "YHW", "COC", "CKR", "DBP",
+	"GEN", "MSI", "APP", "BRD", "VAL", "SNA",
+	"YHW", "COC", "CKR", "DBP",
 	"PKM"
 ];
 exports.EN_INJEONG = [
