@@ -242,7 +242,7 @@
 		
 		"UserList": "FA{users}접속자 목록",
 		"RoomList": "FA{bars}방 목록",
-		"SideList": "FA{newspaper}새로운 소식",
+		"SideList": "FA{chevron-right}빠른 실행",
 		"Shop": "FA{shopping-bag}상점",
 		"Chat": "FA{comment}채팅",
 		"Room": "방",

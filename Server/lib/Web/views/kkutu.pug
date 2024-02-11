@@ -73,8 +73,7 @@ block Jungle
 	div.kkutu-menu
 		div.kkutu-wrap
 			div.kkutu-left
-				button.icnbtn#HelpBtn.tiny-menu.for-lobby.for-master.for-normal.for-gaming(style='display: none;')!= L('help')
-				button.icnbtn#Community2Btn.tiny-menu.for-lobby.for-master.for-normal.for-gaming(style='display: none;')!= L('cafe')
+
 
 			div.kkutu-center
 				button.mainbtn#SpectateBtn.for-master.for-normal(style='display: none;')!= L('spectate')
@@ -94,8 +93,6 @@ block Jungle
 				button.mainbtn#LeaderboardBtn.for-lobby(style='display: none;')!= L('leaderboard')
 			div.kkutu-left
 				button.icnbtn#SettingBtn.tiny-menu.for-lobby.for-master.for-normal.for-gaming(style='display: none;')!= L('settings')
-				button.icnbtn#CommunityBtn.tiny-menu.for-lobby.for-master.for-normal.for-gaming(style='display: none;')!= L('community')
-				
 block Top 
 	div#Top
 		+Menu()
@@ -112,10 +109,12 @@ block Middle
 	div#dimmer(style="display: none;")
 	div#tost_message
 	
-	+Dialog('SettingDiag', 400, 540, L('settingsText', false))
+	+Dialog('SettingDiag', 400, 560, L('settingsText', false))
 		div.dialog-bar
-			h4.opt!= "배경음악 설정"
+			h4.opt!= "개인 설정"
 			+SettingOption('legacy-bgm', "원작 BGM")
+			+SettingOption('pause-video', "배경 영상 비활성화")
+			+SettingOption('copyright-hide', "커뮤니티/약관 보지 않기")
 		div.dialog-bar
 			h4.opt!= "배경음악 볼륨"
 			input#bgm-volume.range-input(type='range' min='0' max='1' value='0.5' step='0.01' style='width:50%;')
@@ -130,7 +129,6 @@ block Middle
 		div.dialog-bar
 			h4.opt!= L('ingames')
 			+SettingOption('auto-ready', L('autoReady', false))
-			+SettingOption('copyright-hide', "저작권 정보 보지 않기")
 		div.dialog-bar
 			h4.opt!= L('etc')
 			+SettingOption('sort-user', L('sortUser'), "width: 200px;")
@@ -199,14 +197,12 @@ block Middle
 					option(value=12)= L('modeKSS')
 					option(value=4)= L('modeCSQ')
 					option(value=9)= L('modeHUN')
-					option(value=14)= L('modeKDG')
 				optgroup(label=L('mcEnglish'))
 					option(value=1)= L('modeESH')
 					option(value=0)= L('modeEKT')
 					option(value=7)= L('modeETY')
 					option(value=11)= L('modeEDA')
 					option(value=13)= L('modeESS')
-					option(value=15)= L('modeEDG')
 		div.dialog-bar(style='margin-top: -5px; height: 50px;')
 			h4
 			h4#game-mode-expl.dialog-bar-value(style='width: 100%; font-size: 11px;')
@@ -230,17 +226,17 @@ block Middle
 				button#room-injeong-pick(style='font-size: 11px;')!= L('pickInjeong')
 		div.dialog-bar.tail-button.d3-bar
 			button.primaryBtn#room-ok= L('OK')
-	+Dialog('InjPickDiag', 300, 440, L('pickInjeong', false))
+	+Dialog('InjPickDiag', 1080, 720, L('pickInjeong', false))
 		h4.opt(style='font-size: 16px; text-align: center; color: #486AA3;')!= L('explInjPick')
 		div.dialog-bar
 			button#injpick-all= L('injpickAll')
 			button#injpick-no= L('injpickNo')
-		div.dialog-bar#injpick-list(style='height: 280px; overflow-y: scroll;')
+		div.dialog-bar#injpick-list(style='height: 540px; overflow-y: scroll; overflow-x: hidden;')
 			div.dialog-opt#ko-pick-list(style='width: 100%;')
 				- locals.KO_THEME.concat(locals.KO_INJEONG).forEach(function(item){
 					- var name = "ko-pick-" + item;
 					- if(locals.IJP_EXCEPT.indexOf(item) != -1) return;
-					div(style='float: left; width: 100%; margin-bottom: 6px;')
+					div(style='float: left; width: 320px; margin-bottom: 6px; margin-right: 6px; padding-top: 150px; padding-left: 15px; padding-right: 15px; padding-bottom: 15px; text-align: center; background-image: url(/img/kkutu/theme/' + item + '.png); background-size: cover;')
 						input(id=name, type='checkbox', style='width: auto;')
 						label(for=name)!= LANG['theme_' + item]
 				- });
@@ -437,7 +433,7 @@ block Middle
 		div.dialog-bar#obtain-name(style='text-align: center;')
 		div.dialog-bar.tail-button.d3-bar
 			button.primaryBtn#obtain-ok= L('OK')
-	+Dialog('HelpDiag', 1000, 540, L('helpText', false))
+	+Dialog('HelpDiag', 1000, 560, L('helpText', false))
 		iframe#help-board(width=1000, height=480)
 	+Dialog('PingShopDiag', 400, 760, "코인 상점")
 		iframe#ping-board(width=400, height=700)
@@ -465,7 +461,16 @@ block Middle
 	+Product('RoomList')
 		div 불러오는 중
 	+Product('SideList')
-		ins.adsbygoogle(style="display:inline-block;width:260px;height:400px", data-ad-client="ca-pub-3808496003691786", data-ad-slot="3421914220")
+			button.sidebtn#HelpBtn
+				img(src="/img/kkutu/quick/support.svg", alt="고객센터")
+			button.sidebtn#Community2Btn
+				img(src="/img/kkutu/quick/community.svg", alt="공식 커뮤니티")
+			a(href="https://pcor.me/coupon", target="_blank")
+				button.sidebtn
+					img(src="/img/kkutu/quick/coupon.svg", alt="쿠폰 등록")
+			button.sidebtn#CommunityBtn
+				img(src="/img/kkutu/quick/friends.svg", alt="친구 목록")
+
 	+Product('Shop')
 		div.shop-categories
 			- for(var i in locals.CATEGORIES)
@@ -553,5 +558,4 @@ block Middle
 		input#Talk(maxlength=200)
 		button#ChatBtn= L('send')
 	script (adsbygoogle = window.adsbygoogle || []).push({});
-	script(type='text/javascript', src='https://unpkg.com/intro.js/intro.js')
 	script(type='text/javascript', src='https://cdn.kkutu.cc/js/onboarding.js')

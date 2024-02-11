@@ -46,6 +46,18 @@
 	</nav>
   </header>
   <div class="fixed top-1/3 right-0 transform"><div class="items-end justify-end flex flex-col">
+	<a href="https://cafe.naver.com/pluskkutu">
+		<button class="lg:hidden transform ease-in duration-100 bg-black/70 border hover:bg-blue-600/70 hover:px-8 text-white px-4 py-2 text-lg">
+		카페</button>
+	</a>
+	<a href="https://discord.gg/7UBmb4XyBZ">
+		<button class="lg:hidden transform ease-in duration-100 bg-black/70 border hover:bg-blue-600/70 hover:px-8 text-white px-4 py-2 text-lg">
+		디스코드</button>
+	</a>
+	<a href="https://plus.oqupie.com/portal/2568">
+		<button class="lg:hidden transform ease-in duration-100 bg-black/70 border hover:bg-blue-600/70 hover:px-8 text-white px-4 py-2 text-lg">
+		고객지원</button>
+	</a>
 	<a href="#">
 		<button class="transform ease-in duration-100 bg-black/70 border hover:bg-blue-600/70 hover:px-8 text-white px-4 py-2 text-lg">TOP</button>
 	</a>

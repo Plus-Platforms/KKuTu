@@ -151,19 +151,22 @@ onMount(async () => {
   <div>
   <h2 class="text-3xl font-bold mb-4">플러스끄투 소식</h2>
   {#if jsonData && jsonData.message && jsonData.message.result}
-  {#each jsonData.message.result.articleList as { articleId, subject, writeDateTimestamp } (articleId)}
-  <a href={`https://cafe.naver.com/pluskkutu/${articleId}`} target="_blank">
-    <div class="post py-4 border-b hover:text-blue-500 hover:bg-gray-100 hover:underline">
-      <h3 class="truncate"><span class="bg-blue-500 rounded-full px-2 text-white mr-2">업데이트</span> <strong>{new Date(writeDateTimestamp).toLocaleDateString()}</strong> {subject}</h3>
+  {#each jsonData.message.result.articleList as { menuName, menuId, articleId, subject, writeDateTimestamp } (articleId)}
+  <a href={`https://cafe.naver.com/ArticleRead.nhn?clubid=31109813&page=1&menuid=${menuId}&boardtype=L&articleid=${articleId}&referrerAllArticles=false`} target="_blank" class="hover:text-blue-500 hover:underline">
+    <div class="post py-4 border-b hover:bg-gray-100 ">
+      <h3 class="truncate">
+        <a href={`https://cafe.naver.com/ArticleList.nhn?search.clubid=31109813&search.menuid=${menuId}&search.boardtype=L`} target="_blank"><span class={`boardBg-${menuId} rounded-full px-2 text-white mr-2 hover:bg-blue-600`}>{menuName}</span></a>
+        <strong>{new Date(writeDateTimestamp).toLocaleDateString()}</strong>
+        {subject}</h3>
     </div>
   </a>
   {/each}
   {:else}
-  <p>Loading...</p>
+  <p>불러오는 중</p>
 {/if}
 </div>
 <div class="justify-end items-end flex">
-  <a href="https://cafe.naver.com/pluskkutu/52"  target="_blank">
+  <a href="https://cafe.naver.com/ArticleRead.nhn?clubid=31109813&page=1&menuid=7&boardtype=L&articleid=52&referrerAllArticles=false"  target="_blank">
   <img src="/img/banner.png" alt="정식출시배너">
 </a>
 </div>
@@ -187,7 +190,7 @@ onMount(async () => {
                     </svg>
                     높은 해상도 지원.
                   </dt>
-                  <dd class="inline">PC 기준 가로 900픽셀의 원작 끄투 대비 1600픽셀로 77.78% 증가한 해상도!</dd>
+                  <dd class="inline">PC 기준 가로 900픽셀의 원작 끄투 대비 1600픽셀로 증가한 해상도</dd>
                 </div>
                 <div class="relative pl-9">
                   <dt class="inline font-semibold text-gray-900">
@@ -196,7 +199,7 @@ onMount(async () => {
                     </svg>
                     PC 클라이언트.
                   </dt>
-                  <dd class="inline">PC 클라이언트로 편리하게 접속하고 Discord 상태 공유가 가능한 유일한 끄투 프리서버! (2024/02/01 기준)</dd>
+                  <dd class="inline">PC 클라이언트로 편리하게 접속하고 Discord 상태 공유가 가능한 끄투</dd>
                 </div>
                 <div class="relative pl-9">
                   <dt class="inline font-semibold text-gray-900">
@@ -209,7 +212,7 @@ onMount(async () => {
                     
                     핑 충전.
                   </dt>
-                  <dd class="inline">커뮤니티 채팅이나 이벤트 참여만으로 얻을 수 있는 PlusCoin으로 핑을 충전할 수 있어요.</dd>
+                  <dd class="inline">커뮤니티 채팅이나 이벤트 참여로 얻을 수 있는 PlusCoin으로 핑을 충전</dd>
                 </div>
               </dl>
             </div>
@@ -237,14 +240,17 @@ onMount(async () => {
       <h2 class="text-3xl font-bold mb-4">모레미 마을 이야기</h2>
       {#if jsonDataFull && jsonDataFull.message && jsonDataFull.message.result}
       {#each jsonDataFull.message.result.articleList as { articleId, subject, writeDateTimestamp, menuName, menuId } (articleId)}
-      <a href={`https://cafe.naver.com/pluskkutu/${articleId}`} target="_blank">
-        <div class="post py-4 border-b hover:text-blue-500 hover:bg-gray-100 hover:underline">
-          <h3 class="truncate"><span class={`boardBg-${menuId} rounded-full px-2 text-white mr-2`}>{menuName}</span> <strong>{new Date(writeDateTimestamp).toLocaleDateString()}</strong> {subject}</h3>
+      <a href={`https://cafe.naver.com/ArticleRead.nhn?clubid=31109813&page=1&menuid=${menuId}&boardtype=L&articleid=${articleId}&referrerAllArticles=false`} target="_blank" class="hover:text-blue-500 hover:underline">
+        <div class="post py-4 border-b hover:bg-gray-100 ">
+          <h3 class="truncate">
+            <a href={`https://cafe.naver.com/ArticleList.nhn?search.clubid=31109813&search.menuid=${menuId}&search.boardtype=L`} target="_blank"><span class={`boardBg-${menuId} rounded-full px-2 text-white mr-2 hover:bg-blue-600`}>{menuName}</span></a>
+            <strong>{new Date(writeDateTimestamp).toLocaleDateString()}</strong>
+            {subject}</h3>
         </div>
       </a>
       {/each}
       {:else}
-      <p>Loading...</p>
+      <p>불러오는 중</p>
     {/if}
     </div>
 

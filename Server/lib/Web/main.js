@@ -256,6 +256,57 @@ Server.get("/game", function(req, res){
 	}
 });
 
+
+Server.get("/game/old", function(req, res){
+	var server = req.query.server;
+	
+	//볕뉘 수정 구문삭제(220~229, 240)
+	DB.session.findOne([ '_id', req.session.id ]).on(function($ses){
+		// var sid = (($ses || {}).profile || {}).sid || "NULL";
+		if(global.isPublic){
+			onFinish($ses);
+			// DB.jjo_session.findOne([ '_id', sid ]).limit([ 'profile', true ]).on(onFinish);
+		}else{
+			if($ses) $ses.profile.sid = $ses._id;
+			onFinish($ses);
+		}
+	});
+	function onFinish($doc){
+		var id = req.session.id;
+
+		if($doc){
+			req.session.profile = $doc.profile;
+			id = $doc.profile.sid;
+		}else{
+			delete req.session.profile;
+		}
+		page(req, res, Const.MAIN_PORTS[server] ? "l_kkutu" : "l_portal", {
+			'_page': "kkutu",
+			'_id': id,
+			'PORT': Const.MAIN_PORTS[server],
+			'HOST': req.hostname,
+			'PROTOCOL': Const.IS_SECURED ? 'wss' : 'ws',
+			'TEST': req.query.test,
+			'MOREMI_PART': Const.MOREMI_PART,
+			'AVAIL_EQUIP': Const.AVAIL_EQUIP,
+			'CATEGORIES': Const.CATEGORIES,
+			'GROUPS': Const.GROUPS,
+			'MODE': Const.GAME_TYPE,
+			'RULE': Const.RULE,
+			'OPTIONS': Const.OPTIONS,
+			'KO_INJEONG': Const.KO_INJEONG,
+			'EN_INJEONG': Const.EN_INJEONG,
+			'KO_THEME': Const.KO_THEME,
+			'EN_THEME': Const.EN_THEME,
+			'IJP_EXCEPT': Const.IJP_EXCEPT,
+			'ogImage': "https://kkutu.cc/img/kkutu/og.png",
+			'ogURL': "https://kkutu.cc/",
+			'ogTitle': "두근두근 플러스끄투",
+			'ogDescription': "글자로 박진감 넘치는 게임을 즐겨보세요!"
+		});
+	}
+});
+
 Server.get("/servers", function(req, res){
 	var list = [];
 

@@ -63,7 +63,9 @@ equ{
 	z-index: 4;
 }
 #Top{
-	background: linear-gradient(180deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%);
+    box-shadow: 0 2px 6px 0 rgba(0,0,0,0.12), inset 0 -1px 0 0 #dadce0;
+    background: #fffcf3;
+	position: fixed;
 }
 #Top .menu-btn{
 	color: #111111;
@@ -94,26 +96,47 @@ iframe{
 
 /* 토스트 메시지 */
 #tost_message {
-	border-bottom: 5px solid rgba(21,169,255,1);
-    background: linear-gradient(180deg, rgba(23,25,100,1) 0%, rgba(23,32,107,1) 100%);
-    width: 100%;
-    z-index: 300;
-    opacity: 0;
-    position: fixed;
-    top: -100px;
-    text-align: center;
-    transform: translate(0, -50%);
-    padding: 10px 10px 10px 5px;
+	visibility: hidden;
+    background-color: #333333b5;
     color: #fff;
-    box-shadow: 3px 4px 11px 0px #00000040;
-    transition: all 0.5s;
+    text-align: center;
+    border-radius: 25px;
+    padding: 4px;
+    position: absolute;
+    z-index: 1;
+    margin-left: 5px;
+    margin-right: 5px;
+    bottom: 55px;
 }
 
 /* 토스트 메시지 활성화 되었을 때 */
 #tost_message.active {
-    opacity: 100%;
-    top: 5%; /* 변경된 부분: left에서 right로 변경 */
+	visibility: visible;
+	-webkit-animation: fadeinToast 0.5s, fadeoutToast 0.5s 2.5s;
+	animation: fadeinToast 0.5s, fadeoutToast 0.5s 2.5s;
 }
+
+
+/* Animations to fade the snackbar in and out */
+@-webkit-keyframes fadeinToast {
+	from {opacity: 0;}
+	to {opacity: 1;}
+  }
+  
+  @keyframes fadeinToast {
+	from {opacity: 0;}
+	to {opacity: 1;}
+  }
+  
+  @-webkit-keyframes fadeoutToast {
+	from {opacity: 1;}
+	to {opacity: 0;}
+  }
+  
+  @keyframes fadeoutToast {
+	from {opacity: 1;}
+	to {opacity: 0;}
+  }
 
 #dimmer{
 	display: none;
@@ -157,6 +180,21 @@ iframe{
 	height: 30px;
 	color: #546481;
 }
+
+#NewRoomBtn {
+	background: #2cb3f0;
+    width: 55px;
+    font-size: 20px;
+    border: none;
+    height: 55px;
+    border-radius: 999px;
+    bottom: 55px;
+    right: 15px;
+    position: absolute;
+    color: #ffffff;
+    font-weight: 700;
+    box-shadow: 0 4px 9px rgba(44, 179, 240, 0.6);
+	}
 .kkutu-menu button .fa {
     display: block;
     font-size: 16px;
@@ -186,19 +224,19 @@ iframe{
 	  
 	  @keyframes zoomIn {
 		from {
-			transform: scale(0.8);
+			transform: translateY(100px);
 		}
 		to {
-			transform: scale(1);
+			transform: translateY(0px);
 		}
 	  }
 	
 	  @keyframes zoomOut {
 		from {
-			transform: scale(1);
+			transform: translateY(0px);
 		}
 		to {
-			transform: scale(0.8);
+			transform: translateY(100px);
 		}
 	  }
 	
@@ -239,9 +277,9 @@ input[type="checkbox"] {
     display: none;
 }
 .dialog{
-    top: 0px!important;
+    top: 45px!important;
     left: 0px!important;
-    height: 94vh!important;
+    height: 95vh!important;
     width: 100vw!important;
     display: none;
     position: fixed;
@@ -250,16 +288,47 @@ input[type="checkbox"] {
     background-color: #EEEEEE;
 }
 	.dialog-bar{ float: left; margin: 3px 0px; width: 100%; }
-	.dialog-bar h4{ float: left; padding-top: 6px; width: 100px; text-align: center; }
+	.dialog-bar h4{ padding: 10px;
+		float: left;
+		font-size: 16px;
+		width: 100%;
+		font-weight: 700;
+	}
 	.dialog-bar-value{ width: calc(100% - 100px) !important; text-align: left !important; }
-	.dialog-bar input, .dialog-bar select{ float: left; width: 188px; height: 14px; box-sizing: inherit; outline: none; }
+	.dialog-bar input, .dialog-bar select{ margin-left: 10px;
+		float: left;
+		width: 188px;
+		box-sizing: inherit;
+		outline: none; }
 	.dialog-bar label{ font-size: 13px; }
 	.dialog-bar button{ float: left; }
 		.dialog-opt{ float: left; width: 100px; }
 	.tail-button{ position: absolute;
 		margin-top: 7px;
 		bottom: 0; }
-	.tail-button button{ float: right; margin-right: 5px; width: 80px; height: 20px; }
+	.tail-button button{
+		padding: 8px;
+		margin-bottom: 5px;
+		margin-left: 35px;
+		margin-right: 35px;
+		width: calc(100% - 86px);
+		font-size: 16px;
+		border: none;
+		color: rgb(63 131 248); }
+
+	.primaryBtn{
+		padding: 8px;
+    border-radius: 15px;
+    margin-bottom: 5px;
+    margin-left: 35px;
+    margin-right: 35px;
+    width: calc(100% - 86px);
+    background: rgb(63 131 248);
+    color: #fff!important;
+    font-size: 16px;
+    font-weight: 700;
+    border: none;
+	}
 	.dialog .closeBtn{
 		float: right;
 		border-radius: 6px;
@@ -272,13 +341,13 @@ input[type="checkbox"] {
 	}
 	.dialog .closeBtn:hover{ color: cyan; }
 	.dialog-head{
-		padding: 2px 11px 11px 11px;
+		font-weight: 600;
+		padding: 11px 11px 20px 11px;
 		border-bottom: 1px solid #CCCCCC;
 		height: 20px;
-		color: #ffffff;
+		color: #48473a;
 		font-size: 20px;
-		background: linear-gradient(90deg, #225CAA 0%, #0E3F8B 100%);
-		background-color: #DDDDDD;
+		background-color: #ffffff;
 	}
 		.dialog-head .dialog-title{    float: left; cursor: move; }
 #replay-players{ height: 160px; }
@@ -301,6 +370,7 @@ input[type="checkbox"] {
 	color: #111111;
 	box-shadow: 0px 2px 1px #DDDDDD;
 	background-color: #EEEEEE;
+	width: calc(100% - 10px);
 }
 .product-title{
 	color: #ffffff;

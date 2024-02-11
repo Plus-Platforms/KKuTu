@@ -17,8 +17,9 @@
  */
 
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap');
-
 /* Extrabold */
+
+
 @font-face {
 	font-family: 'KartGothic';
 	src: url('/webfonts/kart-eb.woff') format('woff');
@@ -180,8 +181,10 @@ span{
     padding-left: 8px;
     margin-right: 8px;
     margin-top: 8px;
-    background-color: #26252D;
-
+    color: #2A2E20;
+    background-color: #DEEFAB;
+    border-radius: 15px;
+    box-shadow: 0px 4px 0px #9ca77a;
 }
 .flex{
 	display: flex;
@@ -194,14 +197,22 @@ span{
 	width: 100%;
     text-align: right;
     display: block;
+	font-weight: 700;
 }
 .fuckSeogom{
-	color: #c3c3c3;
+	color: #313131;
 	display: inline-block;
 }
-.fuckHank{
-	padding-top: 2px;
+#addBalance{
+	margin-top: 3px;
+	margin-left: 3px;
     height: 25px;
+	filter: none;
+}
+.fuckHank {
+    margin-top: -13px;
+    height: 40px;
+	filter: drop-shadow(2px 2px 0px #6B474C);
 }
 .fuckHoSeo{
     padding-left: 8px;
@@ -209,9 +220,6 @@ span{
     line-height: 12px;
     font-size: 12px;
 }
-
-#account-info:hover{ color: #EEEEEE; }
-
 
 @keyframes scroller {
 	from {

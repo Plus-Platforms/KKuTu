@@ -44,7 +44,6 @@ equ{
 	font-family: consolas;
 	font-style: italic;
 }
-
 .blur-hank {
 	filter: blur(10px);
 }
@@ -94,12 +93,17 @@ equ{
 }
 #Top .menu-btn{
 	color: #FFFFFF;
-
 	background-color: #7CC4F800;
 	background-image: none;
 }
 #Top .menu-sub-btn{ color: #222222; }
 #Bottom .bottom-text{ display: none; }
+
+.sidebtn{
+	width: 100%;
+    padding: 0px;
+    border: none;
+}
 
 #facebook-menu{
 	float: right;
@@ -338,13 +342,12 @@ iframe{
 
 .kkutu-menu button{
 	font-weight: bold;
-    color: #1F2167;
+	border-radius: 15px;
+    color: #2A2E20;
     text-align: center;
     font-size: 20px;
     float: left;
     border: none;
-    border-bottom-left-radius: 0px;
-    border-bottom-right-radius: 0px;
     width: 162px;
     height: 39px;
 }
@@ -352,14 +355,14 @@ iframe{
 		margin-top: 5px;
     height: 34px;
     color: #FFFFFF;
-    background: linear-gradient(180deg, rgba(39,134,255,1) 0%, rgba(21,169,255,1) 100%);
+    background: linear-gradient(0deg, #44A342 0%, #7BBF34 100%);
 	}
 	.kkutu-menu .icnbtn:hover{
 		background: #FFFFFF00;
 	}
 	.kkutu-menu .toggled{
 		color: #EEEEEE;
-		background: linear-gradient(180deg, rgba(39,134,255,1) 0%, rgba(21,169,255,1) 100%);
+		background: linear-gradient(0deg, #44A342 0%, #7BBF34 100%);
 	}
 	.tiny-menu{
 		width: 60px !important;
@@ -383,7 +386,7 @@ iframe{
 	border-radius: 10px;
 	color: #111111;
 	box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.2);
-	background: linear-gradient(180deg, rgba(244,245,250,1) 0%, rgba(203,203,223,1) 80%);
+	background-color: #F8F9F2;
 	z-index: 2;
 }
 	.dialog-bar{ float: left; margin: 3px 0px; width: 100%; }
@@ -408,13 +411,15 @@ iframe{
 		padding-top: 2px;
 		padding-bottom: 2px; }
 	.dialog-bar .opt{
-			color: white;
-			background: linear-gradient(90deg, rgba(84,100,129,1) 40%, rgba(84,100,129,0) 100%);
-			padding-left: 7px;
-			padding-top: 2px;
-			padding-bottom: 2px; }
+		border-radius: 8px;
+		font-weight: 700;
+		background-color: #DEEFAB;
+		color: #252525;
+		padding-left: 7px;
+		padding-top: 2px;
+		padding-bottom: 2px; }
 	.dialog-bar-value{ text-align: left !important; color: #486AA3; }
-	.dialog-bar input, .dialog-bar select{ float: left; width: 187px; height: 24px; box-sizing: inherit; outline: none; font-size:16px; }
+	.dialog-bar input, .dialog-bar select{ float: left; width: 187px; height: 24px; box-sizing: inherit; outline: none; font-size:16px;border-radius: 10px; }
 	.dialog-bar label{ font-size: 25px; }
 	.dialog-bar h4{ font-size: 16px; margin-top: 6px; margin-bottom: 6px; }
 	.dialog-bar button{ border: 1px solid #878D99;
@@ -427,14 +432,15 @@ iframe{
 		.dialog-opt{ float: left; margin-right:20px; font-size: 18px;}
 	.tail-button{ margin-top: 7px; }
 	.tail-button button {
-	border: 1px solid #878D99;
-	color: #434D61;
-	background-color: #EAEAEA;
-    float: center;
-    margin-right: 5px;
-	border-radius: 10px;
-    width: 75px;
-    height: 25px;
+		box-shadow: 2px 2px 0px #b1a996;
+		border: 2px solid #AEC78F;
+		color: #2A2E20;
+		background-color: #F5FDE8;
+		float: center;
+		margin-right: 5px;
+		border-radius: 15px;
+		width: 75px;
+		height: 25px;
 }
 #DressDiag{
 	box-shadow: none;
@@ -452,9 +458,12 @@ iframe{
 	color: #ffffff!important;
 }
 	.primaryBtn{
-		border: 1px solid #154792!important;
-		color: white!important;
-		background: linear-gradient(180deg, rgba(39,134,255,1) 0%, rgba(21,169,255,1) 100%);
+		border: 2px solid #EAA339!important;
+		color: #2A2200!important;
+		font-weight: 700;
+		background: linear-gradient(
+	129deg, #FAE89E 0%, #FDDC71 100%);
+		box-shadow: 2px 2px 0px #b1a996;
 	}
 	.dialog .closeBtn{
 		float: right;
@@ -471,15 +480,17 @@ iframe{
 		font-weight: 700;
 		padding: 7px;
 		border-bottom: 1px solid #CCCCCC;
-		margin-bottom: 5px;
+		margin-bottom: 9.5px;
 		margin-left: -5px;
 		margin-right: -5px;
 		height: 28px;
-		color: #1F2167;
+		color: #ffffff;
 		font-size: 20px;
-		margin-top: 2px;
+		margin-top: -4.5px;
 		border-width: 3px;
-		border: #3E5B7B;
+		border-bottom: #7BBF34 2px solid;
+		border-radius: 10px 10px 0px 0px;
+		background-color: #44A342;
 	}
 	#dimmer{
 	opacity: 0.6;
@@ -521,11 +532,13 @@ iframe{
 	backdrop-filter: blur(12px);
 }
 .product-title{
-    color: #ffffff;
+	font-weight: 700;
+    border-radius: 8px;
+    color: #252525;
     padding-left: 15px;
-    background-color: #000000c4;
+    background-color: #DEEFAB;
 }
-.product-title i{ color: #ffffff; }
+.product-title i{ color: #252525; }
 .dialog-front{ z-index: 3; }
 #comm-friends div{ float: left; }
 	.cf-item{ margin: 2px 0px; width: 100%; }
@@ -561,11 +574,19 @@ iframe{
 .UserListBox, .SideListBox{
 	width: 260px;
 	max-height: 480px;
-min-height: 480px;;
-}
+min-height: 480px;
 
+}
+.UserListBox{
+	border-bottom-left-radius: 8px;
+	border-top-left-radius: 8px;
+}
+.SideListBox{
+	border-bottom-right-radius: 8px;
+	border-top-right-radius: 8px;
+}
 	.UserListBox div{ float: left; }
-	.UserListBox .product-body{ width: 250px; height: calc(100% - 50px); overflow-x: hidden; overflow-y: scroll; }
+	.UserListBox .product-body{ width: 250px; height: 433px; overflow-x: hidden; overflow-y: scroll; }
 	.users-item{ width: 190px; }
 		.users-image{ margin: 1px; width: 20px; height: 20px; }
 		.users-level{ margin: 1px; width: 20px; height: 20px; }
@@ -582,10 +603,9 @@ min-height: 480px;
 	.RoomListBox .product-body{ width: calc(100% - 25px); height: 430px; overflow-x: hidden; overflow-y: scroll; }
 	.rooms-item{
 		padding: 5px;
-		/* border-radius: 10px; */
-		margin: 3px;
-		width: 364px;
-		/* height: 80px; */
+		border-radius: 10px;
+		margin: 4px 16px 4px 0px;
+		width: 470px;
 		box-shadow: 0px 1px 1px #777777;
 		cursor: pointer;
 		background-position: center;
@@ -618,10 +638,10 @@ min-height: 480px;
 			.rooms-gaming .rooms-number{ border-color: #CC9999; }
 			.rooms-create:hover{ background-color: #AADDFF; }
 		.rooms-number{ padding-top: 18px; border-right: 1px solid #CCCCCC; margin-right: 4px; width: 49px; height: 46px; font-size: 24px; }
-		.rooms-title{ padding-top: 4px; width: 270px; height: 20px; font-size: 16px; font-weight: bold; }
+		.rooms-title{ padding-top: 4px; width: 360px; height: 20px; font-size: 16px; font-weight: bold; }
 		.rooms-limit{ padding-top: 7px; width: 39px; height: 17px; text-align: center; }
-		.rooms-mode{ padding-top: 5px; width: 270px; }
-		.rooms-info{ width: 270px; }
+		.rooms-mode{ padding-top: 5px; width: 360px; }
+		.rooms-info{ width: 360px; }
 			.rooms-round{ padding-top: 5px; margin-right: 10px; }
 			.rooms-time{ padding-top: 5px; }
 		.rooms-lock{ padding-top: 8px; width: 39px; text-align: center; font-size: 24px; }
@@ -636,6 +656,7 @@ min-height: 480px;
 .RoomBox{
 	min-width: 99.25%;
     max-width: 100%;
+	border-radius: 8px;
 }
 	.RoomBox .product-title{ height: 30px; }
 	.RoomBox .product-title h5{ float: left; font-size: 20px;}
@@ -1164,11 +1185,12 @@ min-height: 480px;
 			.result-me-level{ margin-top: 5px; width: 80px; }
 				.result-me-level-head{ width: 80px; text-align: center; }
 				.result-me-level-body{
+					font-family: 'KartGothic';
 					width: 80px;
 					text-align: center;
 					margin-top: -10px;
 					font-size: 30px;
-					font-weight: bold;
+					font-weight: 800;
 				}
 			.result-me-gauge{
 				margin-top: 5px;
@@ -1220,6 +1242,7 @@ min-height: 480px;
     width: 40%;
     height: 200px;
     bottom: 0;
+	border-top-left-radius: 15px;
 }
 .ChatBox:hover{
     background-color: rgba(0,0,0,1);
@@ -1236,12 +1259,12 @@ min-height: 480px;
 		.my-stat-name{ padding-left: 4px;font-weight: bold; }
 		.my-stat-record{ margin-top: 3px; width: 100%; }
 		.my-stat-ping{ margin-top: 3px; width: 100%; }*/
-		.my-okg{ width: 100%;min-width: 200px; height: 5px; overflow: hidden; background-color: #995511; }
+		.my-okg{ width: 100%;min-width: 150px; height: 5px; overflow: hidden; background-color: #99551100; }
 			.my-okg .graph-bar{ background-color: #FFBB44; }
 		/*.my-okg-text{ margin-top: -20px; width: 100%; }
 	.my-level{ margin: 13px 0px; width: 100%; font-size: 15px; text-align: center; }*/
-	.my-gauge{ width: 100%;min-width: 200px; height: 5px; overflow: hidden; background-color: #333333; }
-		.my-gauge .graph-bar{ background-image: url('https://cdn.kkutu.cc/img/kkutu/scorebar.png'); }
+	.my-gauge{ width: 100%;min-width: 150px; height: 5px; overflow: hidden; background-color: #33333300; }
+		.my-gauge .graph-bar{ background: linear-gradient(180deg, rgba(25,149,233,1) 0%, rgba(0,115,194,1) 100%); }
 	/*.my-gauge-text{     width: 100%;
 		text-shadow: none;
 		color: #000; }*/
@@ -1338,23 +1361,30 @@ min-height: 480px;
 	height: 150px!important;
 }
 #Talk{
-	float: left;
-	border-right: none;
-	border-top-right-radius: 0px;
-	border-bottom-right-radius: 0px;
-	margin-top: 5px;
-	width: calc(100% - 82px);
-	font-size: 16px;
+	color: #fff;
+    background-color: transparent;
+    border: none;
+    float: left;
+    border-right: none;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+    margin-top: 5px;
+    width: calc(100% - 85px);
+    font-size: 16px;
 }
 #ChatBtn{
-	float: left;
-	border-left: none;
-	border-top-left-radius: 0px;
-	border-bottom-left-radius: 0px;
-	margin-top: 5px;
-	width: 60px;
-	font-size: 16px;
-	background-color: #ffffff;
+    border: 2px solid #EAA339!important;
+    color: #2A2200!important;
+    font-weight: 700;
+    background: linear-gradient( 129deg, #FAE89E 0%, #FDDC71 100%);
+    float: left;
+    border-left: none;
+    margin-top: 5px;
+    width: 60px;
+    font-size: 16px;
+    border: none;
+    color: #ffffff;
+    border-radius: 8px;
 }
 	#Chat hr, #chat-log-board hr{
 		padding-top: 0px;

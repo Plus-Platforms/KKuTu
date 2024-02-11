@@ -1499,6 +1499,14 @@ function getRewards(mode, score, bonus, rank, all, ss){
 		* 1.25 / (1 + 1.25 * sr * sr) // 점차비(양학했을 수록 ↓)
 	;
 	rw.money = 1 + rw.score * 0.01;
+
+	//핫타임
+	var date = new Date();
+
+	if ((date.getHours() >= 12 && date.getHours() <= 14) || (date.getHours() >= 19 && date.getHours() <= 23)) {
+		rw.score *= 2;
+	}
+
 	if(all < 2){
 		rw.score = rw.score * 0.05;
 		rw.money = rw.money * 0.05;

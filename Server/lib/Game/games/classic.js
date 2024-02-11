@@ -100,7 +100,7 @@ exports.getTitle = function(){
 		var i, list = [];
 		var len;
 		
-		/* ���ϰ� �ʹ� �ɸ��ٸ� �ּ��� Ǯ��.
+		/* ���ϰ� �ʹ� �ɸ��ٸ� �ּ��� Ǯ��.
 		R.go(true);
 		return R;
 		*/
@@ -359,9 +359,27 @@ exports.readyRobot = function(robot){
 			}
 		}else denied();
 	});
-	function denied(){
-		text = isRev ? `T.T ...${my.game.char}` : `${my.game.char}... T.T`;
+	function denied() {
+		// 랜덤 단어 목록
+		const randomWords = ["ㅁㄴ엄ㄴ어ㅑㅇㅁㄴㅇㅂ", "ㅂㅂㅂ베ㅔㅂ레ㅏ", "ㅓㅜㄴ춘ㅊ", "벼ㅓㅑ뱝뎌", "?", "ㅑㅂ댑댜ㅐ", " 아잉", "??", "?어이업내", "한방어이없음", "단", "산", "퇴", "을", "남", "곡", "지", "천", "주", "해", "율", "서", "곰", "병", "신", "행", "크", "씨", "발"];
+		const failWords = ["하 님 매너좀", "한방단어를 써버리내 ㅋㅋㅋ", "헋", "아잉", "에라이", "에휴", "gk", "하", "얼탱x", "어이없네", "선넘지 마세요", "선 넘지 마세요", "님 진짜 머하세요", "ㅜㅜ", "ㅠㅠ", "...", ";;", "."]
+		// 랜덤 단어 선택을 위한 함수
+		function getRandomWord(type) {
+			if (type == 0){
+				const randomIndex = Math.floor(Math.random() * randomWords.length);
+				return randomWords[randomIndex];
+			}
+			else if (type == 1){
+				const randomIndex = Math.floor(Math.random() * failWords.length);
+				return failWords[randomIndex];
+			}
+		}
+	
+		// T.T 대신 랜덤 단어로 대체하여 표시
+		text = isRev ? `${getRandomWord(0)}${my.game.char}` : `${my.game.char}${getRandomWord(0)}`;
 		after();
+
+		setTimeout(function(){text = getRandomWord(1); after();}, 3000);
 	}
 	function pickList(list){
 		if(list) do{
@@ -412,9 +430,9 @@ function getMission(l){
 }
 function getAuto(char, subc, type){
 	/* type
-		0 ������ �ܾ� �ϳ�
-		1 ���� ����
-		2 �ܾ� ���
+		0 ������ �ܾ� �ϳ�
+		1 ���� ����
+		2 �ܾ� ���
 	*/
 	var my = this;
 	var R = new Lizard.Tail();
@@ -445,7 +463,7 @@ function getAuto(char, subc, type){
 	if(!char){
 		console.log(`Undefined char detected! key=${key} type=${type} adc=${adc}`);
 	}
-	MAN.findOne([ '_id', char || "��" ]).on(function($mn){
+	MAN.findOne([ '_id', char || "��" ]).on(function($mn){
 		if($mn && bool){
 			if($mn[key] === null) produce();
 			else R.go($mn[key]);
@@ -545,12 +563,12 @@ function getSubChar(char){
 			ca = [ Math.floor(k/28/21), Math.floor(k/28)%21, k%28 ];
 			cb = [ ca[0] + 0x1100, ca[1] + 0x1161, ca[2] + 0x11A7 ];
 			cc = false;
-			if(cb[0] == 4357){ // ������ ��, ��
+			if(cb[0] == 4357){ // ������ ��, ��
 				cc = true;
 				if(RIEUL_TO_NIEUN.includes(cb[1])) cb[0] = 4354;
 				else if(RIEUL_TO_IEUNG.includes(cb[1])) cb[0] = 4363;
 				else cc = false;
-			}else if(cb[0] == 4354){ // ������ ��
+			}else if(cb[0] == 4354){ // ������ ��
 				if(NIEUN_TO_IEUNG.indexOf(cb[1]) != -1){
 					cb[0] = 4363;
 					cc = true;

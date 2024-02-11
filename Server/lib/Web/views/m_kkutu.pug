@@ -59,14 +59,15 @@ block Jungle
 	span#RULE= JSON.stringify(locals.RULE)
 	span#OPTIONS= JSON.stringify(locals.OPTIONS)
 	div#Yell
+
 	div.kkutu-menu
-		button#HelpBtn.for-lobby.for-master.for-normal.for-gaming(style='display: none;')!= L('help')
+		//button#HelpBtn.for-lobby.for-master.for-normal.for-gaming(style='display: none;')!= L('help')
 		button#SettingBtn.for-lobby.for-master.for-normal.for-gaming(style='display: none;')!= L('settings')
-		button#CommunityBtn.for-lobby.for-master.for-normal.for-gaming(style='display: none;')!= L('community')
+		//button#CommunityBtn.for-lobby.for-master.for-normal.for-gaming(style='display: none;')!= L('community')
 		button#SpectateBtn.for-master.for-normal(style='display: none;'): +FA('eye')
 		button#SetRoomBtn.for-master(style='display: none;'): +FA('wrench')
-		button#NewRoomBtn.for-lobby(style='display: none;'): +FA('plus')
 		button#QuickRoomBtn.for-lobby(style='display: none;'): +FA('bolt')
+		button#NewRoomBtn.for-lobby(style='display: none;'): +FA('plus')
 		//- button#ShopBtn.for-lobby(style='display: none; background-color: #B3E7B7;'): +FA('shopping-bag')
 		button#DictionaryBtn.for-lobby.for-master.for-normal.for-gaming(style='display: none;'): +FA('book')
 		//- button#WordPlusBtn.for-lobby.for-master.for-normal.for-gaming(style='display: none; background-color: #73D07A;')!= L('wordPlus')
@@ -119,7 +120,7 @@ block Middle
 			h4
 			+SettingOption('only-unlock', L('onlyUnlock'), "width: 200px;")
 		div.dialog-bar.tail-button
-			button#setting-ok= L('save')
+			button.primaryBtn#setting-ok= L('save')
 			button#setting-server= L('changeServer')
 	+Dialog('CommunityDiag', 300, 330)
 		div.dialog-bar(style='height: 225px; overflow-y: scroll;')
@@ -164,12 +165,26 @@ block Middle
 			input#room-pw(type='password', placeholder=L('password'), maxlength=20)
 		div.dialog-bar
 			h4.opt!= L('userLimit')
-			input#room-limit(type='number', min=2, max=8, step=1, value=8)
+			input#room-limit(type='number', min=2, max=9, step=1, value=9)
 		div.dialog-bar
 			h4.opt!= L('gameMode')
 			select#room-mode
-				- for(var i in locals.MODE)
-					option(value=Number(i))!= L('mode' + locals.MODE[i])
+				optgroup(label=L('mcKorean'))
+					option(value=3)= L('modeKSH')
+					option(value=2)= L('modeKKT')
+					option(value=8)= L('modeKAP')
+					option(value=6)= L('modeKTY')
+					option(value=10)= L('modeKDA')
+					option(value=5)= L('modeKCW')
+					option(value=12)= L('modeKSS')
+					option(value=4)= L('modeCSQ')
+					option(value=9)= L('modeHUN')
+				optgroup(label=L('mcEnglish'))
+					option(value=1)= L('modeESH')
+					option(value=0)= L('modeEKT')
+					option(value=7)= L('modeETY')
+					option(value=11)= L('modeEDA')
+					option(value=13)= L('modeESS')
 		div.dialog-bar(style='margin-top: -5px; height: 50px;')
 			h4
 			h4#game-mode-expl.dialog-bar-value(style='width: 100%; font-size: 11px;')
@@ -345,13 +360,24 @@ block Middle
 		div.dialog-bar.tail-button
 			button.primaryBtn#obtain-ok= L('OK')
 	+Dialog('HelpDiag', 300, 400, L('helpText'))
-		iframe#help-board(width=300, height=375)
-	+Dialog('CommunityDiag', 300, 400, "공식 커뮤니티")
+		iframe#help-board(style="height: 1000px;width: 100%;")
+	+Dialog('Community2Diag', 300, 400, "공식 커뮤니티")
 		iframe#community(width=300, height=375)
 	+Product('UserList')
 		div 불러오는 중
 	+Product('RoomList')
 		div 불러오는 중
+	+Product('SideList')
+		div.mslist
+			button.sidebtn#HelpBtn
+				img(src="/img/kkutu/quick/support_m.svg", alt="고객센터")
+			button.sidebtn#Community2Btn
+				img(src="/img/kkutu/quick/community_m.svg", alt="공식 커뮤니티")
+			a(href="https://pcor.me/coupon", target="_blank")
+				button.sidebtn
+					img(src="/img/kkutu/quick/coupon_m.svg", alt="쿠폰 등록")
+			button.sidebtn#CommunityBtn
+				img(src="/img/kkutu/quick/friends_m.svg", alt="친구 목록")
 	+Product('Shop')
 		div 불러오는 중
 	+Product('Room')
@@ -432,7 +458,7 @@ block Middle
 	div#ad
 
 block Bottom
-	div#facebook-menu
-		div.fb-like(data-href='http://jjo.kr/kkutu', data-width='300', data-layout='button_count', data-action='like', data-show-faces='true', data-share='true')
+	ins.adsbygoogle(style="display:inline-block;width:320px;height:50px", data-ad-client="ca-pub-3808496003691786", data-ad-slot="6703419777")
 	div.bottom-legal!= L('dictionarySupport')
 	div.bottom-legal!= L('etcSupport')
+	script (adsbygoogle = window.adsbygoogle || []).push({});

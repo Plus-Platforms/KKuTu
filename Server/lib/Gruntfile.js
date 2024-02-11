@@ -43,6 +43,20 @@ const KKUTU_LIST = [
 	"Web/lib/kkutu/tail.js"
 ];
 
+const KKUTU_LEGACY_LIST = [
+	"Web/lib/kkutu/old/head.js",
+	"Web/lib/kkutu/old/ready.js",
+	"Web/lib/kkutu/old/rule_classic.js",
+	"Web/lib/kkutu/old/rule_jaqwi.js",
+	"Web/lib/kkutu/old/rule_crossword.js",
+	"Web/lib/kkutu/old/rule_typing.js",
+	"Web/lib/kkutu/old/rule_hunmin.js",
+	"Web/lib/kkutu/old/rule_daneo.js",
+	"Web/lib/kkutu/old/rule_sock.js",
+	"Web/lib/kkutu/old/body.js",
+	"Web/lib/kkutu/old/tail.js"
+];
+
 module.exports = function(grunt){
 	var i, files = {}, cons = {};
 	var KKUTU = "Web/public/js/in_game_kkutu.min.js";
@@ -82,4 +96,44 @@ module.exports = function(grunt){
 			});
 		})
 	});
-};
+
+	/*레거시*/
+/*	i, files = {}, cons = {};
+	KKUTU = "Web/public/js/old/in_game_kkutu.min.js";
+	
+	for(i in LIST){
+		files["Web/public/js/old/"+LIST[i]+".min.js"] = "Web/lib/old/"+LIST[i]+".js";
+	}
+	files[KKUTU] = KKUTU_LEGACY_LIST;
+	
+	grunt.initConfig({
+		uglify: {
+			options: {
+				
+			},
+			build: {
+				files: files
+			}
+		},
+		concat: {
+			basic: {
+				src: KKUTU_LEGACY_LIST,
+				dest: "Web/lib/old/in_game_kkutu.js"
+			}
+		}
+	});
+	grunt.loadNpmTasks('grunt-contrib-uglify');
+	grunt.loadNpmTasks('grunt-contrib-concat');
+	
+	grunt.registerTask('default', ['concat', 'uglify']);
+	grunt.registerTask('pack', 'Log', function(){
+		var done = this.async();
+		var url = __dirname + "/" + KKUTU;
+		
+		File.readFile(url, function(err, res){
+			File.writeFile(url, "(function(){" + res.toString() + "})();", function(err, res){
+				done();
+			});
+		})
+	});
+*/};

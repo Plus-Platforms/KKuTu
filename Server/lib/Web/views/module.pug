@@ -70,24 +70,24 @@ mixin Menu()
 			span#profile= SESSION.profile ? JSON.stringify(SESSION.profile) : '{}'
 			div.accountItem
 				div.flex
-					img.fuckHank(src='https://cdn.kkutu.cc/img/kkutu/currency/Ping.svg')
+					img.fuckHank(src='https://cdn.kkutu.cc/img/kkutu/currency/ping.png')
 					span.my-stat-ping.aISub#accping
 					span.fuckSeogom= "핑"
 					img.fuckHank#addBalance(src='https://cdn.kkutu.cc/img/kkutu/currency/charge.svg')
 			div.accountItem
 				div.flex
-					img.fuckHank(src='https://cdn.kkutu.cc/img/kkutu/currency/Win.svg')
+					img.fuckHank(src='https://cdn.kkutu.cc/img/kkutu/currency/win.png')
 					span.my-stat-record.aISub
 					span.fuckSeogom= "승"
 			div.accountItem
 				div.flex
-					img.fuckHank(src='https://cdn.kkutu.cc/img/kkutu/currency/XP.svg')
+					img.fuckHank(src='https://cdn.kkutu.cc/img/kkutu/currency/xp.png')
 					span.aISub.my-level
 					span.my-gauge-text.fuckHoSeo.fuckSeogom
 				+GraphBar('my-gauge')
 			div.accountItem
 				div.flex
-					img.fuckHank(src='https://cdn.kkutu.cc/img/kkutu/currency/Okg.svg')
+					img.fuckHank(src='https://cdn.kkutu.cc/img/kkutu/currency/okg.png')
 					span.my-okg-text.aISub#accping
 				div
 					+GraphBar('my-okg')

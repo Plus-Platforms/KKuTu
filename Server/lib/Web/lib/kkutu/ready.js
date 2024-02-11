@@ -183,7 +183,7 @@ $(document).ready(function(){
 
 	$data._soundList = [
 		{ key: "k", value: "/media/kkutu/k.mp3" },
-		{ key: "lobby", value: "/media/kkutu/LobbyBGMS1.mp3" },
+		{ key: "lobby", value: "/media/kkutu/LobbySeolBGM.mp3" },
 		{ key: "dialog", value: "/media/kkutu/dialog.mp3" },
 		{ key: "legacylobby", value: "/media/kkutu/LobbyBGM.mp3" },
 		{ key: "ingame", value: "/media/kkutu/LobbyBGM2.mp3" },
@@ -405,13 +405,19 @@ $(document).ready(function(){
 		}).hotkey(false, 27));
 	}
 	
-	if($data.opts.cp !== true){
-	showDialog($stage.dialog.license);
+
+
+	if($data.opts.vp == true){
+		document.getElementById("Background").pause();
 	}
 
-	$("#community2").attr('src', "https://pcor.me/plKkkutuCafe");
-	$('#dimmer').fadeIn();
-	showDialog($stage.dialog.community2);
+	if($data.opts.cp !== true){
+		showDialog($stage.dialog.license);
+		$("#community2").attr('src', "https://pcor.me/plKkkutuCafe");
+		$('#dimmer').fadeIn();
+		showDialog($stage.dialog.community2);
+	}
+
 
 
 	VanillaTilt.init(document.querySelector('.my-image'), {
@@ -438,7 +444,7 @@ $(document).ready(function(){
 		setTimeout(function(){
 			tostMessage.classList.remove('active');
 			setTimeout(function(){tostMessage.classList.add('hidden');}, 500);
-		}, 5000);
+		}, 3000);
 	}
 
    
@@ -470,15 +476,7 @@ $(document).ready(function(){
 			}
 	}
  
-	var playtime = 0;
 
-	function showGameAlert() {
-	alert('게임을 플레이한지 '+playtime+'시간이 지났습니다. 과도한 게임 이용은 일상생활에 지장을 줄 수 있습니다. 이 게임물은 전체이용가입니다.');
-
-	setTimeout(showGameAlert, 3600000);
-	}
-
-	showGameAlert();
  
 
 	$stage.menu.help.on('click', function(e){
@@ -767,6 +765,7 @@ $(document).ready(function(){
 			bv: $("#bgm-volume").val(),
 			ev: $("#effect-volume").val(),
 			lb: $("#legacy-bgm").is(":checked"),
+			vp: $("#pause-video").is(":checked"),
 			di: $("#deny-invite").is(":checked"),
 			dw: $("#deny-whisper").is(":checked"),
 			df: $("#deny-friend").is(":checked"),

@@ -251,7 +251,7 @@ $(document).ready(function(){
 
 	$data._soundList = [
 		{ key: "k", value: "/media/kkutu/k.mp3" },
-		{ key: "lobby", value: "/media/kkutu/LobbyBGMS1.mp3" },
+		{ key: "lobby", value: "/media/kkutu/LobbySeolBGM.mp3" },
 		{ key: "dialog", value: "/media/kkutu/dialog.mp3" },
 		{ key: "legacylobby", value: "/media/kkutu/LobbyBGM.mp3" },
 		{ key: "ingame", value: "/media/kkutu/LobbyBGM2.mp3" },
@@ -473,13 +473,19 @@ $(document).ready(function(){
 		}).hotkey(false, 27));
 	}
 	
-	if($data.opts.cp !== true){
-	showDialog($stage.dialog.license);
+
+
+	if($data.opts.vp == true){
+		document.getElementById("Background").pause();
 	}
 
-	$("#community2").attr('src', "https://pcor.me/plKkkutuCafe");
-	$('#dimmer').fadeIn();
-	showDialog($stage.dialog.community2);
+	if($data.opts.cp !== true){
+		showDialog($stage.dialog.license);
+		$("#community2").attr('src', "https://pcor.me/plKkkutuCafe");
+		$('#dimmer').fadeIn();
+		showDialog($stage.dialog.community2);
+	}
+
 
 
 	VanillaTilt.init(document.querySelector('.my-image'), {
@@ -506,7 +512,7 @@ $(document).ready(function(){
 		setTimeout(function(){
 			tostMessage.classList.remove('active');
 			setTimeout(function(){tostMessage.classList.add('hidden');}, 500);
-		}, 5000);
+		}, 3000);
 	}
 
    
@@ -538,15 +544,7 @@ $(document).ready(function(){
 			}
 	}
  
-	var playtime = 0;
 
-	function showGameAlert() {
-	alert('게임을 플레이한지 '+playtime+'시간이 지났습니다. 과도한 게임 이용은 일상생활에 지장을 줄 수 있습니다. 이 게임물은 전체이용가입니다.');
-
-	setTimeout(showGameAlert, 3600000);
-	}
-
-	showGameAlert();
  
 
 	$stage.menu.help.on('click', function(e){
@@ -835,6 +833,7 @@ $(document).ready(function(){
 			bv: $("#bgm-volume").val(),
 			ev: $("#effect-volume").val(),
 			lb: $("#legacy-bgm").is(":checked"),
+			vp: $("#pause-video").is(":checked"),
 			di: $("#deny-invite").is(":checked"),
 			dw: $("#deny-whisper").is(":checked"),
 			df: $("#deny-friend").is(":checked"),
@@ -2380,7 +2379,7 @@ function applyOptions(opt){
 	$("#bgm-volume").val($data.BGMVolume);
 	$("#effect-volume").val($data.EffectVolume);
 	$("#legacy-bgm").attr('checked', $data.opts.lb);
-
+	$("#pause-video").attr('checked', $data.opts.vp);
 	$("#deny-invite").attr('checked', $data.opts.di);
 	$("#deny-whisper").attr('checked', $data.opts.dw);
 	$("#deny-friend").attr('checked', $data.opts.df);
@@ -2802,9 +2801,9 @@ function onMessage(data){
 			}else if(data.code == 413){
 				$stage.dialog.room.hide();
 				$stage.menu.setRoom.trigger('click');
-			}else if(data.code == 429){
+			}/*else if(data.code == 429){
 				playBGM('lobby');
-			}else if(data.code == 430){
+			}*/else if(data.code == 430){
 				$data.setRoom(data.message, null);
 				if($stage.dialog.quick.is(':visible')){
 					$data._preQuick = false;
@@ -2857,38 +2856,65 @@ function adBlockFunction(){
 	console.log("TURN OFF");
 }
 function welcome() {
+    var playtime = 0;
 
-	if(mobile){
-		$("#intro-text").text(L['welcome']);
-		$("#Intro").animate({ 'opacity': 1 }, 1000).animate({ 'opacity': 0 }, 1000);
+    function showGameAlert() {
+		if (playtime !== 0){
+        notice('게임을 플레이한지 ' + playtime + '시간이 지났습니다. 과도한 게임 이용은 일상생활에 지장을 줄 수 있습니다. 이 게임물은 전체이용가입니다.');
+		}
+
+        var date = new Date();
+
+        if ((date.getHours() >= 12 && date.getHours() <= 14) || (date.getHours() >= 19 && date.getHours() <= 23)) {
+            notice('매일 12시부터 14시, 19시부터 23시는 핫타임! XP 2배로 BURNING UP!');
+        }
+
+        playtime++;
+        setTimeout(showGameAlert, 3600000);
+    }
+
+    showGameAlert();
+
+    if (mobile) {
+        $("#intro-text").text(L['welcome']).on("click", function () {
+            $("#intro-text").addClass("load-complete");
+        });
+        $("#Intro").animate({ 'opacity': 1 }, 1000).animate({ 'opacity': 0 }, 1000);
         addTimeout(function () {
             playBGM('lobby');
             $("#Intro").hide();
         }, 2000);
-	}
-	else{
-    stopBGM();
-    $("#intro-text").text(L['welcome']);
+    } else {
+        stopBGM();
+        $("#intro-text").text(L['welcome'])
+		$("#intro-text").addClass("load-complete");
 
-    // 키 입력을 감지하는 이벤트 리스너 추가
-    function keydownHandler() {
-		playBGM('lobby');
-        $("#Intro").animate({ 'opacity': 1 }, 1000).animate({ 'opacity': 0 }, 1000);
-        addTimeout(function () {
+
+		function hideIntro(){
+			playBGM('lobby');
+            //$("#Intro").animate({ 'opacity': 1 }, 1000).animate({ 'opacity': 0 }, 1000);
             $("#Intro").hide();
-			if ($.cookie('introjs-dontShowAgain') !== "true") {
-			playOnboarding();
-			}
-        }, 2000);
+            $(document).off("keydown", keydownHandler);
+		}
 
-        // 이벤트 리스너 제거
-        $(document).off("keydown", keydownHandler);
+        // 키 입력을 감지하는 이벤트 리스너 추가
+        function keydownHandler() {
+			hideIntro();
+        }
+		$("#intro-text").on("click", function () {
+			hideIntro();
+		});
+		$("#lottiePlayer").on("complete", function () {
+			hideIntro();
+		});
+
+        $(document).on("keydown", keydownHandler);
+
     }
 
-    $(document).on("keydown", keydownHandler);
-	}
     if ($data.admin) console.log("관리자 모드");
 }
+
 
 
 function getKickText(profile, vote){
@@ -3376,7 +3402,7 @@ function roomListBar(o){
 	.append($("<div>").addClass("rooms-number").html(o.id))
 	.append($("<div>").addClass("rooms-title ellipse").text(badWords(o.title)))
 	.append($("<div>").addClass("rooms-limit").html(o.players.length + " / " + o.limit))
-	.append($("<div>").width(270)
+	.append($("<div>").width(360)
 		.append($("<div>").addClass("rooms-mode").html(opts.join(" / ").toString()))
 		.append($("<div>").addClass("rooms-round").html(L['rounds'] + " " + o.round))
 		.append($("<div>").addClass("rooms-time").html(o.time + L['SECOND']))
@@ -3473,6 +3499,7 @@ function updateRoom(gaming){
 				o.profile = getAIProfile(o.level);
 				$data.robots[o.id] = o;
 			}
+			
 			$r.append($("<div>").attr('id', "room-user-"+o.id).addClass("room-user")
 				.append($("<div>").addClass("room-user-title").addClass("room-user-team nameTeam-" + o.game.team)
 					.append(getLevelImage(o.data.score).addClass("room-user-level"))
@@ -4409,10 +4436,23 @@ function roundEnd(result, data){
 		if(addp > 0){
 			addp = "<label class='result-me-bonus'>(+" + commify(addp) + ")</label>";
 		}else addp = "";
+		var date = new Date();
 		
 		notice(L['scoreGain'] + ": " + commify($data._result.reward.score) + ", " + L['moneyGain'] + ": " + commify($data._result.reward.money));
+		if ((date.getHours() >= 12 && date.getHours() <= 14) || (date.getHours() >= 19 && date.getHours() <= 23)) {
+			notice("핫타임이 적용되어 XP가 2배 되었습니다.");
+		}
+
 		$(".result-me").css('opacity', 1);
-		$(".result-me-score").html(L['scoreGain']+" +"+commify($data._result.reward.score)+addit);
+		
+
+		if ((date.getHours() >= 12 && date.getHours() <= 14) || (date.getHours() >= 19 && date.getHours() <= 23)) {
+			$(".result-me-score").html("핫타임 XP 2배 +"+commify($data._result.reward.score)+addit);
+		}
+		else{
+			$(".result-me-score").html(L['scoreGain']+" +"+commify($data._result.reward.score)+addit);
+		}
+		
 		$(".result-me-money").html(L['moneyGain']+" +"+commify($data._result.reward.money)+addp);
 	}
 	function roundEndAnimation(first){
@@ -4501,9 +4541,7 @@ function drawRanking(ranks){
 	if(!ranks) return $stage.dialog.resultOK.trigger('click');
 	for(i in ranks.list){
 		r = ranks.list[i];
-		o = $data.users[r.id] || {
-			profile: { title: L['hidden'] }
-		};
+		o = $data.users[r.id];
 		me = r.id == $data.id;
 		
 		$b.append($o = $("<div>").addClass("result-board-item")

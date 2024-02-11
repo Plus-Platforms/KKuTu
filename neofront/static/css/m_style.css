@@ -128,7 +128,8 @@ span{
     float: right;
     margin: 1px;
     font-size: 18px;
-    color: #ffffff; }
+    color: #48473a;
+}
 
 #account-setting{
 	float: left;
@@ -139,18 +140,28 @@ span{
 #account-info{
 	float: left;
 	padding-top: 8px;
-	width: 80px;
-	text-align: center;
+	margin-right: 8px;
 	cursor: pointer;
 	transition: color 300ms ease;
 }
-#account-info:hover{ color: #EEEEEE; }
 #global-notice{
-	padding: 3px 0px;
-	margin-top: 30px;
-	color: #111111;
-	background-color: #FFFFFF;
-	z-index: 5;
+    display: flex;
+    align-content: center;
+    align-items: center;
+    justify-items: center;
+    padding-left: 25px;
+    padding-right: 25px;
+    left: 0px;
+    top: 0px;
+    position: absolute;
+    z-index: 999;
+    height: 100vh;
+    color: #111111;
+    background-color: #00000095;
+}
+#gn-content{
+	border-radius: 20px;
+    background-color: #fff;
 }
 .searching{
 	color: #EEEEEE;
@@ -266,12 +277,19 @@ span{
 .auto-item:hover{ background-color: #333333; }
 .auto-selected{ color: #EEEE44; background-color: #3B3B3B; }
 
+.sidebtn{
+	border: none;
+    padding-bottom: 0px;
+    padding-top: 0px;
+}
+.mslist{
+	display: flex;
+}
 #Top{
-	position: fixed;
-    width: 100%;
+	padding-right: 4px;
+    padding-left: 4px;
     height: 45px;
-    /* box-shadow: 0px 2px 2px #111111; */
-    background-image: url(https://cdn.kkutu.cc/img/topbg.png);
+	width: 100%;
     z-index: 1;
 }
 #Middle{
