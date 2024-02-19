@@ -3371,7 +3371,7 @@ function updateCommunity(){
 		o = $data._friends[i] || {};
 		p = ($data.users[i] || {}).profile;
 		
-		$stage.dialog.commFriends.append($("<div>").addClass("cf-item").attr('id', "cfi-" + i)
+		/*$stage.dialog.commFriends.append($("<div>").addClass("cf-item").attr('id', "cfi-" + i)
 			.append($("<div>").addClass("cfi-status cfi-stat-" + (o.server ? 'on' : 'off')))
 			.append($("<div>").addClass("cfi-server").html(o.server ? L['server_' + o.server] : "-"))
 			.append($("<div>").addClass("cfi-name ellipse").html(p ? (p.title || p.name) : L['hidden']))
@@ -3380,7 +3380,8 @@ function updateCommunity(){
 				.append($("<i>").addClass("fa fa-pencil").on('click', requestEditMemo))
 				.append($("<i>").addClass("fa fa-remove").on('click', requestRemoveFriend))
 			)
-		);
+		);*/
+		$stage.dialog.commFriends.append("친구 목록 수정중으로 당분간 확인하실 수 없습니다");
 	}
 	function requestEditMemo(e){
 		var id = $(e.currentTarget).parent().parent().attr('id').slice(4);

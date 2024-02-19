@@ -17,21 +17,21 @@
  */
 /* Extrabold */
 @font-face {
-	font-family: 'KartGothic';
+	font-family: 'Pretendard';
 	src: url('/webfonts/kart-eb.woff') format('woff');
 	font-weight: 800;
 }
 
 /* Bold */
 @font-face {
-	font-family: 'KartGothic';
+	font-family: 'Pretendard';
 	src: url('/webfonts/kart-bold.woff') format('woff');
 	font-weight: bold;
 }
 
 /* Medium */
 @font-face {
-	font-family: 'KartGothic';
+	font-family: 'Pretendard';
 	src: url('/webfonts/kart-med.woff') format('woff');
 	font-weight: 500;
 }
@@ -43,7 +43,7 @@ body{
 	height: 480px;
 	overflow-y: hidden;
 	font-size: 18px;
-	font-family: 'KartGothic', 맑은 고딕, 돋움;
+	font-family: 'Pretendard', 맑은 고딕, 돋움;
 }
 img{
 	cursor: pointer;

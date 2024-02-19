@@ -346,7 +346,7 @@ min-height: 410px;
 .GameBox{
 	width: 1000px;
 	height: 410px;
-	background-image: url('https://cdn.kkutu.cc/img/kkutu/gamebg.png');
+	background-image: url('/img/kkutu/gamebg.png');
 }
 	.GameBox .product-title{ height: 12px; }
 	.GameBox .product-title h5{ float: left; }
@@ -418,7 +418,7 @@ min-height: 410px;
 		font-weight: bold;
 		text-align: center;
 		text-shadow: 0px 1px 5px #141414;
-		background-image: url('https://cdn.kkutu.cc/img/kkutu/lefthand.png');
+		background-image: url('/img/kkutu/lefthand.png');
 	}
 	.jjoriping{ width: 500px; }
 	.cw.jjoriping{ margin-top: -10px; width: 322px; }
@@ -507,7 +507,7 @@ min-height: 410px;
 		font-weight: bold;
 		text-align: center;
 		text-shadow: 0px 1px 5px #141414;
-		background-image: url('https://cdn.kkutu.cc/img/kkutu/righthand.png');
+		background-image: url('/img/kkutu/righthand.png');
 	}
 	.rounds{
 		margin-top: -130px;
@@ -689,9 +689,9 @@ min-height: 410px;
 				box-shadow: 0px 1px 1px #CCCCCC;
 				background-color: #333333;
 			}
-				.result-me-before-bar{ background-image: url('https://cdn.kkutu.cc/img/kkutu/scorebar.png'); }
-				.result-me-current-bar{ background-image: url('https://cdn.kkutu.cc/img/kkutu/currentbar.png'); }
-				.result-me-bonus-bar{ background-image: url('https://cdn.kkutu.cc/img/kkutu/bonusbar.png'); }
+				.result-me-before-bar{ background-image: url('/img/kkutu/scorebar.png'); }
+				.result-me-current-bar{ background-image: url('/img/kkutu/currentbar.png'); }
+				.result-me-bonus-bar{ background-image: url('/img/kkutu/bonusbar.png'); }
 				.result-me-score-text{
 					margin-top: -32px;
 					margin-left: 80px;
@@ -726,7 +726,7 @@ min-height: 410px;
 		.my-okg-text{ margin-top: -15px; width: 100px; }
 	.my-level{ margin: 13px 0px; width: 190px; font-size: 15px; text-align: center; }
 	.my-gauge{ border-radius: 10px; margin: 3px 0px; width: 190px; height: 30px; overflow: hidden; background-color: #333333; }
-		.my-gauge .graph-bar{ background-image: url('https://cdn.kkutu.cc/img/kkutu/scorebar.png'); }
+		.my-gauge .graph-bar{ background-image: url('/img/kkutu/scorebar.png'); }
 	.my-gauge-text{ margin-top: -25px; width: 190px; }
 	.category-filter{
 		border-radius: 5px;
@@ -803,13 +803,13 @@ min-height: 410px;
 		margin: -1px -12px 0px -7px;
 		width: 20px;
 		height: 20px;
-		background-image: url('https://cdn.kkutu.cc/img/kkutu/balloontip.png');
+		background-image: url('/img/kkutu/balloontip.png');
 	}
 	.chat-balloon-bot{
 		margin: -1px -12px 0px 50px;
 		width: 20px;
 		height: 20px;
-		background-image: url('https://cdn.kkutu.cc/img/kkutu/balloonbot.png');
+		background-image: url('/img/kkutu/balloonbot.png');
 	}
 #Chat{
 	width: 100%;

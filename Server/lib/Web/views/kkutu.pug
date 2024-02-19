@@ -109,7 +109,7 @@ block Middle
 	div#dimmer(style="display: none;")
 	div#tost_message
 	
-	+Dialog('SettingDiag', 400, 560, L('settingsText', false))
+	+Dialog('SettingDiag', 400,591, L('settingsText', false))
 		div.dialog-bar
 			h4.opt!= "개인 설정"
 			+SettingOption('legacy-bgm', "원작 BGM")
@@ -141,7 +141,7 @@ block Middle
 			button#setting-server= L('changeServer')
 	+Dialog('CommunityDiag', 300, 330)
 		div.dialog-bar(style='height: 225px; overflow-y: scroll;')
-			div#comm-friends
+			
 		div.dialog-bar.tail-button.d3-bar
 			button#comm-friend-add= L('friendAdd')
 	+Dialog('LeaderboardDiag', 300, 550, L('leaderboard', false))
@@ -269,7 +269,7 @@ block Middle
 				option(value=4) D
 		div.dialog-bar.tail-button.d3-bar
 			button.primaryBtn#practice-ok= L('OK')
-	+Dialog('ResultDiag', 400, 560, L('gameResult'), true)
+	+Dialog('ResultDiag', 400,591, L('gameResult'), true)
 		div.result-board
 		div.result-me
 			div.result-me-score
@@ -433,7 +433,7 @@ block Middle
 		div.dialog-bar#obtain-name(style='text-align: center;')
 		div.dialog-bar.tail-button.d3-bar
 			button.primaryBtn#obtain-ok= L('OK')
-	+Dialog('HelpDiag', 1000, 560, L('helpText', false))
+	+Dialog('HelpDiag', 1000,591, L('helpText', false))
 		iframe#help-board(width=1000, height=480)
 	+Dialog('PingShopDiag', 400, 760, "코인 상점")
 		iframe#ping-board(width=400, height=700)
@@ -455,107 +455,114 @@ block Middle
 		div.dialog-bar.d2-bar.tail-button
 			button.primaryBtn#confirm-ok= L('OK')
 			button#confirm-cancel= "취소"
-	
-	+Product('UserList')
-		div 불러오는 중
-	+Product('RoomList')
-		div 불러오는 중
+	div(style="width: 100%;display: flex;height: 680px;")
+		div(style="width: 310px;flex-direction: column;display: flex;")
+			+Product('UserList')
+				div#megauser
+					p.conn-desc.mfriend= "내 친구"
+					div#comm-friends
+					p.conn-desc= "전체 접속자"
+					div#connList 불러오는 중
+			+Product('Chat')
+				div#Chat
+				input#Talk(maxlength=200)
+				button#ChatBtn= L('send')
+		+Product('RoomList')
+			div 불러오는 중
+
+
+		+Product('Shop')
+			div.shop-categories
+				- for(var i in locals.CATEGORIES)
+					- var v = locals.GROUPS[locals.CATEGORIES[i]] || [];
+					div.category-filter.shop-type(id="shop-type-" + locals.CATEGORIES[i], value=v.join(','))!= L('category_' + locals.CATEGORIES[i])
+			div#shop-shelf(style='padding: 0px 20px 20px 20px; box-sizing: border-box; width: 100%; height: 540px; overflow-y: scroll;')
+
+		+Product('Room')
+			div.team-selector
+				div.team-button#team-0.team-0= L('teamSolo')
+				div.team-button#team-1.team-1 A
+				div.team-button#team-2.team-2 B
+				div.team-button#team-3.team-3 C
+				div.team-button#team-4.team-4 D
+			div.room-users
+		+Product('Game')
+			div.game-head
+				div.items
+				div.hints(style='display: none;')
+				div.tools(style='display: none;')
+					div(style="width: 100%")
+						div(style="float: left; width: 35%;")
+							span#themeis= L('themeis')
+						div(style="float: left; width: 65%;")
+							span#themeis-title
+					div(style="width: 100%")
+						div(style="float: left; width: 35%;")
+							span#drawing= L('wordis')
+						div(style="float: left; width: 65%;")
+							span#drawing-title
+					div(style="width: 100%")
+						label(for="drawing-line-width")= L('drawingLineWidth')
+						input#drawing-line-width(type="range", value="1", min="1", max="40")
+					.palette
+						div
+							button.button-color#color-red
+						div
+							button.button-color#color-orange
+						div
+							button.button-color#color-yellow
+						div
+							button.button-color#color-green
+						div
+							button.button-color#color-blue
+						div
+							button.button-color#color-indigo
+						div
+							button.button-color#color-violet
+						div
+							button.button-color#color-black
+						div
+							button.button-color#color-white
+					div(style="width: 100%")
+						div(style="float: left; width: 60%;")
+							label(for="drawing-color")= L('drawingColor')
+							input#drawing-color(type="color", value="#000000")
+						div(style="float: left; width: 40%;")
+							button#drawing-clear= L('drawingClear')
+				div.b-left.cwcmd(style='display: none;')
+					div.cw-q-head
+					input#cw-q-input(placeholder=L('inputHere'), style='width: 313px; height: 20px; font-size: 15px;')
+					div.cw-q-body
+				div.b-left.bb(style='display: none;')
+				div.jjoriping
+					img.jjoObj.jjoEyeL(src='/img/jjoeyeL.png')
+					img.jjoObj.jjoNose(src='/img/jjonose.png')
+					img.jjoObj.jjoEyeR(src='/img/jjoeyeR.png')
+					div.jjoDisplayBar
+						div.jjo-display.ellipse
+						+GraphBar('jjo-turn-time')
+						+GraphBar('jjo-round-time')
+				div.chain
+				div.rounds
+				div.history-holder
+					div.history
+			div.game-body
+			div.game-input
+				input#game-input(placeholder=L('yourTurn')+' '+L('inputChat'), readonly)
 	+Product('SideList')
-			button.sidebtn#HelpBtn
-				img(src="/img/kkutu/quick/support.svg", alt="고객센터")
-			button.sidebtn#Community2Btn
-				img(src="/img/kkutu/quick/community.svg", alt="공식 커뮤니티")
-			a(href="https://pcor.me/coupon", target="_blank")
-				button.sidebtn
-					img(src="/img/kkutu/quick/coupon.svg", alt="쿠폰 등록")
-			button.sidebtn#CommunityBtn
-				img(src="/img/kkutu/quick/friends.svg", alt="친구 목록")
-
-	+Product('Shop')
-		div.shop-categories
-			- for(var i in locals.CATEGORIES)
-				- var v = locals.GROUPS[locals.CATEGORIES[i]] || [];
-				div.category-filter.shop-type(id="shop-type-" + locals.CATEGORIES[i], value=v.join(','))!= L('category_' + locals.CATEGORIES[i])
-		div#shop-shelf(style='width: 100%; height: 400px; overflow-y: scroll;')
-
-	+Product('Room')
-		div.team-selector
-			div.team-button#team-0.team-0= L('teamSolo')
-			div.team-button#team-1.team-1 A
-			div.team-button#team-2.team-2 B
-			div.team-button#team-3.team-3 C
-			div.team-button#team-4.team-4 D
-		div.room-users
-	+Product('Game')
-		div.game-head
-			div.items
-			div.hints(style='display: none;')
-			div.tools(style='display: none;')
-				div(style="width: 100%")
-					div(style="float: left; width: 35%;")
-						span#themeis= L('themeis')
-					div(style="float: left; width: 65%;")
-						span#themeis-title
-				div(style="width: 100%")
-					div(style="float: left; width: 35%;")
-						span#drawing= L('wordis')
-					div(style="float: left; width: 65%;")
-						span#drawing-title
-				div(style="width: 100%")
-					label(for="drawing-line-width")= L('drawingLineWidth')
-					input#drawing-line-width(type="range", value="1", min="1", max="40")
-				.palette
-					div
-						button.button-color#color-red
-					div
-						button.button-color#color-orange
-					div
-						button.button-color#color-yellow
-					div
-						button.button-color#color-green
-					div
-						button.button-color#color-blue
-					div
-						button.button-color#color-indigo
-					div
-						button.button-color#color-violet
-					div
-						button.button-color#color-black
-					div
-						button.button-color#color-white
-				div(style="width: 100%")
-					div(style="float: left; width: 60%;")
-						label(for="drawing-color")= L('drawingColor')
-						input#drawing-color(type="color", value="#000000")
-					div(style="float: left; width: 40%;")
-						button#drawing-clear= L('drawingClear')
-			div.b-left.cwcmd(style='display: none;')
-				div.cw-q-head
-				input#cw-q-input(placeholder=L('inputHere'), style='width: 313px; height: 20px; font-size: 15px;')
-				div.cw-q-body
-			div.b-left.bb(style='display: none;')
-			div.jjoriping
-				img.jjoObj.jjoEyeL(src='/img/jjoeyeL.png')
-				img.jjoObj.jjoNose(src='/img/jjonose.png')
-				img.jjoObj.jjoEyeR(src='/img/jjoeyeR.png')
-				div.jjoDisplayBar
-					div.jjo-display.ellipse
-					+GraphBar('jjo-turn-time')
-					+GraphBar('jjo-round-time')
-			div.chain
-			div.rounds
-			div.history-holder
-				div.history
-		div.game-body
-		div.game-input
-			input#game-input(placeholder=L('yourTurn')+' '+L('inputChat'), readonly)
+				button.sidebtn#HelpBtn
+					img(src="/img/kkutu/quick/support.svg", alt="고객센터")
+				button.sidebtn#Community2Btn
+					img(src="/img/kkutu/quick/community.svg", alt="공식 커뮤니티")
+				a(href="https://pcor.me/coupon", target="_blank")
+					button.sidebtn
+						img(src="/img/kkutu/quick/coupon.svg", alt="쿠폰 등록")
+				button.sidebtn#CommunityBtn
+					img(src="/img/kkutu/quick/friends.svg", alt="친구 목록")
 	+Product('Me')
 		div.moremi.my-image
 	+Product('AD')
 		ins.adsbygoogle(style="display:inline-block;width:1200px;height:150px", data-ad-client="ca-pub-3808496003691786", data-ad-slot="8845631298")
-	+Product('Chat')
-		div#Chat
-		input#Talk(maxlength=200)
-		button#ChatBtn= L('send')
+
 	script (adsbygoogle = window.adsbygoogle || []).push({});
 	script(type='text/javascript', src='/js/onboarding.js')

@@ -113,6 +113,7 @@ $(document).ready(function(){
 		lobby: {
 			userListTitle: $(".UserListBox .product-title"),
 			userList: $(".UserListBox .product-body"),
+			connList: $("#connList"),
 			roomListTitle: $(".RoomListBox .product-title"),
 			roomList: $(".RoomListBox .product-body"),
 			createBanner: $("<div>").addClass("rooms-item rooms-create").append($("<div>").html("&nbsp;"))
@@ -326,7 +327,7 @@ $(document).ready(function(){
 				$obj = userListBar(data, only == "for-master");
 				
 				if(only == "for-master") $stage.dialog.inviteList.append($obj);
-				else $stage.lobby.userList.append($obj);
+				else $stage.lobby.connList.append($obj);
 			}
 			$data.users[id] = data;
 			if(needed){
@@ -474,10 +475,6 @@ $(document).ready(function(){
 	}
 	
 
-
-	if($data.opts.vp == true){
-		document.getElementById("Background").pause();
-	}
 
 	if($data.opts.cp !== true){
 		showDialog($stage.dialog.license);
@@ -846,12 +843,6 @@ $(document).ready(function(){
 		$.cookie('kks', JSON.stringify($data.opts));
 		$stage.dialog.setting.hide();
 
-		if($data.opts.vp == true){
-			document.getElementById("Background").pause();
-		}
-		else{
-			document.getElementById("Background").play();
-		}
 
 		stopBGM();
 		playBGM('lobby');
@@ -2903,9 +2894,12 @@ function welcome() {
 
 
 		function hideIntro(){
+			
 			playBGM('lobby');
-            //$("#Intro").animate({ 'opacity': 1 }, 1000).animate({ 'opacity': 0 }, 1000);
-            $("#Intro").hide();
+			$("#Intro").animate({ 'opacity': 0 }, 1000);
+			addTimeout(function () {
+				$("#Intro").hide();
+			}, 1000);
             $(document).off("keydown", keydownHandler);
 		}
 
@@ -2914,9 +2908,6 @@ function welcome() {
 			hideIntro();
         }
 		$("#intro-text").on("click", function () {
-			hideIntro();
-		});
-		$("#lottiePlayer").on("complete", function () {
 			hideIntro();
 		});
 
@@ -3300,7 +3291,7 @@ function updateMe(){
 	$(".my-okg-text").html(prettyTime($data._playTime));
 	$(".my-level").html("Lv. " + lv);
 	$(".my-gauge .graph-bar").width((my.data.score-prev)/(goal-prev)*190);
-	$(".my-gauge-text").html(commify(my.data.score) + "/\n" + commify(goal));
+	$(".my-gauge-text").html(commify(my.data.score) + "/" + commify(goal));
 }
 function prettyTime(time){
 	var min = Math.floor(time / 60000) % 60, sec = Math.floor(time * 0.001) % 60;
@@ -3333,18 +3324,17 @@ function updateUserList(refresh){
 		for(i in $data.users) len++;
 	}
 	$stage.lobby.userListTitle.html("<i class='fa fa-users'></i>"
-		+ "&lt;<b>" + L['server_' + $data.server] + "</b>&gt; "
-		+ L['UserList'].replace("FA{users}", "")
-		+ " [" + len + L['MN'] + "]");
+		+ "<b>" + L['server_' + $data.server] + "</b> 서버 "
+		+ " (" + len + L['MN'] + ")");
 	
 	if(refresh){
-		$stage.lobby.userList.empty();
+		$stage.lobby.connList.empty();
 		$stage.dialog.inviteList.empty();
 		for(i in arr){
 			o = arr[i];
 			if(o.robot) continue;
 			
-			$stage.lobby.userList.append(userListBar(o));
+			$stage.lobby.connList.append(userListBar(o));
 			if(o.place == 0) $stage.dialog.inviteList.append(userListBar(o, true));
 		}
 	}
@@ -3924,7 +3914,7 @@ function updateCommunity(){
 		if(!confirm(memo + "(#" + id.substr(0, 5) + ")\n" + L['friendSureRemove'])) return;
 		send('friendRemove', { id: id }, true);
 	}
-	$("#CommunityDiag .dialog-title").html(L['communityText'] + " (" + len + " / 100)");
+	$(".mfriend").html(L['communityText'] + " - " + len + " / 100명");
 }
 function requestRoomInfo(id){
 	var o = $data.rooms[id];

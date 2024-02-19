@@ -15,38 +15,15 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap');
+ @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css");
 /* Extrabold */
-
-
-@font-face {
-	font-family: 'KartGothic';
-	src: url('/webfonts/kart-eb.woff') format('woff');
-	font-weight: 800;
-}
-
-/* Bold */
-@font-face {
-	font-family: 'KartGothic';
-	src: url('/webfonts/kart-bold.woff') format('woff');
-	font-weight: bold;
-}
-
-/* Medium */
-@font-face {
-	font-family: 'KartGothic';
-	src: url('/webfonts/kart-med.woff') format('woff');
-	font-weight: 500;
-}
-
 
 body{
 	color: #EEEEEE;
 	padding: 0px;
 	margin: 0px;
 	min-width: 480px;
-	font-family: 'Noto Sans KR', sans-serif!important;
+	font-family: 'Pretendard', sans-serif!important;
 }
 /* width */
 ::-webkit-scrollbar {
@@ -98,7 +75,10 @@ input:focus, textarea:focus, button:focus{
 span{
 	display: none;
 }
-.Menu{ min-width: 500px; }
+.Menu{ margin-right: auto;
+    margin-left: auto;
+    max-width: 1540px;
+    min-width: 500px; }
 .Menu .menu-btn{
 	float: left;
     padding: 7px 5px 5px 5px;
@@ -174,51 +154,56 @@ span{
 	text-align: center;
 }
 .accountItem{
-    min-width: 150px;
-    padding-top: 4px;
+    align-items: center;
+    height: 45px;
+    min-width: 160px;
     font-size: 20px;
     padding-right: 8px;
     padding-left: 8px;
     margin-right: 8px;
     margin-top: 8px;
-    color: #2A2E20;
-    background-color: #DEEFAB;
-    border-radius: 15px;
-    box-shadow: 0px 4px 0px #9ca77a;
+    color: #000000;
+    background-color: #ffffff;
+    border-radius: 999px;
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
 }
 .flex{
-	display: flex;
+	height: 100%;
+    align-items: center;
+    justify-content: center;
+    display: flex;
 }
 #account-info{
 	cursor: pointer;
 	transition: color 300ms ease;
 }
 .aISub{
-	width: 100%;
-    text-align: right;
     display: block;
-	font-weight: 700;
+    color: #000;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
 }
 .fuckSeogom{
-	color: #313131;
 	display: inline-block;
+    color: #6B7280;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
 }
 #addBalance{
-	margin-top: 3px;
-	margin-left: 3px;
-    height: 25px;
+	margin-left: 6px;
+    height: 16px;
 	filter: none;
 }
 .fuckHank {
-    margin-top: -13px;
-    height: 40px;
-	filter: drop-shadow(2px 2px 0px #6B474C);
+	height: 20px;
+	margin-right: 4px;
 }
 .fuckHoSeo{
-    padding-left: 8px;
-    padding-top: 2px;
-    line-height: 12px;
-    font-size: 12px;
+	padding-left: 4px;
 }
 
 @keyframes scroller {
@@ -277,24 +262,18 @@ span{
 }
 .Product{
 	float: left;
-	padding: 5px;
-	border-radius: 10px;
 	margin-bottom: 1px;
 	box-shadow: 0px 2px 2px #141414;
 	background-color: #232323;
 }
 .product-title{
-    color: #CCCCCC;
-    padding: 7px;
-    margin-bottom: 5px;
-	font-size: 17px;
+    padding: 10px;
+    font-size: 20px;
 }
 .product-title i{
-	color: #FFFFFF;
-	margin-right: 5px;
+    margin-right: 6px;
 }
 .product-body{
-	padding: 5px 5px 0px 5px;
 	font-size: 13px;
 }
 .product-body #Top{ display: none; }
@@ -435,7 +414,7 @@ code{
 }
 .jt-image{
 	float: left;
-	border-radius: 5px;
+	border-radius: 999px;
 	background-size: 100%;
 }
 .jt-btn-shadow{

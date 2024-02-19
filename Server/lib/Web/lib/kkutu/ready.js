@@ -45,6 +45,7 @@ $(document).ready(function(){
 		lobby: {
 			userListTitle: $(".UserListBox .product-title"),
 			userList: $(".UserListBox .product-body"),
+			connList: $("#connList"),
 			roomListTitle: $(".RoomListBox .product-title"),
 			roomList: $(".RoomListBox .product-body"),
 			createBanner: $("<div>").addClass("rooms-item rooms-create").append($("<div>").html("&nbsp;"))
@@ -258,7 +259,7 @@ $(document).ready(function(){
 				$obj = userListBar(data, only == "for-master");
 				
 				if(only == "for-master") $stage.dialog.inviteList.append($obj);
-				else $stage.lobby.userList.append($obj);
+				else $stage.lobby.connList.append($obj);
 			}
 			$data.users[id] = data;
 			if(needed){
@@ -406,10 +407,6 @@ $(document).ready(function(){
 	}
 	
 
-
-	if($data.opts.vp == true){
-		document.getElementById("Background").pause();
-	}
 
 	if($data.opts.cp !== true){
 		showDialog($stage.dialog.license);
@@ -778,12 +775,6 @@ $(document).ready(function(){
 		$.cookie('kks', JSON.stringify($data.opts));
 		$stage.dialog.setting.hide();
 
-		if($data.opts.vp == true){
-			document.getElementById("Background").pause();
-		}
-		else{
-			document.getElementById("Background").play();
-		}
 
 		stopBGM();
 		playBGM('lobby');

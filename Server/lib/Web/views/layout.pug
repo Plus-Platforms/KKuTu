@@ -51,24 +51,18 @@ html
 	body(style='min-width: 640px;')
 		div#Loading= L('LOADING')
 		div#Intro
-			dotlottie-player(
-			src="/media/idM0YfRCz5.lottie",
-			background="#ffffff",
-			speed="1",
-			style="width: 100vw; hegiht: 100vh;     min-width: 1600px;",
-			direction="1",
-			mode="normal",
-			loop="false",
-			id="lottiePlayer",
-			autoplay
-			)
-			div#version= VERSION
-			div#intro-text= L('LOADING')
+			div#intro-top
+				img(style="width: 200px", src="/img/kkutu/intro/infole_logo.svg")
+				img(style="height: 120px;", src="/img/kkutu/intro/grac_all.svg")
+			div#intro-rc
+				img(style="height: 108px", src="/img/kkutu/intro/kkutu_logo.svg")
+				div#intro-text= L('LOADING')
+				div#version= VERSION
 		block Top
 		div#Jungle
 			span#mobile= locals.mobile
 			span#summonerID= DATA._id
-			video#Background(src='/media/bg.mp4', muted, autoplay, loop)
+			div#Background(style='background: #F1F5F9;')
 			block Jungle
 		div#Middle
 			block Middle

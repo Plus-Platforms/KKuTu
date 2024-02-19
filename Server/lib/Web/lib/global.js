@@ -117,9 +117,9 @@ var L;
 	// 계정
 		if($.cookie('lc') == "") $.cookie('lc', "ko_KR");
 		
-		if(global.profile.token){
-			$("#account-info").html(global.profile.title || global.profile.name).on('click', function(e){
-				if(confirm(L['ASK_LOGOUT'])) requestLogout(e);
+		if (global.profile.token) {
+			$("#account-info").html((global.profile.title || global.profile.name) + '<span class="fuckSeogom">님</span>').on('click', function(e){
+				if (confirm(L['ASK_LOGOUT'])) requestLogout(e);
 			});
 		}else{
 			if(window['FB']){

@@ -16,28 +16,8 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 html {
-    width: 100vw;
-    height: 100vh;
-	min-width: 1600px;
-	min-height: 900px;
-    transform-origin: top left;
-    transform: scale(1);
 	overflow-x: hidden;
 	overflow-y: hidden;
-}
-
-/* 1280px 이하의 디바이스에 대한 스타일 */
-@media (max-width: 1280px) {
-    html {
-        transform: scale(0.8);
-    }
-}
-
-/* 1024px 이하의 디바이스에 대한 스타일 */
-@media (max-width: 1024px) {
-    html {
-        transform: scale(0.6);
-    }
 }
 
 equ{
@@ -52,12 +32,16 @@ equ{
 	display: none;
 }
 #Intro{
-	min-width: 1600px;
-	position: fixed;
-	z-index: 4;
-}
-#Intro img{
-	width: 100vw;
+	padding-bottom: 50px;
+    box-sizing: border-box;
+    padding-left: 70px;
+    padding-right: 70px;
+    padding-top: 50px;
+    background: #F1F5F9;
+    height: 100vh;
+    position: fixed;
+    z-index: 4;
+    width: 100vw;
 }
 	#version{
 		position: absolute;
@@ -67,15 +51,23 @@ equ{
 		text-shadow: 0px 0px 3px #000000;
 	}
 	#intro-text{
-		font-weight: bold;
+		margin-top: 20px;
+		font-weight: 600;
 		color: black;
-		position: absolute;
-		top: 10px;
-		right: 10px;
-		width: 100%;
-		font-size: 30px;
+		font-size: 40px;
 		text-align: right;
-		text-shadow: 0px 0px 3px #ffffff;
+	}
+	#intro-top{
+		display: flex;
+    	justify-content: space-between;
+	}
+	#intro-rc{
+		position: relative;
+    top: 30%;
+    width: 100%;
+    flex-direction: column;
+    display: flex;
+    align-items: end;
 	}
 #Loading{
 	position: fixed;
@@ -88,8 +80,7 @@ equ{
 	z-index: 5;
 }
 #Top{
-	background-color: #eeeeeeb0;
-    backdrop-filter: blur(12px);
+	background-color: #E5E7EB;
 }
 #Top .menu-btn{
 	color: #FFFFFF;
@@ -150,70 +141,18 @@ input[type="checkbox"]+label {
     height: 20px;
     font-size: 15px;
     padding-left: 24px;
-    background: url('https://cdn.kkutu.cc/img/kkutu/checkbox/off.svg') no-repeat 0 0px / contain;
+	margin-bottom: 7px;
+    background: url('/img/kkutu/checkbox/off.svg') no-repeat 0 0px / contain;
 }
 
 input[type='checkbox']:checked+label {
-    background: url('https://cdn.kkutu.cc/img/kkutu/checkbox/on.svg') no-repeat 0 0px / contain;
+    background: url('/img/kkutu/checkbox/on.svg') no-repeat 0 0px / contain;
 }
 
 
 input[type="checkbox"] {
     display: none!important;
 }
-
-/* 플러스끄투 커스텀 레인지 */
-.range-input {
-    -webkit-appearance: none!important;
-    appearance: none;
-    width: 100%;
-    cursor: pointer;
-    outline: none!important;
-    border-radius: 15px;
-    height: 6px!important;
-    background: #ccc;
-}
-  
-  .range-input::-webkit-slider-thumb {
-	-webkit-appearance: none;
-	appearance: none; 
-	height: 15px;
-	width: 15px;
-	background-color: #f50;
-	border-radius: 50%;
-	border: none;
-	transition: .2s ease-in-out;
-  }
-  
-  .range-input::-moz-range-thumb {
-	height: 15px;
-	width: 15px;
-	background-color: #f50;
-	border-radius: 50%;
-	border: none;
-	transition: .2s ease-in-out;
-  }
-  
-  .range-input::-webkit-slider-thumb:hover {
-	box-shadow: 0 0 0 10px rgba(255,85,0, .1)
-  }
-  .range-input:active::-webkit-slider-thumb {
-	box-shadow: 0 0 0 13px rgba(255,85,0, .2)
-  }
-  .range-input:focus::-webkit-slider-thumb {
-	box-shadow: 0 0 0 13px rgba(255,85,0, .2)
-  }
-  
-  .range-input::-moz-range-thumb:hover {
-	box-shadow: 0 0 0 10px rgba(255,85,0, .1)
-  }
-  .range-input:active::-moz-range-thumb {
-	box-shadow: 0 0 0 13px rgba(255,85,0, .2)
-  }
-  .range-input:focus::-moz-range-thumb {
-	box-shadow: 0 0 0 13px rgba(255,85,0, .2)    
-  }
-  
   .value2, .value3, .value4 {
 	font-size: 26px;    
 	width: 50px;
@@ -316,9 +255,7 @@ iframe{
     bottom: 0;
     width: 100vw;
     min-width: 1600px;
-    height: 60px;
-    background: linear-gradient(180deg, #eeeeeeb0, rgba(0,0,0,0) 100%);
-    margin-bottom: 30px;
+	background-color: #E5E7EB;
 }
 .kkutu-wrap{
 	padding-right: 30px;
@@ -352,17 +289,17 @@ iframe{
     height: 39px;
 }
 	.kkutu-menu .mainbtn:hover{
-		margin-top: 5px;
-    height: 34px;
-    color: #FFFFFF;
-    background: linear-gradient(0deg, #44A342 0%, #7BBF34 100%);
+		border-radius: 12px 12px 0px 0px;
+		background: #FFF;
+		box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.10), 0px 4px 6px -4px rgba(0, 0, 0, 0.10);
 	}
 	.kkutu-menu .icnbtn:hover{
 		background: #FFFFFF00;
 	}
 	.kkutu-menu .toggled{
-		color: #EEEEEE;
-		background: linear-gradient(0deg, #44A342 0%, #7BBF34 100%);
+		border-radius: 12px 12px 0px 0px;
+		background: #FFF;
+		box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.10), 0px 4px 6px -4px rgba(0, 0, 0, 0.10);
 	}
 	.tiny-menu{
 		width: 60px !important;
@@ -380,14 +317,16 @@ iframe{
 		color: #2db400;
 	}
 .dialog{
-	display: none;
-	position: fixed;
-	padding: 5px;
-	border-radius: 10px;
-	color: #111111;
-	box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.2);
-	background-color: #F8F9F2;
-	z-index: 2;
+    box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.10), 0px 4px 6px -4px rgba(0, 0, 0, 0.10);
+    border-radius: 15px;
+    border: 1px solid #E5E7EB;
+    background: #F3F4F6;
+    display: none;
+    position: fixed;
+    color: #111111;
+    z-index: 2;
+	padding: 13px;
+
 }
 	.dialog-bar{ float: left; margin: 3px 0px; width: 100%; }
 	.d2-bar{
@@ -407,15 +346,12 @@ iframe{
 		width: 100%;
 	}
 	.dialog-bar h4{ 
-		padding-left: 7px;
 		padding-top: 2px;
 		padding-bottom: 2px; }
 	.dialog-bar .opt{
-		border-radius: 8px;
 		font-weight: 700;
-		background-color: #DEEFAB;
-		color: #252525;
-		padding-left: 7px;
+		padding-left: 0px;
+		color: #000000;
 		padding-top: 2px;
 		padding-bottom: 2px; }
 	.dialog-bar-value{ text-align: left !important; color: #486AA3; }
@@ -432,15 +368,14 @@ iframe{
 		.dialog-opt{ float: left; margin-right:20px; font-size: 18px;}
 	.tail-button{ margin-top: 7px; }
 	.tail-button button {
-		box-shadow: 2px 2px 0px #b1a996;
-		border: 2px solid #AEC78F;
-		color: #2A2E20;
-		background-color: #F5FDE8;
-		float: center;
+		color: #000000;
+		box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.15);
+		background-color: #ffffff;
 		margin-right: 5px;
-		border-radius: 15px;
+		border-radius: 8px;
 		width: 75px;
-		height: 25px;
+		height: 24px;
+		border: none;
 }
 #DressDiag{
 	box-shadow: none;
@@ -458,12 +393,9 @@ iframe{
 	color: #ffffff!important;
 }
 	.primaryBtn{
-		border: 2px solid #EAA339!important;
-		color: #2A2200!important;
 		font-weight: 700;
-		background: linear-gradient(
-	129deg, #FAE89E 0%, #FDDC71 100%);
-		box-shadow: 2px 2px 0px #b1a996;
+		color: #fff!important;
+		background-color: #3A82F6!important;
 	}
 	.dialog .closeBtn{
 		float: right;
@@ -475,22 +407,18 @@ iframe{
 	.closeBtn::after {
 		content: "×";
 	}
-	.dialog .closeBtn:hover{ color: cyan; }
+	.dialog .closeBtn:hover{ color: #EF4444; }
 	.dialog-head{
-		font-weight: 700;
+		font-weight: 600;
 		padding: 7px;
-		border-bottom: 1px solid #CCCCCC;
 		margin-bottom: 9.5px;
 		margin-left: -5px;
 		margin-right: -5px;
-		height: 28px;
-		color: #ffffff;
+		height: 20px;
+		color: #000000;
 		font-size: 20px;
 		margin-top: -4.5px;
-		border-width: 3px;
-		border-bottom: #7BBF34 2px solid;
-		border-radius: 10px 10px 0px 0px;
-		background-color: #44A342;
+	
 	}
 	#dimmer{
 	opacity: 0.6;
@@ -502,7 +430,7 @@ iframe{
 	.hidden{
 		display: none;
 	}
-		.dialog-head .dialog-title{ text-align: center;float: left; cursor: move; }
+		.dialog-head .dialog-title{ float: left; cursor: move; }
 #replay-players{ height: 140px; overflow-y: scroll; }
 	.replay-player-bar{ float: left; width: 100%; }
 		.replay-player-bar img{ float: left; margin-right: 3px; width: 20px; height: 20px; }
@@ -533,18 +461,17 @@ iframe{
 }
 .product-title{
 	font-weight: 700;
-    border-radius: 8px;
-    color: #252525;
-    padding-left: 15px;
-    background-color: #DEEFAB;
+    color: #6B7280;
+    padding-left: 20px;
+    background-color: #ffffff;
 }
-.product-title i{ color: #252525; }
+.product-title i{ color: #6B7280; }
 .dialog-front{ z-index: 3; }
 #comm-friends div{ float: left; }
 	.cf-item{ margin: 2px 0px; width: 100%; }
 		.cfi-status{ border-radius: 7px; margin-right: 2px; width: 12px; height: 12px; }
-			.cfi-stat-on{ background-color: green; }
-			.cfi-stat-off{ background-color: gray; }
+			.cfi-stat-on{ background-color: #4ADE80; }
+			.cfi-stat-off{ background-color: #6B7280; }
 		.cfi-server{ width: 46px; text-align: center; }
 		.cfi-name{ width: 60px; }
 		.cfi-memo{ width: calc(100% - 150px); }
@@ -572,22 +499,36 @@ iframe{
 		.rip-team{ margin: 3px 3px 0px 0px; width: 44px; text-align: center; }
 		.rip-form{ margin-top: 3px; width: calc(100% - 90px); }
 .UserListBox, .SideListBox{
-	width: 260px;
-	max-height: 480px;
-min-height: 480px;
-
+	width: 310px;
+    height: 340px;
 }
-.UserListBox{
-	border-bottom-left-radius: 8px;
-	border-top-left-radius: 8px;
+#connList{
+	display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 11px;
 }
-.SideListBox{
-	border-bottom-right-radius: 8px;
-	border-top-right-radius: 8px;
+#megauser{
+	padding: 11px;
+}
+.conn-desc{
+	color: var(--Disabled-Text, #6B7280);
+    font-family: Pretendard;
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    margin: 0px;
+    padding-bottom: 11px;
 }
 	.UserListBox div{ float: left; }
-	.UserListBox .product-body{ width: 250px; height: 433px; overflow-x: hidden; overflow-y: scroll; }
-	.users-item{ width: 190px; }
+	.UserListBox .product-body{ width: 300px; height: 295px; overflow-x: hidden; overflow-y: scroll; }
+	.users-item{     padding: 7px 11px;
+		width: 256px!important;
+		border-radius: 8px;
+		background: #FFF!important;
+		box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.15);
+		width: 190px; }
 		.users-image{ margin: 1px; width: 20px; height: 20px; }
 		.users-level{ margin: 1px; width: 20px; height: 20px; }
 		.users-name{ padding: 2px 0px 0px 3px; font-size: 16px; }
@@ -595,9 +536,8 @@ min-height: 480px;
 	.invite-item{ margin: 2px 0px; width: 100%; height: 20px; }
 		.invite-item .users-name{ width: 270px; }
 .RoomListBox{
-	width: calc(100% - 560px);
-	max-height: 480px;
-min-height: 480px;
+	width: 100%;
+	height: 100%;
 }
 	.RoomListBox div{ float: left; }
 	.RoomListBox .product-body{ width: calc(100% - 25px); height: 430px; overflow-x: hidden; overflow-y: scroll; }
@@ -610,14 +550,14 @@ min-height: 480px;
 		cursor: pointer;
 		background-position: center;
 		background-size: cover;
-		background-image: url(https://cdn.kkutu.cc/img/kkutu/room/Waiting.png);
+		background-image: url(/img/kkutu/room/Waiting.png);
 		transition: all 300ms ease;
 	}
 		.rooms-create{ background-position: center;
 			background-size: cover;
-			background-image: url(https://cdn.kkutu.cc/img/kkutu/createRoom.png); }
+			background-image: url(/img/kkutu/createRoom.png); }
 		.rooms-create:hover{
-				background-image: url(https://cdn.kkutu.cc/img/kkutu/createRoomHover.png); }
+				background-image: url(/img/kkutu/createRoomHover.png); }
 		.rooms-create>div{ text-shadow: 2px 2px 0px black;
 			color: #ffffff;
 			font-style: italic;
@@ -634,7 +574,7 @@ min-height: 480px;
 			.channel-4{ background-color: #99F; }
 		.rooms-gaming{ background-position: center;
 			background-size: cover;
-			background-image: url(https://cdn.kkutu.cc/img/kkutu/room/Playing.png); }
+			background-image: url(/img/kkutu/room/Playing.png); }
 			.rooms-gaming .rooms-number{ border-color: #CC9999; }
 			.rooms-create:hover{ background-color: #AADDFF; }
 		.rooms-number{ padding-top: 18px; border-right: 1px solid #CCCCCC; margin-right: 4px; width: 49px; height: 46px; font-size: 24px; }
@@ -646,9 +586,8 @@ min-height: 480px;
 			.rooms-time{ padding-top: 5px; }
 		.rooms-lock{ padding-top: 8px; width: 39px; text-align: center; font-size: 24px; }
 .ShopBox{
-	width: calc(100% - 280px)!important;
-	max-height: 480px;
-min-height: 480px;
+	height: 100%;
+    width: 100%!important;
 }
 	.ShopBox div{ float: left; }
 	.ShopBox .product-body{ width: 100%;
@@ -678,7 +617,7 @@ min-height: 480px;
 	}
 	.team-button {
 		font-weight: 800;
-		font-family: 'KartGothic'!important;
+		font-family: 'Pretendard'!important;
 		float: left;
 		margin: 2px 0px 2px 0px;
 		width: 100%;
@@ -756,7 +695,7 @@ min-height: 480px;
 	width: 100%!important;
 	max-height: 480px;
 	min-height: 480px;
-	background-image: url('https://cdn.kkutu.cc/img/kkutu/gamebg.png');
+	background-image: url('/img/kkutu/gamebg.png');
 }
 	.GameBox .product-title{ height: 30px; }
 	.GameBox .product-title h5{ float: left; font-size:20px; }
@@ -829,31 +768,31 @@ min-height: 480px;
 		margin: 5px 5px 5px 5px;
 	}
 	.button-color#color-red {
-		background: #DEB887 url('https://cdn.kkutu.cc/img/kkutu/paint_red.png') no-repeat center;
+		background: #DEB887 url('/img/kkutu/paint_red.png') no-repeat center;
 	}
 	.button-color#color-orange {
-		background: #DEB887 url('https://cdn.kkutu.cc/img/kkutu/paint_orange.png') no-repeat center;
+		background: #DEB887 url('/img/kkutu/paint_orange.png') no-repeat center;
 	}
 	.button-color#color-yellow {
-		background: #DEB887 url('https://cdn.kkutu.cc/img/kkutu/paint_yellow.png') no-repeat center;
+		background: #DEB887 url('/img/kkutu/paint_yellow.png') no-repeat center;
 	}
 	.button-color#color-green {
-		background: #DEB887 url('https://cdn.kkutu.cc/img/kkutu/paint_green.png') no-repeat center;
+		background: #DEB887 url('/img/kkutu/paint_green.png') no-repeat center;
 	}
 	.button-color#color-blue {
-		background: #DEB887 url('https://cdn.kkutu.cc/img/kkutu/paint_blue.png') no-repeat center;
+		background: #DEB887 url('/img/kkutu/paint_blue.png') no-repeat center;
 	}
 	.button-color#color-indigo {
-		background: #DEB887 url('https://cdn.kkutu.cc/img/kkutu/paint_indigo.png') no-repeat center;
+		background: #DEB887 url('/img/kkutu/paint_indigo.png') no-repeat center;
 	}
 	.button-color#color-violet {
-		background: #DEB887 url('https://cdn.kkutu.cc/img/kkutu/paint_violet.png') no-repeat center;
+		background: #DEB887 url('/img/kkutu/paint_violet.png') no-repeat center;
 	}
 	.button-color#color-black {
-		background: #DEB887 url('https://cdn.kkutu.cc/img/kkutu/paint_black.png') no-repeat center;
+		background: #DEB887 url('/img/kkutu/paint_black.png') no-repeat center;
 	}
 	.button-color#color-white {
-		background: #DEB887 url('https://cdn.kkutu.cc/img/kkutu/paint_white.png') no-repeat center;
+		background: #DEB887 url('/img/kkutu/paint_white.png') no-repeat center;
 	}
 
 		.hint-item{
@@ -909,7 +848,7 @@ min-height: 480px;
 		font-weight: bold;
 		text-align: center;
 		text-shadow: 0px 1px 5px #141414;
-		background-image: url('https://cdn.kkutu.cc/img/kkutu/lefthand.png');
+		background-image: url('/img/kkutu/lefthand.png');
 	}
 	.jjoriping{ width: 500px; }
 	.cw.jjoriping{ margin-top: -10px; width: 322px; }
@@ -998,7 +937,7 @@ min-height: 480px;
 		font-weight: bold;
 		text-align: center;
 		text-shadow: 0px 1px 5px #141414;
-		background-image: url('https://cdn.kkutu.cc/img/kkutu/righthand.png');
+		background-image: url('/img/kkutu/righthand.png');
 	}
 	.rounds{
 		margin-top: -140px;
@@ -1122,7 +1061,7 @@ min-height: 480px;
 			.game-user-image{ margin: 3px 15px; width: 120px; height: 120px; }
 			.game-user-level{ margin: 1px; width: 18px; height: 18px; }
 			.game-user-name{ padding-left: 3px; margin: 3px 0px; width: 87px; height: 20px; font-size: 15px; }
-			.game-user-score{     font-family: 'KartGothic'!important;
+			.game-user-score{     font-family: 'Pretendard'!important;
 				padding: 0px 5px;
 				align-items: center;
 				display: flex;
@@ -1185,7 +1124,7 @@ min-height: 480px;
 			.result-me-level{ margin-top: 5px; width: 80px; }
 				.result-me-level-head{ width: 80px; text-align: center; }
 				.result-me-level-body{
-					font-family: 'KartGothic';
+					font-family: 'Pretendard';
 					width: 80px;
 					text-align: center;
 					margin-top: -10px;
@@ -1200,9 +1139,9 @@ min-height: 480px;
 				box-shadow: 0px 1px 1px #CCCCCC;
 				background-color: #333333;
 			}
-				.result-me-before-bar{ background-image: url('https://cdn.kkutu.cc/img/kkutu/scorebar.png'); }
-				.result-me-current-bar{ background-image: url('https://cdn.kkutu.cc/img/kkutu/currentbar.png'); }
-				.result-me-bonus-bar{ background-image: url('https://cdn.kkutu.cc/img/kkutu/bonusbar.png'); }
+				.result-me-before-bar{ background-image: url('/img/kkutu/scorebar.png'); }
+				.result-me-current-bar{ background-image: url('/img/kkutu/currentbar.png'); }
+				.result-me-bonus-bar{ background-image: url('/img/kkutu/bonusbar.png'); }
 				.result-me-score-text{
 					margin-top: -45px;
     margin-left: 80px;
@@ -1235,19 +1174,10 @@ min-height: 480px;
 	display:none;
 }
 .ChatBox{
-	backdrop-filter: none;
-    right: 0;
-    background-color: rgba(0,0,0,0.7);
-    position: absolute;
-    width: 40%;
-    height: 200px;
-    bottom: 0;
-	border-top-left-radius: 15px;
+    backdrop-filter: none;
+    width: 100%!important;
+    height: 100%!important;
 }
-.ChatBox:hover{
-    background-color: rgba(0,0,0,1);
-}
-
 
 	.MeBox div{ float: left; }
 	.bar-text{ color: #EEEEEE; text-align: center; text-shadow: 0px 1px 1px #141414; }
@@ -1286,9 +1216,7 @@ min-height: 480px;
 			margin: 1px;
 			width: 42px;
 		}
-		.category-filter.selected{ color: #EEEEEE; background-color: #1597f5; }
-		.category-filter:hover{ background-color: #EEEEEE; }
-		.category-filter.selected:hover{ background-color: #222222; }
+		.category-filter.selected{ color: #000000; border-bottom: solid 4px #8B5CF6; }
 		.dress-item{
 			background: linear-gradient(135deg, rgba(136,140,163,1) 0%, rgba(61,63,74,1) 100%);
 			float: left;
@@ -1347,44 +1275,44 @@ min-height: 480px;
 		margin: -1px -12px 0px -7px;
 		width: 20px;
 		height: 20px;
-		background-image: url('https://cdn.kkutu.cc/img/kkutu/balloontip.png');
+		background-image: url('/img/kkutu/balloontip.png');
 	}
 	.chat-balloon-bot{
 		margin: -1px -12px 0px 50px;
 		width: 20px;
 		height: 20px;
-		background-image: url('https://cdn.kkutu.cc/img/kkutu/balloonbot.png');
+		background-image: url('/img/kkutu/balloonbot.png');
 	}
 #Chat{
-	width: 100%;
-	overflow-y: scroll;
-	height: 150px!important;
+	padding: 13px;
+    width: 100%;
+    overflow-y: scroll;
+    box-sizing: border-box;
+    height: 301px!important;
 }
 #Talk{
-	color: #fff;
-    background-color: transparent;
+    padding-left: 11px;
+    color: #000;
+    background-color: white;
     border: none;
     float: left;
+    width: calc(100% - 80px);
     border-right: none;
     border-top-right-radius: 0px;
     border-bottom-right-radius: 0px;
     margin-top: 5px;
-    width: calc(100% - 85px);
     font-size: 16px;
 }
 #ChatBtn{
-    border: 2px solid #EAA339!important;
-    color: #2A2200!important;
+    border: 1px solid #D1D5DB!important;
     font-weight: 700;
-    background: linear-gradient( 129deg, #FAE89E 0%, #FDDC71 100%);
+    background: #D8B4FE;
+    color: var(--Primary, #885CF6);
     float: left;
     border-left: none;
     margin-top: 5px;
-    width: 60px;
+    width: 50px;
     font-size: 16px;
-    border: none;
-    color: #ffffff;
-    border-radius: 8px;
 }
 	#Chat hr, #chat-log-board hr{
 		padding-top: 0px;
@@ -1398,11 +1326,11 @@ min-height: 480px;
 		margin: 1px 0px;
 		width: 100%;
 		overflow: hidden;
-		color: #FFFFFF
+		color: #000000
 	}
-	.chat-notice{
-		background-color: #000000;
-	}
+	/*background.chat-notice{
+		-color: #ffffff;
+	}*/
 		.chat-notice .chat-head{ color: #1767CA; }
 		.chat-stamp{
 			float: left;
@@ -1411,18 +1339,18 @@ min-height: 480px;
 			font-size: 11px;
 			text-align: right;
 			color: #999999;
+			display: none;
 		}
 		.chat-head{
 			float: left;
 			padding-right: 4px;
 			margin-right: 5px;
-			width: 100px;
 			font-weight: bold;
 			text-align: center;
 			cursor: pointer;
 		}
 			.chat-head:hover{ background-color: #FFF; }
-		.chat-body{ float: left; width: calc(100% - 190px); min-height: 14px; }
+		.chat-body{ float: left; min-height: 14px; }
 .ADBox{
 	width: calc(100% - 280px);
 	box-shadow: 0px 1px 1px #14141400;
@@ -1495,5 +1423,5 @@ min-height: 480px;
     background-image: url(/img/kkutu/moremiBG.png);
 }
 .introjs-tooltipReferenceLayer * {
-    font-family: "Noto Sans KR",Helvetica,Arial,sans-serif!important;
+    font-family: "Pretendard",Helvetica,Arial,sans-serif!important;
 }

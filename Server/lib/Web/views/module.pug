@@ -70,10 +70,10 @@ mixin Menu()
 			span#profile= SESSION.profile ? JSON.stringify(SESSION.profile) : '{}'
 			div.accountItem
 				div.flex
-					img.fuckHank(src='/img/kkutu/currency/ping.png')
-					span.my-stat-ping.aISub#accping
-					span.fuckSeogom= "핑"
-					img.fuckHank#addBalance(src='/img/kkutu/currency/charge.svg')
+					img.fuckHank(src='/img/kkutu/currency/xp.png')
+					span.aISub.my-level
+					span.my-gauge-text.fuckHoSeo.fuckSeogom
+				//+GraphBar('my-gauge')
 			div.accountItem
 				div.flex
 					img.fuckHank(src='/img/kkutu/currency/win.png')
@@ -81,21 +81,20 @@ mixin Menu()
 					span.fuckSeogom= "승"
 			div.accountItem
 				div.flex
-					img.fuckHank(src='/img/kkutu/currency/xp.png')
-					span.aISub.my-level
-					span.my-gauge-text.fuckHoSeo.fuckSeogom
-				+GraphBar('my-gauge')
-			div.accountItem
+					img.fuckHank(src='/img/kkutu/currency/ping.png')
+					span.my-stat-ping.aISub#accping
+					span.fuckSeogom= "핑"
+					img.fuckHank#addBalance(src='/img/kkutu/currency/charge.svg')
+			div.accountItem(style="display:none;")
 				div.flex
 					img.fuckHank(src='/img/kkutu/currency/okg.png')
 					span.my-okg-text.aISub#accping
-				div
+				//div
 					+GraphBar('my-okg')
 			div.accountItem#signin(data-intro='Hello step one!')
 				div.flex
 					//img.my-stat-level
 					span#account-info.aISub
-					span.fuckSeogom= "님"
 			//div
 
 mixin MMenu()
@@ -126,7 +125,6 @@ mixin PageHead(min)
   	
 	script.defer(src='https://static.cloudflareinsights.com/beacon.min.js', data-cf-beacon='{"token": "fe1c8aa1783c445caa30aaf4d1c870eb"}')
 
-	script(src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs", type="module")
 
 	if PUBLIC && !SESSION.admin
 		//script(type='text/javascript', src='/js/google.js')
