@@ -57,7 +57,7 @@
 
 mixin Menu()
 	div.Menu
-		img(src='https://cdn.kkutu.cc/img/kkutu/logo-obt.svg', style='margin-left: 30px;margin-top: 12px;height: 2.7rem;', alt="로고")
+		img(src='/img/kkutu/logo-obt.svg', style='margin-left: 30px;margin-top: 12px;height: 2.7rem;', alt="로고")
 		- for(i in MENU)
 			- if(MENU[i].href)
 				button.menu-btn(id='menu-item-'+MENU[i].key, onclick='location.href = "'+MENU[i].href+'";')!= L(MENU[i].key)
@@ -70,24 +70,24 @@ mixin Menu()
 			span#profile= SESSION.profile ? JSON.stringify(SESSION.profile) : '{}'
 			div.accountItem
 				div.flex
-					img.fuckHank(src='https://cdn.kkutu.cc/img/kkutu/currency/ping.png')
+					img.fuckHank(src='/img/kkutu/currency/ping.png')
 					span.my-stat-ping.aISub#accping
 					span.fuckSeogom= "핑"
-					img.fuckHank#addBalance(src='https://cdn.kkutu.cc/img/kkutu/currency/charge.svg')
+					img.fuckHank#addBalance(src='/img/kkutu/currency/charge.svg')
 			div.accountItem
 				div.flex
-					img.fuckHank(src='https://cdn.kkutu.cc/img/kkutu/currency/win.png')
+					img.fuckHank(src='/img/kkutu/currency/win.png')
 					span.my-stat-record.aISub
 					span.fuckSeogom= "승"
 			div.accountItem
 				div.flex
-					img.fuckHank(src='https://cdn.kkutu.cc/img/kkutu/currency/xp.png')
+					img.fuckHank(src='/img/kkutu/currency/xp.png')
 					span.aISub.my-level
 					span.my-gauge-text.fuckHoSeo.fuckSeogom
 				+GraphBar('my-gauge')
 			div.accountItem
 				div.flex
-					img.fuckHank(src='https://cdn.kkutu.cc/img/kkutu/currency/okg.png')
+					img.fuckHank(src='/img/kkutu/currency/okg.png')
 					span.my-okg-text.aISub#accping
 				div
 					+GraphBar('my-okg')
@@ -100,7 +100,7 @@ mixin Menu()
 
 mixin MMenu()
 	div.Menu
-		img(src='https://cdn.kkutu.cc/img/kkutu/logo-obt.svg', style='margin-left: 10px;margin-top: 10px;height: 1.7rem;', alt="로고")
+		img(src='/img/kkutu/logo-obt.svg', style='margin-left: 10px;margin-top: 10px;height: 1.7rem;', alt="로고")
 		div#account
 			span#profile= SESSION.profile ? JSON.stringify(SESSION.profile) : '{}'
 			div#account-info
@@ -121,7 +121,7 @@ mixin PageHead(min)
 		link(rel='stylesheet', href=(locals.mobile && !locals.as_pc) ? '/css/m_style.css' : '/css/style.css')
 		link(rel='stylesheet', href='/css/fa.css')
 		link(rel='stylesheet', href='/css/expl.css')
-	script(type='text/javascript', src='https://cdn.kkutu.cc/js/jquery.js')
+	script(type='text/javascript', src='/js/jquery.js')
 	script(type='text/javascript', src='/language/'+locals.page.replace("/", "_")+'/'+locals.lang)
   	
 	script.defer(src='https://static.cloudflareinsights.com/beacon.min.js', data-cf-beacon='{"token": "fe1c8aa1783c445caa30aaf4d1c870eb"}')
@@ -129,20 +129,20 @@ mixin PageHead(min)
 	script(src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs", type="module")
 
 	if PUBLIC && !SESSION.admin
-		//script(type='text/javascript', src='https://cdn.kkutu.cc/js/google.js')
-	script(type='text/javascript', src='https://cdn.kkutu.cc/js/global.min.js')
+		//script(type='text/javascript', src='/js/google.js')
+	script(type='text/javascript', src='/js/global.min.js')
 	if !min
-		//script(type='text/javascript', src='https://cdn.kkutu.cc/js/facebook.js')
+		//script(type='text/javascript', src='/js/facebook.js')
 	if block
 		block
 	link(rel='stylesheet', href='/css/in_'+locals.page.replace("/", "_")+'.css')
-	script(type='text/javascript', src='https://cdn.kkutu.cc/js/in_'+locals.page.replace("/", "_")+'.min.js')
+	script(type='text/javascript', src='/js/in_'+locals.page.replace("/", "_")+'.min.js')
 	script.async(src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3808496003691786", crossorigin="anonymous", onerror="adBlockFunction();")
 	
 	//씨발새끼들 검열하는 코드
 	//script(type='text/javascript', src='https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js')
 	//script(type='text/javascript', src='https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachablemachine-image.min.js')
-	//script(type='text/javascript', src='https://cdn.kkutu.cc/js/hide-hank.js')
+	//script(type='text/javascript', src='/js/hide-hank.js')
 	
 mixin SearchBox(arg1, arg2)
 	meta(name='description', content=L('meta_desc', arg1, arg2))

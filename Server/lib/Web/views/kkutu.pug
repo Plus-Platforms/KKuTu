@@ -41,10 +41,10 @@ block Subject
 	title= L('title')
 
 block JS
-	script(type='text/javascript', src='https://cdn.kkutu.cc/js/in_game_kkutu.min.js')
-	script(type='text/javascript', src='https://cdn.kkutu.cc/js/fabric.min.js')
-	script(type='text/javascript', src='https://cdn.kkutu.cc/js/diff-match-patch-compressed.js')
-	script(type='text/javascript', src='https://cdn.kkutu.cc/js/vanilla-tilt.min.js')
+	script(type='text/javascript', src='/js/in_game_kkutu.min.js')
+	script(type='text/javascript', src='/js/fabric.min.js')
+	script(type='text/javascript', src='/js/diff-match-patch-compressed.js')
+	script(type='text/javascript', src='/js/vanilla-tilt.min.js')
 	script(src='https://challenges.cloudflare.com/turnstile/v0/api.js?compat=recaptcha', async, defer)
 
 block CSS
@@ -61,7 +61,7 @@ block Jungle
 	span#RULE= JSON.stringify(locals.RULE)
 	span#OPTIONS= JSON.stringify(locals.OPTIONS)
 	div#Yell
-		// img#intro-start(src='https://cdn.kkutu.cc/img/kkutu/intro_start.gif')
+		// img#intro-start(src='/img/kkutu/intro_start.gif')
 
 	div#Balloons(style='position: absolute;')
 	-
@@ -226,7 +226,7 @@ block Middle
 				button#room-injeong-pick(style='font-size: 11px;')!= L('pickInjeong')
 		div.dialog-bar.tail-button.d3-bar
 			button.primaryBtn#room-ok= L('OK')
-	+Dialog('InjPickDiag', 1080, 720, L('pickInjeong', false))
+	+Dialog('InjPickDiag', 1090, 720, L('pickInjeong', false))
 		h4.opt(style='font-size: 16px; text-align: center; color: #486AA3;')!= L('explInjPick')
 		div.dialog-bar
 			button#injpick-all= L('injpickAll')
@@ -236,7 +236,7 @@ block Middle
 				- locals.KO_THEME.concat(locals.KO_INJEONG).forEach(function(item){
 					- var name = "ko-pick-" + item;
 					- if(locals.IJP_EXCEPT.indexOf(item) != -1) return;
-					div(style='float: left; width: 320px; margin-bottom: 6px; margin-right: 6px; padding-top: 150px; padding-left: 15px; padding-right: 15px; padding-bottom: 15px; text-align: center; background-image: url(/img/kkutu/theme/' + item + '.png); background-size: cover;')
+					div(style='float: left; border: 1px solid gray; width: 320px; margin-bottom: 6px; margin-right: 6px; padding-top: 150px; padding-left: 15px; padding-right: 15px; padding-bottom: 15px; text-align: center; background-image: url(/img/kkutu/theme/' + item + '.png); background-size: cover;')
 						input(id=name, type='checkbox', style='width: auto;')
 						label(for=name)!= LANG['theme_' + item]
 				- });
@@ -382,15 +382,15 @@ block Middle
 	+Dialog('DressDiag', 1000, 510, L('dress', false))
 		div(style="display:flex;")
 			div
-				img#dressitembtn(src="https://cdn.kkutu.cc/img/kkutu/dress/deco.png", alt="꾸미기")
+				img#dressitembtn(src="/img/kkutu/dress/deco.png", alt="꾸미기")
 				+Expl(true)
 					div!= "프로필을 휘장과 여러가지 장식으로 꾸며 보세요"
 			div
-				img#dress-cf(src="https://cdn.kkutu.cc/img/kkutu/dress/lab.png" alt="조합소")
+				img#dress-cf(src="/img/kkutu/dress/lab.png" alt="조합소")
 				+Expl(true)
 					div!= "게임에서 수집한 글자 조각을 조합해 보세요"
 			div
-				img#infobtn(src="https://cdn.kkutu.cc/img/kkutu/dress/info.png", alt="내 정보")
+				img#infobtn(src="/img/kkutu/dress/info.png", alt="내 정보")
 				+Expl(true)
 					div!= "내 전적을 확인해 보세요"
 		
@@ -535,9 +535,9 @@ block Middle
 				div.cw-q-body
 			div.b-left.bb(style='display: none;')
 			div.jjoriping
-				img.jjoObj.jjoEyeL(src='https://cdn.kkutu.cc/img/jjoeyeL.png')
-				img.jjoObj.jjoNose(src='https://cdn.kkutu.cc/img/jjonose.png')
-				img.jjoObj.jjoEyeR(src='https://cdn.kkutu.cc/img/jjoeyeR.png')
+				img.jjoObj.jjoEyeL(src='/img/jjoeyeL.png')
+				img.jjoObj.jjoNose(src='/img/jjonose.png')
+				img.jjoObj.jjoEyeR(src='/img/jjoeyeR.png')
 				div.jjoDisplayBar
 					div.jjo-display.ellipse
 					+GraphBar('jjo-turn-time')
@@ -558,4 +558,4 @@ block Middle
 		input#Talk(maxlength=200)
 		button#ChatBtn= L('send')
 	script (adsbygoogle = window.adsbygoogle || []).push({});
-	script(type='text/javascript', src='https://cdn.kkutu.cc/js/onboarding.js')
+	script(type='text/javascript', src='/js/onboarding.js')

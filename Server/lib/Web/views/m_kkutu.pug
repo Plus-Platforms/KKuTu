@@ -41,10 +41,10 @@ block Subject
 	title= L('title')
 	
 block JS
-	script(type='text/javascript', src='https://cdn.kkutu.cc/js/in_game_kkutu.min.js')
-	script(type='text/javascript', src='https://cdn.kkutu.cc/js/fabric.min.js')
-	script(type='text/javascript', src='https://cdn.kkutu.cc/js/diff-match-patch-compressed.js')
-	script(type='text/javascript', src='https://cdn.kkutu.cc/js/vanilla-tilt.min.js')
+	script(type='text/javascript', src='/js/in_game_kkutu.min.js')
+	script(type='text/javascript', src='/js/fabric.min.js')
+	script(type='text/javascript', src='/js/diff-match-patch-compressed.js')
+	script(type='text/javascript', src='/js/vanilla-tilt.min.js')
 	script(src='https://challenges.cloudflare.com/turnstile/v0/api.js?compat=recaptcha', async, defer)
 	
 block CSS
@@ -94,8 +94,8 @@ block Middle
 	div#tost_message
 
 	div#Intro
-		img#intro(src='https://cdn.kkutu.cc/img/kkutu/m_intro.png')
-		//- img#intro-start(src='https://cdn.kkutu.cc/img/kkutu/intro_start.gif')
+		img#intro(src='/img/kkutu/m_intro.png')
+		//- img#intro-start(src='/img/kkutu/intro_start.gif')
 		div#version= VERSION
 		div#intro-text= L('LOADING')
 	+Dialog('SettingDiag', 300, 240, L('settingsText'))
@@ -213,12 +213,12 @@ block Middle
 		div.dialog-bar
 			button#injpick-all= L('injpickAll')
 			button#injpick-no= L('injpickNo')
-		div.dialog-bar#injpick-list(style='height: 280px; overflow-y: scroll;')
+		div.dialog-bar#injpick-list(style='height: 690px; overflow-y: scroll;')
 			div.dialog-opt#ko-pick-list(style='width: 100%;')
 				- locals.KO_THEME.concat(locals.KO_INJEONG).forEach(function(item){
 					- var name = "ko-pick-" + item;
 					- if(locals.IJP_EXCEPT.indexOf(item) != -1) return;
-					div(style='float: left; width: 100%;')
+					div(style='float: left; border: 1px solid gray; width: 150px; margin-bottom: 6px; margin-right: 6px; padding-top: 150px; padding-left: 15px; padding-right: 15px; padding-bottom: 15px; text-align: center; background-image: url(/img/kkutu/theme/' + item + '.png); background-size: cover;')
 						input(id=name, type='checkbox', style='width: auto;')
 						label(for=name)!= LANG['theme_' + item]
 				- });
@@ -396,9 +396,9 @@ block Middle
 				input#cw-q-input(placeholder=L('inputHere'), style='width: 313px; height: 20px; font-size: 15px;')
 				div.cw-q-body
 			div.jjoriping
-				img.jjoObj.jjoEyeL(src='https://cdn.kkutu.cc/img/jjoeyeL.png')
-				img.jjoObj.jjoNose(src='https://cdn.kkutu.cc/img/jjonose.png')
-				img.jjoObj.jjoEyeR(src='https://cdn.kkutu.cc/img/jjoeyeR.png')
+				img.jjoObj.jjoEyeL(src='/img/jjoeyeL.png')
+				img.jjoObj.jjoNose(src='/img/jjonose.png')
+				img.jjoObj.jjoEyeR(src='/img/jjoeyeR.png')
 				div.jjoDisplayBar
 					div.jjo-display
 					+GraphBar('jjo-turn-time')

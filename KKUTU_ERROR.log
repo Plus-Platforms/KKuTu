@@ -62,4 +62,114 @@ TypeError: Cannot read properties of null (reading 'handleRowDescription')
     at addChunk (node:internal/streams/readable:545:12)
     at readableAddChunkPushByteMode (node:internal/streams/readable:495:3)
     at Readable.push (node:internal/streams/readable:375:5)
-    at TCP.onStreamRead (node:internal/stream_base_commons:190:23)
+    at TCP.onStreamRead (node:internal/stream_base_commons:190:23):8496 [2/12/2024, 4:38:59 AM] ERROR: TypeError: Cannot read properties of null (reading '_id')
+TypeError: Cannot read properties of null (reading '_id')
+    at /var/KKuTu/Server/lib/Game/games/jaqwi.js:62:27
+    at exports.Tail.go (/var/KKuTu/Server/lib/sub/lizard.js:43:16)
+    at /var/KKuTu/Server/lib/Game/games/jaqwi.js:249:21
+    at callback (/var/KKuTu/Server/lib/sub/collection.js:316:13)
+    at Query.preCB (/var/KKuTu/Server/lib/sub/collection.js:298:6)
+    at Query.handleReadyForQuery (/var/KKuTu/Server/lib/node_modules/pg/lib/query.js:138:12)
+    at Client._handleReadyForQuery (/var/KKuTu/Server/lib/node_modules/pg/lib/client.js:290:19)
+    at Connection.emit (node:events:518:28)
+    at /var/KKuTu/Server/lib/node_modules/pg/lib/connection.js:114:12
+    at Parser.parse (/var/KKuTu/Server/lib/node_modules/pg-protocol/dist/parser.js:40:17):8496 [2/12/2024, 4:43:37 AM] ERROR: TypeError: Cannot read properties of null (reading '_id')
+TypeError: Cannot read properties of null (reading '_id')
+    at /var/KKuTu/Server/lib/Game/games/jaqwi.js:62:27
+    at exports.Tail.go (/var/KKuTu/Server/lib/sub/lizard.js:43:16)
+    at /var/KKuTu/Server/lib/Game/games/jaqwi.js:249:21
+    at callback (/var/KKuTu/Server/lib/sub/collection.js:316:13)
+    at Query.preCB (/var/KKuTu/Server/lib/sub/collection.js:298:6)
+    at Query.handleReadyForQuery (/var/KKuTu/Server/lib/node_modules/pg/lib/query.js:138:12)
+    at Client._handleReadyForQuery (/var/KKuTu/Server/lib/node_modules/pg/lib/client.js:290:19)
+    at Connection.emit (node:events:518:28)
+    at /var/KKuTu/Server/lib/node_modules/pg/lib/connection.js:114:12
+    at Parser.parse (/var/KKuTu/Server/lib/node_modules/pg-protocol/dist/parser.js:40:17):8496 [2/12/2024, 4:45:15 AM] ERROR: TypeError: Cannot read properties of null (reading '_id')
+TypeError: Cannot read properties of null (reading '_id')
+    at /var/KKuTu/Server/lib/Game/games/jaqwi.js:62:27
+    at exports.Tail.go (/var/KKuTu/Server/lib/sub/lizard.js:43:16)
+    at /var/KKuTu/Server/lib/Game/games/jaqwi.js:249:21
+    at callback (/var/KKuTu/Server/lib/sub/collection.js:316:13)
+    at Query.preCB (/var/KKuTu/Server/lib/sub/collection.js:298:6)
+    at Query.handleReadyForQuery (/var/KKuTu/Server/lib/node_modules/pg/lib/query.js:138:12)
+    at Client._handleReadyForQuery (/var/KKuTu/Server/lib/node_modules/pg/lib/client.js:290:19)
+    at Connection.emit (node:events:518:28)
+    at /var/KKuTu/Server/lib/node_modules/pg/lib/connection.js:114:12
+    at Parser.parse (/var/KKuTu/Server/lib/node_modules/pg-protocol/dist/parser.js:40:17):8496 [2/12/2024, 4:45:46 AM] ERROR: TypeError: Cannot read properties of null (reading '_id')
+TypeError: Cannot read properties of null (reading '_id')
+    at /var/KKuTu/Server/lib/Game/games/jaqwi.js:62:27
+    at exports.Tail.go (/var/KKuTu/Server/lib/sub/lizard.js:43:16)
+    at /var/KKuTu/Server/lib/Game/games/jaqwi.js:249:21
+    at callback (/var/KKuTu/Server/lib/sub/collection.js:316:13)
+    at Query.preCB (/var/KKuTu/Server/lib/sub/collection.js:298:6)
+    at Query.handleReadyForQuery (/var/KKuTu/Server/lib/node_modules/pg/lib/query.js:138:12)
+    at Client._handleReadyForQuery (/var/KKuTu/Server/lib/node_modules/pg/lib/client.js:290:19)
+    at Connection.emit (node:events:518:28)
+    at /var/KKuTu/Server/lib/node_modules/pg/lib/connection.js:114:12
+    at Parser.parse (/var/KKuTu/Server/lib/node_modules/pg-protocol/dist/parser.js:40:17):8496 [2/12/2024, 4:51:58 AM] ERROR: TypeError: Cannot read properties of null (reading '_id')
+TypeError: Cannot read properties of null (reading '_id')
+    at /var/KKuTu/Server/lib/Game/games/jaqwi.js:62:27
+    at exports.Tail.go (/var/KKuTu/Server/lib/sub/lizard.js:43:16)
+    at /var/KKuTu/Server/lib/Game/games/jaqwi.js:249:21
+    at callback (/var/KKuTu/Server/lib/sub/collection.js:316:13)
+    at Query.preCB (/var/KKuTu/Server/lib/sub/collection.js:298:6)
+    at Query.handleReadyForQuery (/var/KKuTu/Server/lib/node_modules/pg/lib/query.js:138:12)
+    at Client._handleReadyForQuery (/var/KKuTu/Server/lib/node_modules/pg/lib/client.js:290:19)
+    at Connection.emit (node:events:518:28)
+    at /var/KKuTu/Server/lib/node_modules/pg/lib/connection.js:114:12
+    at Parser.parse (/var/KKuTu/Server/lib/node_modules/pg-protocol/dist/parser.js:40:17):8496 [2/12/2024, 8:52:58 PM] ERROR: TypeError: Cannot read properties of null (reading '_id')
+TypeError: Cannot read properties of null (reading '_id')
+    at /var/KKuTu/Server/lib/Game/games/jaqwi.js:62:27
+    at exports.Tail.go (/var/KKuTu/Server/lib/sub/lizard.js:43:16)
+    at /var/KKuTu/Server/lib/Game/games/jaqwi.js:249:21
+    at callback (/var/KKuTu/Server/lib/sub/collection.js:316:13)
+    at Query.preCB (/var/KKuTu/Server/lib/sub/collection.js:298:6)
+    at Query.handleReadyForQuery (/var/KKuTu/Server/lib/node_modules/pg/lib/query.js:138:12)
+    at Client._handleReadyForQuery (/var/KKuTu/Server/lib/node_modules/pg/lib/client.js:290:19)
+    at Connection.emit (node:events:518:28)
+    at /var/KKuTu/Server/lib/node_modules/pg/lib/connection.js:114:12
+    at Parser.parse (/var/KKuTu/Server/lib/node_modules/pg-protocol/dist/parser.js:40:17):8496 [2/12/2024, 9:02:51 PM] ERROR: TypeError: Cannot read properties of null (reading '_id')
+TypeError: Cannot read properties of null (reading '_id')
+    at /var/KKuTu/Server/lib/Game/games/jaqwi.js:62:27
+    at exports.Tail.go (/var/KKuTu/Server/lib/sub/lizard.js:43:16)
+    at /var/KKuTu/Server/lib/Game/games/jaqwi.js:249:21
+    at callback (/var/KKuTu/Server/lib/sub/collection.js:316:13)
+    at Query.preCB (/var/KKuTu/Server/lib/sub/collection.js:298:6)
+    at Query.handleReadyForQuery (/var/KKuTu/Server/lib/node_modules/pg/lib/query.js:138:12)
+    at Client._handleReadyForQuery (/var/KKuTu/Server/lib/node_modules/pg/lib/client.js:290:19)
+    at Connection.emit (node:events:518:28)
+    at /var/KKuTu/Server/lib/node_modules/pg/lib/connection.js:114:12
+    at Parser.parse (/var/KKuTu/Server/lib/node_modules/pg-protocol/dist/parser.js:40:17):8496 [2/12/2024, 9:55:14 PM] ERROR: TypeError: Cannot read properties of null (reading '_id')
+TypeError: Cannot read properties of null (reading '_id')
+    at /var/KKuTu/Server/lib/Game/games/jaqwi.js:62:27
+    at exports.Tail.go (/var/KKuTu/Server/lib/sub/lizard.js:43:16)
+    at /var/KKuTu/Server/lib/Game/games/jaqwi.js:249:21
+    at callback (/var/KKuTu/Server/lib/sub/collection.js:316:13)
+    at Query.preCB (/var/KKuTu/Server/lib/sub/collection.js:298:6)
+    at Query.handleReadyForQuery (/var/KKuTu/Server/lib/node_modules/pg/lib/query.js:138:12)
+    at Client._handleReadyForQuery (/var/KKuTu/Server/lib/node_modules/pg/lib/client.js:290:19)
+    at Connection.emit (node:events:518:28)
+    at /var/KKuTu/Server/lib/node_modules/pg/lib/connection.js:114:12
+    at Parser.parse (/var/KKuTu/Server/lib/node_modules/pg-protocol/dist/parser.js:40:17):8496 [2/12/2024, 9:59:40 PM] ERROR: TypeError: Cannot read properties of null (reading '_id')
+TypeError: Cannot read properties of null (reading '_id')
+    at /var/KKuTu/Server/lib/Game/games/jaqwi.js:62:27
+    at exports.Tail.go (/var/KKuTu/Server/lib/sub/lizard.js:43:16)
+    at /var/KKuTu/Server/lib/Game/games/jaqwi.js:249:21
+    at callback (/var/KKuTu/Server/lib/sub/collection.js:316:13)
+    at Query.preCB (/var/KKuTu/Server/lib/sub/collection.js:298:6)
+    at Query.handleReadyForQuery (/var/KKuTu/Server/lib/node_modules/pg/lib/query.js:138:12)
+    at Client._handleReadyForQuery (/var/KKuTu/Server/lib/node_modules/pg/lib/client.js:290:19)
+    at Connection.emit (node:events:518:28)
+    at /var/KKuTu/Server/lib/node_modules/pg/lib/connection.js:114:12
+    at Parser.parse (/var/KKuTu/Server/lib/node_modules/pg-protocol/dist/parser.js:40:17):8496 [2/12/2024, 10:15:20 PM] ERROR: TypeError: Cannot read properties of null (reading '_id')
+TypeError: Cannot read properties of null (reading '_id')
+    at /var/KKuTu/Server/lib/Game/games/jaqwi.js:62:27
+    at exports.Tail.go (/var/KKuTu/Server/lib/sub/lizard.js:43:16)
+    at /var/KKuTu/Server/lib/Game/games/jaqwi.js:249:21
+    at callback (/var/KKuTu/Server/lib/sub/collection.js:316:13)
+    at Query.preCB (/var/KKuTu/Server/lib/sub/collection.js:298:6)
+    at Query.handleReadyForQuery (/var/KKuTu/Server/lib/node_modules/pg/lib/query.js:138:12)
+    at Client._handleReadyForQuery (/var/KKuTu/Server/lib/node_modules/pg/lib/client.js:290:19)
+    at Connection.emit (node:events:518:28)
+    at /var/KKuTu/Server/lib/node_modules/pg/lib/connection.js:114:12
+    at Parser.parse (/var/KKuTu/Server/lib/node_modules/pg-protocol/dist/parser.js:40:17)

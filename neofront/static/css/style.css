@@ -112,7 +112,7 @@ span{
     font-size: 20px;
     text-align: center;
     color: #47330D;
-    background-image: url(https://cdn.kkutu.cc/img/topbg.png);
+    background-image: url(/img/topbg.png);
     background-color: #DEAF56;
     transition: all 200ms ease;
 }

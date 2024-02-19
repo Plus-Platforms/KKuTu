@@ -183,7 +183,7 @@ $(document).ready(function(){
 
 	$data._soundList = [
 		{ key: "k", value: "/media/kkutu/k.mp3" },
-		{ key: "lobby", value: "/media/kkutu/LobbySeolBGM.mp3" },
+		{ key: "lobby", value: "/media/kkutu/LobbyBGMS1.mp3" },
 		{ key: "dialog", value: "/media/kkutu/dialog.mp3" },
 		{ key: "legacylobby", value: "/media/kkutu/LobbyBGM.mp3" },
 		{ key: "ingame", value: "/media/kkutu/LobbyBGM2.mp3" },
@@ -777,6 +777,18 @@ $(document).ready(function(){
 		});
 		$.cookie('kks', JSON.stringify($data.opts));
 		$stage.dialog.setting.hide();
+
+		if($data.opts.vp == true){
+			document.getElementById("Background").pause();
+		}
+		else{
+			document.getElementById("Background").play();
+		}
+
+		stopBGM();
+		playBGM('lobby');
+		
+
 	});
 	$stage.dialog.profileLevel.on('click', function(e){
 		$("#PracticeDiag .dialog-title").html(L['robot']);
