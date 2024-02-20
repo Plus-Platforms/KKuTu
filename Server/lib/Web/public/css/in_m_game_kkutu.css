@@ -321,7 +321,11 @@ iframe{
 		.room-user-name{ font-weight: bold; }
 .GameBox{
 	width: calc(100% - 10px);
+<<<<<<< HEAD
 	height: 680px;
+=======
+	height: 410px;
+>>>>>>> 697bca9 (메인 페이지 개편)
 	background-image: url('/img/kkutu/gamebg.png');
 }
 	.GameBox .product-title{ height: 12px; }
