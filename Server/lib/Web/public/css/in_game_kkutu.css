@@ -220,7 +220,7 @@ iframe{
 .UserListBox{
 	width: 200px;
 	max-height: 480px;
-min-height: 410px;
+min-height: 680px;
 }
 	.UserListBox div{ float: left; }
 	.UserListBox .product-body{ width: 190px; height: 330px; overflow-x: hidden; overflow-y: scroll; }
@@ -234,7 +234,7 @@ min-height: 410px;
 .RoomListBox{
 	width: 790px;
 	max-height: 480px;
-min-height: 410px;
+min-height: 680px;
 }
 	.RoomListBox div{ float: left; }
 	.RoomListBox .product-body{ width: 780px; height: 330px; overflow-x: hidden; overflow-y: scroll; }
@@ -273,14 +273,14 @@ min-height: 410px;
 .ShopBox{
 	width: 790px;
 	max-height: 480px;
-min-height: 410px;
+min-height: 680px;
 }
 	.ShopBox div{ float: left; }
 	.ShopBox .product-body{ width: 780px; height: 330px; }
 .RoomBox{
 	width: 1000px;
 	max-height: 480px;
-min-height: 410px;
+min-height: 680px;
 }
 	.RoomBox .product-title{ height: 12px; }
 	.RoomBox .product-title h5{ float: left; }
@@ -344,8 +344,7 @@ min-height: 410px;
 		.room-user-name{ padding: 9px 0px 0px 4px; font-weight: bold; }
 		.room-user:hover{ cursor: pointer; background-color: #EEEEEE; }
 .GameBox{
-	width: 1000px;
-	height: 410px;
+	height: 680px;
 	background-image: url('/img/kkutu/gamebg.png');
 }
 	.GameBox .product-title{ height: 12px; }

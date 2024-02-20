@@ -350,8 +350,8 @@ iframe{
 		.room-user-name{ padding: 9px 0px 0px 4px; font-weight: bold; }
 		.room-user:hover{ cursor: pointer; background-color: #EEEEEE; }
 .GameBox{
-	width: 1000px;
-	height: 410px;
+	width: 100%;
+	height: 680px;
 	background-image: url('/img/kkutu/gamebg.png');
 }
 	.GameBox .product-title{ height: 12px; }

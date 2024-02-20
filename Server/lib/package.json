@@ -6,6 +6,9 @@
   "keywords": [
     "kkutu"
   ],
+  "scripts": {
+    "build": "grunt default pack"
+  },
   "author": "JJoriping",
   "dependencies": {
     "@google-cloud/logging": "^11.0.0",

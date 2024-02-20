@@ -127,6 +127,8 @@ $(document).ready(function(){
 			setting: $("#SettingBtn"),
 			community: $("#CommunityBtn"),
 			community2: $("#Community2Btn"),
+			sideMenu: $("#SideMenuBtn"),
+			sideMenuClose: $("#SideMenuCloseBtn"),
 			newRoom: $("#NewRoomBtn"),
 			setRoom: $("#SetRoomBtn"),
 			quickRoom: $("#QuickRoomBtn"),
@@ -252,7 +254,7 @@ $(document).ready(function(){
 
 	$data._soundList = [
 		{ key: "k", value: "/media/kkutu/k.mp3" },
-		{ key: "lobby", value: "/media/kkutu/LobbyBGMS1.mp3" },
+		{ key: "lobby", value: "/media/kkutu/devserver.mp3" },
 		{ key: "dialog", value: "/media/kkutu/dialog.mp3" },
 		{ key: "legacylobby", value: "/media/kkutu/LobbyBGM.mp3" },
 		{ key: "ingame", value: "/media/kkutu/LobbyBGM2.mp3" },
@@ -556,6 +558,14 @@ $(document).ready(function(){
 		$("#community2").attr('src', "https://pcor.me/plKkkutuCafe");
 		$('#dimmer').fadeIn();
 		showDialog($stage.dialog.community2);
+	});
+	$stage.menu.sideMenu.on('click', function(e){
+		$('#dimmer').fadeIn();
+		$('#sideMenuDiag').fadeIn();
+	});
+	$stage.menu.sideMenuClose.on('click', function(e){
+		$('#dimmer').fadeOut();
+		$('#sideMenuDiag').fadeOut();
 	});
 	$stage.menu.setting.on('click', function(e){
 		showDialog($stage.dialog.setting);
@@ -899,7 +909,7 @@ $(document).ready(function(){
 		$stage.dialog.result.hide();
 		delete $data._replay;
 		delete $data._resultRank;
-		$stage.box.room.height(480);
+		$stage.box.room.height(680);
 		playBGM('lobby');
 		forkChat();
 		updateUI();
@@ -3046,7 +3056,7 @@ function processRoom(data){
 				stopAllSounds();
 				$data.practicing = false;
 				$data._gaming = false;
-				$stage.box.room.height(480);
+				$stage.box.room.height(680);
 				playBGM('lobby');
 			}
 			$data.users[$data.id].game.ready = false;
@@ -3160,7 +3170,7 @@ function updateUI(myRoom, refresh){
 	
 	$(".kkutu-menu button").hide();
 	for(i in $stage.box) $stage.box[i].hide();
-	$stage.box.me.show();
+	$stage.box.me.hide();
 	$stage.box.chat.show().css('width', '40%').height(200);
 	$stage.chat.height(120);
 	
@@ -3201,7 +3211,7 @@ function updateUI(myRoom, refresh){
 			}
 		}
 		$data._shop = false;
-		$stage.box.room.show().height(480);
+		$stage.box.room.show().height(680);
 		if(only == "for-master") if($stage.dialog.inviteList.is(':visible')) updateUserList();
 		updateRoom(false);
 		updateMe();
@@ -4058,8 +4068,8 @@ function gameReady(){
 	$data.failCombo = 0;
 	$data._spectate = $data.room.game.seq.indexOf($data.id) == -1;
 	$data._gAnim = true;
-	$stage.box.room.show().height(480).animate({ 'height': 1 }, 500);
-	$stage.box.game.height(1).animate({ 'height': 410 }, 500);
+	$stage.box.room.show().height(680).animate({ 'height': 1 }, 500);
+	$stage.box.game.height(1).animate({ 'height': 680 }, 500);
 	stopBGM();
 	$stage.dialog.resultSave.attr('disabled', false);
 	clearBoard();
@@ -4067,7 +4077,7 @@ function gameReady(){
 	playSound('game_start');
 	forkChat();
 	addTimeout(function(){
-		$stage.box.room.height(480).hide();
+		$stage.box.room.height(680).hide();
 		$stage.chat.scrollTop(999999999);
 	}, 500);
 }
@@ -4239,7 +4249,7 @@ function replayTick(stay){
 function replayStop(){
 	delete $data.room;
 	$data._replay = false;
-	$stage.box.room.height(480);
+	$stage.box.room.height(680);
 	clearTimeout($data._rt);
 	updateUI();
 	playBGM('lobby');

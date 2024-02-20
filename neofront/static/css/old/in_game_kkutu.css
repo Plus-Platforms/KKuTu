@@ -340,7 +340,7 @@ iframe{
 		.room-user:hover{ cursor: pointer; background-color: #EEEEEE; }
 .GameBox{
 	width: 1000px;
-	height: 410px;
+	height: 680px;
 	background-image: url('/img/kkutu/gamebg.png');
 }
 	.GameBox .product-title{ height: 12px; }

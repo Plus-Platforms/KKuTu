@@ -59,6 +59,8 @@ $(document).ready(function(){
 			setting: $("#SettingBtn"),
 			community: $("#CommunityBtn"),
 			community2: $("#Community2Btn"),
+			sideMenu: $("#SideMenuBtn"),
+			sideMenuClose: $("#SideMenuCloseBtn"),
 			newRoom: $("#NewRoomBtn"),
 			setRoom: $("#SetRoomBtn"),
 			quickRoom: $("#QuickRoomBtn"),
@@ -184,7 +186,7 @@ $(document).ready(function(){
 
 	$data._soundList = [
 		{ key: "k", value: "/media/kkutu/k.mp3" },
-		{ key: "lobby", value: "/media/kkutu/LobbyBGMS1.mp3" },
+		{ key: "lobby", value: "/media/kkutu/devserver.mp3" },
 		{ key: "dialog", value: "/media/kkutu/dialog.mp3" },
 		{ key: "legacylobby", value: "/media/kkutu/LobbyBGM.mp3" },
 		{ key: "ingame", value: "/media/kkutu/LobbyBGM2.mp3" },
@@ -488,6 +490,14 @@ $(document).ready(function(){
 		$("#community2").attr('src', "https://pcor.me/plKkkutuCafe");
 		$('#dimmer').fadeIn();
 		showDialog($stage.dialog.community2);
+	});
+	$stage.menu.sideMenu.on('click', function(e){
+		$('#dimmer').fadeIn();
+		$('#sideMenuDiag').fadeIn();
+	});
+	$stage.menu.sideMenuClose.on('click', function(e){
+		$('#dimmer').fadeOut();
+		$('#sideMenuDiag').fadeOut();
 	});
 	$stage.menu.setting.on('click', function(e){
 		showDialog($stage.dialog.setting);
@@ -831,7 +841,7 @@ $(document).ready(function(){
 		$stage.dialog.result.hide();
 		delete $data._replay;
 		delete $data._resultRank;
-		$stage.box.room.height(480);
+		$stage.box.room.height(680);
 		playBGM('lobby');
 		forkChat();
 		updateUI();
