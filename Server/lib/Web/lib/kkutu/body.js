@@ -56,7 +56,6 @@ function applyOptions(opt){
 	
 	$("#bgm-volume").val($data.BGMVolume);
 	$("#effect-volume").val($data.EffectVolume);
-	$("#legacy-bgm").attr('checked', $data.opts.lb);
 	$("#pause-video").attr('checked', $data.opts.vp);
 	$("#deny-invite").attr('checked', $data.opts.di);
 	$("#deny-whisper").attr('checked', $data.opts.dw);
@@ -956,16 +955,16 @@ function updateMe(){
 	var goal = EXP[lv-1];
 	
 	for(i in my.data.record) gw += my.data.record[i][1];
-	renderMoremi(".my-image", my.equip);
+	//renderMoremi(".my-image", my.equip);
 	// $(".my-image").css('background-image', "url('"+my.profile.image+"')");
 	$(".my-stat-level").replaceWith(getLevelImage(my.data.score).addClass("my-stat-level"));
 	$(".my-stat-name").text(my.profile.title || my.profile.name);
 	$(".my-stat-record").html(gw);
 	$(".my-stat-ping").html(commify(my.money));
-	$(".my-okg .graph-bar").width(($data._playTime % 600000) / 6000 + "%");
+	//$(".my-okg .graph-bar").width(($data._playTime % 600000) / 6000 + "%");
 	$(".my-okg-text").html(prettyTime($data._playTime));
 	$(".my-level").html("Lv. " + lv);
-	$(".my-gauge .graph-bar").width((my.data.score-prev)/(goal-prev)*190);
+	//$(".my-gauge .graph-bar").width((my.data.score-prev)/(goal-prev)*190);
 	$(".my-gauge-text").html(commify(my.data.score) + "/" + commify(goal));
 }
 function prettyTime(time){
@@ -2690,16 +2689,6 @@ function stopBGM(){
 }
 function playSound(key, loop){
 
-	if ($data.opts.lb == true){
-		if (key == 'lobby'){
-		key = "legacylobby";
-	}
-	}
-	else{
-		if (key == 'lobby'){
-			key = "lobby";
-		}
-	}
 	var src, sound;
 	var bgmMuted = loop && $data.BGMVolume == 0;
 	var effectMuted = !loop && $data.EffectVolume == 0;

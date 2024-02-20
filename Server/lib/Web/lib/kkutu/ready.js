@@ -48,7 +48,7 @@ $(document).ready(function(){
 			connList: $("#connList"),
 			roomListTitle: $(".RoomListBox .product-title"),
 			roomList: $(".RoomListBox .product-body"),
-			createBanner: $("<div>").addClass("rooms-item rooms-create").append($("<div>").html("&nbsp;"))
+			createBanner: $("<div>").addClass("rooms-item rooms-create").append($("<div>").html("<i class='fa-solid fa-plus'></i>방 만들기"))
 		},
 		chat: $("#Chat"),
 		chatLog: $("#chat-log-board"),
@@ -419,21 +419,6 @@ $(document).ready(function(){
 
 
 
-	VanillaTilt.init(document.querySelector('.my-image'), {
-        max: 25,
-        speed: 400,
-        glare: true,
-        "max-glare": 0.5,
-		onMove: function(tilt) {
-			var background = document.getElementById('Background');
-			var tiltXPercentage = (tilt.clientX / window.innerWidth - 0.5) * 100;
-			var tiltYPercentage = (tilt.clientY / window.innerHeight - 0.5) * 100;
-			background.style.transform = 'translate(' + tiltXPercentage + '%, ' + tiltYPercentage + '%)';
-		}
-      });
-	  
-
-
 
 	var tostMessage = document.getElementById('tost_message');
 
@@ -479,6 +464,7 @@ $(document).ready(function(){
  
 
 	$stage.menu.help.on('click', function(e){
+		$('#sideMenuDiag').fadeOut();
 		$("#help-board").attr('src', "https://plus.oqupie.com/portal/2568");
 		showDialog($stage.dialog.help);
 	});
@@ -487,6 +473,7 @@ $(document).ready(function(){
 		showDialog($stage.dialog.pingShop);
 	});
 	$stage.menu.community2.on('click', function(e){
+		$('#sideMenuDiag').fadeOut();
 		$("#community2").attr('src', "https://pcor.me/plKkkutuCafe");
 		$('#dimmer').fadeIn();
 		showDialog($stage.dialog.community2);
@@ -500,6 +487,7 @@ $(document).ready(function(){
 		$('#sideMenuDiag').fadeOut();
 	});
 	$stage.menu.setting.on('click', function(e){
+		$('#sideMenuDiag').fadeOut();
 		showDialog($stage.dialog.setting);
 	});
 	$stage.menu.community.on('click', function(e){
@@ -771,7 +759,6 @@ $(document).ready(function(){
 		applyOptions({
 			bv: $("#bgm-volume").val(),
 			ev: $("#effect-volume").val(),
-			lb: $("#legacy-bgm").is(":checked"),
 			vp: $("#pause-video").is(":checked"),
 			di: $("#deny-invite").is(":checked"),
 			dw: $("#deny-whisper").is(":checked"),
@@ -784,11 +771,6 @@ $(document).ready(function(){
 		});
 		$.cookie('kks', JSON.stringify($data.opts));
 		$stage.dialog.setting.hide();
-
-
-		stopBGM();
-		playBGM('lobby');
-		
 
 	});
 	$stage.dialog.profileLevel.on('click', function(e){

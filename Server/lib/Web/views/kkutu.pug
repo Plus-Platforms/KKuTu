@@ -92,7 +92,7 @@ block Jungle
 				button.mainbtn#ReplayBtn.for-lobby(style='display: none;')!= L('replay')
 				button.mainbtn#LeaderboardBtn.for-lobby(style='display: none;')!= L('leaderboard')
 			div.kkutu-left
-				button.icnbtn#SettingBtn.tiny-menu.for-lobby.for-master.for-normal.for-gaming(style='display: none;')!= L('settings')
+				
 block Top 
 	div#Top
 		+Menu()
@@ -109,12 +109,7 @@ block Middle
 	div#dimmer(style="display: none;")
 	div#tost_message
 	
-	+Dialog('SettingDiag', 400,591, L('settingsText', false))
-		div.dialog-bar
-			h4.opt!= "개인 설정"
-			+SettingOption('legacy-bgm', "원작 BGM")
-			+SettingOption('pause-video', "배경 영상 비활성화")
-			+SettingOption('copyright-hide', "커뮤니티/약관 보지 않기")
+	+Dialog('SettingDiag', 400, 500, L('settingsText', false))
 		div.dialog-bar
 			h4.opt!= "배경음악 볼륨"
 			input#bgm-volume.range-input(type='range' min='0' max='1' value='0.5' step='0.01' style='width:50%;')
@@ -443,6 +438,7 @@ block Middle
 		h4.opt(style='text-align: center;')!= L('dictionarySupport')
 		h4.opt(style='text-align: center;')!= "게임 이용약관 및 개인정보 처리방침은 우상단 고객센터 탭에서 확인 가능합니다. 이 창을 닫을 시 이에 동의하는 것으로 간주합니다. (설정 내 저작권정보 보지 않기로 비활성화 가능)"
 		h4.opt(style='text-align: center;')!= L('GPL')
+		+SettingOption('copyright-hide', "동의합니다")
 
 
 	//시스템 UI Override
@@ -459,19 +455,29 @@ block Middle
 
 	.side-panel#sideMenuDiag(style="display:none;")
 		.panel-content
-			button#SideMenuCloseBtn= "닫기"
+			button#SideMenuCloseBtn= "×"
 			h2 전체 메뉴
-			p Side panel content goes here.
 			div
+				button.sidebtn
+					+FA("clock")
+					h3 오끄감 보너스
+					h3.my-okg-text 
+				button.sidebtn#SettingBtn
+					+FA("gear")
+					h3 환경설정
 				button.sidebtn#HelpBtn
-					img(src="/img/kkutu/quick/support.svg", alt="고객센터")
+					+FA("circle-question")
+					h3 고객센터
 				button.sidebtn#Community2Btn
-					img(src="/img/kkutu/quick/community.svg", alt="공식 커뮤니티")
+					+FA("bullhorn")
+					h3 공지사항
 				a(href="https://pcor.me/coupon", target="_blank")
 					button.sidebtn
-						img(src="/img/kkutu/quick/coupon.svg", alt="쿠폰 등록")
-				button.sidebtn#CommunityBtn
-					img(src="/img/kkutu/quick/friends.svg", alt="친구 목록")
+						+FA("ticket")
+						h3 쿠폰 등록
+				div.sideFooter
+					img(src="/img/kkutu/infole_gray.svg")
+					p Copyright &copy; 2021~ Infole & Plus
 			
 	div(style="width: 100%;display: flex;height: 680px;")
 		div(style="width: 310px;flex-direction: column;display: flex;")
@@ -570,9 +576,6 @@ block Middle
 				div.game-body
 				div.game-input
 					input#game-input(placeholder=L('yourTurn')+' '+L('inputChat'), readonly)
-	+Product('SideList')
-	+Product('Me')
-		div.moremi.my-image
 	+Product('AD')
 		ins.adsbygoogle(style="display:inline-block;width:1200px;height:150px", data-ad-client="ca-pub-3808496003691786", data-ad-slot="8845631298")
 

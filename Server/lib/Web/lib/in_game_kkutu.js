@@ -116,7 +116,7 @@ $(document).ready(function(){
 			connList: $("#connList"),
 			roomListTitle: $(".RoomListBox .product-title"),
 			roomList: $(".RoomListBox .product-body"),
-			createBanner: $("<div>").addClass("rooms-item rooms-create").append($("<div>").html("&nbsp;"))
+			createBanner: $("<div>").addClass("rooms-item rooms-create").append($("<div>").html("<i class='fa-solid fa-plus'></i>방 만들기"))
 		},
 		chat: $("#Chat"),
 		chatLog: $("#chat-log-board"),
@@ -487,21 +487,6 @@ $(document).ready(function(){
 
 
 
-	VanillaTilt.init(document.querySelector('.my-image'), {
-        max: 25,
-        speed: 400,
-        glare: true,
-        "max-glare": 0.5,
-		onMove: function(tilt) {
-			var background = document.getElementById('Background');
-			var tiltXPercentage = (tilt.clientX / window.innerWidth - 0.5) * 100;
-			var tiltYPercentage = (tilt.clientY / window.innerHeight - 0.5) * 100;
-			background.style.transform = 'translate(' + tiltXPercentage + '%, ' + tiltYPercentage + '%)';
-		}
-      });
-	  
-
-
 
 	var tostMessage = document.getElementById('tost_message');
 
@@ -547,6 +532,7 @@ $(document).ready(function(){
  
 
 	$stage.menu.help.on('click', function(e){
+		$('#sideMenuDiag').fadeOut();
 		$("#help-board").attr('src', "https://plus.oqupie.com/portal/2568");
 		showDialog($stage.dialog.help);
 	});
@@ -555,6 +541,7 @@ $(document).ready(function(){
 		showDialog($stage.dialog.pingShop);
 	});
 	$stage.menu.community2.on('click', function(e){
+		$('#sideMenuDiag').fadeOut();
 		$("#community2").attr('src', "https://pcor.me/plKkkutuCafe");
 		$('#dimmer').fadeIn();
 		showDialog($stage.dialog.community2);
@@ -568,6 +555,7 @@ $(document).ready(function(){
 		$('#sideMenuDiag').fadeOut();
 	});
 	$stage.menu.setting.on('click', function(e){
+		$('#sideMenuDiag').fadeOut();
 		showDialog($stage.dialog.setting);
 	});
 	$stage.menu.community.on('click', function(e){
@@ -839,7 +827,6 @@ $(document).ready(function(){
 		applyOptions({
 			bv: $("#bgm-volume").val(),
 			ev: $("#effect-volume").val(),
-			lb: $("#legacy-bgm").is(":checked"),
 			vp: $("#pause-video").is(":checked"),
 			di: $("#deny-invite").is(":checked"),
 			dw: $("#deny-whisper").is(":checked"),
@@ -852,11 +839,6 @@ $(document).ready(function(){
 		});
 		$.cookie('kks', JSON.stringify($data.opts));
 		$stage.dialog.setting.hide();
-
-
-		stopBGM();
-		playBGM('lobby');
-		
 
 	});
 	$stage.dialog.profileLevel.on('click', function(e){
@@ -2391,7 +2373,6 @@ function applyOptions(opt){
 	
 	$("#bgm-volume").val($data.BGMVolume);
 	$("#effect-volume").val($data.EffectVolume);
-	$("#legacy-bgm").attr('checked', $data.opts.lb);
 	$("#pause-video").attr('checked', $data.opts.vp);
 	$("#deny-invite").attr('checked', $data.opts.di);
 	$("#deny-whisper").attr('checked', $data.opts.dw);
@@ -3291,16 +3272,16 @@ function updateMe(){
 	var goal = EXP[lv-1];
 	
 	for(i in my.data.record) gw += my.data.record[i][1];
-	renderMoremi(".my-image", my.equip);
+	//renderMoremi(".my-image", my.equip);
 	// $(".my-image").css('background-image', "url('"+my.profile.image+"')");
 	$(".my-stat-level").replaceWith(getLevelImage(my.data.score).addClass("my-stat-level"));
 	$(".my-stat-name").text(my.profile.title || my.profile.name);
 	$(".my-stat-record").html(gw);
 	$(".my-stat-ping").html(commify(my.money));
-	$(".my-okg .graph-bar").width(($data._playTime % 600000) / 6000 + "%");
+	//$(".my-okg .graph-bar").width(($data._playTime % 600000) / 6000 + "%");
 	$(".my-okg-text").html(prettyTime($data._playTime));
 	$(".my-level").html("Lv. " + lv);
-	$(".my-gauge .graph-bar").width((my.data.score-prev)/(goal-prev)*190);
+	//$(".my-gauge .graph-bar").width((my.data.score-prev)/(goal-prev)*190);
 	$(".my-gauge-text").html(commify(my.data.score) + "/" + commify(goal));
 }
 function prettyTime(time){
@@ -5025,16 +5006,6 @@ function stopBGM(){
 }
 function playSound(key, loop){
 
-	if ($data.opts.lb == true){
-		if (key == 'lobby'){
-		key = "legacylobby";
-	}
-	}
-	else{
-		if (key == 'lobby'){
-			key = "lobby";
-		}
-	}
 	var src, sound;
 	var bgmMuted = loop && $data.BGMVolume == 0;
 	var effectMuted = !loop && $data.EffectVolume == 0;
