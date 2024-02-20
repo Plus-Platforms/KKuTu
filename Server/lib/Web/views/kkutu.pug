@@ -73,22 +73,13 @@ block Jungle
 	div.kkutu-menu
 		div.kkutu-wrap
 			div.kkutu-left
-
-
 			div.kkutu-center
-				button.mainbtn#SpectateBtn.for-master.for-normal(style='display: none;')!= L('spectate')
-				button.mainbtn#SetRoomBtn.for-master(style='display: none;')!= L('setRoom')
 				button.mainbtn#NewRoomBtn.for-lobby(style='display: none;')!= L('newRoomTitle')
 				button.mainbtn#QuickRoomBtn.for-lobby(style='display: none;')!= L('quickRoom')
 				button.mainbtn#ShopBtn.for-lobby(style='display: none;')!= L('shop')
-				button.mainbtn#DictionaryBtn.for-lobby.for-master.for-normal.for-gaming(style='display: none;')!= L('dict')
+				button.mainbtn#DictionaryBtn.for-lobby(style='display: none;')!= L('dict')
 				// button#WordPlusBtn.for-lobby.for-master.for-normal.for-gaming(style='display: none;')!= L('wordPlus')
-				button.mainbtn#InviteBtn.for-master(style='display: none;')!= L('invite')
 				button.mainbtn#profile-dress.for-lobby(style='display: none;')!= L('dress')
-				button.mainbtn#PracticeBtn.for-master.for-normal(style='display: none;')!= L('practice')
-				button.mainbtn#ReadyBtn.for-normal(style='display: none;')!= L('ready')
-				button.mainbtn#StartBtn.for-master(style='display: none;')!= L('start')
-				button.mainbtn#ExitBtn.for-master.for-normal.for-gaming(style='display: none;')!= L('exit')
 				button.mainbtn#ReplayBtn.for-lobby(style='display: none;')!= L('replay')
 				button.mainbtn#LeaderboardBtn.for-lobby(style='display: none;')!= L('leaderboard')
 			div.kkutu-left
@@ -96,10 +87,6 @@ block Jungle
 block Top 
 	div#Top
 		+Menu()
-		div#global-notice
-			div#gn-content
-				include ../public/global_notice.html
-		+Expl(L('GLOBAL_NOTICE'))
 
 block Middle
 	- var VERSION = L('version');
@@ -151,8 +138,7 @@ block Middle
 		div.dialog-bar.tail-button.d3-bar
 			button#lb-prev= L('prevPage')
 			button#lb-me= L('myRank')
-			button#lb-next(style='margin-right: 6px;')!= L('nextPage')
-			
+			button#lb-next(style='margin-right: 6px;')!= L('nextPage')		
 	+Dialog('QuickDiag', 300, 320, L('quickRoom', false))
 		div.dialog-bar
 			h4.opt!= L('gameMode')
@@ -178,7 +164,7 @@ block Middle
 			input#room-pw(type='password', placeholder=L('password'), maxlength=20)
 		div.dialog-bar
 			h4.opt!= L('userLimit')
-			input#room-limit(type='number', min=2, max=12, step=1, value=9)
+			input#room-limit(type='number', min=2, max=10, step=1, value=10)
 		div.dialog-bar
 			h4.opt!= L('gameMode')
 			select#room-mode
@@ -373,7 +359,6 @@ block Middle
 			h4.dialog-bar-value#replay-players -
 		div.dialog-bar.tail-button.d3-bar
 			button.primaryBtn#replay-view= L('replayView')
-
 	+Dialog('DressDiag', 1000, 510, L('dress', false))
 		div(style="display:flex;")
 			div
@@ -387,8 +372,7 @@ block Middle
 			div
 				img#infobtn(src="/img/kkutu/dress/info.png", alt="내 정보")
 				+Expl(true)
-					div!= "내 전적을 확인해 보세요"
-		
+					div!= "내 전적을 확인해 보세요"	
 	+Dialog('DressItemDiag', 600, 360, L('dress', false))
 		div.dialog-bar
 			h4(style='width: 150px;')!= L('myExordial')
@@ -405,7 +389,6 @@ block Middle
 		div.dialog-bar.tail-button.d3-bar
 			button.primaryBtn#dress-ok= L('OK')
 			button(onclick=`alert("${L("paybackHelp")}");`)!= L('payback')
-
 	+Dialog('CharFactoryDiag', 500, 462, L('charFactory', false))
 		div.dialog-bar(style='width: 300px;')
 			div#cf-tray
@@ -439,9 +422,6 @@ block Middle
 		h4.opt(style='text-align: center;')!= "게임 이용약관 및 개인정보 처리방침은 우상단 고객센터 탭에서 확인 가능합니다. 이 창을 닫을 시 이에 동의하는 것으로 간주합니다. (설정 내 저작권정보 보지 않기로 비활성화 가능)"
 		h4.opt(style='text-align: center;')!= L('GPL')
 		+SettingOption('copyright-hide', "동의합니다")
-
-
-	//시스템 UI Override
 	+Dialog('NotificationDiag', 700, 180, "플러스끄투 안내")
 		p#alertcon(style='text-align: center;font-size: 18px;color: #1F2167;font-weight: 600;')
 		div.dialog-bar.d2-bar.tail-button
@@ -451,7 +431,13 @@ block Middle
 		div.dialog-bar.d2-bar.tail-button
 			button.primaryBtn#confirm-ok= L('OK')
 			button#confirm-cancel= "취소"
-
+	+Dialog('TeamSelectDiag', 500, 85, "팀 설정")
+		div.team-selector
+			div.team-button#team-0.team-0= L('teamSolo')
+			div.team-button#team-1.team-1 A
+			div.team-button#team-2.team-2 B
+			div.team-button#team-3.team-3 C
+			div.team-button#team-4.team-4 D
 
 	.side-panel#sideMenuDiag(style="display:none;")
 		.panel-content
@@ -477,7 +463,7 @@ block Middle
 						h3 쿠폰 등록
 				div.sideFooter
 					img(src="/img/kkutu/infole_gray.svg")
-					p Copyright &copy; 2021~ Infole & Plus
+					p Copyright &copy; 2021~ Infole
 			
 	div(style="width: 100%;display: flex;height: 680px;")
 		div(style="width: 310px;flex-direction: column;display: flex;")
@@ -487,6 +473,23 @@ block Middle
 					div#comm-friends
 					p.conn-desc= "전체 접속자"
 					div#connList 불러오는 중
+			+Product('RoominfoList')
+				div.roomInfo
+				div.roomControls
+					div.rc1Row
+						button.roomBtn.room2row#SetRoomBtn.for-master(style='display: none;')!= L('setRoom')
+						button.roomBtn.room2row#InviteBtn.for-master(style='display: none;')!= L('invite')
+					div.rc2Row
+						button.roomBtn.room3row#TeamSelectBtn.for-master.for-normal(style='display: none;')!= L('setTeam')
+						button.roomBtn.room3row#SpectateBtn.for-master.for-normal(style='display: none;')!= L('spectate')
+						button.roomBtn.room3row#PracticeBtn.for-master.for-normal(style='display: none;')!= L('practice')
+					div.rc3Row
+						button.roomBtn.room2row#DictionaryBtnIngame.for-gaming(style='display: none;')!= L('dict')
+						button.roomBtn.room2row#ExitBtn.for-master.for-normal.for-gaming(style='display: none;')!= L('exit')
+						button.roomBtn.room2row#ReadyBtn.for-normal(style='display: none;')!= L('ready')
+						button.roomBtn.room2row#StartBtn.for-master(style='display: none;')!= L('start')
+
+
 			+Product('Chat')
 				div#Chat
 				input#Talk(maxlength=200)
@@ -506,15 +509,10 @@ block Middle
 			
 		
 			+Product('Room')
-				div.team-selector
-					div.team-button#team-0.team-0= L('teamSolo')
-					div.team-button#team-1.team-1 A
-					div.team-button#team-2.team-2 B
-					div.team-button#team-3.team-3 C
-					div.team-button#team-4.team-4 D
 				div.room-users
 			+Product('Game')
 				div.game-head
+					div.rounds
 					div.items
 					div.hints(style='display: none;')
 					div.tools(style='display: none;')
@@ -556,26 +554,27 @@ block Middle
 								input#drawing-color(type="color", value="#000000")
 							div(style="float: left; width: 40%;")
 								button#drawing-clear= L('drawingClear')
+					
 					div.b-left.cwcmd(style='display: none;')
 						div.cw-q-head
 						input#cw-q-input(placeholder=L('inputHere'), style='width: 313px; height: 20px; font-size: 15px;')
 						div.cw-q-body
 					div.b-left.bb(style='display: none;')
 					div.jjoriping
-						img.jjoObj.jjoEyeL(src='/img/jjoeyeL.png')
-						img.jjoObj.jjoNose(src='/img/jjonose.png')
-						img.jjoObj.jjoEyeR(src='/img/jjoeyeR.png')
 						div.jjoDisplayBar
 							div.jjo-display.ellipse
 							+GraphBar('jjo-turn-time')
-							+GraphBar('jjo-round-time')
 					div.chain
-					div.rounds
+					div.enterHere
+						div.game-input
+							input#game-input.game-inputs(placeholder=L('yourTurn')+' '+L('inputChat'), readonly)
+							div#game-correct.game-inputs= "정답입니다!"
+							div#game-wrong.game-inputs= "오답입니다."
+							div#other-enter.game-inputs= "다른 사람이 입력하고 있어요"
 					div.history-holder
 						div.history
 				div.game-body
-				div.game-input
-					input#game-input(placeholder=L('yourTurn')+' '+L('inputChat'), readonly)
+				+GraphBar('jjo-round-time')
 	+Product('AD')
 		ins.adsbygoogle(style="display:inline-block;width:1200px;height:150px", data-ad-client="ca-pub-3808496003691786", data-ad-slot="8845631298")
 

@@ -36,7 +36,7 @@ $lib.Jaqwi.roundReady = function(data){
 $lib.Jaqwi.turnStart = function(data){
 	$(".game-user-current").removeClass("game-user-current");
 	$(".game-user-bomb").removeClass("game-user-bomb");
-	if($data.room.game.seq.indexOf($data.id) >= 0) $stage.game.here.show();
+	if($data.room.game.seq.indexOf($data.id) >= 0) $stage.game.hereText.show();
 	$stage.game.display.html($data._char = data.char);
 	clearInterval($data._tTime);
 	$data._tTime = addInterval(turnGoing, TICK);
@@ -74,13 +74,17 @@ $lib.Jaqwi.turnEnd = function(id, data){
 	if(data.giveup){
 		$uc.addClass("game-user-bomb");
 	}else if(data.answer){
-		$stage.game.here.hide();
+		$stage.game.hereText.hide();
+		if (!$stage.game.other.is(":visible")){ $stage.game.correct.show();
+}
 		$stage.game.display.html($("<label>").css('color', "#FFFF44").html(data.answer));
 		stopBGM();
 		playSound('horr');
 	}else{
 		// if(data.mean) turnHint(data);
-		if(id == $data.id) $stage.game.here.hide();
+		if(id == $data.id) $stage.game.hereText.hide();
+		if (!$stage.game.other.is(":visible")){ $stage.game.correct.show();
+}
 		addScore(id, data.score);
 		if($data._roundTime > 10000) $data._roundTime = 10000;
 		drawObtainedScore($uc, $sc);

@@ -241,6 +241,8 @@
 		"checkAgeCancel": "본인 확인을 취소하고 미루겠습니까?",
 		
 		"UserList": "FA{users}접속자 목록",
+		"RoominfoList": "FA{circle-info}방 정보",
+		"setTeam": "FA{flag-checkered}팀 설정",
 		"RoomList": "FA{bars}방 목록",
 		"SideList": "FA{chevron-right}빠른 실행",
 		"Shop": "FA{shopping-bag}상점",

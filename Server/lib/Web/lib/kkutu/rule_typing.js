@@ -66,7 +66,7 @@ $lib.Typing.spaceOff = function(){
 };
 $lib.Typing.turnStart = function(data){
 	if(!$data._spectate){
-		$stage.game.here.show();
+		$stage.game.hereText.show();
 		if(mobile) $stage.game.hereText.val("").focus();
 		else $stage.talk.val("").focus();
 		$lib.Typing.spaceOn();
@@ -107,7 +107,9 @@ $lib.Typing.turnEnd = function(id, data){
 	}else{
 		clearInterval($data._tTime);
 		$lib.Typing.spaceOff();
-		$stage.game.here.hide();
+		$stage.game.hereText.hide();
+		if (!$stage.game.other.is(":visible")){ $stage.game.wrong.show();
+}
 		stopBGM();
 		playSound('horr');
 		addTimeout(drawSpeed, 1000, data.speed);

@@ -833,22 +833,22 @@ function updateUI(myRoom, refresh){
 	if($data.practicing) only = "for-gaming";
 	
 	$(".kkutu-menu button").hide();
+	$(".roomControls button").hide();
 	for(i in $stage.box) $stage.box[i].hide();
 	$stage.box.me.hide();
-	$stage.box.chat.show().css('width', '40%').height(200);
-	$stage.chat.height(120);
+	$stage.box.chat.show().css('width', '40%').height(500);
+	$stage.chat.height(274);
 	
 	if(only == "for-lobby"){
 		playBGM('lobby');
 		$data._ar_first = true;
 		$stage.box.userList.show();
+		$stage.box.roominfoList.hide();
 		if($data._shop){
 			$stage.box.roomList.hide();
-			$stage.box.sideList.hide();
 			$stage.box.shop.show();
 		}else{
 			$stage.box.roomList.show();
-			$stage.box.sideList.show();
 			$stage.box.shop.hide();
 		}
 		updateUserList(refresh || only != $data._only);
@@ -859,6 +859,7 @@ function updateUI(myRoom, refresh){
 			delete $data._jamsu;
 		}
 	}else if(only == "for-master" || only == "for-normal"){
+		$stage.box.roominfoList.show();
 		playBGM('ingame');
 		$(".team-chosen").removeClass("team-chosen");
 		if($data.users[$data.id].game.ready || $data.users[$data.id].game.form == "S"){
@@ -880,6 +881,7 @@ function updateUI(myRoom, refresh){
 		updateRoom(false);
 		updateMe();
 	}else if(only == "for-gaming"){
+		$stage.box.roominfoList.show();
 		if($data._gAnim){
 			$stage.box.room.show();
 			$data._gAnim = false;
@@ -888,13 +890,13 @@ function updateUI(myRoom, refresh){
 		$data._ar_first = true;
 		$stage.box.me.hide();
 		$stage.box.game.show();
-		$(".ChatBox").css('width', '45%').height(200);
-		$stage.chat.height(170);
+		$(".ChatBox").css('width', '45%').height(500);
+		$stage.chat.height(428);
 		updateRoom(true);
 	}
 	$data._only = only;
 	setLocation($data.place);
-	$(".kkutu-menu ."+only).show();
+	$("."+only).show();
 }
 function animModified(cls){
 	$(cls).addClass("room-head-modified");
@@ -1077,13 +1079,12 @@ function roomListBar(o){
 	.append($ch = $("<div>").addClass("rooms-channel channel-" + o.channel).on('click', function(e){ requestRoomInfo(o.id); }))
 	.append($("<div>").addClass("rooms-number").html(o.id))
 	.append($("<div>").addClass("rooms-title ellipse").text(badWords(o.title)))
+	.append($("<div>").addClass("rooms-lock").html(o.password ? "<i class='fa fa-lock'></i>" : "<i class='fa fa-unlock'></i>"))
 	.append($("<div>").addClass("rooms-limit").html(o.players.length + " / " + o.limit))
 	.append($("<div>").width(360)
 		.append($("<div>").addClass("rooms-mode").html(opts.join(" / ").toString()))
-		.append($("<div>").addClass("rooms-round").html(L['rounds'] + " " + o.round))
-		.append($("<div>").addClass("rooms-time").html(o.time + L['SECOND']))
 	)
-	.append($("<div>").addClass("rooms-lock").html(o.password ? "<i class='fa fa-lock'></i>" : "<i class='fa fa-unlock'></i>"))
+	.append($("<div>").addClass("rooms-round").html(L['rounds'] + o.round + " " + o.time + L['SECOND']))
 	.on('click', function(e){
 		if(e.target == $ch.get(0)) return;
 		tryJoin($(e.currentTarget).attr('id').slice(5));
@@ -1140,8 +1141,8 @@ function updateRoom(gaming){
 	var spec;
 	var arAcc = false, allReady = true;
 	
-	setRoomHead($(".RoomBox .product-title"), $data.room);
-	setRoomHead($(".GameBox .product-title"), $data.room);
+	setRoomHead($(".RoominfoListBox .roomInfo"), $data.room);
+	//setRoomHead($(".GameBox .product-title"), $data.room);
 	if(gaming){
 		$r = $(".GameBox .game-body").empty();
 		// updateScore(true);
@@ -1799,7 +1800,7 @@ function replayReady(){
 	}
 	$stage.box.userList.hide();
 	$stage.box.roomList.hide();
-	$stage.box.sideList.hide();
+	$stage.box.roominfoList.show();
 	$stage.box.game.show();
 	$stage.dialog.replay.hide();
 	gameReady();
@@ -1980,7 +1981,10 @@ function recordEvent(data){
 function clearBoard(){
 	$data._relay = false;
 	loading();
-	$stage.game.here.hide();
+	$stage.game.hereText.hide();
+	$stage.game.wrong.hide();
+	$stage.game.correct.hide();
+	$stage.game.other.hide();
 	$stage.dialog.result.hide();
 	$stage.dialog.dress.hide();
 	$stage.dialog.charFactory.hide();
@@ -2016,15 +2020,19 @@ function turnHint(data){
 	route("turnHint", data);
 }
 function turnError(code, text){
-	$stage.game.display.empty().append($("<label>").addClass("game-fail-text")
-		.text((L['turnError_'+code] ? (L['turnError_'+code] + ": ") : "") + text)
-	);
+	$stage.game.wrong.empty().text((L['turnError_'+code] ? (L['turnError_'+code] + ": ") : "") + text);
 	playSound('fail');
+	if (!$stage.game.other.is(":visible")){ $stage.game.wrong.show();$stage.game.hereText.hide();
+ // 오류 텍스트를 표시합니다.
+	
 	clearTimeout($data._fail);
 	$data._fail = addTimeout(function(){
-		$stage.game.display.html($data._char);
-	}, 1800);
+		$stage.game.wrong.html("오답입니다!");
+		$stage.game.wrong.hide();
+		$stage.game.hereText.show();
+	}, 1800);}
 }
+
 function getScore(id){
 	if($data._replay) return $rec.users[id].game.score;
 	else return ($data.users[id] || $data.robots[id]).game.score;
@@ -2399,7 +2407,7 @@ function pushDisplay(text, mean, theme, wc){
 			
 			$stage.game.display.append($l = $("<div>")
 				.addClass("display-text")
-				.css({ 'float': isRev ? "right" : "left", 'margin-top': -6, 'font-size': 36 })
+				.css({ 'float': isRev ? "right" : "left", 'margin-top': -12, 'font-size': 24 })
 				.hide()
 				.html(isRev ? text.charAt(len - j - 1) : text.charAt(j))
 			);
@@ -2411,9 +2419,9 @@ function pushDisplay(text, mean, theme, wc){
 				if($l.html() == $data.mission){
 					playSound('mission');
 					$l.addClass('gradientMission');
-					anim['font-size'] = 24;
+					anim['font-size'] = 36;
 				}else{
-					anim['font-size'] = 20;
+					anim['font-size'] = 36;
 				}
 				$l.show().animate(anim, 100);
 			}, Number(i) * tick, $l, ta);
@@ -2455,8 +2463,8 @@ function pushDisplay(text, mean, theme, wc){
 					else playSound('kung');
 				}
 				(beat ? $stage.game.display.children(".display-text") : $stage.game.display)
-					.css('font-size', 21)
-					.animate({ 'font-size': 20 }, tick);
+					.css('font-size', 37)
+					.animate({ 'font-size': 36 }, tick);
 			}, i * tick * 2, i);
 		}
 		addTimeout(pushHistory, tick * 4, text, mean, theme, wc);
@@ -2487,7 +2495,7 @@ function pushHistory(text, mean, theme, wc){
 		.html(text)
 	);
 	$w = $stage.game.history.children();
-	if($w.length > 7){
+	if($w.length > 6){
 		$w.last().remove();
 	}
 	val = processWord(text, mean, theme, wcs);
@@ -2618,15 +2626,17 @@ function setRoomHead($obj, room){
 	var opts = getOptions(room.mode, room.opts);
 	var rule = RULE[MODE[room.mode]];
 	var $rm;
-	
+
+	console.log(rule[0]);
+
 	$obj.empty()
-		.append($("<h5>").addClass("room-head-number").html((room.practice ? "[연습]" : "#"+room.id)+""))
+		//.append($("<h5>").addClass("room-head-number").html((room.practice ? "[연습]" : "#"+room.id)+""))
 		.append($("<h5>").addClass("room-head-title").text(badWords(room.title)))
-		.append($rm = $("<h5>").addClass("room-head-mode").html(opts.join(" ") + "  |"))
-		.append($("<h5>").addClass("room-head-limit").html((mobile ? "" : (L['players'] + " ")) + room.players.length + " / " +room.limit + "  |"))
-		.append($("<h5>").addClass("room-head-round").html(L['rounds'] + " " + room.round+ "  |"))
-		.append($("<h5>").addClass("room-head-time").html(room.time + L['SECOND']))
-		.append($("<h5>").addClass("room-vendor").html("플러스끄투 kkutu.cc"));
+		.append($rm = $("<h5>").addClass("room-head-mode").html(opts.join(" ") + " | " +  room.players.length + " / " +room.limit + " | " + L['rounds'] + " " + room.round+ " "+room.time + L['SECOND']))
+		//.append($("<h5>").addClass("room-head-limit").html((mobile ? "" : (L['players'] + " ")) +))
+		//.append($("<h5>").addClass("room-head-round").html(L['rounds'] + " " + room.round+ "  |"))
+		//.append($("<h5>").addClass("room-head-time").html(room.time + L['SECOND']))
+		//.append($("<h5>").addClass("room-vendor").html("플러스끄투 kkutu.cc"));
 	if(rule.opts.indexOf("ijp") != -1){
 		$rm.append($("<div>").addClass("expl").html("<h5>" + room.opts.injpick.map(function(item){
 			return L["theme_" + item];

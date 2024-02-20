@@ -41,7 +41,10 @@ $lib.Hunmin.turnStart = function(data){
 	$stage.game.display.html($data._char);
 	$("#game-user-"+data.id).addClass("game-user-current");
 	if(!$data._replay){
-		$stage.game.here.css('display', (data.id == $data.id) ? "block" : "none");
+		$stage.game.hereText.css('display', (data.id == $data.id) ? "block" : "none");
+$stage.game.correct.hide();
+$stage.game.wrong.hide();
+$stage.game.other.css('display', (data.id == $data.id) ? "none" : "block");
 		if(data.id == $data.id){
 			if(mobile) $stage.game.hereText.val("").focus();
 			else $stage.talk.focus();
@@ -76,13 +79,17 @@ $lib.Hunmin.turnEnd = function(id, data){
 	clearInterval($data._tTime);
 	if(data.ok){
 		clearTimeout($data._fail);
-		$stage.game.here.hide();
+		$stage.game.hereText.hide();
+		if (!$stage.game.other.is(":visible")){ $stage.game.correct.show();
+}
 		$stage.game.chain.html(++$data.chain);
 		pushDisplay(data.value, data.mean, data.theme, data.wc);
 	}else{
 		$sc.addClass("lost");
 		$(".game-user-current").addClass("game-user-bomb");
-		$stage.game.here.hide();
+		$stage.game.hereText.hide();
+		if (!$stage.game.other.is(":visible")){ $stage.game.wrong.show();
+}
 		playSound('timeout');
 	}
 	if(data.hint){

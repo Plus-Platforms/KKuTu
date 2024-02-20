@@ -135,6 +135,7 @@ $(document).ready(function(){
 			spectate: $("#SpectateBtn"),
 			shop: $("#ShopBtn"),
 			dict: $("#DictionaryBtn"),
+			dictIngame: $("#DictionaryBtnIngame"),
 			wordPlus: $("#WordPlusBtn"),
 			invite: $("#InviteBtn"),
 			practice: $("#PracticeBtn"),
@@ -144,7 +145,8 @@ $(document).ready(function(){
 			notice: $("#NoticeBtn"),
 			replay: $("#ReplayBtn"),
 			addBalance: $("#addBalance"),
-			leaderboard: $("#LeaderboardBtn")
+			leaderboard: $("#LeaderboardBtn"),
+			teamSelect: $("#TeamSelectBtn")
 		},
 		dialog: {
 			setting: $("#SettingDiag"),
@@ -214,12 +216,13 @@ $(document).ready(function(){
 				alertOK: $("#alert-ok"),
 			confirm: $("#ConfirmDiag"),
 				confirmOK: $("#confirm-ok"),
-				confirmCancel: $("#confirm-cancel")
+				confirmCancel: $("#confirm-cancel"),
+			teamSelect: $("#TeamSelectDiag"),
 		},
 		box: {
 			chat: $(".ChatBox"),
 			userList: $(".UserListBox"),
-			sideList: $(".SideListBox"),
+			roominfoList: $(".RoominfoListBox"),
 			roomList: $(".RoomListBox"),
 			shop: $(".ShopBox"),
 			room: $(".RoomBox"),
@@ -237,8 +240,11 @@ $(document).ready(function(){
 			items: $(".GameBox .items"),
 			chain: $(".GameBox .chain"),
 			round: $(".rounds"),
-			here: $(".game-input").hide(),
+			here: $(".game-input"),
 			hereText: $("#game-input"),
+			correct: $("#game-correct"),
+			wrong: $("#game-wrong"),
+			other: $("#other-enter"),
 			history: $(".history"),
 			roundBar: $(".jjo-round-time .graph-bar"),
 			turnBar: $(".jjo-turn-time .graph-bar")
@@ -377,7 +383,7 @@ $(document).ready(function(){
 	$stage.chatBtn.on('click', function(e){
 		checkInput();
 		
-		var value = (mobile && $stage.game.here.is(':visible'))
+		var value = (mobile && $stage.game.hereText.is(':visible'))
 			? $stage.game.hereText.val()
 			: $stage.talk.val();
 		if(!value) return;
@@ -386,7 +392,7 @@ $(document).ready(function(){
 			o.cmd = o.value.split(" ");
 			runCommand(o.cmd);
 		}else{
-			if($stage.game.here.is(":visible") || $data._relay){
+			if($stage.game.hereText.is(":visible") || $data._relay){
 				o.relay = true;
 			}
 			send('talk', o);
@@ -417,7 +423,7 @@ $(document).ready(function(){
 		var $target = $(e.currentTarget);
 		var value = $target.val();
 		
-		if(value < 2 || value > 9){
+		if(value < 2 || value > 10){
 			$target.css('color', "#FF4444");
 		}else{
 			$target.css('color', "");
@@ -433,7 +439,7 @@ $(document).ready(function(){
 			$target.css('color', "");
 		}
 	});
-	$stage.game.here.on('click', function(e){
+	$stage.game.hereText.on('click', function(e){
 		mobile || $stage.talk.focus();
 	});
 	$stage.talk.on('keyup', function(e){
@@ -549,6 +555,9 @@ $(document).ready(function(){
 	$stage.menu.sideMenu.on('click', function(e){
 		$('#dimmer').fadeIn();
 		$('#sideMenuDiag').fadeIn();
+	});
+	$stage.menu.teamSelect.on('click', function(e){
+		showDialog($stage.dialog.teamSelect);
 	});
 	$stage.menu.sideMenuClose.on('click', function(e){
 		$('#dimmer').fadeOut();
@@ -752,6 +761,9 @@ $(document).ready(function(){
 		filterShop(type == 'all' || $target.attr('value'));
 	});
 	$stage.menu.dict.on('click', function(e){
+		showDialog($stage.dialog.dict);
+	});
+	$stage.menu.dictIngame.on('click', function(e){
 		showDialog($stage.dialog.dict);
 	});
 	$stage.menu.wordPlus.on('click', function(e){
@@ -1271,7 +1283,11 @@ $lib.Classic.turnStart = function(data){
 	$stage.game.display.html($data._char = getCharText(data.char, data.subChar, data.wordLength));
 	$("#game-user-"+data.id).addClass("game-user-current");
 	if(!$data._replay){
-		$stage.game.here.css('display', (data.id == $data.id) ? "block" : "none");
+		$stage.game.hereText.css('display', (data.id == $data.id) ? "block" : "none");
+$stage.game.correct.hide();
+$stage.game.wrong.hide();
+$stage.game.other.css('display', (data.id == $data.id) ? "none" : "block");
+		
 		if(data.id == $data.id){
 			if(mobile) $stage.game.hereText.val("").focus();
 			else $stage.talk.focus();
@@ -1320,14 +1336,18 @@ $lib.Classic.turnEnd = function(id, data){
 	if(data.ok){
 		checkFailCombo();
 		clearTimeout($data._fail);
-		$stage.game.here.hide();
+		$stage.game.hereText.hide();
+		if (!$stage.game.other.is(":visible")){ $stage.game.correct.show();
+}
 		$stage.game.chain.html(++$data.chain);
 		pushDisplay(data.value, data.mean, data.theme, data.wc);
 	}else{
 		checkFailCombo(id);
 		$sc.addClass("lost");
 		$(".game-user-current").addClass("game-user-bomb");
-		$stage.game.here.hide();
+		$stage.game.hereText.hide();
+		if (!$stage.game.other.is(":visible")){ $stage.game.wrong.show();
+}
 		playSound('timeout');
 	}
 	if(data.hint){
@@ -1393,7 +1413,7 @@ $lib.Jaqwi.roundReady = function(data){
 $lib.Jaqwi.turnStart = function(data){
 	$(".game-user-current").removeClass("game-user-current");
 	$(".game-user-bomb").removeClass("game-user-bomb");
-	if($data.room.game.seq.indexOf($data.id) >= 0) $stage.game.here.show();
+	if($data.room.game.seq.indexOf($data.id) >= 0) $stage.game.hereText.show();
 	$stage.game.display.html($data._char = data.char);
 	clearInterval($data._tTime);
 	$data._tTime = addInterval(turnGoing, TICK);
@@ -1431,13 +1451,17 @@ $lib.Jaqwi.turnEnd = function(id, data){
 	if(data.giveup){
 		$uc.addClass("game-user-bomb");
 	}else if(data.answer){
-		$stage.game.here.hide();
+		$stage.game.hereText.hide();
+		if (!$stage.game.other.is(":visible")){ $stage.game.correct.show();
+}
 		$stage.game.display.html($("<label>").css('color', "#FFFF44").html(data.answer));
 		stopBGM();
 		playSound('horr');
 	}else{
 		// if(data.mean) turnHint(data);
-		if(id == $data.id) $stage.game.here.hide();
+		if(id == $data.id) $stage.game.hereText.hide();
+		if (!$stage.game.other.is(":visible")){ $stage.game.correct.show();
+}
 		addScore(id, data.score);
 		if($data._roundTime > 10000) $data._roundTime = 10000;
 		drawObtainedScore($uc, $sc);
@@ -1658,7 +1682,7 @@ $lib.Typing.spaceOff = function(){
 };
 $lib.Typing.turnStart = function(data){
 	if(!$data._spectate){
-		$stage.game.here.show();
+		$stage.game.hereText.show();
 		if(mobile) $stage.game.hereText.val("").focus();
 		else $stage.talk.val("").focus();
 		$lib.Typing.spaceOn();
@@ -1699,7 +1723,9 @@ $lib.Typing.turnEnd = function(id, data){
 	}else{
 		clearInterval($data._tTime);
 		$lib.Typing.spaceOff();
-		$stage.game.here.hide();
+		$stage.game.hereText.hide();
+		if (!$stage.game.other.is(":visible")){ $stage.game.wrong.show();
+}
 		stopBGM();
 		playSound('horr');
 		addTimeout(drawSpeed, 1000, data.speed);
@@ -1763,7 +1789,10 @@ $lib.Hunmin.turnStart = function(data){
 	$stage.game.display.html($data._char);
 	$("#game-user-"+data.id).addClass("game-user-current");
 	if(!$data._replay){
-		$stage.game.here.css('display', (data.id == $data.id) ? "block" : "none");
+		$stage.game.hereText.css('display', (data.id == $data.id) ? "block" : "none");
+$stage.game.correct.hide();
+$stage.game.wrong.hide();
+$stage.game.other.css('display', (data.id == $data.id) ? "none" : "block");
 		if(data.id == $data.id){
 			if(mobile) $stage.game.hereText.val("").focus();
 			else $stage.talk.focus();
@@ -1798,13 +1827,17 @@ $lib.Hunmin.turnEnd = function(id, data){
 	clearInterval($data._tTime);
 	if(data.ok){
 		clearTimeout($data._fail);
-		$stage.game.here.hide();
+		$stage.game.hereText.hide();
+		if (!$stage.game.other.is(":visible")){ $stage.game.correct.show();
+}
 		$stage.game.chain.html(++$data.chain);
 		pushDisplay(data.value, data.mean, data.theme, data.wc);
 	}else{
 		$sc.addClass("lost");
 		$(".game-user-current").addClass("game-user-bomb");
-		$stage.game.here.hide();
+		$stage.game.hereText.hide();
+		if (!$stage.game.other.is(":visible")){ $stage.game.wrong.show();
+}
 		playSound('timeout');
 	}
 	if(data.hint){
@@ -1872,7 +1905,10 @@ $lib.Daneo.turnStart = function(data){
 	$stage.game.display.html($data._char);
 	$("#game-user-"+data.id).addClass("game-user-current");
 	if(!$data._replay){
-		$stage.game.here.css('display', (data.id == $data.id) ? "block" : "none");
+		$stage.game.hereText.css('display', (data.id == $data.id) ? "block" : "none");
+$stage.game.correct.hide();
+$stage.game.wrong.hide();
+$stage.game.other.css('display', (data.id == $data.id) ? "none" : "block");
 		if(data.id == $data.id){
 			if(mobile) $stage.game.hereText.val("").focus();
 			else $stage.talk.focus();
@@ -1907,13 +1943,17 @@ $lib.Daneo.turnEnd = function(id, data){
 	clearInterval($data._tTime);
 	if(data.ok){
 		clearTimeout($data._fail);
-		$stage.game.here.hide();
+		$stage.game.hereText.hide();
+		if (!$stage.game.other.is(":visible")){ $stage.game.correct.show();
+}
 		$stage.game.chain.html(++$data.chain);
 		pushDisplay(data.value, data.mean, data.theme, data.wc);
 	}else{
 		$sc.addClass("lost");
 		$(".game-user-current").addClass("game-user-bomb");
-		$stage.game.here.hide();
+		$stage.game.hereText.hide();
+		if (!$stage.game.other.is(":visible")){ $stage.game.wrong.show();
+}
 		playSound('timeout');
 	}
 	if(data.hint){
@@ -2098,14 +2138,18 @@ $lib.Drawing.turnEnd = function (id, data) {
     $uc.addClass('game-user-bomb')
     $data._relay = false
   } else if (data.answer) {
-    $stage.game.here.hide()
+    $stage.game.hereText.hide()
+    if (!$stage.game.other.is(":visible")){ $stage.game.correct.show();
+}
     $stage.game.display.html($('<label>').css('color', '#FFFF44').html(data.answer))
     stopBGM()
     playSound('horr')
     $data._relay = false
   } else {
     // if(data.mean) turnHint(data);
-    if (id == $data.id) $stage.game.here.hide()
+    if (id == $data.id) $stage.game.hereText.hide()
+    if (!$stage.game.other.is(":visible")){ $stage.game.wrong.show();
+}
     addScore(id, data.score)
     if ($data._roundTime > 10000) $data._roundTime = 10000
     drawObtainedScore($uc, $sc)
@@ -3150,22 +3194,22 @@ function updateUI(myRoom, refresh){
 	if($data.practicing) only = "for-gaming";
 	
 	$(".kkutu-menu button").hide();
+	$(".roomControls button").hide();
 	for(i in $stage.box) $stage.box[i].hide();
 	$stage.box.me.hide();
-	$stage.box.chat.show().css('width', '40%').height(200);
-	$stage.chat.height(120);
+	$stage.box.chat.show().css('width', '40%').height(500);
+	$stage.chat.height(274);
 	
 	if(only == "for-lobby"){
 		playBGM('lobby');
 		$data._ar_first = true;
 		$stage.box.userList.show();
+		$stage.box.roominfoList.hide();
 		if($data._shop){
 			$stage.box.roomList.hide();
-			$stage.box.sideList.hide();
 			$stage.box.shop.show();
 		}else{
 			$stage.box.roomList.show();
-			$stage.box.sideList.show();
 			$stage.box.shop.hide();
 		}
 		updateUserList(refresh || only != $data._only);
@@ -3176,6 +3220,7 @@ function updateUI(myRoom, refresh){
 			delete $data._jamsu;
 		}
 	}else if(only == "for-master" || only == "for-normal"){
+		$stage.box.roominfoList.show();
 		playBGM('ingame');
 		$(".team-chosen").removeClass("team-chosen");
 		if($data.users[$data.id].game.ready || $data.users[$data.id].game.form == "S"){
@@ -3197,6 +3242,7 @@ function updateUI(myRoom, refresh){
 		updateRoom(false);
 		updateMe();
 	}else if(only == "for-gaming"){
+		$stage.box.roominfoList.show();
 		if($data._gAnim){
 			$stage.box.room.show();
 			$data._gAnim = false;
@@ -3205,13 +3251,13 @@ function updateUI(myRoom, refresh){
 		$data._ar_first = true;
 		$stage.box.me.hide();
 		$stage.box.game.show();
-		$(".ChatBox").css('width', '45%').height(200);
-		$stage.chat.height(170);
+		$(".ChatBox").css('width', '45%').height(500);
+		$stage.chat.height(428);
 		updateRoom(true);
 	}
 	$data._only = only;
 	setLocation($data.place);
-	$(".kkutu-menu ."+only).show();
+	$("."+only).show();
 }
 function animModified(cls){
 	$(cls).addClass("room-head-modified");
@@ -3394,13 +3440,12 @@ function roomListBar(o){
 	.append($ch = $("<div>").addClass("rooms-channel channel-" + o.channel).on('click', function(e){ requestRoomInfo(o.id); }))
 	.append($("<div>").addClass("rooms-number").html(o.id))
 	.append($("<div>").addClass("rooms-title ellipse").text(badWords(o.title)))
+	.append($("<div>").addClass("rooms-lock").html(o.password ? "<i class='fa fa-lock'></i>" : "<i class='fa fa-unlock'></i>"))
 	.append($("<div>").addClass("rooms-limit").html(o.players.length + " / " + o.limit))
 	.append($("<div>").width(360)
 		.append($("<div>").addClass("rooms-mode").html(opts.join(" / ").toString()))
-		.append($("<div>").addClass("rooms-round").html(L['rounds'] + " " + o.round))
-		.append($("<div>").addClass("rooms-time").html(o.time + L['SECOND']))
 	)
-	.append($("<div>").addClass("rooms-lock").html(o.password ? "<i class='fa fa-lock'></i>" : "<i class='fa fa-unlock'></i>"))
+	.append($("<div>").addClass("rooms-round").html(L['rounds'] + o.round + " " + o.time + L['SECOND']))
 	.on('click', function(e){
 		if(e.target == $ch.get(0)) return;
 		tryJoin($(e.currentTarget).attr('id').slice(5));
@@ -3457,8 +3502,8 @@ function updateRoom(gaming){
 	var spec;
 	var arAcc = false, allReady = true;
 	
-	setRoomHead($(".RoomBox .product-title"), $data.room);
-	setRoomHead($(".GameBox .product-title"), $data.room);
+	setRoomHead($(".RoominfoListBox .roomInfo"), $data.room);
+	//setRoomHead($(".GameBox .product-title"), $data.room);
 	if(gaming){
 		$r = $(".GameBox .game-body").empty();
 		// updateScore(true);
@@ -4116,7 +4161,7 @@ function replayReady(){
 	}
 	$stage.box.userList.hide();
 	$stage.box.roomList.hide();
-	$stage.box.sideList.hide();
+	$stage.box.roominfoList.show();
 	$stage.box.game.show();
 	$stage.dialog.replay.hide();
 	gameReady();
@@ -4297,7 +4342,10 @@ function recordEvent(data){
 function clearBoard(){
 	$data._relay = false;
 	loading();
-	$stage.game.here.hide();
+	$stage.game.hereText.hide();
+	$stage.game.wrong.hide();
+	$stage.game.correct.hide();
+	$stage.game.other.hide();
 	$stage.dialog.result.hide();
 	$stage.dialog.dress.hide();
 	$stage.dialog.charFactory.hide();
@@ -4333,15 +4381,19 @@ function turnHint(data){
 	route("turnHint", data);
 }
 function turnError(code, text){
-	$stage.game.display.empty().append($("<label>").addClass("game-fail-text")
-		.text((L['turnError_'+code] ? (L['turnError_'+code] + ": ") : "") + text)
-	);
+	$stage.game.wrong.empty().text((L['turnError_'+code] ? (L['turnError_'+code] + ": ") : "") + text);
 	playSound('fail');
+	if (!$stage.game.other.is(":visible")){ $stage.game.wrong.show();$stage.game.hereText.hide();
+ // 오류 텍스트를 표시합니다.
+	
 	clearTimeout($data._fail);
 	$data._fail = addTimeout(function(){
-		$stage.game.display.html($data._char);
-	}, 1800);
+		$stage.game.wrong.html("오답입니다!");
+		$stage.game.wrong.hide();
+		$stage.game.hereText.show();
+	}, 1800);}
 }
+
 function getScore(id){
 	if($data._replay) return $rec.users[id].game.score;
 	else return ($data.users[id] || $data.robots[id]).game.score;
@@ -4716,7 +4768,7 @@ function pushDisplay(text, mean, theme, wc){
 			
 			$stage.game.display.append($l = $("<div>")
 				.addClass("display-text")
-				.css({ 'float': isRev ? "right" : "left", 'margin-top': -6, 'font-size': 36 })
+				.css({ 'float': isRev ? "right" : "left", 'margin-top': -12, 'font-size': 24 })
 				.hide()
 				.html(isRev ? text.charAt(len - j - 1) : text.charAt(j))
 			);
@@ -4728,9 +4780,9 @@ function pushDisplay(text, mean, theme, wc){
 				if($l.html() == $data.mission){
 					playSound('mission');
 					$l.addClass('gradientMission');
-					anim['font-size'] = 24;
+					anim['font-size'] = 36;
 				}else{
-					anim['font-size'] = 20;
+					anim['font-size'] = 36;
 				}
 				$l.show().animate(anim, 100);
 			}, Number(i) * tick, $l, ta);
@@ -4772,8 +4824,8 @@ function pushDisplay(text, mean, theme, wc){
 					else playSound('kung');
 				}
 				(beat ? $stage.game.display.children(".display-text") : $stage.game.display)
-					.css('font-size', 21)
-					.animate({ 'font-size': 20 }, tick);
+					.css('font-size', 37)
+					.animate({ 'font-size': 36 }, tick);
 			}, i * tick * 2, i);
 		}
 		addTimeout(pushHistory, tick * 4, text, mean, theme, wc);
@@ -4804,7 +4856,7 @@ function pushHistory(text, mean, theme, wc){
 		.html(text)
 	);
 	$w = $stage.game.history.children();
-	if($w.length > 7){
+	if($w.length > 6){
 		$w.last().remove();
 	}
 	val = processWord(text, mean, theme, wcs);
@@ -4935,15 +4987,17 @@ function setRoomHead($obj, room){
 	var opts = getOptions(room.mode, room.opts);
 	var rule = RULE[MODE[room.mode]];
 	var $rm;
-	
+
+	console.log(rule[0]);
+
 	$obj.empty()
-		.append($("<h5>").addClass("room-head-number").html((room.practice ? "[연습]" : "#"+room.id)+""))
+		//.append($("<h5>").addClass("room-head-number").html((room.practice ? "[연습]" : "#"+room.id)+""))
 		.append($("<h5>").addClass("room-head-title").text(badWords(room.title)))
-		.append($rm = $("<h5>").addClass("room-head-mode").html(opts.join(" ") + "  |"))
-		.append($("<h5>").addClass("room-head-limit").html((mobile ? "" : (L['players'] + " ")) + room.players.length + " / " +room.limit + "  |"))
-		.append($("<h5>").addClass("room-head-round").html(L['rounds'] + " " + room.round+ "  |"))
-		.append($("<h5>").addClass("room-head-time").html(room.time + L['SECOND']))
-		.append($("<h5>").addClass("room-vendor").html("플러스끄투 kkutu.cc"));
+		.append($rm = $("<h5>").addClass("room-head-mode").html(opts.join(" ") + " | " +  room.players.length + " / " +room.limit + " | " + L['rounds'] + " " + room.round+ " "+room.time + L['SECOND']))
+		//.append($("<h5>").addClass("room-head-limit").html((mobile ? "" : (L['players'] + " ")) +))
+		//.append($("<h5>").addClass("room-head-round").html(L['rounds'] + " " + room.round+ "  |"))
+		//.append($("<h5>").addClass("room-head-time").html(room.time + L['SECOND']))
+		//.append($("<h5>").addClass("room-vendor").html("플러스끄투 kkutu.cc"));
 	if(rule.opts.indexOf("ijp") != -1){
 		$rm.append($("<div>").addClass("expl").html("<h5>" + room.opts.injpick.map(function(item){
 			return L["theme_" + item];

@@ -67,6 +67,7 @@ $(document).ready(function(){
 			spectate: $("#SpectateBtn"),
 			shop: $("#ShopBtn"),
 			dict: $("#DictionaryBtn"),
+			dictIngame: $("#DictionaryBtnIngame"),
 			wordPlus: $("#WordPlusBtn"),
 			invite: $("#InviteBtn"),
 			practice: $("#PracticeBtn"),
@@ -76,7 +77,8 @@ $(document).ready(function(){
 			notice: $("#NoticeBtn"),
 			replay: $("#ReplayBtn"),
 			addBalance: $("#addBalance"),
-			leaderboard: $("#LeaderboardBtn")
+			leaderboard: $("#LeaderboardBtn"),
+			teamSelect: $("#TeamSelectBtn")
 		},
 		dialog: {
 			setting: $("#SettingDiag"),
@@ -146,12 +148,13 @@ $(document).ready(function(){
 				alertOK: $("#alert-ok"),
 			confirm: $("#ConfirmDiag"),
 				confirmOK: $("#confirm-ok"),
-				confirmCancel: $("#confirm-cancel")
+				confirmCancel: $("#confirm-cancel"),
+			teamSelect: $("#TeamSelectDiag"),
 		},
 		box: {
 			chat: $(".ChatBox"),
 			userList: $(".UserListBox"),
-			sideList: $(".SideListBox"),
+			roominfoList: $(".RoominfoListBox"),
 			roomList: $(".RoomListBox"),
 			shop: $(".ShopBox"),
 			room: $(".RoomBox"),
@@ -169,8 +172,11 @@ $(document).ready(function(){
 			items: $(".GameBox .items"),
 			chain: $(".GameBox .chain"),
 			round: $(".rounds"),
-			here: $(".game-input").hide(),
+			here: $(".game-input"),
 			hereText: $("#game-input"),
+			correct: $("#game-correct"),
+			wrong: $("#game-wrong"),
+			other: $("#other-enter"),
 			history: $(".history"),
 			roundBar: $(".jjo-round-time .graph-bar"),
 			turnBar: $(".jjo-turn-time .graph-bar")
@@ -186,7 +192,7 @@ $(document).ready(function(){
 
 	$data._soundList = [
 		{ key: "k", value: "/media/kkutu/k.mp3" },
-		{ key: "lobby", value: "/media/kkutu/devserver.mp3" },
+		{ key: "lobby", value: "/media/kkutu/LobbyBGMS1.mp3" },
 		{ key: "dialog", value: "/media/kkutu/dialog.mp3" },
 		{ key: "legacylobby", value: "/media/kkutu/LobbyBGM.mp3" },
 		{ key: "ingame", value: "/media/kkutu/LobbyBGM2.mp3" },
@@ -309,7 +315,7 @@ $(document).ready(function(){
 	$stage.chatBtn.on('click', function(e){
 		checkInput();
 		
-		var value = (mobile && $stage.game.here.is(':visible'))
+		var value = (mobile && $stage.game.hereText.is(':visible'))
 			? $stage.game.hereText.val()
 			: $stage.talk.val();
 		if(!value) return;
@@ -318,7 +324,7 @@ $(document).ready(function(){
 			o.cmd = o.value.split(" ");
 			runCommand(o.cmd);
 		}else{
-			if($stage.game.here.is(":visible") || $data._relay){
+			if($stage.game.hereText.is(":visible") || $data._relay){
 				o.relay = true;
 			}
 			send('talk', o);
@@ -349,7 +355,7 @@ $(document).ready(function(){
 		var $target = $(e.currentTarget);
 		var value = $target.val();
 		
-		if(value < 2 || value > 9){
+		if(value < 2 || value > 10){
 			$target.css('color', "#FF4444");
 		}else{
 			$target.css('color', "");
@@ -365,7 +371,7 @@ $(document).ready(function(){
 			$target.css('color', "");
 		}
 	});
-	$stage.game.here.on('click', function(e){
+	$stage.game.hereText.on('click', function(e){
 		mobile || $stage.talk.focus();
 	});
 	$stage.talk.on('keyup', function(e){
@@ -481,6 +487,9 @@ $(document).ready(function(){
 	$stage.menu.sideMenu.on('click', function(e){
 		$('#dimmer').fadeIn();
 		$('#sideMenuDiag').fadeIn();
+	});
+	$stage.menu.teamSelect.on('click', function(e){
+		showDialog($stage.dialog.teamSelect);
 	});
 	$stage.menu.sideMenuClose.on('click', function(e){
 		$('#dimmer').fadeOut();
@@ -684,6 +693,9 @@ $(document).ready(function(){
 		filterShop(type == 'all' || $target.attr('value'));
 	});
 	$stage.menu.dict.on('click', function(e){
+		showDialog($stage.dialog.dict);
+	});
+	$stage.menu.dictIngame.on('click', function(e){
 		showDialog($stage.dialog.dict);
 	});
 	$stage.menu.wordPlus.on('click', function(e){

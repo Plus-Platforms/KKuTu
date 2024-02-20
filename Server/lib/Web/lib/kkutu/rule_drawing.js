@@ -158,14 +158,18 @@ $lib.Drawing.turnEnd = function (id, data) {
     $uc.addClass('game-user-bomb')
     $data._relay = false
   } else if (data.answer) {
-    $stage.game.here.hide()
+    $stage.game.hereText.hide()
+    if (!$stage.game.other.is(":visible")){ $stage.game.correct.show();
+}
     $stage.game.display.html($('<label>').css('color', '#FFFF44').html(data.answer))
     stopBGM()
     playSound('horr')
     $data._relay = false
   } else {
     // if(data.mean) turnHint(data);
-    if (id == $data.id) $stage.game.here.hide()
+    if (id == $data.id) $stage.game.hereText.hide()
+    if (!$stage.game.other.is(":visible")){ $stage.game.wrong.show();
+}
     addScore(id, data.score)
     if ($data._roundTime > 10000) $data._roundTime = 10000
     drawObtainedScore($uc, $sc)
