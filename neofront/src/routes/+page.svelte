@@ -74,6 +74,7 @@ onMount(async () => {
 	<title>플러스끄투 - {title}</title>
 </svelte:head>
 
+<div  class="dark:bg-gray-900 dark:text-white">
 <section class="hero w-full py-12 md:py-24 lg:py-32">
   <div class="mx-auto max-w-screen-2xl container px-4 md:px-6">
     <div class="flex flex-col lg:flex-row items-center justify-between space-y-4 lg:space-y-0">
@@ -144,14 +145,13 @@ onMount(async () => {
   </div>
 </div>
 
-
 <section class="max-w-screen-2xl mx-auto my-10 p-4 md:grid md:grid-cols-2">
   <div>
   <h2 class="text-3xl font-bold mb-4">플러스끄투 소식</h2>
   {#if jsonData && jsonData.message && jsonData.message.result}
   {#each jsonData.message.result.articleList as { menuName, menuId, articleId, subject, writeDateTimestamp } (articleId)}
   <a href={`https://cafe.naver.com/ArticleRead.nhn?clubid=31109813&page=1&menuid=${menuId}&boardtype=L&articleid=${articleId}&referrerAllArticles=false`} target="_blank" class="hover:text-blue-500 hover:underline">
-    <div class="post py-4 border-b hover:bg-gray-100 ">
+    <div class="post py-4 border-b dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800">
       <h3 class="truncate">
         <a href={`https://cafe.naver.com/ArticleList.nhn?search.clubid=31109813&search.menuid=${menuId}&search.boardtype=L`} target="_blank"><span class={`boardBg-${menuId} rounded-full px-2 text-white mr-2 hover:bg-blue-600`}>{menuName}</span></a>
         <strong>{new Date(writeDateTimestamp).toLocaleDateString()}</strong>
@@ -169,20 +169,20 @@ onMount(async () => {
 </a>
 </div>
 </section>
-<div class="overflow-hidden bg-gray-100 py-24">
+<div class="overflow-hidden bg-gray-100 py-24 dark:bg-gray-800 dark:text-white">
       <div class="mx-auto max-w-screen-2xl px-6 lg:px-8">
         <div class="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 sm:gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-2">
           <div class="lg:pr-8 lg:pt-4">
             <div class="lg:max-w-lg">
-              <h2 class="text-base font-semibold leading-7 text-[#8B5CF6]">플러스끄투에서만 만나다</h2>
-              <p class="mt-2 text-4xl font-bold text-gray-900 sm:text-5xl">다른 끄투와 전격비교!</p>
-              <p class="mt-6 text-lg leading-8 text-gray-600">
+              <h2 class="text-base font-semibold leading-7 text-[#8B5CF6] dark:text-purple-300">플러스끄투에서만 만나다</h2>
+              <p class="mt-2 text-4xl font-bold text-gray-900 sm:text-5xl dark:text-gray-100">다른 끄투와 전격비교!</p>
+              <p class="mt-6 text-lg leading-8 text-gray-600 dark:text-gray-400">
                 Google, Kakao, Discord 등 지원하는 모든 SNS를 통해 로그인 하여 모바일과 PC에서 게임을 즐길 수 있습니다.
               </p>
 
-              <dl class="mt-10 max-w-xl space-y-8 text-base leading-7 text-gray-600 lg:max-w-none">
+              <dl class="mt-10 max-w-xl space-y-8 text-base leading-7 text-gray-600 dark:text-gray-400 lg:max-w-none">
                 <div class="relative pl-9">
-                  <dt class="inline font-semibold text-gray-900">
+                  <dt class="inline font-semibold text-gray-900 dark:text-gray-100">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="absolute left-1 top-1 h-5 w-5 text-[#3B82F6]">
                       <path fill-rule="evenodd" d="M15 3.75a.75.75 0 0 1 .75-.75h4.5a.75.75 0 0 1 .75.75v4.5a.75.75 0 0 1-1.5 0V5.56l-3.97 3.97a.75.75 0 1 1-1.06-1.06l3.97-3.97h-2.69a.75.75 0 0 1-.75-.75Zm-12 0A.75.75 0 0 1 3.75 3h4.5a.75.75 0 0 1 0 1.5H5.56l3.97 3.97a.75.75 0 0 1-1.06 1.06L4.5 5.56v2.69a.75.75 0 0 1-1.5 0v-4.5Zm11.47 11.78a.75.75 0 1 1 1.06-1.06l3.97 3.97v-2.69a.75.75 0 0 1 1.5 0v4.5a.75.75 0 0 1-.75.75h-4.5a.75.75 0 0 1 0-1.5h2.69l-3.97-3.97Zm-4.94-1.06a.75.75 0 0 1 0 1.06L5.56 19.5h2.69a.75.75 0 0 1 0 1.5h-4.5a.75.75 0 0 1-.75-.75v-4.5a.75.75 0 0 1 1.5 0v2.69l3.97-3.97a.75.75 0 0 1 1.06 0Z" clip-rule="evenodd" />
                     </svg>
@@ -191,7 +191,7 @@ onMount(async () => {
                   <dd class="inline">PC 기준 가로 900픽셀의 원작 끄투 대비 1600픽셀로 증가한 해상도</dd>
                 </div>
                 <div class="relative pl-9">
-                  <dt class="inline font-semibold text-gray-900">
+                  <dt class="inline font-semibold text-gray-900 dark:text-gray-100">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="absolute left-1 top-1 h-5 w-5 text-[#3B82F6]">
                       <path fill-rule="evenodd" d="M2.25 5.25a3 3 0 0 1 3-3h13.5a3 3 0 0 1 3 3V15a3 3 0 0 1-3 3h-3v.257c0 .597.237 1.17.659 1.591l.621.622a.75.75 0 0 1-.53 1.28h-9a.75.75 0 0 1-.53-1.28l.621-.622a2.25 2.25 0 0 0 .659-1.59V18h-3a3 3 0 0 1-3-3V5.25Zm1.5 0v7.5a1.5 1.5 0 0 0 1.5 1.5h13.5a1.5 1.5 0 0 0 1.5-1.5v-7.5a1.5 1.5 0 0 0-1.5-1.5H5.25a1.5 1.5 0 0 0-1.5 1.5Z" clip-rule="evenodd" />
                     </svg>
@@ -200,7 +200,7 @@ onMount(async () => {
                   <dd class="inline">PC 클라이언트로 편리하게 접속하고 Discord 상태 공유가 가능한 끄투</dd>
                 </div>
                 <div class="relative pl-9 hidden">
-                  <dt class="inline font-semibold text-gray-900">
+                  <dt class="inline font-semibold text-gray-900 dark:text-gray-100">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="absolute left-1 top-1 h-5 w-5 text-[#3B82F6]">
                       <path d="M21 6.375c0 2.692-4.03 4.875-9 4.875S3 9.067 3 6.375 7.03 1.5 12 1.5s9 2.183 9 4.875Z" />
                       <path d="M12 12.75c2.685 0 5.19-.586 7.078-1.609a8.283 8.283 0 0 0 1.897-1.384c.016.121.025.244.025.368C21 12.817 16.97 15 12 15s-9-2.183-9-4.875c0-.124.009-.247.025-.368a8.285 8.285 0 0 0 1.897 1.384C6.809 12.164 9.315 12.75 12 12.75Z" />
@@ -239,7 +239,7 @@ onMount(async () => {
       {#if jsonDataFull && jsonDataFull.message && jsonDataFull.message.result}
       {#each jsonDataFull.message.result.articleList as { articleId, subject, writeDateTimestamp, menuName, menuId } (articleId)}
       <a href={`https://cafe.naver.com/ArticleRead.nhn?clubid=31109813&page=1&menuid=${menuId}&boardtype=L&articleid=${articleId}&referrerAllArticles=false`} target="_blank" class="hover:text-blue-500 hover:underline">
-        <div class="post py-4 border-b hover:bg-gray-100 ">
+        <div class="post py-4 border-b dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800">
           <h3 class="truncate">
             <a href={`https://cafe.naver.com/ArticleList.nhn?search.clubid=31109813&search.menuid=${menuId}&search.boardtype=L`} target="_blank"><span class={`boardBg-${menuId} rounded-full px-2 text-white mr-2 hover:bg-blue-600`}>{menuName}</span></a>
             <strong>{new Date(writeDateTimestamp).toLocaleDateString()}</strong>
@@ -284,3 +284,5 @@ onMount(async () => {
       </div>
     </div>
   </div>
+
+</div>
