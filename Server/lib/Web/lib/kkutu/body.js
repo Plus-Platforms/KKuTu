@@ -2021,9 +2021,10 @@ function turnHint(data){
 }
 function turnError(code, text){
 	$stage.game.wrong.empty().text((L['turnError_'+code] ? (L['turnError_'+code] + ": ") : "") + text);
-	playSound('fail');
-	if (!$stage.game.other.is(":visible")){ $stage.game.wrong.show();$stage.game.hereText.hide();
- // 오류 텍스트를 표시합니다.
+	
+	if (!$stage.game.other.is(":visible")){ 
+		$stage.game.wrong.show();$stage.game.hereText.hide();
+		playSound('fail');
 	
 	clearTimeout($data._fail);
 	$data._fail = addTimeout(function(){
@@ -2031,6 +2032,17 @@ function turnError(code, text){
 		$stage.game.wrong.hide();
 		$stage.game.hereText.show();
 	}, 1800);}
+	else{
+		$stage.game.wrong.show();$stage.game.other.hide();
+
+		playSound('fail');
+		clearTimeout($data._fail);
+		$data._fail = addTimeout(function(){
+			$stage.game.wrong.html("오답입니다!");
+			$stage.game.wrong.hide();
+			$stage.game.other.show();
+		}, 1800);
+	}
 }
 
 function getScore(id){

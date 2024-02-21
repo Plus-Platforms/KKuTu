@@ -83,20 +83,18 @@ onMount(async () => {
       어서와요, 플끄!
       </h1>
         -->
-      <h1 class="text-center lg:text-left text-3xl font-bold tracking-tight text-black sm:text-4xl md:text-5xl lg:text-6xl">
-      어서와요, 플끄!
+      <h1 class="text-white text-center lg:text-left text-3xl font-bold tracking-tight text-black sm:text-4xl md:text-5xl lg:text-6xl">
+        Phase 2 업데이트
       </h1>
-      <p class="mt-2 text-center lg:text-left sm:text-2xl tracking-tight text-black">
-        서버는 달라졌어도 실력은 그대로!<br>
-        경험치 최대 100,000까지 인정받고 플끄로 놀러오세요!<br><br>
-        02.01~03.01
+      <p class="text-white mt-2 text-center lg:text-left sm:text-2xl tracking-tight text-black">
+        경험 해 보지 못한 UI에서, 경험 해 보지 못한 끄투를 경험해보세요!
       </p>
       <div class="justify-center flex items-center lg:justify-start lg:items-start">
-      <a href="https://plus.oqupie.com/portal/2568/request?type=16783">
+     <!-- <a href="https://plus.oqupie.com/portal/2568/request?type=16783">
         <button class="mt-3 px-3 bg-blue-500 font-bold text-white text-center m-auto py-2 transform ease-in duration-100 active:scale-95 hover:bg-blue-700">
           경험치 인정받기
       </button>
-    </a>
+    </a>-->
     </div>
     </div>
       <div class="flex flex-col">
@@ -201,7 +199,7 @@ onMount(async () => {
                   </dt>
                   <dd class="inline">PC 클라이언트로 편리하게 접속하고 Discord 상태 공유가 가능한 끄투</dd>
                 </div>
-                <div class="relative pl-9">
+                <div class="relative pl-9 hidden">
                   <dt class="inline font-semibold text-gray-900">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="absolute left-1 top-1 h-5 w-5 text-[#3B82F6]">
                       <path d="M21 6.375c0 2.692-4.03 4.875-9 4.875S3 9.067 3 6.375 7.03 1.5 12 1.5s9 2.183 9 4.875Z" />
@@ -260,7 +258,7 @@ onMount(async () => {
         <h2 class="text-center text-lg font-semibold leading-8 text-gray-900">
           게임 소식 가장 먼저 받기
         </h2>
-        <div class="max-w-lg mx-auto mt-10 grid grid-cols-4 gap-x-8 items-center jusitfy-center">
+        <div class="max-w-lg mx-auto mt-10 grid grid-cols-2 gap-x-8 items-center jusitfy-center">
           <div class="flex items-center justify-center">
           <a href="https://cafe.naver.com/pluskkutu" target="_blank">
           <img
@@ -283,27 +281,6 @@ onMount(async () => {
         /></a>
       </div>
 
-    <div class="flex items-center justify-center">
-      <a href="https://x.com/@PlusPlatforms" target="_blank">
-      <img
-        class="col-span-2 max-h-8 w-full object-contain lg:col-span-1"
-        src="/img/x.png"
-        alt="X"
-        width={48}
-        height={48}
-      /></a>
-    </div>
-
-  <div class="flex items-center justify-center">
-    <a href="https://www.youtube.com/@PlusPlatforms" target="_blank">
-    <img
-      class="col-span-2 max-h-8 w-full object-contain lg:col-span-1"
-      src="/img/youtube.png"
-      alt="YouTube"
-      width={48}
-      height={48}
-    /></a>
-  </div>
       </div>
     </div>
   </div>

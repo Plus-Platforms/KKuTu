@@ -144,7 +144,6 @@ $(document).ready(function(){
 			exit: $("#ExitBtn"),
 			notice: $("#NoticeBtn"),
 			replay: $("#ReplayBtn"),
-			addBalance: $("#addBalance"),
 			leaderboard: $("#LeaderboardBtn"),
 			teamSelect: $("#TeamSelectBtn")
 		},
@@ -260,7 +259,7 @@ $(document).ready(function(){
 
 	$data._soundList = [
 		{ key: "k", value: "/media/kkutu/k.mp3" },
-		{ key: "lobby", value: "/media/kkutu/devserver.mp3" },
+		{ key: "lobby", value: "/media/kkutu/LobbyBGMS1.mp3" },
 		{ key: "dialog", value: "/media/kkutu/dialog.mp3" },
 		{ key: "legacylobby", value: "/media/kkutu/LobbyBGM.mp3" },
 		{ key: "ingame", value: "/media/kkutu/LobbyBGM2.mp3" },
@@ -542,10 +541,6 @@ $(document).ready(function(){
 		$("#help-board").attr('src', "https://plus.oqupie.com/portal/2568");
 		showDialog($stage.dialog.help);
 	});
-	$stage.menu.addBalance.on('click', function(e){
-		$("#ping-board").attr('src', "https://www.pcor.me/plKKuTuPingShop");
-		showDialog($stage.dialog.pingShop);
-	});
 	$stage.menu.community2.on('click', function(e){
 		$('#sideMenuDiag').fadeOut();
 		$("#community2").attr('src', "https://pcor.me/plKkkutuCafe");
@@ -595,8 +590,7 @@ $(document).ready(function(){
 			'키보드 부서질라 고만 눌러라',
 			'신나는 플러스끄투!',
 			'오늘도 플끄 내일도 플끄',
-			'오끄감 채우는 방',
-			'귀여운 돼냥이를 쓰다듬는 방'
+			'오끄감 채우는 방'
 		];
 	
 		// 무작위 방 제목 선택
@@ -839,7 +833,6 @@ $(document).ready(function(){
 		applyOptions({
 			bv: $("#bgm-volume").val(),
 			ev: $("#effect-volume").val(),
-			vp: $("#pause-video").is(":checked"),
 			di: $("#deny-invite").is(":checked"),
 			dw: $("#deny-whisper").is(":checked"),
 			df: $("#deny-friend").is(":checked"),
@@ -851,7 +844,7 @@ $(document).ready(function(){
 		});
 		$.cookie('kks', JSON.stringify($data.opts));
 		$stage.dialog.setting.hide();
-
+		$('#dimmer').fadeOut();
 	});
 	$stage.dialog.profileLevel.on('click', function(e){
 		$("#PracticeDiag .dialog-title").html(L['robot']);
@@ -4382,9 +4375,10 @@ function turnHint(data){
 }
 function turnError(code, text){
 	$stage.game.wrong.empty().text((L['turnError_'+code] ? (L['turnError_'+code] + ": ") : "") + text);
-	playSound('fail');
-	if (!$stage.game.other.is(":visible")){ $stage.game.wrong.show();$stage.game.hereText.hide();
- // 오류 텍스트를 표시합니다.
+	
+	if (!$stage.game.other.is(":visible")){ 
+		$stage.game.wrong.show();$stage.game.hereText.hide();
+		playSound('fail');
 	
 	clearTimeout($data._fail);
 	$data._fail = addTimeout(function(){
@@ -4392,6 +4386,17 @@ function turnError(code, text){
 		$stage.game.wrong.hide();
 		$stage.game.hereText.show();
 	}, 1800);}
+	else{
+		$stage.game.wrong.show();$stage.game.other.hide();
+
+		playSound('fail');
+		clearTimeout($data._fail);
+		$data._fail = addTimeout(function(){
+			$stage.game.wrong.html("오답입니다!");
+			$stage.game.wrong.hide();
+			$stage.game.other.show();
+		}, 1800);
+	}
 }
 
 function getScore(id){

@@ -1,10 +1,10 @@
 <footer class="bg-gray-50 dark:bg-gray-900">
     <div class="mx-auto max-w-screen-xl p-4 py-6 lg:py-8">
       <div  class="flex items-center justify-center">
-    <a href="https://pcor.me">
-        <img src="https://pcor.me/Plus.svg" class="inline-block h-8" alt="Plus Logo"/>
-      <span class="font-semibold self-center text-2xl text-gray-500 whitespace-nowrap dark:text-white">Plus</span>
-      </a></div><br/>
+    
+        <img src="/img/kkutu/intro/infole_logo.svg" class="inline-block h-8" alt="InfoleLogo"/>
+      
+      </div><br/>
       <div  class="flex items-center justify-center">
       <a href="https://www.grac.or.kr/Statistics/Popup/Pop_StatisticsDetails.aspx?850c3e6034aa5ae3efd1751a7b1bfabaa6c813a6a053e8e5ec12581d53453bb0" target="_blank"><img src="/grac.png" class="h-12" alt="Rating"/></a>
     </div>
@@ -15,9 +15,9 @@
       <a href="https://plus.oqupie.com/portal/2568/article/56556" target='_blank'><span>개인정보처리방침</span></a>
           </p><br/>
           <p class="text-xs text-center w-full text-gray-500 dark:text-gray-400">
-            <span>© 2021~ Plus (moremi@pcor.me) All Rights Reserved.<br/>
+            <span>© 2021~ Infole(support@kkutu.cc) All Rights Reserved.<br/>
             WordNet 3.0 Copyright 2006 by Princeton University. All rights reserved.<br/>
-            NXDict Copyright 2024 by Plus Platforms. All rights reserved.<br/><br/>
+            NXDict Copyright 2024 by Infole. All rights reserved.<br/><br/>
 
             이 프로그램은 제품에 대한 어떠한 형태의 보증도 제공되지 않습니다.<br/>
 이 프로그램은 자유 소프트웨어이며 배포 규정을 만족시키는 조건 아래 자유롭게 재배포할 수 있습니다.<br/>

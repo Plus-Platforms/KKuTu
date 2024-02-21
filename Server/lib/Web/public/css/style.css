@@ -17,7 +17,11 @@
  */
  @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css");
 /* Extrabold */
-
+@media (max-width: 1900px) {
+	.lowreshidden {
+	  display: none;
+	}
+  }
 body{
 	color: #EEEEEE;
 	padding: 0px;
@@ -365,7 +369,7 @@ span{
 #Middle{
 	margin-left: auto!important;
     margin-right: auto!important;
-	max-width: 100em;
+	max-width: 1920px;
 }
 .middleFixer{
 	height: 70px;

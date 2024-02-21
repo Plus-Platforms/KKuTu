@@ -76,7 +76,6 @@ $(document).ready(function(){
 			exit: $("#ExitBtn"),
 			notice: $("#NoticeBtn"),
 			replay: $("#ReplayBtn"),
-			addBalance: $("#addBalance"),
 			leaderboard: $("#LeaderboardBtn"),
 			teamSelect: $("#TeamSelectBtn")
 		},
@@ -474,10 +473,6 @@ $(document).ready(function(){
 		$("#help-board").attr('src', "https://plus.oqupie.com/portal/2568");
 		showDialog($stage.dialog.help);
 	});
-	$stage.menu.addBalance.on('click', function(e){
-		$("#ping-board").attr('src', "https://www.pcor.me/plKKuTuPingShop");
-		showDialog($stage.dialog.pingShop);
-	});
 	$stage.menu.community2.on('click', function(e){
 		$('#sideMenuDiag').fadeOut();
 		$("#community2").attr('src', "https://pcor.me/plKkkutuCafe");
@@ -527,8 +522,7 @@ $(document).ready(function(){
 			'키보드 부서질라 고만 눌러라',
 			'신나는 플러스끄투!',
 			'오늘도 플끄 내일도 플끄',
-			'오끄감 채우는 방',
-			'귀여운 돼냥이를 쓰다듬는 방'
+			'오끄감 채우는 방'
 		];
 	
 		// 무작위 방 제목 선택
@@ -771,7 +765,6 @@ $(document).ready(function(){
 		applyOptions({
 			bv: $("#bgm-volume").val(),
 			ev: $("#effect-volume").val(),
-			vp: $("#pause-video").is(":checked"),
 			di: $("#deny-invite").is(":checked"),
 			dw: $("#deny-whisper").is(":checked"),
 			df: $("#deny-friend").is(":checked"),
@@ -783,7 +776,7 @@ $(document).ready(function(){
 		});
 		$.cookie('kks', JSON.stringify($data.opts));
 		$stage.dialog.setting.hide();
-
+		$('#dimmer').fadeOut();
 	});
 	$stage.dialog.profileLevel.on('click', function(e){
 		$("#PracticeDiag .dialog-title").html(L['robot']);

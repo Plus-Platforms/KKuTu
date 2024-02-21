@@ -165,12 +165,7 @@ equ{
 }
 
 .gradientMission{
-	background: linear-gradient(180deg, #FFFAFF, #FBCDF5, #C1C8FD, #CAF6F4);
-    -webkit-background-clip: text;
-    color: transparent;
-	font-weight: 700;
-    -webkit-text-stroke: 2px linear-gradient(180deg, #D47EC5, #8076BF, #247972);
-    text-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
+	color: #FBCDF5;
 }
 
 /* 플러스끄투 커스텀 체크박스 */
@@ -180,10 +175,7 @@ input[type="checkbox"]+label {
     height: 20px;
     font-size: 15px;
     padding-left: 24px;
-<<<<<<< HEAD
 	margin-bottom: 7px;
-=======
->>>>>>> 697bca9 (메인 페이지 개편)
     background: url('/img/kkutu/checkbox/off.svg') no-repeat 0 0px / contain;
 }
 
@@ -613,27 +605,20 @@ iframe{
 }
 	.RoomListBox div{ float: left; }
 	.RoomListBox .product-body{padding: 20px;
-		width: calc(100% - 25px);
+		width: calc(100% - 44px);
 		height: calc(100% - 44px);
 		overflow-x: hidden;
 		overflow-y: scroll; }
 	.rooms-item{
 		padding: 25px 32px;
 		border-radius: 16px;
-		margin: 0px 35px 11px 0px;
+		margin: 0px 18px 11px 0px;
 		width: 536px;
 		cursor: pointer;
-<<<<<<< HEAD
 		background-color: #fff;
-=======
-		background-position: center;
-		background-size: cover;
-		background-image: url(/img/kkutu/room/Waiting.png);
->>>>>>> 697bca9 (메인 페이지 개편)
 		transition: all 300ms ease;
 		box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.10), 0px 4px 6px -4px rgba(0, 0, 0, 0.10);
 	}
-<<<<<<< HEAD
 		.rooms-create{ width: 600px;
 			padding: 0px;
 			height: 90px;
@@ -643,19 +628,9 @@ iframe{
 		}
 		.rooms-create>div{ font-size: 36px;
 			color: #000000;
-=======
-		.rooms-create{ background-position: center;
-			background-size: cover;
-			background-image: url(/img/kkutu/createRoom.png); }
-		.rooms-create:hover{
-				background-image: url(/img/kkutu/createRoomHover.png); }
-		.rooms-create>div{ text-shadow: 2px 2px 0px black;
-			color: #ffffff;
-			font-style: italic;
->>>>>>> 697bca9 (메인 페이지 개편)
 			float: none;
 			text-align: center;
-			font-weight: bold;
+			font-weight: 800;
 			padding-top: 23px; }
 
 		.rooms-create>div i{ margin-right: 10px; }
@@ -664,16 +639,8 @@ iframe{
 			/*.channel-1{ background-color: #F99; }
 			.channel-2{ background-color: #FF7; }
 			.channel-3{ background-color: #7C7; }
-<<<<<<< HEAD
 			.channel-4{ background-color: #99F; }*/
 		.rooms-gaming{ background-color: #E9D5FF; }
-=======
-			.channel-4{ background-color: #99F; }
-		.rooms-gaming{ background-position: center;
-			background-size: cover;
-			background-image: url(/img/kkutu/room/Playing.png); }
-			.rooms-gaming .rooms-number{ border-color: #CC9999; }
->>>>>>> 697bca9 (메인 페이지 개편)
 			.rooms-create:hover{ background-color: #AADDFF; }
 		.rooms-number{     font-weight: 600;
 			padding-top: 18px;
@@ -703,7 +670,6 @@ iframe{
 .RoomBox{
 	width: 100%;
 }
-	.RoomBox .product-title{ height: 30px; }
 	.RoomBox .product-title h5{ float: left; font-size: 20px;}
 	.RoominfoListBox .product-body{
 		padding: 15px;
@@ -852,13 +818,7 @@ iframe{
 		.room-user-name{ padding: 0px 0px 0px 4px; }
 		.room-user:hover{ cursor: pointer; background: #F1F5F9; }
 .GameBox{
-	width: 100%!important;
-<<<<<<< HEAD
-=======
-	max-height: 480px;
-	min-height: 480px;
-	background-image: url('/img/kkutu/gamebg.png');
->>>>>>> 697bca9 (메인 페이지 개편)
+	width: 100%!important;height: 680px;
 }
 	.GameBox .product-title{ display: none; }
 	.GameBox .product-title h5{ float: left; font-size:20px; }
@@ -1010,14 +970,9 @@ iframe{
 		color: #EEEEEE;
 		font-weight: bold;
 		text-align: center;
-<<<<<<< HEAD
 		/* text-shadow: 30px 1px 5px #141414; */
 		background-image: url(/img/kkutu/lefthand.png);
 		background-size: cover;
-=======
-		text-shadow: 0px 1px 5px #141414;
-		background-image: url('/img/kkutu/lefthand.png');
->>>>>>> 697bca9 (메인 페이지 개편)
 	}
 	.jjoriping{ width: 500px; }
 	.cw.jjoriping{ margin-top: -10px; width: 322px; }
@@ -1045,6 +1000,7 @@ iframe{
 				text-align: center;
 				color: #EEEEEE;
 				background: #4b556300;
+    			font-weight: 700;
 			}
 			.jjo-turn-time{
 				position: absolute;
@@ -1056,7 +1012,7 @@ iframe{
 			}
 			.jjo-display-word-length{ color: orange; font-size: 14px; }
 			.cw .jjo-display{ position: relative; padding: 5px; width: 298px; height: 298px; }
-				.display-text{ width: 20px; text-align: center; z-index: 1; margin-left: 10px;}
+				.display-text{ width: 20px; text-align: center; z-index: 1; margin-right: 10px;}
 				.game-fail-text{ animation: FailBlink 2s linear; color: #FF7777; }
 				.cw-bar{
 					position: absolute;
@@ -1117,13 +1073,8 @@ iframe{
 		color: #EEEEEE;
 		font-weight: bold;
 		text-align: center;
-<<<<<<< HEAD
 		background-size: cover;
 		background-image: url(/img/kkutu/righthand.png);
-=======
-		text-shadow: 0px 1px 5px #141414;
-		background-image: url('/img/kkutu/righthand.png');
->>>>>>> 697bca9 (메인 페이지 개편)
 	}
 	.rounds{
 		margin-top: 64px;
@@ -1581,11 +1532,8 @@ box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.10), 0px 4px 6px -4px rgba(0, 0, 
 	border-bottom-color: #333333;
 	color: #CCCCCC;
 	background-color: inherit;
+	display: none!important;
 }
-.ADBox .product-body{
-	padding-left: 55px;
-}
-
 @keyframes RoundEffect{
 	0%		{ font-size: 16px; color: #FFFF44; background-color: rgba(0, 0, 0, 1); }
 	100%	{ font-size: 12px; color: #FFFFFF; background-color: rgba(0, 0, 0, 0); }

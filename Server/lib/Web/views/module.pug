@@ -57,7 +57,7 @@
 
 mixin Menu()
 	div.Menu
-		img(src='/img/kkutu/logo-obt.svg', style='margin-left: 30px;margin-top: 12px;height: 2.7rem;', alt="로고")
+		img(src='/img/kkutu/logo-ingame.svg', style='margin-left: 30px;margin-top: 12px;height: 2.7rem;', alt="로고")
 		- for(i in MENU)
 			- if(MENU[i].href)
 				button.menu-btn(id='menu-item-'+MENU[i].key, onclick='location.href = "'+MENU[i].href+'";')!= L(MENU[i].key)
@@ -84,7 +84,7 @@ mixin Menu()
 					img.fuckHank(src='/img/kkutu/currency/ping.png')
 					span.my-stat-ping.aISub#accping
 					span.fuckSeogom= "핑"
-					img.fuckHank#addBalance(src='/img/kkutu/currency/charge.svg')
+					//img.fuckHank#addBalance(src='/img/kkutu/currency/charge.svg')
 			div.accountItem#signin(data-intro='Hello step one!')
 				div.flex
 					//img.my-stat-level

@@ -88,7 +88,7 @@ exports.run = (Server, page) => {
 			let id = req.query.id || "ADMIN";
 	
 			if (!req.session.profile) {
-				res.redirect("/?f=1");
+				res.redirect("/game?server=0&f=1");
 			} else {
 				let lp = {
 					id: id,
@@ -101,7 +101,7 @@ exports.run = (Server, page) => {
 					MainDB.users.update(['_id', id]).set(['lastLogin', now]).on();
 					req.session.admin = true;
 					req.session.profile = lp;
-					res.redirect("/");
+					res.redirect("/game?server=0");
 				});
 			}
 		}

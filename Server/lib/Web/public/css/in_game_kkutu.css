@@ -344,12 +344,7 @@ min-height: 680px;
 		.room-user-name{ padding: 9px 0px 0px 4px; font-weight: bold; }
 		.room-user:hover{ cursor: pointer; background-color: #EEEEEE; }
 .GameBox{
-<<<<<<< HEAD
 	height: 680px;
-=======
-	width: 1000px;
-	height: 410px;
->>>>>>> 697bca9 (메인 페이지 개편)
 	background-image: url('/img/kkutu/gamebg.png');
 }
 	.GameBox .product-title{ height: 12px; }
