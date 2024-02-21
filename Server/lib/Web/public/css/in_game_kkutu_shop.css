@@ -57,6 +57,7 @@
 .x-indigo_name{ color: #1C18B9; }
 .x-purple_name{ color: #A939CC; }
 .x-pink_name{ color: #F15F9A; }
+.x-ras_name{ color: #D56E48; }
 .x-gradient_name{   background: linear-gradient(to right, #A78BFA, #60A5FA);
 	-webkit-background-clip: text;
 	-webkit-text-fill-color: transparent;
