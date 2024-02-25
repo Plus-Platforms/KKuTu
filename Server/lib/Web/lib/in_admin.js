@@ -44,6 +44,7 @@
 	
 	// 어인정 신청
 		$("#injeong-go").on('click', function(e){
+			/*
 			$.get("/gwalli/injeong", function(res){
 				var $table = $("#injeong-data").empty();
 				var $r;
@@ -58,7 +59,7 @@
 						.append($("<td>").append(putter("ij-" + item._id + "-writer", 'g', item.writer)))
 						.append($("<td>").append(putter("ij-" + item._id + "-createdAt", 'g', item.createdAt)))
 				});
-			});
+			});*/
 		});
 		$("#injeong-everything").on('click', function(e){
 			$("#injeong-data input[type='checkbox']").prop('checked', true);

@@ -88,7 +88,7 @@ block Jungle
 	
 block Middle
 	- var VERSION = L('version') + " (모바일)";
-	- var nick = SESSION.profile ? (SESSION.profile.title || SESSION.profile.name) : null;
+	- var nick = SESSION.nickname;
 	
 	div#dimmer(style="display: none;")
 	div#tost_message
@@ -364,7 +364,11 @@ block Middle
 	+Dialog('Community2Diag', 300, 400, "공식 커뮤니티")
 		iframe#community(width=300, height=375)
 	+Product('UserList')
-		div 불러오는 중
+		div#megauser
+			p.conn-desc.mfriend(style="display:none;")= "내 친구"
+			div#comm-friends(style="display:none;")
+			p.conn-desc= "전체 접속자"
+			div#connList 불러오는 중
 	+Product('RoomList')
 		div 불러오는 중
 	+Product('SideList')

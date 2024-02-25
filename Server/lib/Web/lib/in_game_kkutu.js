@@ -39,15 +39,18 @@ var MAX_LEVEL = 361;
 var TICK = 30;
 var EXP = [];
 var BAD = new RegExp([
-	"느으*[^가-힣]*금마?", "니[^가-힣]*(엄|앰|엠)", "(ㅄ|ㅅㅂ|ㅂㅅ)", "미친[^가-힣](년|놈|개)?", "(병|븅|빙|등)[^가-힣]*(신|딱)", "보[^가-힣]*지", "(새|섀|쌔|썌)[^가-힣]*(기|끼)", "섹[^가-힣]*스", "(시|씨|쉬|쒸)이*입?[^가-힣]*(발|빨|벌|뻘|팔|펄)", "십[^가-힣]*새", "(애|에)[^가-힣]*미", "자[^가-힣]*지", "(졸|존)[^가-힣]*(나|라|만)","좃|좆|죶", "지랄", "창[^가-힣]*(녀|년|놈)", "개[^가-힣]*(년|녀|쓰레기|스레기|돼지|되지|초딩)", "나가[^가-힝]*(뒤져|디져|죽어)","(닥|닭)[^가-힣]*(쳐|처)", "(또|똘)[^가-힣]*(아이|라이)","빡(통대가리|대가리)", "썩을", "(fuck|뻑큐|뻐큐)", "(부|브|불)[^가-힣]*(알|랄)","씹", "십[^가-힣]*(년|놈)" , "아가리[^가-힣]*?","(엠|엄)[^가-힣]*창","(짱|장)[^가-힣]*(깨|꼴라|궤)","(찐|왕)[^가-힣]*(따|다)", "틀딱", "페[^가-힣]*미", "한남",  "(염|옘)[^가-힣]*병", "sex",
+	"느으*[^가-힣]*금마?", "니[^가-힣]*(엄|앰|엠)", "(ㅄ|ㅅㅂ|ㅂㅅ)", "미친[^가-힣](년|놈|개)?", "(병|븅|빙|등)[^가-힣]*(신|딱)", "보[^가-힣]*지", "(새|섀|쌔|썌)[^가-힣]*(기|끼)", "섹[^가-힣]*스", "(시|씨|쉬|쒸)이*입?[^가-힣]*(발|빨|벌|뻘|팔|펄)", "십[^가-힣]*새", "(애|에)[^가-힣]*미", "자[^가-힣]*지", "(졸|존)[^가-힣]*(나|라|만)","좃|좆|죶", "지랄", "창[^가-힣]*(녀|년|놈)", "개[^가-힣]*(년|녀|쓰레기|스레기|돼지|되지|초딩)", "나가[^가-힝]*(뒤져|디져|죽어)","(닥|닭)[^가-힣]*(쳐|처)", "(또|똘)[^가-힣]*(아이|라이)","빡(통대가리|대가리)", "썩을", "(fuck|뻑큐|뻐큐)", "(부|불)[^가-힣]*(알|랄)","씹", "십[^가-힣]*(년|놈)" , "아가리[^가-힣]*?","(엠|엄)[^가-힣]*창","(짱|장)[^가-힣]*(깨|꼴라|궤)","(찐|왕)[^가-힣]*(따|다)", "틀딱", "페[^가-힣]*미", "한남",  "(염|옘)[^가-힣]*병", "sex",
 	"끄[^가-힣]*투[^가-힣]*리[^가-힣]*오",
 	"분[^가-힣]*홍[^가-힣]*끄[^가-힣]*투",
 	"끄[^가-힣]*투[^가-힣]*핑[^가-힣]*크",
 	"끄[^가-힣]*투[^가-힣]*아[^가-힣]*이[^가-힣]*오",
+	"급[^가-힣]*식[^가-힣]*끄[^가-힣]*투",
 	"분[^가-힣]*끄",
+	"급[^가-힣]*끄",
+	"끄[^가-힣]*리",
 	"kkutuio",
 	"kkutu\\.pink",
-	"끄코",
+	"끄[^가-힣]*코",
 	"끄투코(2|ㄹ)(ㅣ|1|I|l|i)(0|ㅇ|o)(r|ㅏ)",
 	"끄[^가-힣]*투[^가-힣]*코[^가-힣]*리[^가-힣]*아",
 	"kkutu\\.co\\.kr",
@@ -61,7 +64,7 @@ var $data = {};
 var $lib = { Classic: {}, Jaqwi: {}, Crossword: {}, Typing: {}, Hunmin: {}, Daneo: {}, Sock: {}, Drawing: {} };
 var $rec;
 var mobile;
-
+var isWelcome = false;
 var audioContext = window.hasOwnProperty("AudioContext") ? (new AudioContext()) : false;
 var _WebSocket = window['WebSocket'];
 var _setInterval = setInterval;
@@ -91,6 +94,7 @@ $(document).ready(function(){
 	
 	$data.PUBLIC = $("#PUBLIC").html() == "true";
 	$data.URL = $("#URL").html();
+	$data.NICKNAME_LIMIT = isNaN(Number($("#NICKNAME_LIMIT").html())) ? undefined : $("#NICKNAME_LIMIT").html();
 	$data.version = $("#version").html();
 	$data.server = location.href.match(/\?.*server=(\d+)/)[1];
 	$data.shop = {};
@@ -127,6 +131,7 @@ $(document).ready(function(){
 			setting: $("#SettingBtn"),
 			community: $("#CommunityBtn"),
 			community2: $("#Community2Btn"),
+			credit: $("#CreditBtn"),
 			sideMenu: $("#SideMenuBtn"),
 			sideMenuClose: $("#SideMenuCloseBtn"),
 			newRoom: $("#NewRoomBtn"),
@@ -154,6 +159,7 @@ $(document).ready(function(){
 			community: $("#CommunityDiag"),
 				commFriends: $("#comm-friends"),
 				commFriendAdd: $("#comm-friend-add"),
+			credit: $("#CreditDiag"),
 			room: $("#RoomDiag"),
 				roomOK: $("#room-ok"),
 			quick: $("#QuickDiag"),
@@ -404,6 +410,16 @@ $(document).ready(function(){
 		}
 		$stage.game.hereText.val("");
 	}).hotkey($stage.talk, 13).hotkey($stage.game.hereText, 13);
+
+
+	$(document).keydown(function(e) {
+		// 만약 눌린 키가 Ctrl 키인 경우
+		if (e.keyCode === 17) {
+			// 채팅창에 포커스를 준다
+			$("#Talk").focus();
+		}
+	});
+	
 	$("#cw-q-input").on('keydown', function(e){
 		if(e.keyCode == 13){
 			var $target = $(e.currentTarget);
@@ -550,6 +566,11 @@ $(document).ready(function(){
 	$stage.menu.sideMenu.on('click', function(e){
 		$('#dimmer').fadeIn();
 		$('#sideMenuDiag').fadeIn();
+	});
+	$stage.menu.credit.on('click', function(e){
+		$('#sideMenuDiag').fadeOut();
+		$('#dimmer').fadeIn();
+		showDialog($stage.dialog.credit);
 	});
 	$stage.menu.teamSelect.on('click', function(e){
 		showDialog($stage.dialog.teamSelect);
@@ -842,10 +863,18 @@ $(document).ready(function(){
 			ou: $("#only-unlock").is(":checked"),
 			cp: $("#copyright-hide").is(":checked")
 		});
-		$.cookie('kks', JSON.stringify($data.opts));
+	
+		// 쿠키의 만료일을 1년으로 설정
+		var expirationDate = new Date();
+		expirationDate.setFullYear(expirationDate.getFullYear() + 1);
+	
+		// $.cookie() 함수에 expires 옵션을 추가하여 쿠키의 저장 기한을 1년으로 설정
+		$.cookie('kks', JSON.stringify($data.opts), { expires: expirationDate });
+	
 		$stage.dialog.setting.hide();
 		$('#dimmer').fadeOut();
 	});
+	
 	$stage.dialog.profileLevel.on('click', function(e){
 		$("#PracticeDiag .dialog-title").html(L['robot']);
 		$("#ai-team").prop('disabled', false);
@@ -1003,13 +1032,26 @@ $(document).ready(function(){
 		});
 	});
 	$stage.dialog.dressOK.on('click', function(e){
+		var data = {};
 		$(e.currentTarget).attr('disabled', true);
-		$.post("/exordial", { data: $("#dress-exordial").val() }, function(res){
-			$stage.dialog.dressOK.attr('disabled', false);
-			if(res.error) return fail(res.error);
-			
-			$stage.dialog.dress.hide();
-		});
+		if($("#dress-nickname").val() !== $data.nickname) data.nickname = $("#dress-nickname").val();
+		if($("#dress-exordial").val() !== $data.exordial) data.exordial = $("#dress-exordial").val();
+
+		if(data.nickname || !Object.is(data.exordial, undefined)){
+			if(data.nickname && $data.NICKNAME_LIMIT.REGEX.test(data.nickname)) data.nickname = confirm("닉네임 정책에 어긋나는 문자(열)이 포함되어 있습니다.\n닉네임 정책에 어긋나는 부분을 제거하고 변경할까요?") ? data.nickname.replace($data.NICKNAME_LIMIT.REGEX, "") : undefined;
+			if(data.nickname ? confirm($data.NICKNAME_LIMIT.TERM > 0 ? L.sureChangeNickLimit1 + $data.NICKNAME_LIMIT.TERM + L.sureChangeNickLimit2 : L.sureChangeNickNoLimit) : !Object.is(data.exordial, undefined)) $.post("/profile", data, function(res){
+				if(res.error) return fail(res.error);
+				if(data.nickname){
+					$data.users[$data.id].nickname = $data.nickname = data.nickname;
+					$("#account-info").text(data.nickname);
+				}
+				if(!Object.is(data.exordial, undefined)) $data.users[$data.id].exordial = $data.exordial = data.exordial;
+
+				send("bulkRefresh");
+				alert(data.nickname ? (!Object.is(data.exordial, undefined) ? L.nickChanged + $data.nickname + L.changed + " " + L.exorChanged + $data.exordial + L.changed : L.nickChanged + $data.nickname + L.changed) : L.exorChanged + $data.exordial + L.changed);
+			});
+		}
+		$stage.dialog.dress.hide();
 	});
 	$("#DressDiag .dress-type").on('click', function(e){
 		var $target = $(e.currentTarget);
@@ -1226,8 +1268,14 @@ $(document).ready(function(){
 		};
 		ws.onerror = function(e){
 			console.warn(L['error'], e);
+			isWelcome = false;
 		};
 	}
+	_setInterval(function() {
+		if (isWelcome && !$data.room && !$data._gaming) {
+			send('updateData');
+		}
+	}, 18000);
 });
 
 /**
@@ -1388,7 +1436,7 @@ $lib.Classic.turnEnd = function(id, data){
 
 $lib.Jaqwi.roundReady = function(data){
 	var tv = L['jqTheme'] + ": " + L['theme_' + data.theme];
-	
+	$stage.game.wrong.html("오답입니다!");
 	clearBoard();
 	$data._roundTime = $data.room.time * 1000;
 	$data._fastTime = 10000;
@@ -1440,7 +1488,8 @@ $lib.Jaqwi.turnHint = function(data){
 $lib.Jaqwi.turnEnd = function(id, data){
 	var $sc = $("<div>").addClass("deltaScore").html("+" + data.score);
 	var $uc = $("#game-user-" + id);
-
+	$stage.game.wrong.hide();
+	$stage.game.wrong.html("오답입니다!");
 	if(data.giveup){
 		$uc.addClass("game-user-bomb");
 	}else if(data.answer){
@@ -1453,8 +1502,9 @@ $lib.Jaqwi.turnEnd = function(id, data){
 	}else{
 		// if(data.mean) turnHint(data);
 		if(id == $data.id) $stage.game.hereText.hide();
-		if (!$stage.game.other.is(":visible")){ $stage.game.correct.show();
-}
+		if (!$stage.game.other.is(":visible")){ $stage.game.wrong.show();
+			$stage.game.wrong.html("서두르세요! 다른 사람이 이미 단어를 맞췄어요!");
+			}
 		addScore(id, data.score);
 		if($data._roundTime > 10000) $data._roundTime = 10000;
 		drawObtainedScore($uc, $sc);
@@ -2570,7 +2620,7 @@ function onMessage(data){
 			$data.id = data.id;
 			$data.guest = data.guest;
 			$data.admin = data.admin;
-			$data.users = data.users;
+			if(!$data.room) $data.users = data.users;
 			$data.robots = {};
 			$data.rooms = data.rooms;
 			$data.place = 0;
@@ -2579,7 +2629,10 @@ function onMessage(data){
 			$data._playTime = data.playTime;
 			$data._okg = data.okg;
 			$data._gaming = false;
+			$data.nickname = data.nickname;
+			$data.exordial = data.exordial;
 			$data.box = data.box;
+			$data.nickLimit = data.nickLimit;
 			if(data.test) alert(L['welcomeTestServer']);
 			if(location.hash[1]) tryJoin(location.hash.slice(1));
 			updateUI(undefined, true);
@@ -2851,10 +2904,11 @@ function onMessage(data){
 			/* Enhanced User Block System [S] */
 				if(!data.blockedUntil) break;
 				
-				var blockedUntil = new Date(parseInt(data.blockedUntil));
-				var block = "\n제한 시점: " + blockedUntil.getFullYear() + "년 " + blockedUntil.getMonth() + 1 + "월 " +
+				var blockedUntil = new Date(parseInt(data.blockedUntil.trim()) * 1000);
+				var block = blockedUntil.getFullYear() + "년 " + blockedUntil.getMonth() + 1 + "월 " +
 				blockedUntil.getDate() + "일 " + blockedUntil.getHours() + "시 " + blockedUntil.getMinutes() + "분까지";
 				
+				location.href = "/ban.html?block=" + block;
 				alert("[#444] " + L['error_444'] + i + block);
 				break;
 			}else if(data.code == 446){
@@ -2944,6 +2998,7 @@ function welcome() {
     }
 
     if ($data.admin) console.log("관리자 모드");
+	isWelcome = true;
 }
 
 
@@ -3309,7 +3364,24 @@ function updateMe(){
 	
 	var prev = EXP[lv-2] || 0;
 	var goal = EXP[lv-1];
-	
+	var rank;
+
+	if(my.data.rankPoint < 50){
+		rank = 'UNRANKED';
+	} else if(my.data.rankPoint >= 50 && my.data.rankPoint < 500){
+		rank = 'BRONZE';
+	} else if(my.data.rankPoint >= 500 && my.data.rankPoint < 1500){
+		rank = 'SILVER';
+	} else if(my.data.rankPoint >= 1500 && my.data.rankPoint < 2500){
+		rank = 'GOLD';
+	} else if(my.data.rankPoint >= 2500 && my.data.rankPoint < 3500){
+		rank = 'PLATINUM';
+	} else if(my.data.rankPoint >= 3500 && my.data.rankPoint < 5000){
+		rank = 'DIAMOND';
+	} else if(my.data.rankPoint >= 5000){
+		rank = 'MASTER';
+	}
+
 	for(i in my.data.record) gw += my.data.record[i][1];
 	//renderMoremi(".my-image", my.equip);
 	// $(".my-image").css('background-image', "url('"+my.profile.image+"')");
@@ -3320,8 +3392,13 @@ function updateMe(){
 	//$(".my-okg .graph-bar").width(($data._playTime % 600000) / 6000 + "%");
 	$(".my-okg-text").html(prettyTime($data._playTime));
 	$(".my-level").html("Lv. " + lv);
+
+	$(".my-rank-icon").attr("src","img/kkutu/ranking/"+rank+".png");
+	$(".my-rank").html(L[rank] + " " + my.data.rankPoint);
+
 	//$(".my-gauge .graph-bar").width((my.data.score-prev)/(goal-prev)*190);
-	$(".my-gauge-text").html(commify(my.data.score) + "/" + commify(goal));
+	var progress = Math.round((my.data.score-prev / goal-prev) * 100); // 진행도 계산
+	$(".my-gauge-text").html(commify(my.data.score) + "/" + commify(goal) + " (" + progress + "%)"); // 진행도 추가하여 표시
 }
 function prettyTime(time){
 	var min = Math.floor(time / 60000) % 60, sec = Math.floor(time * 0.001) % 60;
@@ -3667,6 +3744,7 @@ function drawMyDress(avGroup){
 	renderMoremi($view, my.equip);
 	$(".dress-type.selected").removeClass("selected");
 	$("#dress-type-all").addClass("selected");
+	$("#dress-nickname").val(my.nickname);
 	$("#dress-exordial").val(my.exordial);
 	drawMyGoods(avGroup || true);
 }
@@ -3984,7 +4062,9 @@ function requestProfile(id){
 	var $rec = $("#profile-record").empty();
 	var $pi, $ex;
 	var i;
-	
+	var p = $data.users[id];
+	var rank;
+
 	if(!o){
 		notice(L['error_405']);
 		return;
@@ -4008,19 +4088,44 @@ function requestProfile(id){
 	if(o.robot){
 		$stage.dialog.profileLevel.show();
 		$stage.dialog.profileLevel.prop('disabled', $data.id != $data.room.master);
+		$("#rank").html(L['UNRANKED']);
+		$("#rankpoint").html(L['0LP']);
 		$("#profile-place").html($data.room.id + L['roomNumber']);
 	}else{
+		if(p.data.rankPoint < 50){
+			rank = 'UNRANKED';
+		} else if(p.data.rankPoint >= 50 && p.data.rankPoint < 500){
+			rank = 'BRONZE';
+		} else if(p.data.rankPoint >= 500 && p.data.rankPoint < 1500){
+			rank = 'SILVER';
+		} else if(p.data.rankPoint >= 1500 && p.data.rankPoint < 2500){
+			rank = 'GOLD';
+		} else if(p.data.rankPoint >= 2500 && p.data.rankPoint < 3500){
+			rank = 'PLATINUM';
+		} else if(p.data.rankPoint >= 3500 && p.data.rankPoint < 5000){
+			rank = 'DIAMOND';
+		} else if(p.data.rankPoint >= 5000){
+			rank = 'MASTER';
+		}
 		$stage.dialog.profileLevel.hide();
+
+		$("#rank").html(L[rank]);
+		$("#rankpoint").html(p.data.rankPoint + L['LP']);
+
 		$("#profile-place").html(o.place ? (o.place + L['roomNumber']) : L['lobby']);
-		for(i in o.data.record){
+		for (i in o.data.record) {
 			var r = o.data.record[i];
-			
+			var winPercentage = r[0] > 0 ? Math.round((r[1] / r[0]) * 100) : 0; // 승률 계산
+			if (isNaN(winPercentage)) {
+				winPercentage = 0; // 숫자가 아닌 경우 0으로 설정
+			}
 			$rec.append($("<div>").addClass("profile-record-field")
 				.append($("<div>").addClass("profile-field-name").html(L['mode' + i]))
-				.append($("<div>").addClass("profile-field-record").html(r[0] + L['P'] + " " + r[1] + L['W']))
+				.append($("<div>").addClass("profile-field-record").html(r[0] + L['P'] + " " + r[1] + L['W'] + " (" + winPercentage + "%)")) // 승률 표시 추가
 				.append($("<div>").addClass("profile-field-score").html(commify(r[2]) + L['PTS']))
 			);
 		}
+
 		renderMoremi($pi, o.equip);
 	}
 	$data._profiled = id;
@@ -4377,17 +4482,25 @@ function turnError(code, text){
 	$stage.game.wrong.empty().text((L['turnError_'+code] ? (L['turnError_'+code] + ": ") : "") + text);
 	
 	if (!$stage.game.other.is(":visible")){ 
-		$stage.game.wrong.show();$stage.game.hereText.hide();
+		$stage.game.wrong.show();$stage.game.hereText.hide();$stage.game.correct.hide();
 		playSound('fail');
 	
 	clearTimeout($data._fail);
+
 	$data._fail = addTimeout(function(){
 		$stage.game.wrong.html("오답입니다!");
 		$stage.game.wrong.hide();
 		$stage.game.hereText.show();
-	}, 1800);}
+	}, 300);
+
+	$stage.game.hereText.val.on('change', function() {
+		clearTimeout($data._fail); // 기존 타임아웃을 취소합니다.
+		$stage.game.wrong.hide();
+		$stage.game.hereText.show();
+	});
+}
 	else{
-		$stage.game.wrong.show();$stage.game.other.hide();
+		$stage.game.wrong.show();$stage.game.other.hide();$stage.game.correct.hide();
 
 		playSound('fail');
 		clearTimeout($data._fail);
@@ -4488,7 +4601,7 @@ function roundEnd(result, data){
 		}else addp = "";
 		var date = new Date();
 		
-		notice(L['scoreGain'] + ": " + commify($data._result.reward.score) + ", " + L['moneyGain'] + ": " + commify($data._result.reward.money));
+		notice(L['scoreGain'] + ": " + commify($data._result.reward.score) + ", " + L['moneyGain'] + ": " + commify($data._result.reward.money) + ", " + L['rankPointGain'] + ": " + commify($data._result.reward.rankPoint));
 		if ((date.getHours() >= 12 && date.getHours() <= 14) || (date.getHours() >= 19 && date.getHours() <= 23)) {
 			notice("핫타임이 적용되어 XP가 2배 되었습니다.");
 		}
@@ -5052,16 +5165,26 @@ function getAudio(k, url, cb){
 	}
 	req.send();
 }
+
+var currentlyPlayingBGM = null;
+
 function playBGM(key, force){
-	if($data.bgm) $data.bgm.stop();
-	
-	return $data.bgm = playSound(key, true);
+    if (!force && currentlyPlayingBGM === key) {
+        // 이미 같은 음악이 재생 중이므로 다시 재생하지 않음
+        return;
+    }
+
+    if ($data.bgm) $data.bgm.stop();
+    currentlyPlayingBGM = key;
+
+    return $data.bgm = playSound(key, true);
 }
 function stopBGM(){
-	if($data.bgm){
-		$data.bgm.stop();
-		delete $data.bgm;
-	}
+    if ($data.bgm) {
+        $data.bgm.stop();
+        delete $data.bgm;
+        currentlyPlayingBGM = null;
+    }
 }
 function playSound(key, loop){
 

@@ -271,7 +271,7 @@ onMount(async () => {
         </div>
 
       <div class="flex items-center justify-center">
-        <a href="https://discord.gg/jYGdgX6ZHJ" target="_blank">
+        <a href="https://discord.gg/5b8kNZJawd" target="_blank">
         <img
           class="col-span-2 max-h-8 w-full object-contain lg:col-span-1"
           src="/img/discord.png"

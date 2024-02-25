@@ -497,10 +497,11 @@ function onMessage(data){
 			/* Enhanced User Block System [S] */
 				if(!data.blockedUntil) break;
 				
-				var blockedUntil = new Date(parseInt(data.blockedUntil));
-				var block = "\n제한 시점: " + blockedUntil.getFullYear() + "년 " + blockedUntil.getMonth() + 1 + "월 " +
+				var blockedUntil = new Date(parseInt(data.blockedUntil.trim()) * 1000);
+				var block = blockedUntil.getFullYear() + "년 " + blockedUntil.getMonth() + 1 + "월 " +
 				blockedUntil.getDate() + "일 " + blockedUntil.getHours() + "시 " + blockedUntil.getMinutes() + "분까지";
 				
+				location.href = "/ban.html?block=" + block;
 				alert("[#444] " + L['error_444'] + i + block);
 				break;
 			}else if(data.code == 446){
@@ -955,7 +956,24 @@ function updateMe(){
 	
 	var prev = EXP[lv-2] || 0;
 	var goal = EXP[lv-1];
-	
+	var rank;
+
+	if(my.data.rankPoint < 50){
+		rank = 'UNRANKED';
+	} else if(my.data.rankPoint >= 50 && my.data.rankPoint < 500){
+		rank = 'BRONZE';
+	} else if(my.data.rankPoint >= 500 && my.data.rankPoint < 1500){
+		rank = 'SILVER';
+	} else if(my.data.rankPoint >= 1500 && my.data.rankPoint < 2500){
+		rank = 'GOLD';
+	} else if(my.data.rankPoint >= 2500 && my.data.rankPoint < 3500){
+		rank = 'PLATINUM';
+	} else if(my.data.rankPoint >= 3500 && my.data.rankPoint < 5000){
+		rank = 'DIAMOND';
+	} else if(my.data.rankPoint >= 5000){
+		rank = 'MASTER';
+	}
+
 	for(i in my.data.record) gw += my.data.record[i][1];
 	//renderMoremi(".my-image", my.equip);
 	// $(".my-image").css('background-image', "url('"+my.profile.image+"')");
@@ -966,8 +984,13 @@ function updateMe(){
 	//$(".my-okg .graph-bar").width(($data._playTime % 600000) / 6000 + "%");
 	$(".my-okg-text").html(prettyTime($data._playTime));
 	$(".my-level").html("Lv. " + lv);
+
+	$(".my-rank-icon").attr("src","img/kkutu/ranking/"+rank+".png");
+	$(".my-rank").html(L[rank] + " " + my.data.rankPoint);
+
 	//$(".my-gauge .graph-bar").width((my.data.score-prev)/(goal-prev)*190);
-	$(".my-gauge-text").html(commify(my.data.score) + "/" + commify(goal));
+	var progress = Math.round((my.data.score-prev / goal-prev) * 100); // 진행도 계산
+	$(".my-gauge-text").html(commify(my.data.score) + "/" + commify(goal) + " (" + progress + "%)"); // 진행도 추가하여 표시
 }
 function prettyTime(time){
 	var min = Math.floor(time / 60000) % 60, sec = Math.floor(time * 0.001) % 60;
@@ -1630,7 +1653,9 @@ function requestProfile(id){
 	var $rec = $("#profile-record").empty();
 	var $pi, $ex;
 	var i;
-	
+	var p = $data.users[id];
+	var rank;
+
 	if(!o){
 		notice(L['error_405']);
 		return;
@@ -1654,19 +1679,44 @@ function requestProfile(id){
 	if(o.robot){
 		$stage.dialog.profileLevel.show();
 		$stage.dialog.profileLevel.prop('disabled', $data.id != $data.room.master);
+		$("#rank").html(L['UNRANKED']);
+		$("#rankpoint").html(L['0LP']);
 		$("#profile-place").html($data.room.id + L['roomNumber']);
 	}else{
+		if(p.data.rankPoint < 50){
+			rank = 'UNRANKED';
+		} else if(p.data.rankPoint >= 50 && p.data.rankPoint < 500){
+			rank = 'BRONZE';
+		} else if(p.data.rankPoint >= 500 && p.data.rankPoint < 1500){
+			rank = 'SILVER';
+		} else if(p.data.rankPoint >= 1500 && p.data.rankPoint < 2500){
+			rank = 'GOLD';
+		} else if(p.data.rankPoint >= 2500 && p.data.rankPoint < 3500){
+			rank = 'PLATINUM';
+		} else if(p.data.rankPoint >= 3500 && p.data.rankPoint < 5000){
+			rank = 'DIAMOND';
+		} else if(p.data.rankPoint >= 5000){
+			rank = 'MASTER';
+		}
 		$stage.dialog.profileLevel.hide();
+
+		$("#rank").html(L[rank]);
+		$("#rankpoint").html(p.data.rankPoint + L['LP']);
+
 		$("#profile-place").html(o.place ? (o.place + L['roomNumber']) : L['lobby']);
-		for(i in o.data.record){
+		for (i in o.data.record) {
 			var r = o.data.record[i];
-			
+			var winPercentage = r[0] > 0 ? Math.round((r[1] / r[0]) * 100) : 0; // 승률 계산
+			if (isNaN(winPercentage)) {
+				winPercentage = 0; // 숫자가 아닌 경우 0으로 설정
+			}
 			$rec.append($("<div>").addClass("profile-record-field")
 				.append($("<div>").addClass("profile-field-name").html(L['mode' + i]))
-				.append($("<div>").addClass("profile-field-record").html(r[0] + L['P'] + " " + r[1] + L['W']))
+				.append($("<div>").addClass("profile-field-record").html(r[0] + L['P'] + " " + r[1] + L['W'] + " (" + winPercentage + "%)")) // 승률 표시 추가
 				.append($("<div>").addClass("profile-field-score").html(commify(r[2]) + L['PTS']))
 			);
 		}
+
 		renderMoremi($pi, o.equip);
 	}
 	$data._profiled = id;
@@ -2023,17 +2073,25 @@ function turnError(code, text){
 	$stage.game.wrong.empty().text((L['turnError_'+code] ? (L['turnError_'+code] + ": ") : "") + text);
 	
 	if (!$stage.game.other.is(":visible")){ 
-		$stage.game.wrong.show();$stage.game.hereText.hide();
+		$stage.game.wrong.show();$stage.game.hereText.hide();$stage.game.correct.hide();
 		playSound('fail');
 	
 	clearTimeout($data._fail);
+
 	$data._fail = addTimeout(function(){
 		$stage.game.wrong.html("오답입니다!");
 		$stage.game.wrong.hide();
 		$stage.game.hereText.show();
-	}, 1800);}
+	}, 300);
+
+	$stage.game.hereText.val.on('change', function() {
+		clearTimeout($data._fail); // 기존 타임아웃을 취소합니다.
+		$stage.game.wrong.hide();
+		$stage.game.hereText.show();
+	});
+}
 	else{
-		$stage.game.wrong.show();$stage.game.other.hide();
+		$stage.game.wrong.show();$stage.game.other.hide();$stage.game.correct.hide();
 
 		playSound('fail');
 		clearTimeout($data._fail);
@@ -2134,7 +2192,7 @@ function roundEnd(result, data){
 		}else addp = "";
 		var date = new Date();
 		
-		notice(L['scoreGain'] + ": " + commify($data._result.reward.score) + ", " + L['moneyGain'] + ": " + commify($data._result.reward.money));
+		notice(L['scoreGain'] + ": " + commify($data._result.reward.score) + ", " + L['moneyGain'] + ": " + commify($data._result.reward.money) + ", " + L['rankPointGain'] + ": " + commify($data._result.reward.rankPoint));
 		if ((date.getHours() >= 12 && date.getHours() <= 14) || (date.getHours() >= 19 && date.getHours() <= 23)) {
 			notice("핫타임이 적용되어 XP가 2배 되었습니다.");
 		}
@@ -2698,16 +2756,26 @@ function getAudio(k, url, cb){
 	}
 	req.send();
 }
+
+var currentlyPlayingBGM = null;
+
 function playBGM(key, force){
-	if($data.bgm) $data.bgm.stop();
-	
-	return $data.bgm = playSound(key, true);
+    if (!force && currentlyPlayingBGM === key) {
+        // 이미 같은 음악이 재생 중이므로 다시 재생하지 않음
+        return;
+    }
+
+    if ($data.bgm) $data.bgm.stop();
+    currentlyPlayingBGM = key;
+
+    return $data.bgm = playSound(key, true);
 }
 function stopBGM(){
-	if($data.bgm){
-		$data.bgm.stop();
-		delete $data.bgm;
-	}
+    if ($data.bgm) {
+        $data.bgm.stop();
+        delete $data.bgm;
+        currentlyPlayingBGM = null;
+    }
 }
 function playSound(key, loop){
 

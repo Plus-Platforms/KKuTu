@@ -41,6 +41,7 @@ exports.OPTIONS = {
 	'str': { name: "Strict" },
 	'k32': { name: "Sami" },
 	'no2': { name: "No2" },
+	'rank': { name: "RankGame" },
 	'ulm': { name: "Unlimited" },
 	'sht': { name: "Short" }
 };
@@ -98,7 +99,7 @@ exports.RULE = {
 	},
 	'KSH': { lang: "ko",
 		rule: "Classic",
-		opts: [ "man", "ext", "mis", "loa", "str" ],
+		opts: [ "man", "ext", "mis", "loa", "str", "rank" ],
 		time: 1,
 		ai: true,
 		big: false,
@@ -227,7 +228,7 @@ exports.KO_INJEONG = [
 	"HSS", "KMV", "HDC", "HOS", "KRT", "WAK", "PSK",
 	"BRN", "MUS", "BLU", "AIR", "MOM", "MIN", "BRL", "LOA",
 	"GEN", "MSI", "APP", "BRD", "VAL", "SNA",
-	"YHW", "COC", "CKR", "DBP"
+	"YHW", "COC", "CKR", "DBP", "COR", "RHY"
 ];
 exports.EN_INJEONG = [
 	"LOL"

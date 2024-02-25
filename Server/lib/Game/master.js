@@ -506,13 +506,14 @@ exports.init = function(_SID, CHAN){
 				$c.refresh().then(function(ref){
 					/* Enhanced User Block System [S] */
 					let isBlockRelease = false;
-					
-					if(ref.blockedUntil < Date.now()) {
+					var blockedUntilTimestamp = parseInt(ref.blockedUntil);
+					if (Date.now() < blockedUntilTimestamp) {
 						DIC[$c.id] = $c;
 						MainDB.users.update([ '_id', $c.id ]).set([ 'blockedUntil', 0 ], [ 'black', null ]).on();
 						JLog.info(`사용자 #${$c.id}의 이용제한이 해제되었습니다.`);
 						isBlockRelease = true;
 					}
+					
 					/* Enhanced User Block System [E] */						
 					
 					/* Enhanced User Block System [S] */
@@ -561,7 +562,10 @@ function joinNewUser($c) {
 		id: $c.id,
 		guest: $c.guest,
 		box: $c.box,
+		nickname: $c.nickname,
+		exordial: $c.exordial,
 		playTime: $c.data.playTime,
+		rankPoint: $c.data.rankPoint,
 		okg: $c.okgCount,
 		users: KKuTu.getUserList(),
 		rooms: KKuTu.getRoomList(),
@@ -613,6 +617,46 @@ function processClientRequest($c, msg) {
 
 			$c.publish('yell', {value: msg.value});
 			break;
+		case 'updateProfile':
+			$c.nickname = msg.nickname;
+			$c.exordial = msg.exordial;
+			KKuTu.publish('updateProfile', msg);
+			$c.updateProfile(msg.nickname, msg.exordial);
+		case 'updateData':
+			$c.send('updateData', {
+				id: $c.id,
+				guest: $c.guest,
+				box: $c.box,
+				nickname: $c.nickname,
+				exordial: $c.exordial,
+				playTime: $c.data.playTime,
+				okg: $c.okgCount,
+				users: KKuTu.getUserList(),
+				rooms: KKuTu.getRoomList(),
+				friends: $c.friends,
+				admin: $c.admin,
+				test: global.test,
+				caj: $c._checkAjae ? true : false
+			});
+		case 'updateProfile':
+				$data.users[data.id].nickname = data.nickname;
+				$data.users[data.id].exordial = data.exordial;
+				break;
+		case 'updateData':
+				$data.id = data.id;
+				$data.guest = data.guest;
+				$data.admin = data.admin;
+				$data.users = data.users;
+				$data.rooms = data.rooms;
+				$data.friends = data.friends;
+				$data._playTime = data.playTime;
+				$data._okg = data.okg;
+				$data.nickname = data.nickname;
+				$data.exordial = data.exordial;
+				$data.box = data.box;
+				updateUI(undefined, true);
+				updateCommunity();
+				break;
 		case 'refresh':
 			$c.refresh();
 			break;

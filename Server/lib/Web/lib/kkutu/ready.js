@@ -59,6 +59,7 @@ $(document).ready(function(){
 			setting: $("#SettingBtn"),
 			community: $("#CommunityBtn"),
 			community2: $("#Community2Btn"),
+			credit: $("#CreditBtn"),
 			sideMenu: $("#SideMenuBtn"),
 			sideMenuClose: $("#SideMenuCloseBtn"),
 			newRoom: $("#NewRoomBtn"),
@@ -86,6 +87,7 @@ $(document).ready(function(){
 			community: $("#CommunityDiag"),
 				commFriends: $("#comm-friends"),
 				commFriendAdd: $("#comm-friend-add"),
+			credit: $("#CreditDiag"),
 			room: $("#RoomDiag"),
 				roomOK: $("#room-ok"),
 			quick: $("#QuickDiag"),
@@ -336,6 +338,16 @@ $(document).ready(function(){
 		}
 		$stage.game.hereText.val("");
 	}).hotkey($stage.talk, 13).hotkey($stage.game.hereText, 13);
+
+
+	$(document).keydown(function(e) {
+		// 만약 눌린 키가 Ctrl 키인 경우
+		if (e.keyCode === 17) {
+			// 채팅창에 포커스를 준다
+			$("#Talk").focus();
+		}
+	});
+	
 	$("#cw-q-input").on('keydown', function(e){
 		if(e.keyCode == 13){
 			var $target = $(e.currentTarget);
@@ -482,6 +494,11 @@ $(document).ready(function(){
 	$stage.menu.sideMenu.on('click', function(e){
 		$('#dimmer').fadeIn();
 		$('#sideMenuDiag').fadeIn();
+	});
+	$stage.menu.credit.on('click', function(e){
+		$('#sideMenuDiag').fadeOut();
+		$('#dimmer').fadeIn();
+		showDialog($stage.dialog.credit);
 	});
 	$stage.menu.teamSelect.on('click', function(e){
 		showDialog($stage.dialog.teamSelect);
@@ -774,10 +791,18 @@ $(document).ready(function(){
 			ou: $("#only-unlock").is(":checked"),
 			cp: $("#copyright-hide").is(":checked")
 		});
-		$.cookie('kks', JSON.stringify($data.opts));
+	
+		// 쿠키의 만료일을 1년으로 설정
+		var expirationDate = new Date();
+		expirationDate.setFullYear(expirationDate.getFullYear() + 1);
+	
+		// $.cookie() 함수에 expires 옵션을 추가하여 쿠키의 저장 기한을 1년으로 설정
+		$.cookie('kks', JSON.stringify($data.opts), { expires: expirationDate });
+	
 		$stage.dialog.setting.hide();
 		$('#dimmer').fadeOut();
 	});
+	
 	$stage.dialog.profileLevel.on('click', function(e){
 		$("#PracticeDiag .dialog-title").html(L['robot']);
 		$("#ai-team").prop('disabled', false);
@@ -942,7 +967,7 @@ $(document).ready(function(){
 			
 			$stage.dialog.dress.hide();
 		});
-	});
+		});
 	$("#DressDiag .dress-type").on('click', function(e){
 		var $target = $(e.currentTarget);
 		var type = $target.attr('id').slice(11);

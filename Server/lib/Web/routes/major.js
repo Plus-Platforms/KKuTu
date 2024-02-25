@@ -19,6 +19,7 @@
 var Web		 = require("request");
 var MainDB	 = require("../db");
 var JLog	 = require("../../sub/jjlog");
+var GLOBAL	 = require("../../sub/global.json");
 var Const	 = require("../../const");
 
 function obtain($user, key, value, term, addValue){

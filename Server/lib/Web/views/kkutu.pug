@@ -58,6 +58,7 @@ block Jungle
 	span#URL= `${locals.PROTOCOL}://${locals.HOST}:${locals.PORT}/${locals._id}`
 	span#MOREMI_PART= locals.MOREMI_PART.join(',')
 	span#AVAIL_EQUIP= locals.AVAIL_EQUIP.join(',')
+	span#NICKNAME_LIMIT= locals.NICKNAME_LIMIT ? JSON.stringify(locals.NICKNAME_LIMIT) : "{}"
 	span#RULE= JSON.stringify(locals.RULE)
 	span#OPTIONS= JSON.stringify(locals.OPTIONS)
 	div#Yell
@@ -264,11 +265,12 @@ block Middle
 		div.dialog-bar.tail-button.d3-bar
 			button.primaryBtn#result-ok= L('OK')
 			button#result-save= L('saveReplay')
-	+Dialog('DictionaryDiag', 400, 540, L('dict', false))
-		h4.opt(style='font-size: 14px; text-align: center; color: #486AA3;')= "저희 플러스끄투는 타 끄투 프리서버의 데이터를 가져올 수 없으므로 여러분들의 기여가 절실히 필요합니다. 우수 기여자 1인에게는 매달 1500핑을 제공 예정이오니 많은 등록 바랍니다."
+	+Dialog('DictionaryDiag', 400, 428, L('dict', false))
+		h4.opt(style='font-size: 14px; text-align: center; color: #486AA3;')= "단어 신청은 공식 디스코드의 피드백 -> 단어 신청 및 카페로만 받고 있습니다."
 		div.dialog-bar
 			h4.opt!= "키워드 입력"
-			input#dict-input(style='width: 283px;', placeholder=L('wpInput'), maxlength=200)
+			input#dict-input(style='width: 283px;border-radius: 10px 0px 0px 10px;', placeholder=L('wpInput'), maxlength=200)
+			button#dict-search= "검색"
 		div.dialog-bar
 			h4.opt!= "주제 선택"
 			select#dict-theme
@@ -276,11 +278,9 @@ block Middle
 				- locals.KO_INJEONG.forEach(function(item){
 					option(value=item)!= L('theme_' + item)
 				- });
-		h4.opt(style='font-size: 14px; text-align: center; color: #486AA3;')= "404 오류 발생 시 없는 단어이므로 등록하셔도 좋습니다."
-		div.dialog-bar#dict-output(style='height: 195px; overflow-y: scroll; color: #BBBBBB;background-repeat: no-repeat;background-size: cover;background-image: url(/img/kkutu/lettershopBG.png);')
+		div.dialog-bar#dict-output(style='height: 195px; overflow-y: scroll; color: #000; background-color: #fff;')
 		div.dialog-bar.tail-button.d3-bar
-			button#dict-search= "중복 확인"
-			button#dict-injeong= L('injeongReq')
+			button#dict-injeong(style="display:none;")= L('injeongReq')
 	+Dialog('InviteDiag', 300, 445, L('invite', false))
 		div.invite-board(style='height: 355px; overflow-y: scroll;')
 		div.dialog-bar.tail-button.d3-bar
@@ -300,9 +300,13 @@ block Middle
 		div.dialog-bar(style='height: 190px; overflow-y: scroll;')
 			div#ri-players(style='width: 100%;')
 		div.dialog-bar.tail-button.d3-bar
-			button#room-info-join= L('join')
-	+Dialog('ProfileDiag', 368,500)
+			button.primaryBtn#room-info-join= L('join')
+	+Dialog('ProfileDiag', 368,518)
 		div.dialog-bar.profile-head
+		div.dialog-bar
+			h4(style='width: 83px;')= L('PRANK')
+			h4#rank
+			h4#rankpoint
 		div.dialog-bar
 			h4(style='width: 83px;')!= L('place')
 			h4.dialog-bar-value#profile-place
@@ -404,7 +408,7 @@ block Middle
 			button.primaryBtn#cf-compose= L('cfCompose')
 	+Dialog('ChatLogDiag', 350, 500, L('chatLog', false))
 		div#chat-log-board(style='height: 475px; font-size: 11px; overflow-y: scroll;')
-	+Dialog('ObtainDiag', 300, 245, L('notice'), true)
+	+Dialog('ObtainDiag', 1291, 681, "", true)
 		div.dialog-bar
 			h4(style='width: 100%;')!= L('obtained') + '!'
 		div.jt-image#obtain-image(style='margin-left: 110px; width: 80px; height: 80px;')
@@ -431,6 +435,33 @@ block Middle
 		div.dialog-bar.d2-bar.tail-button
 			button.primaryBtn#confirm-ok= L('OK')
 			button#confirm-cancel= "취소"
+	+Dialog('CreditDiag', 390, 600, "제작진")
+		div(style="font-size: 16px; text-align: center;")
+			strong Team Infole
+			br
+			strong DIRECTOR
+			p Hanseon
+
+			strong DEVELOPENT LEADER
+			p Doul
+
+			strong WORD MANAGEMENT
+			p Yooddunddun
+
+			strong CLOSED BETA TEST
+			p Sqlare
+			p Kom Pasu
+
+			strong ILLUST
+			p Drawing Pasu
+
+			strong MUSIC
+			p Xpolcore
+			p Yooddunddun
+
+			strong SPECIAL THANKS TO
+			p JJoriping (Original KKuTu)
+
 	+Dialog('TeamSelectDiag', 500, 85, "팀 설정")
 		div.team-selector
 			div.team-button#team-0.team-0= L('teamSolo')
@@ -461,6 +492,10 @@ block Middle
 					button.sidebtn
 						+FA("ticket")
 						h3 쿠폰 등록
+				button.sidebtn#CreditBtn
+					+FA("circle-info")
+					h3 제작진
+
 				div.sideFooter
 					img(src="/img/kkutu/infole_gray.svg")
 					p Copyright &copy; 2021~ Infole
@@ -468,34 +503,6 @@ block Middle
 	div(style="width: 100%;display: flex;height: 680px;")
 		div.lowreshidden(style="width:160px;height:600px;background-image: url(/img/ad/placeholder-l.png);")
 			ins.adsbygoogle(style="display:inline-block;width:160px;height:600px", data-ad-client="ca-pub-3808496003691786", data-ad-slot="5307706929")
-		div(style="width: 310px;flex-direction: column;display: flex;")
-			+Product('UserList')
-				div#megauser
-					p.conn-desc.mfriend(style="display:none;")= "내 친구"
-					div#comm-friends(style="display:none;")
-					p.conn-desc= "전체 접속자"
-					div#connList 불러오는 중
-			+Product('RoominfoList')
-				div.roomInfo
-				div.roomControls
-					div.rc1Row
-						button.roomBtn.room2row#SetRoomBtn.for-master(style='display: none;')!= L('setRoom')
-						button.roomBtn.room2row#InviteBtn.for-master(style='display: none;')!= L('invite')
-					div.rc2Row
-						button.roomBtn.room3row#TeamSelectBtn.for-master.for-normal(style='display: none;')!= L('setTeam')
-						button.roomBtn.room3row#SpectateBtn.for-master.for-normal(style='display: none;')!= L('spectate')
-						button.roomBtn.room3row#PracticeBtn.for-master.for-normal(style='display: none;')!= L('practice')
-					div.rc3Row
-						button.roomBtn.room2row#DictionaryBtnIngame.for-gaming(style='display: none;')!= L('dict')
-						button.roomBtn.room2row#ExitBtn.for-master.for-normal.for-gaming(style='display: none;')!= L('exit')
-						button.roomBtn.room2row#ReadyBtn.for-normal(style='display: none;')!= L('ready')
-						button.roomBtn.room2row#StartBtn.for-master(style='display: none;')!= L('start')
-
-
-			+Product('Chat')
-				div#Chat
-				input#Talk(maxlength=200)
-				button#ChatBtn= L('send')
 
 		div(style="width: 1290px")
 			+Product('RoomList')
@@ -577,6 +584,35 @@ block Middle
 						div.history
 				div.game-body
 				+GraphBar('jjo-round-time')
+		div(style="width: 310px;flex-direction: column;display: flex;")
+			+Product('UserList')
+				div#megauser
+					p.conn-desc.mfriend(style="display:none;")= "내 친구"
+					div#comm-friends(style="display:none;")
+					p.conn-desc= "전체 접속자"
+					div#connList 불러오는 중
+			+Product('RoominfoList')
+				div.roomInfo
+				div.roomControls
+					div.rc1Row
+						button.roomBtn.room2row#SetRoomBtn.for-master(style='display: none;')!= L('setRoom')
+						button.roomBtn.room2row#InviteBtn.for-master(style='display: none;')!= L('invite')
+					div.rc2Row
+						button.roomBtn.room3row#TeamSelectBtn.for-master.for-normal(style='display: none;')!= L('setTeam')
+						button.roomBtn.room3row#SpectateBtn.for-master.for-normal(style='display: none;')!= L('spectate')
+						button.roomBtn.room3row#PracticeBtn.for-master.for-normal(style='display: none;')!= L('practice')
+					div.rc3Row
+						button.roomBtn.room2row#DictionaryBtnIngame.for-gaming(style='display: none;')!= L('dict')
+						button.roomBtn.room2row#ExitBtn.for-master.for-normal.for-gaming(style='display: none;')!= L('exit')
+						button.roomBtn.room2row#ReadyBtn.for-normal(style='display: none;')!= L('ready')
+						button.roomBtn.room2row#StartBtn.for-master(style='display: none;')!= L('start')
+
+
+			+Product('Chat')
+				div#Chat
+				input#Talk(maxlength=200, placeholder="Left Ctrl키를 눌러 입력하세요", autocomplete="off")
+				button#ChatBtn= L('send')
+
 		div.lowreshidden(style="width:160px;height:600px; background-image: url(/img/ad/placeholder-r.png);")
 			ins.adsbygoogle(style="display:inline-block;width:160px;height:600px", data-ad-client="ca-pub-3808496003691786", data-ad-slot="3446996199")
 	+Product('AD')

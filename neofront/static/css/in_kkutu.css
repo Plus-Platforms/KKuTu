@@ -113,6 +113,17 @@ equ{
 .sidebtn h3 {
     font-size: 24px;
 }
+#dict-search{
+	color: #ffffff;
+    font-weight: 700;
+    background-color: #885CF6;
+    margin-right: 5px;
+    border: 1px solid #AAAAAA;
+    border-left: 0;
+    border-radius: 0px 10px 10px 0px;
+    width: 45px;
+    height: 24px;
+}
 .my-okg-text{
 	border-radius: 99px;
     background: #4B5563;
@@ -606,7 +617,7 @@ iframe{
 	.RoomListBox div{ float: left; }
 	.RoomListBox .product-body{padding: 20px;
 		width: calc(100% - 44px);
-		height: calc(100% - 44px);
+		height: calc(100% - 85px);
 		overflow-x: hidden;
 		overflow-y: scroll; }
 	.rooms-item{
@@ -634,12 +645,16 @@ iframe{
 			padding-top: 23px; }
 
 		.rooms-create>div i{ margin-right: 10px; }
-		.rooms-channel{ position: relative; width: 10px; height: 10px; border-radius: 5px; margin-right: -10px; }
-			.rooms-channel:hover{ width: 8px; height: 8px; border: 1px solid #000; }
-			/*.channel-1{ background-color: #F99; }
+		.rooms-channel{ position: relative; width: 12px;
+			height: 12px;
+			border-radius: 999px; margin-right: -10px; }
+			.rooms-channel:hover{ width: 10px;
+				height: 10px;
+				border: 1px solid #000; }
+			.channel-1{ background-color: #F99; }
 			.channel-2{ background-color: #FF7; }
 			.channel-3{ background-color: #7C7; }
-			.channel-4{ background-color: #99F; }*/
+			.channel-4{ background-color: #99F; }
 		.rooms-gaming{ background-color: #E9D5FF; }
 			.rooms-create:hover{ background-color: #AADDFF; }
 		.rooms-number{     font-weight: 600;
@@ -815,7 +830,9 @@ iframe{
 			font-weight: 600;
 			color: black; }
 		.room-user-level{ width: 30px; height: 30px; }
-		.room-user-name{ padding: 0px 0px 0px 4px; }
+		.room-user-name{ padding: 0px 0px 0px 4px; overflow: hidden;
+			text-overflow: ellipsis;
+			max-width: 198px;}
 		.room-user:hover{ cursor: pointer; background: #F1F5F9; }
 .GameBox{
 	width: 100%!important;height: 680px;
@@ -1232,7 +1249,9 @@ box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.10), 0px 4px 6px -4px rgba(0, 0, 
 		.game-user-bomb{ border-color: #FF6666; }
 			.game-user-image{ margin: 15px 15px; width: 100px; height: 100px; }
 			.game-user-level{ margin: 1px; width: 18px; height: 18px; }
-			.game-user-name{ padding-left: 3px; margin: 3px 0px; font-size: 15px; }
+			.game-user-name{ padding-left: 3px; margin: 3px 0px; font-size: 15px;overflow: hidden;
+				text-overflow: ellipsis;
+				max-width: 95px; }
 			.game-user-score{     font-family: 'Pretendard'!important;
 				padding: 0px 5px;
 				align-items: center;
@@ -1417,9 +1436,7 @@ box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.10), 0px 4px 6px -4px rgba(0, 0, 
 	#cf-tray{ border-bottom: 1px solid #CCCCCC; margin-top: -2px; height: 32px; }
 		#cf-tray div{ width: 30px; height: 30px; cursor: pointer; }
 		.cf-tray-selected{ padding: 0px; border: 2px solid #61B8FF; }
-	#cf-dict{ margin: 2px 0px; height: 166px; color: #BBBBBB; overflow-y: scroll;     background-repeat: no-repeat;
-		background-size: cover;
-		background-image: url(/img/kkutu/lettershopBG.png); }
+	#cf-dict{ margin: 2px 0px; height: 166px; color: #000; background-color: #fff; overflow-y: scroll; }
 	#cf-reward{ float: left; width: 100%; height: 148px; overflow-y: scroll; }
 		.cf-rew-item{ float: left; border-bottom: 1px dashed #DDDDDD; margin-bottom: 1px; }
 		.cf-rew-item div{ float: left; }
@@ -1525,8 +1542,9 @@ box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.10), 0px 4px 6px -4px rgba(0, 0, 
 		.chat-body{ float: left; min-height: 14px; }
 .ADBox{
 	width: calc(100% - 280px);
-	box-shadow: 0px 1px 1px #14141400;
-	background-color: #23232300;
+	box-shadow: none;
+    background-color: transparent;
+    backdrop-filter: none;
 }
 .ADBox .product-title{
 	border-bottom-color: #333333;

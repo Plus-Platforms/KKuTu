@@ -176,6 +176,7 @@ exports.Data = function(data){
 	this.score = data.score || 0;
 	this.playTime = data.playTime || 0;
 	this.connectDate = data.connectDate || 0;
+	this.rankPoint = data.rankPoint || 0;
 	this.record = {};
 	for(i in Const.GAME_TYPE){
 		this.record[j = Const.GAME_TYPE[i]] = data.record ? (data.record[Const.GAME_TYPE[i]] || [0, 0, 0, 0]) : [0, 0, 0, 0];
@@ -244,6 +245,7 @@ exports.Client = function(socket, profile, sid){
 			image: GUEST_IMAGE
 		};
 	}
+	my.nickname = null;
 	my.socket = socket;
 	my.place = 0;
 	my.team = 0;
@@ -290,7 +292,7 @@ exports.Client = function(socket, profile, sid){
 		if(!my) return;
 		if(!msg) return;
 		
-		JLog.log(`Chan @${channel} Msg #${my.id}: ${msg}`);
+		if(JSON.parse(msg).type != 'refreshData') JLog.log(`Chan @${channel} Msg #${my.id}: ${msg}`);
 		try{ data = JSON.parse(msg); }catch(e){ data = { error: 400 }; }
 
 		JLog.log(`Chan @${channel} Msg #${my.id}: ${data.type == 'drawingCanvas' ? JSON.stringify({type: data.type, diffed: data.diffed}) : msg}`);
@@ -348,6 +350,7 @@ exports.Client = function(socket, profile, sid){
 			o.data = my.data;
 			o.money = my.money;
 			o.equip = my.equip;
+			o.nickname = my.nickname;
 			o.exordial = my.exordial;
 		}
 		return o;
@@ -438,40 +441,32 @@ exports.Client = function(socket, profile, sid){
 			R.go({ result: 200 });
 		}else DB.users.findOne([ '_id', my.id ]).on(function($user){
 			var first = !$user;
-			var black = first ? "" : $user.black;
+			var black = $user ? $user.black : null;
 			/* Enhanced User Block System [S] */
-			const blockedUntil = (first || !$user.blockedUntil) ? null : $user.blockedUntil;
+			const blockedUntil = $user ? $user.blockedUntil : 0;
 			/* Enhanced User Block System [E] */
 
-			if(first) $user = { money: 0 };
+			if(first) $user = { nickname: my.profile.title || my.profile.name, money: 0 };
 			if(black == "null") black = false;
 			if(black == "chat"){
 				black = false;
 				my.noChat = true;
 			}
-			/* 망할 셧다운제
-			if(Cluster.isMaster && !my.isAjae){ // null일 수는 없다.
-				my.isAjae = Ajae.checkAjae(($user.birthday || "").split('-'));
-				if(my.isAjae === null){
-					if(my._birth) my._checkAjae = setTimeout(function(){
-						my.sendError(442);
-						my.socket.close();
-					}, 300000);
-					else{
-						my.sendError(441);
-						my.socket.close();
-						return;
-					}
-				}
-			}*/
+			my.nickname = $user.nickname;
 			my.exordial = $user.exordial || "";
+			if (my.nickname) my.profile.title = my.nickname;
 			my.equip = $user.equip || {};
 			my.box = $user.box || {};
 			my.data = new exports.Data($user.kkutu);
 			my.money = Number($user.money);
 			my.friends = $user.friends || {};
-			if(first) my.flush();
-			else{
+			if(first){
+				my.flush();
+				DB.users.update([ '_id', my.id ]).set([ 'nickname', my.nickname || "닉네임 없음" ]).on(function($body){
+					if(!my.nickname) JLog.warn(`OAuth로부터 별명을 받아오지 못한 유저가 있습니다. #${my.id}`);
+					DB.session.update([ '_id', sid ]).set([ 'nickname', my.nickname || "닉네임 없음" ]).on();
+				});
+			}else{
 				my.checkExpire();
 				my.okgCount = Math.floor((my.data.playTime || 0) / PER_OKG);
 			}
@@ -503,7 +498,7 @@ exports.Client = function(socket, profile, sid){
 		).on(function(__res){
 			DB.redis.getGlobal(my.id).then(function(_res){
 				DB.redis.putGlobal(my.id, my.data.score).then(function(res){
-					JLog.log(`FLUSHED [${my.id}] PTS=${my.data.score} MNY=${my.money}`);
+					JLog.log(`FLUSHED [${my.id}] PTS=${my.data.score} MNY=${my.money} RP=${my.data.rankPoint}`);
 					R.go({ id: my.id, prev: _res });
 				});
 			});
@@ -806,6 +801,11 @@ exports.Client = function(socket, profile, sid){
 		delete my.friends[id];
 		my.flush(false, false, true);
 		my.send('friendEdit', { friends: my.friends });
+	};
+	
+	my.updateProfile = (nickname, exordial) => {
+		my.nickname = nickname;
+		my.exordial = exordial;
 	};
 };
 exports.Room = function(room, channel){
@@ -1250,7 +1250,7 @@ exports.Room = function(room, channel){
 				res[i].rank = Number(i);
 			}
 			pv = res[i].score;
-			rw = getRewards(my.mode, o.game.score / res[i].dim, o.game.bonus, res[i].rank, rl, sumScore);
+			rw = getRewards(o.data.rankPoint, my.mode, o.game.score / res[i].dim, o.game.bonus, res[i].rank, rl, sumScore, my.opts);
 			rw.playTime = now - o.playAt;
 			o.applyEquipOptions(rw); // 착용 아이템 보너스 적용
 			if(rw.together){
@@ -1260,6 +1260,7 @@ exports.Room = function(room, channel){
 			res[i].reward = rw;
 			o.data.score += rw.score || 0;
 			o.money += rw.money || 0;
+			o.data.rankPoint += rw.rankPoint || 0;
 			o.data.record[Const.GAME_TYPE[my.mode]][2] += rw.score || 0;
 			o.data.record[Const.GAME_TYPE[my.mode]][3] += rw.playTime;
 			if(!my.practice && rw.together){
@@ -1436,8 +1437,8 @@ function shuffle(arr){
 	
 	return r;
 }
-function getRewards(mode, score, bonus, rank, all, ss){
-	var rw = { score: 0, money: 0 };
+function getRewards(rankScore, mode, score, bonus, rank, all, ss, opts){
+	var rw = { score: 0, money: 0, rankPoint: 0};
 	var sr = score / ss;
 	
 	// all은 1~8
@@ -1516,6 +1517,16 @@ function getRewards(mode, score, bonus, rank, all, ss){
 	rw.score += bonus;
 	rw.score = rw.score || 0;
 	rw.money = rw.money || 0;
+	
+	if (opts.rankgame){ //랭크게임 이라면
+		rw.rankPoint = rw.score * 0.05 //점수에 0.05를 곱하고
+		rw.rankPoint = Math.round(rw.rankPoint); //아이템 효과 없이 바로 반영되므로 여기서 반올림한다.
+	}
+
+	if (rankScore >= 5000){
+		rw.rankPoint = 0; //마스터 달성 시 추가 랭크 포인트 획득 제한
+	}
+
 	
 	// applyEquipOptions에서 반올림한다.
 	return rw;

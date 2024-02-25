@@ -133,6 +133,7 @@ Server.get("/gwalli/shop/:key", function(req, res){
 		});
 	});
 });
+/*
 Server.post("/gwalli/injeong", function(req, res){
 	if(!checkAdmin(req, res)) return;
 //	if(req.body.pw != GLOBAL.PASS) return res.sendStatus(400);
@@ -157,7 +158,7 @@ Server.post("/gwalli/injeong", function(req, res){
 		// MainDB.kkutu_injeong.remove([ '_id', v._origin ]).on();
 	});
 	res.sendStatus(200);
-});
+});*/
 Server.post("/gwalli/kkutudb", onKKuTuDB);
 function onKKuTuDB(req, res){
 	if(!checkAdmin(req, res)) return;

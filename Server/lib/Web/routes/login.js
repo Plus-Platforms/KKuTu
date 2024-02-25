@@ -28,7 +28,6 @@ const path = require('path')
 function process(req, accessToken, MainDB, $p, done) {
     $p.token = accessToken;
     $p.sid = req.session.id;
-
     let now = Date.now();
     $p.sid = req.session.id;
     req.session.admin = GLOBAL.ADMIN.includes($p.id);
@@ -41,9 +40,9 @@ function process(req, accessToken, MainDB, $p, done) {
         req.session.profile = $p;
         MainDB.users.update([ '_id', $p.id ]).set([ 'lastLogin', now ]).on();
     });
-
     done(null, $p);
 }
+
 
 exports.run = (Server, page) => {
     //passport configure
@@ -62,7 +61,7 @@ exports.run = (Server, page) => {
 			let auth = require(path.resolve(__dirname, '..', 'auth', 'auth_' + i + '.js'))
 			Server.get('/login/' + auth.config.vendor, passport.authenticate(auth.config.vendor))
 			Server.get('/login/' + auth.config.vendor + '/callback', passport.authenticate(auth.config.vendor, {
-				successRedirect: '/',
+				successRedirect: '/game?server=0',
 				failureRedirect: '/loginfail'
 			}))
 			passport.use(new auth.config.strategy(auth.strategyConfig, auth.strategy(process, MainDB /*, Ajae */)));
