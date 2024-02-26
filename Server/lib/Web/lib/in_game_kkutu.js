@@ -64,7 +64,6 @@ var $data = {};
 var $lib = { Classic: {}, Jaqwi: {}, Crossword: {}, Typing: {}, Hunmin: {}, Daneo: {}, Sock: {}, Drawing: {} };
 var $rec;
 var mobile;
-var isWelcome = false;
 var audioContext = window.hasOwnProperty("AudioContext") ? (new AudioContext()) : false;
 var _WebSocket = window['WebSocket'];
 var _setInterval = setInterval;
@@ -94,7 +93,6 @@ $(document).ready(function(){
 	
 	$data.PUBLIC = $("#PUBLIC").html() == "true";
 	$data.URL = $("#URL").html();
-	$data.NICKNAME_LIMIT = isNaN(Number($("#NICKNAME_LIMIT").html())) ? undefined : $("#NICKNAME_LIMIT").html();
 	$data.version = $("#version").html();
 	$data.server = location.href.match(/\?.*server=(\d+)/)[1];
 	$data.shop = {};
@@ -369,12 +367,23 @@ $(document).ready(function(){
 		}
 	});
 	$data.opts = $.cookie('kks');
-	if($data.opts){
+	/*if($data.opts){
 		var opts = JSON.parse($data.opts);
 		opts.bv = $("#bgm-volume").val();
 		opts.ev = $("#effect-volume").val();
 		applyOptions(opts);
 	}
+	*/
+	if($data.opts.bgm){
+		if($data.opts.BGMVolume){
+			$data.bgm.volume = $data.opts.BGMVolume;
+			$data.bgm = playBGM($data.bgm.key, true);
+		}else{
+			$data.bgm.volume = 0;
+			$data.bgm.stop();
+		}
+	}
+
 	$(".dialog-head .dialog-title").on('mousedown', function(e){
 		var $pd = $(e.currentTarget).parents(".dialog");
 		
@@ -617,7 +626,7 @@ $(document).ready(function(){
 		// 무작위 방 제목 선택
 		var randomTitle = roomTitles[Math.floor(Math.random() * roomTitles.length)];
 	
-		$("#room-title").val(randomTitle);
+		//$("#room-title").val(randomTitle);
 		$data.typeRoom = 'enter';
 		showDialog($d = $stage.dialog.room);
 		$d.find(".dialog-title").html(L['newRoom']);
@@ -864,12 +873,9 @@ $(document).ready(function(){
 			cp: $("#copyright-hide").is(":checked")
 		});
 	
-		// 쿠키의 만료일을 1년으로 설정
-		var expirationDate = new Date();
-		expirationDate.setFullYear(expirationDate.getFullYear() + 1);
 	
 		// $.cookie() 함수에 expires 옵션을 추가하여 쿠키의 저장 기한을 1년으로 설정
-		$.cookie('kks', JSON.stringify($data.opts), { expires: expirationDate });
+		$.cookie('kks', JSON.stringify($data.opts));
 	
 		$stage.dialog.setting.hide();
 		$('#dimmer').fadeOut();
@@ -1032,28 +1038,15 @@ $(document).ready(function(){
 		});
 	});
 	$stage.dialog.dressOK.on('click', function(e){
-		var data = {};
 		$(e.currentTarget).attr('disabled', true);
-		if($("#dress-nickname").val() !== $data.nickname) data.nickname = $("#dress-nickname").val();
-		if($("#dress-exordial").val() !== $data.exordial) data.exordial = $("#dress-exordial").val();
-
-		if(data.nickname || !Object.is(data.exordial, undefined)){
-			if(data.nickname && $data.NICKNAME_LIMIT.REGEX.test(data.nickname)) data.nickname = confirm("닉네임 정책에 어긋나는 문자(열)이 포함되어 있습니다.\n닉네임 정책에 어긋나는 부분을 제거하고 변경할까요?") ? data.nickname.replace($data.NICKNAME_LIMIT.REGEX, "") : undefined;
-			if(data.nickname ? confirm($data.NICKNAME_LIMIT.TERM > 0 ? L.sureChangeNickLimit1 + $data.NICKNAME_LIMIT.TERM + L.sureChangeNickLimit2 : L.sureChangeNickNoLimit) : !Object.is(data.exordial, undefined)) $.post("/profile", data, function(res){
-				if(res.error) return fail(res.error);
-				if(data.nickname){
-					$data.users[$data.id].nickname = $data.nickname = data.nickname;
-					$("#account-info").text(data.nickname);
-				}
-				if(!Object.is(data.exordial, undefined)) $data.users[$data.id].exordial = $data.exordial = data.exordial;
-
-				send("bulkRefresh");
-				alert(data.nickname ? (!Object.is(data.exordial, undefined) ? L.nickChanged + $data.nickname + L.changed + " " + L.exorChanged + $data.exordial + L.changed : L.nickChanged + $data.nickname + L.changed) : L.exorChanged + $data.exordial + L.changed);
-			});
-		}
-		$stage.dialog.dress.hide();
-	});
-	$("#DressDiag .dress-type").on('click', function(e){
+		$.post("/exordial", { data: $("#dress-exordial").val() }, function(res){
+			$stage.dialog.dressOK.attr('disabled', false);
+			if(res.error) return fail(res.error);
+			
+			$stage.dialog.dress.hide();
+		});
+		});
+	$("#DressItemDiag .dress-type").on('click', function(e){
 		var $target = $(e.currentTarget);
 		var type = $target.attr('id').slice(11);
 		
@@ -1268,14 +1261,8 @@ $(document).ready(function(){
 		};
 		ws.onerror = function(e){
 			console.warn(L['error'], e);
-			isWelcome = false;
 		};
 	}
-	_setInterval(function() {
-		if (isWelcome && !$data.room && !$data._gaming) {
-			send('updateData');
-		}
-	}, 18000);
 });
 
 /**
@@ -2620,7 +2607,7 @@ function onMessage(data){
 			$data.id = data.id;
 			$data.guest = data.guest;
 			$data.admin = data.admin;
-			if(!$data.room) $data.users = data.users;
+			$data.users = data.users;
 			$data.robots = {};
 			$data.rooms = data.rooms;
 			$data.place = 0;
@@ -2629,10 +2616,7 @@ function onMessage(data){
 			$data._playTime = data.playTime;
 			$data._okg = data.okg;
 			$data._gaming = false;
-			$data.nickname = data.nickname;
-			$data.exordial = data.exordial;
 			$data.box = data.box;
-			$data.nickLimit = data.nickLimit;
 			if(data.test) alert(L['welcomeTestServer']);
 			if(location.hash[1]) tryJoin(location.hash.slice(1));
 			updateUI(undefined, true);
@@ -2998,7 +2982,6 @@ function welcome() {
     }
 
     if ($data.admin) console.log("관리자 모드");
-	isWelcome = true;
 }
 
 
@@ -3397,8 +3380,8 @@ function updateMe(){
 	$(".my-rank").html(L[rank] + " " + my.data.rankPoint);
 
 	//$(".my-gauge .graph-bar").width((my.data.score-prev)/(goal-prev)*190);
-	var progress = Math.round((my.data.score-prev / goal-prev) * 100); // 진행도 계산
-	$(".my-gauge-text").html(commify(my.data.score) + "/" + commify(goal) + " (" + progress + "%)"); // 진행도 추가하여 표시
+	var progress = Math.round((my.data.score-prev)/(goal-prev)*100); // 진행도 계산
+	$(".my-gauge-text").html(commify(my.data.score) + "/" + commify(goal)); // 진행도 추가하여 표시
 }
 function prettyTime(time){
 	var min = Math.floor(time / 60000) % 60, sec = Math.floor(time * 0.001) % 60;
@@ -3744,7 +3727,6 @@ function drawMyDress(avGroup){
 	renderMoremi($view, my.equip);
 	$(".dress-type.selected").removeClass("selected");
 	$("#dress-type-all").addClass("selected");
-	$("#dress-nickname").val(my.nickname);
 	$("#dress-exordial").val(my.exordial);
 	drawMyGoods(avGroup || true);
 }

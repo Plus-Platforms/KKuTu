@@ -297,12 +297,23 @@ $(document).ready(function(){
 		}
 	});
 	$data.opts = $.cookie('kks');
-	if($data.opts){
+	/*if($data.opts){
 		var opts = JSON.parse($data.opts);
 		opts.bv = $("#bgm-volume").val();
 		opts.ev = $("#effect-volume").val();
 		applyOptions(opts);
 	}
+	*/
+	if($data.opts.bgm){
+		if($data.opts.BGMVolume){
+			$data.bgm.volume = $data.opts.BGMVolume;
+			$data.bgm = playBGM($data.bgm.key, true);
+		}else{
+			$data.bgm.volume = 0;
+			$data.bgm.stop();
+		}
+	}
+
 	$(".dialog-head .dialog-title").on('mousedown', function(e){
 		var $pd = $(e.currentTarget).parents(".dialog");
 		
@@ -545,7 +556,7 @@ $(document).ready(function(){
 		// 무작위 방 제목 선택
 		var randomTitle = roomTitles[Math.floor(Math.random() * roomTitles.length)];
 	
-		$("#room-title").val(randomTitle);
+		//$("#room-title").val(randomTitle);
 		$data.typeRoom = 'enter';
 		showDialog($d = $stage.dialog.room);
 		$d.find(".dialog-title").html(L['newRoom']);
@@ -792,12 +803,9 @@ $(document).ready(function(){
 			cp: $("#copyright-hide").is(":checked")
 		});
 	
-		// 쿠키의 만료일을 1년으로 설정
-		var expirationDate = new Date();
-		expirationDate.setFullYear(expirationDate.getFullYear() + 1);
 	
 		// $.cookie() 함수에 expires 옵션을 추가하여 쿠키의 저장 기한을 1년으로 설정
-		$.cookie('kks', JSON.stringify($data.opts), { expires: expirationDate });
+		$.cookie('kks', JSON.stringify($data.opts));
 	
 		$stage.dialog.setting.hide();
 		$('#dimmer').fadeOut();
@@ -968,7 +976,7 @@ $(document).ready(function(){
 			$stage.dialog.dress.hide();
 		});
 		});
-	$("#DressDiag .dress-type").on('click', function(e){
+	$("#DressItemDiag .dress-type").on('click', function(e){
 		var $target = $(e.currentTarget);
 		var type = $target.attr('id').slice(11);
 		

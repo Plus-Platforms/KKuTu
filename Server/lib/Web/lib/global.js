@@ -25,30 +25,39 @@ var L;
 
 (function(){
 	var size;
-	var _setTimeout = setTimeout;
+	var _setTimeout = setTimeout;function setCookie(cName, cValue, cDay) {
+		var expire = new Date();
+		
+		// 쿠키 만료일을 1년으로 설정
+		expire.setDate(expire.getDate() + 365);
 	
-	function setCookie(cName, cValue, cDay){
-        var expire = new Date();
+		var encodedValue = encodeURIComponent(cValue);
+		var cookies = cName + '=' + encodedValue + '; path=/ ';
 		
-        expire.setDate(expire.getDate() + cDay);
-        cookies = cName + '=' + escape(cValue) + '; path=/ ';
-        if(typeof cDay != 'undefined') cookies += ';expires=' + expire.toGMTString() + ';';
+		if (typeof cDay !== 'undefined') {
+			cookies += ';expires=' + expire.toGMTString() + ';';
+		}
 		
-        document.cookie = cookies;
-    }
-    function getCookie(cName) {
-        //볕뉘 수정
-        var cName = cName+"=";
+		document.cookie = cookies;
+	}
+	
+	function getCookie(cName) {
+		var searchName = cName + "=";
 		var allCookie = decodeURIComponent(document.cookie).split(';');
-		var cval = [];
-		for(var i=0; i < allCookie.length; i++) {
-			if (allCookie[i].trim().indexOf(cName) == 0) {
-				cval = allCookie[i].trim().split("=");
+		var cval = '';
+	
+		for (var i = 0; i < allCookie.length; i++) {
+			var cookie = allCookie[i].trim();
+	
+			if (cookie.indexOf(searchName) === 0) {
+				cval = cookie.substring(searchName.length, cookie.length);
+				break;
 			}
 		}
-		return unescape((cval.length > 0) ? cval[1] : "");
-		//볕뉘 수정 끝
-    }
+	
+		return cval;
+	}
+	
 	
 	$.prototype.hotkey = function($f, code){
 		var $this = $(this);
