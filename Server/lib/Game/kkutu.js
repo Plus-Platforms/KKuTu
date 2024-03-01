@@ -1505,7 +1505,7 @@ function getRewards(rankScore, mode, score, bonus, rank, all, ss, opts){
 	var date = new Date();
 
 	if ((date.getHours() >= 12 && date.getHours() <= 14) || (date.getHours() >= 19 && date.getHours() <= 23)) {
-		rw.score *= 2;
+		rw.score *= 1.75;
 	}
 
 	if(all < 2){

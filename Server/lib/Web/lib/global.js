@@ -25,7 +25,21 @@ var L;
 
 (function(){
 	var size;
-	var _setTimeout = setTimeout;function setCookie(cName, cValue, cDay) {
+	var _setTimeout = setTimeout;
+	/*function setCookie(cName, cValue, cDay) {
+		// 쿠키와 달리 로컬 스토리지에는 만료일이 없으므로 별도의 처리가 필요하지 않습니다.
+		localStorage.setItem(cName, JSON.stringify(cValue)); // 데이터를 문자열로 변환하여 저장합니다.
+	}
+	
+	function getCookie(cName) {
+		var data = localStorage.getItem(cName);
+		if (data) {
+			return JSON.parse(data); // 저장된 데이터를 JSON 형태로 파싱하여 반환합니다.
+		}
+		return null;
+	}*/
+	
+	function setCookie(cName, cValue, cDay) {
 		var expire = new Date();
 		
 		// 쿠키 만료일을 1년으로 설정

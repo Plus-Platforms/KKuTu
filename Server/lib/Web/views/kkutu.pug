@@ -96,6 +96,7 @@ block Middle
 
 	div#dimmer(style="display: none;")
 	div#tost_message
+	div#contextMenuContainer
 	
 	+Dialog('SettingDiag', 400, 500, L('settingsText', false))
 		div.dialog-bar
@@ -476,9 +477,9 @@ block Middle
 			h2 전체 메뉴
 			div
 				button.sidebtn
-					+FA("clock")
-					h3 오끄감 보너스
-					h3.my-okg-text 
+					+FA("trophy")
+					h3 승리 횟수
+					h3.my-stat-record
 				button.sidebtn#SettingBtn
 					+FA("gear")
 					h3 환경설정
@@ -610,8 +611,10 @@ block Middle
 
 			+Product('Chat')
 				div#Chat
-				input#Talk(maxlength=200, placeholder="Left Ctrl키를 눌러 입력하세요", autocomplete="off")
-				button#ChatBtn= L('send')
+				input#Talk(maxlength=200, placeholder="Enter키를 눌러 입력하세요", autocomplete="off")
+				button#ChatBtn
+					+FA('paper-plane')
+					
 
 		div.lowreshidden(style="width:160px;height:600px; background-image: url(/img/ad/placeholder-r.png);")
 			ins.adsbygoogle(style="display:inline-block;width:160px;height:600px", data-ad-client="ca-pub-3808496003691786", data-ad-slot="3446996199")

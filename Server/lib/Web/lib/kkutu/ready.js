@@ -297,21 +297,11 @@ $(document).ready(function(){
 		}
 	});
 	$data.opts = $.cookie('kks');
-	/*if($data.opts){
+	if($data.opts){
 		var opts = JSON.parse($data.opts);
 		opts.bv = $("#bgm-volume").val();
 		opts.ev = $("#effect-volume").val();
 		applyOptions(opts);
-	}
-	*/
-	if($data.opts.bgm){
-		if($data.opts.BGMVolume){
-			$data.bgm.volume = $data.opts.BGMVolume;
-			$data.bgm = playBGM($data.bgm.key, true);
-		}else{
-			$data.bgm.volume = 0;
-			$data.bgm.stop();
-		}
 	}
 
 	$(".dialog-head .dialog-title").on('mousedown', function(e){
@@ -353,9 +343,13 @@ $(document).ready(function(){
 
 	$(document).keydown(function(e) {
 		// 만약 눌린 키가 Ctrl 키인 경우
-		if (e.keyCode === 17) {
-			// 채팅창에 포커스를 준다
+		if(e.keyCode == 13){
+		if(!$("#Talk").is(":focus")) {
 			$("#Talk").focus();
+        }
+		}
+		else if (e.keyCode === 27) {
+			$("#Talk").blur();
 		}
 	});
 	

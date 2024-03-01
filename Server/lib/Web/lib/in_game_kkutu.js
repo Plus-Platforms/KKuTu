@@ -367,21 +367,11 @@ $(document).ready(function(){
 		}
 	});
 	$data.opts = $.cookie('kks');
-	/*if($data.opts){
+	if($data.opts){
 		var opts = JSON.parse($data.opts);
 		opts.bv = $("#bgm-volume").val();
 		opts.ev = $("#effect-volume").val();
 		applyOptions(opts);
-	}
-	*/
-	if($data.opts.bgm){
-		if($data.opts.BGMVolume){
-			$data.bgm.volume = $data.opts.BGMVolume;
-			$data.bgm = playBGM($data.bgm.key, true);
-		}else{
-			$data.bgm.volume = 0;
-			$data.bgm.stop();
-		}
 	}
 
 	$(".dialog-head .dialog-title").on('mousedown', function(e){
@@ -423,9 +413,13 @@ $(document).ready(function(){
 
 	$(document).keydown(function(e) {
 		// 만약 눌린 키가 Ctrl 키인 경우
-		if (e.keyCode === 17) {
-			// 채팅창에 포커스를 준다
+		if(e.keyCode == 13){
+		if(!$("#Talk").is(":focus")) {
 			$("#Talk").focus();
+        }
+		}
+		else if (e.keyCode === 27) {
+			$("#Talk").blur();
 		}
 	});
 	
@@ -2532,7 +2526,7 @@ function connectToRoom(chan, rid){
 	if(rws) return;
 	rws = new _WebSocket(url);
 	
-	loading(L['connectToRoom'] + "\n<center><button id='ctr-close'>" + L['ctrCancel'] + "</button></center>");
+	loading(L['connectToRoom'] + "\n<center>자동으로 열리지 않으면 아무 키나 누르세요\n<button id='ctr-close'>" + L['ctrCancel'] + "</button></center>");
 	$("#ctr-close").on('click', function(){
 		loading();
 		if(rws) rws.close();
@@ -2925,6 +2919,7 @@ function adBlockFunction(){
 	console.log("TURN OFF");
 }
 function welcome() {
+	notice('로비에서의 친목성 채팅은 제재 대상입니다. 자유로운 채팅은 귓속말 또는 방을 생성하여 이용해주세요.');
     var playtime = 0;
 
     function showGameAlert() {
@@ -2935,7 +2930,7 @@ function welcome() {
         var date = new Date();
 
         if ((date.getHours() >= 12 && date.getHours() <= 14) || (date.getHours() >= 19 && date.getHours() <= 23)) {
-            notice('매일 12시부터 14시, 19시부터 23시는 핫타임! XP 2배로 BURNING UP!');
+            notice('🔥 12시부터 15시, 19시부터 0시는 핫타임! 1.75배의 XP를 받아보세요.');
         }
 
         playtime++;
@@ -4490,7 +4485,7 @@ function turnError(code, text){
 			$stage.game.wrong.html("오답입니다!");
 			$stage.game.wrong.hide();
 			$stage.game.other.show();
-		}, 1800);
+		}, 300);
 	}
 }
 
@@ -4585,14 +4580,14 @@ function roundEnd(result, data){
 		
 		notice(L['scoreGain'] + ": " + commify($data._result.reward.score) + ", " + L['moneyGain'] + ": " + commify($data._result.reward.money) + ", " + L['rankPointGain'] + ": " + commify($data._result.reward.rankPoint));
 		if ((date.getHours() >= 12 && date.getHours() <= 14) || (date.getHours() >= 19 && date.getHours() <= 23)) {
-			notice("핫타임이 적용되어 XP가 2배 되었습니다.");
+			notice("핫타임이 적용되어 XP가 1.75배 되었습니다.");
 		}
 
 		$(".result-me").css('opacity', 1);
 		
 
 		if ((date.getHours() >= 12 && date.getHours() <= 14) || (date.getHours() >= 19 && date.getHours() <= 23)) {
-			$(".result-me-score").html("핫타임 XP 2배 +"+commify($data._result.reward.score)+addit);
+			$(".result-me-score").html("핫타임 XP 1.75배 +"+commify($data._result.reward.score)+addit);
 		}
 		else{
 			$(".result-me-score").html(L['scoreGain']+" +"+commify($data._result.reward.score)+addit);

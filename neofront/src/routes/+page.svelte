@@ -88,7 +88,7 @@ onMount(async () => {
         Phase 2 업데이트
       </h1>
       <p class="text-white mt-2 text-center lg:text-left sm:text-2xl tracking-tight text-black">
-        경험 해 보지 못한 UI에서, 경험 해 보지 못한 끄투를 경험해보세요!
+        무언가 다른 끄투를 보여드리겠습니다
       </p>
       <div class="justify-center flex items-center lg:justify-start lg:items-start">
      <!-- <a href="https://plus.oqupie.com/portal/2568/request?type=16783">
@@ -121,7 +121,7 @@ onMount(async () => {
 <div class="modal">
   <div class="modal-content">
     <button on:click="{() => isModalOpen = false}" class="modal-close text-2xl text-gray-500">×</button>
-    <h3 class="text-3xl font-bold text-center">PC 클라이언트 다운로드</h3>
+    <h3 class="text-3xl font-bold text-center dark:text-black">PC 클라이언트 다운로드</h3>
     <p class="text-gray-500 text-center">현재 Windows 기기만 지원합니다. (macOS 추후 지원 예정)</p>
     <div class="px-4 w-full">
       <a href="https://github.com/Plus-Platforms/KKuTu/releases/download/1.0.0/install-1.0.0.exe">
@@ -147,25 +147,25 @@ onMount(async () => {
 
 <section class="max-w-screen-2xl mx-auto my-10 p-4 md:grid md:grid-cols-2">
   <div>
-  <h2 class="text-3xl font-bold mb-4">플러스끄투 소식</h2>
-  {#if jsonData && jsonData.message && jsonData.message.result}
-  {#each jsonData.message.result.articleList as { menuName, menuId, articleId, subject, writeDateTimestamp } (articleId)}
-  <a href={`https://cafe.naver.com/ArticleRead.nhn?clubid=31109813&page=1&menuid=${menuId}&boardtype=L&articleid=${articleId}&referrerAllArticles=false`} target="_blank" class="hover:text-blue-500 hover:underline">
-    <div class="post py-4 border-b dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800">
-      <h3 class="truncate">
-        <a href={`https://cafe.naver.com/ArticleList.nhn?search.clubid=31109813&search.menuid=${menuId}&search.boardtype=L`} target="_blank"><span class={`boardBg-${menuId} rounded-full px-2 text-white mr-2 hover:bg-blue-600`}>{menuName}</span></a>
-        <strong>{new Date(writeDateTimestamp).toLocaleDateString()}</strong>
-        {subject}</h3>
-    </div>
-  </a>
-  {/each}
-  {:else}
-  <p>불러오는 중</p>
+  <h2 class="text-3xl font-bold mb-4">카페 이야기</h2>
+{#if jsonDataFull && jsonDataFull.message && jsonDataFull.message.result}
+{#each jsonDataFull.message.result.articleList as { articleId, subject, writeDateTimestamp, menuName, menuId } (articleId)}
+<a href={`https://cafe.naver.com/ArticleRead.nhn?clubid=31109813&page=1&menuid=${menuId}&boardtype=L&articleid=${articleId}&referrerAllArticles=false`} target="_blank" class="hover:text-blue-500 hover:underline">
+  <div class="post py-4 border-b dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800">
+    <h3 class="truncate">
+      <a href={`https://cafe.naver.com/ArticleList.nhn?search.clubid=31109813&search.menuid=${menuId}&search.boardtype=L`} target="_blank"><span class={`boardBg-${menuId} rounded-full px-2 text-white mr-2 hover:bg-blue-600`}>{menuName}</span></a>
+      <strong>{new Date(writeDateTimestamp).toLocaleDateString()}</strong>
+      {subject}</h3>
+  </div>
+</a>
+{/each}
+{:else}
+<p>불러오는 중</p>
 {/if}
 </div>
 <div class="justify-end items-end flex">
   <a href="https://cafe.naver.com/ArticleRead.nhn?clubid=31109813&page=1&menuid=7&boardtype=L&articleid=52&referrerAllArticles=false"  target="_blank">
-  <img src="/img/banner.png" alt="정식출시배너">
+  <img src="/img/삼일절우측.png" alt="삼일절배너">
 </a>
 </div>
 </section>
@@ -227,17 +227,14 @@ onMount(async () => {
     </div>
     <section class="max-w-screen-2xl mx-auto my-10 p-4 md:grid md:grid-cols-2">
       <div class="flex flex-col">
-        <a href="https://plus.oqupie.com/portal/2568"  target="_blank">
-        <img src="/img/faq.png" alt="자주묻는질문">
-      </a>
       <a href="https://free.kkutu.kr"  target="_blank">
         <img src="/img/daldalso.png" alt="달달소">
       </a>
       </div>
       <div>
-      <h2 class="text-3xl font-bold mb-4">모레미 마을 이야기</h2>
-      {#if jsonDataFull && jsonDataFull.message && jsonDataFull.message.result}
-      {#each jsonDataFull.message.result.articleList as { articleId, subject, writeDateTimestamp, menuName, menuId } (articleId)}
+      <h2 class="text-3xl font-bold mb-4">업데이트</h2>
+      {#if jsonData && jsonData.message && jsonData.message.result}
+      {#each jsonData.message.result.articleList as { menuName, menuId, articleId, subject, writeDateTimestamp } (articleId)}
       <a href={`https://cafe.naver.com/ArticleRead.nhn?clubid=31109813&page=1&menuid=${menuId}&boardtype=L&articleid=${articleId}&referrerAllArticles=false`} target="_blank" class="hover:text-blue-500 hover:underline">
         <div class="post py-4 border-b dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800">
           <h3 class="truncate">

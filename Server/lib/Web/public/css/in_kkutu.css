@@ -15,6 +15,168 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
+ 
+ @media (prefers-color-scheme: dark) {
+	#Intro{
+		background: #2f2f2f!important;
+	}
+	#intro-text {
+		color: white!important;
+	}
+	#Top {
+		background-color: #1f2937!important;
+	}
+	.accountItem {
+		color: #ffffff!important;
+		background-color: #374151!important;
+	}
+	.aISub {
+		color: #fff!important;
+	}
+	.fuckSeogom {
+		color: #e5e7eb!important;
+	}
+	.iconItem {
+		color: #ffffff!important;
+		background-color: #374151!important;
+	}
+	.kkutu-menu {
+		background-color: #1f2937!important;
+	}
+	.kkutu-menu button {
+		color: #e5e7eb!important;
+	}
+	.kkutu-menu .mainbtn:hover {
+		background: #374151!important;
+	}
+	#Background{
+		background: #374151!important;
+	}
+	.product-title {
+		color: #d1d5db!important;
+		background-color: #374151!important;
+	}
+	.product-title i {
+		color: #d1d5db!important;
+	}
+	.dialog {
+		border: 1px solid #374151!important;
+		background: #1f2937!important;
+		color: #e5e7eb!important;
+	}
+	.dialog-bar .opt {
+		color: #ffffff!important;
+	}
+	.dialog-head {
+		color: #ffffff!important;
+	}
+	.side-panel {
+		background-color: #111827!important;
+	}
+	.panel-content h2 {
+		color: #fff!important;
+	}
+	#SideMenuCloseBtn {
+		color: #fff!important;
+	}
+	.sidebtn {
+		background-color: #1f2937!important;
+		color: #e5e7eb!important;
+	}
+	.Product{
+		color: #ffffff!important;
+    	background-color: #374151!important;
+		box-shadow: none!important;
+		backdrop-filter: blur(0px)!important;
+	}
+	::-webkit-scrollbar-track {
+		background: #00000000!important;
+	}
+	.game-user {
+		background-color: #1f2937!important;
+	}
+	.game-user-current {
+		background-color: #052e16!important;
+	}
+	.rounds {
+		color: #9ca3af!important;
+	}
+	.chat-item {
+		color: #ffffff!important;
+	}
+	.chat-head:hover {
+		background-color: #000!important;
+	}
+	.users-item {
+		background-color: #1f2937!important;
+	}
+	.room-user {
+		background: #111827!important;
+	}
+	.room-user-title {
+		color: white!important;
+	}
+	.dark {
+		display: inline-block!important;
+	}
+	.goods {
+		background-color: #1f2937!important;
+	}
+	.goods:hover {
+		background: #111827!important;
+	}
+	.goods-cost {
+		color: #d1d5db!important;
+	}
+	.shop-type {
+		color: #d1d5db!important;
+	}
+	.category-filter.selected {
+		color: #ffffff!important;
+		border-bottom: solid 4px #d8b4fe!important;
+	}
+	.kkutu-menu .toggled {
+		background: #111827!important;
+	}
+	.light{
+		display:none;
+	}
+	#Talk {
+		color: #fff!important;
+		background-color: #1f2937!important;
+	}
+	#ChatBtn {
+		background: #3b0764!important;
+		color: #a855f7!important;
+		border: 1px solid #581c87!important;
+	}
+	.rooms-item {
+		background-color: #111827!important;
+	}
+	.rooms-gaming {
+		background-color: #581c87!important;
+	}
+	input{
+		color: #fff!important;
+		background-color: #1f2937!important;
+	}
+	.tail-button button {
+		color: #ffffff!important;
+		background-color: #111827!important;
+	}
+	td{
+		background-color: #000;
+	}
+	.rooms-create>div {
+		color: #ffffff!important;
+	}
+  }
+
+.dark{
+	display:none;
+}
+
 html {
 	overflow-x: hidden;
 	overflow-y: hidden;
@@ -89,7 +251,26 @@ equ{
 }
 #Top .menu-sub-btn{ color: #222222; }
 #Bottom .bottom-text{ display: none; }
-
+    /* 컨텍스트 메뉴 스타일 */
+    #customContextMenu {
+		display: none;
+		position: absolute;
+		background-color: #fff;
+		border: 1px solid #ccc;
+		box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+		z-index: 1000;
+	  }
+  
+	  /* 컨텍스트 메뉴 아이템 스타일 */
+	  #customContextMenu li {
+		list-style: none;
+		padding: 8px 12px;
+		cursor: pointer;
+	  }
+  
+	  #customContextMenu li:hover {
+		background-color: #f0f0f0;
+	  }
 .sidebtn{
 	width: 540px;
 	height: 50px;
@@ -124,7 +305,7 @@ equ{
     width: 45px;
     height: 24px;
 }
-.my-okg-text{
+.my-stat-record{
 	border-radius: 99px;
     background: #4B5563;
     margin-left: 11px;
@@ -281,8 +462,9 @@ iframe{
 /*#ReadyBtn{
 	animation: ReadyBlink 1s linear infinite;
 }*/
-#ReadyBtn:hover, #ReadyBtn.toggled{
-	animation: none;
+#ReadyBtn:hover, #ReadyBtn.toggled {
+    animation: none;
+    background: #2e1065;
 }
 .product-body{ font-size: 16px; }
 .deltaScore{
@@ -531,8 +713,8 @@ iframe{
 	border-radius: 0px;
 	color: #111111;
 	box-shadow: 0px 2px 1px #DDDDDD;
-	background-color: #eeeeeeb0;
-	backdrop-filter: blur(12px);
+	background-color: #eeeeee;
+	backdrop-filter: blur(0px);
 }
 .product-title{
 	font-weight: 700;
@@ -601,7 +783,7 @@ iframe{
 	.users-item{     padding: 7px 11px;
 		width: 256px!important;
 		border-radius: 8px;
-		background-color: #FFF!important;
+		background-color: #FFF;
 		box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.15);
 		width: 190px; }
 		.users-image{ margin: 1px; width: 20px; height: 20px; }
@@ -1079,8 +1261,8 @@ iframe{
 				.round-extreme{ background-color: #FF6D6D !important; }
 			.cw .jjo-turn-time{ display: none; }
 			.cw .jjo-round-time{ width: 306px; }
-		.sock-char{ text-align: center; }
-			.sock-picked{ color: #FFFF44; font-weight: bold; font-size: 24px; }
+		.sock-char{ text-align: center; background-color: #000; }
+			.sock-picked{ color: #FFFF44; font-weight: bold; font-size: 36px; }
 	.chain{
 		padding-top: 44px;
 		margin: 30px 105px 0px 40px;
@@ -1480,17 +1662,17 @@ box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.10), 0px 4px 6px -4px rgba(0, 0, 
     height: 301px;
 }
 #Talk{
-    padding-left: 11px;
+	padding-left: 11px;
     color: #000;
-    background-color: white;
+    background-color: #e5e7eb;
     border: none;
     float: left;
-    width: calc(100% - 80px);
+    width: calc(100% - 64px);
     border-right: none;
-    border-top-right-radius: 0px;
-    border-bottom-right-radius: 0px;
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
     margin-top: 5px;
-    font-size: 16px;
+    font-size: 18px;
 }
 #ChatBtn{
     border: 1px solid #D1D5DB!important;
@@ -1500,8 +1682,10 @@ box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.10), 0px 4px 6px -4px rgba(0, 0, 
     float: left;
     border-left: none;
     margin-top: 5px;
-    width: 50px;
+    width: 24px;
     font-size: 16px;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
 }
 	#Chat hr, #chat-log-board hr{
 		padding-top: 0px;

@@ -24,11 +24,6 @@
 				  class="mr-6 text-xl flex rounded-xl py-2 px-2 transform ease-in duration-100 active:scale-95 hover:bg-gray-100 dark:hover:bg-gray-800 hover:underline hover:font-semibold hover:text-purple-500">
 					  디스코드
 					  </a>
-		
-		<a href="https://plus.oqupie.com/portal/2568"
-					  class="mr-6 text-xl flex rounded-xl py-2 px-2 transform ease-in duration-100 active:scale-95 hover:bg-gray-100 dark:hover:bg-gray-800 hover:underline hover:font-semibold hover:text-purple-500">
-						  고객지원
-						  </a>
 
 		<a href="https://kkutu.cc/login"
 						  class="mr-6 text-xl flex rounded-xl py-2 px-2 transform ease-in duration-100 active:scale-95 hover:bg-gray-100 dark:hover:bg-gray-800 hover:underline hover:font-semibold hover:text-purple-500">
@@ -58,10 +53,6 @@
 	<a href="https://discord.gg/5b8kNZJawd">
 		<button class="lg:hidden transform ease-in duration-100 bg-black/70 border hover:bg-blue-600/70 hover:px-8 text-white px-4 py-2 text-lg">
 		디스코드</button>
-	</a>
-	<a href="https://plus.oqupie.com/portal/2568">
-		<button class="lg:hidden transform ease-in duration-100 bg-black/70 border hover:bg-blue-600/70 hover:px-8 text-white px-4 py-2 text-lg">
-		고객지원</button>
 	</a>
 	<a href="#">
 		<button class="transform ease-in duration-100 bg-black/70 border hover:bg-blue-600/70 hover:px-8 text-white px-4 py-2 text-lg">TOP</button>
