@@ -85,17 +85,18 @@ onMount(async () => {
       </h1>
         -->
       <h1 class="text-white text-center lg:text-left text-3xl font-bold tracking-tight text-black sm:text-4xl md:text-5xl lg:text-6xl">
-        Phase 2 업데이트
+        벚꽃이 만개한<br>
+        교문 너머로
       </h1>
       <p class="text-white mt-2 text-center lg:text-left sm:text-2xl tracking-tight text-black">
-        무언가 다른 끄투를 보여드리겠습니다
+        새 학기, 새 학년! 플끄에서도 새롭게 출발 해 보세요.
       </p>
       <div class="justify-center flex items-center lg:justify-start lg:items-start">
-     <!-- <a href="https://plus.oqupie.com/portal/2568/request?type=16783">
-        <button class="mt-3 px-3 bg-blue-500 font-bold text-white text-center m-auto py-2 transform ease-in duration-100 active:scale-95 hover:bg-blue-700">
-          경험치 인정받기
+     <a href="https://cafe.naver.com/pluskkutu/95">
+        <button class="mt-3 px-3 bg-pink-500 font-bold text-white text-center m-auto py-2 transform ease-in duration-100 active:scale-95 hover:bg-blue-700">
+          이벤트 알아보기
       </button>
-    </a>-->
+    </a>
     </div>
     </div>
       <div class="flex flex-col">
@@ -164,8 +165,8 @@ onMount(async () => {
 {/if}
 </div>
 <div class="justify-end items-end flex">
-  <a href="https://cafe.naver.com/ArticleRead.nhn?clubid=31109813&page=1&menuid=7&boardtype=L&articleid=52&referrerAllArticles=false"  target="_blank">
-  <img src="/img/삼일절우측.png" alt="삼일절배너">
+  <a href="https://cafe.naver.com/pluskkutu/95"  target="_blank">
+  <img src="/img/봄시즌.png" alt="봄시즌배너">
 </a>
 </div>
 </section>
