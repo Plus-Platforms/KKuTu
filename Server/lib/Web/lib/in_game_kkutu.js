@@ -61,7 +61,7 @@ var $stage;
 var $sound = {};
 var $_sound = {}; // 현재 재생 중인 것들
 var $data = {};
-var $lib = { Classic: {}, Jaqwi: {}, Crossword: {}, Typing: {}, Hunmin: {}, Daneo: {}, Sock: {}, Drawing: {} };
+var $lib = { Classic: {}, Jaqwi: {}, Crossword: {}, Typing: {}, Hunmin: {}, Daneo: {}, Sock: {}, Drawing: {}, All: {} };
 var $rec;
 var mobile;
 var audioContext = window.hasOwnProperty("AudioContext") ? (new AudioContext()) : false;
@@ -138,6 +138,7 @@ $(document).ready(function(){
 			spectate: $("#SpectateBtn"),
 			shop: $("#ShopBtn"),
 			dict: $("#DictionaryBtn"),
+			event: $("#LvEventBtn"),
 			dictIngame: $("#DictionaryBtnIngame"),
 			wordPlus: $("#WordPlusBtn"),
 			invite: $("#InviteBtn"),
@@ -158,6 +159,7 @@ $(document).ready(function(){
 				commFriends: $("#comm-friends"),
 				commFriendAdd: $("#comm-friend-add"),
 			credit: $("#CreditDiag"),
+			event: $("#LvEventDiag"),
 			room: $("#RoomDiag"),
 				roomOK: $("#room-ok"),
 			quick: $("#QuickDiag"),
@@ -366,23 +368,51 @@ $(document).ready(function(){
 			return false;
 		}
 	});
-	$data.opts = $.cookie('kks');
-	if($data.opts){
-		var opts = JSON.parse($data.opts);
-		opts.bv = $("#bgm-volume").val();
-		opts.ev = $("#effect-volume").val();
+	const options = $.cookie('kks');
+	if(options){
+		var opts = JSON.parse(options);
+		$("#bgm-volume").val(opts.bv);
+		$("#effect-volume").val(opts.ev);
 		applyOptions(opts);
 	}
+	else{
+		applyOptions({
+			bv: $("#bgm-volume").val(),
+			ev: $("#effect-volume").val(),
+			di: $("#deny-invite").is(":checked"),
+			dw: $("#deny-whisper").is(":checked"),
+			df: $("#deny-friend").is(":checked"),
+			ar: $("#auto-ready").is(":checked"),
+			su: $("#sort-user").is(":checked"),
+			ow: $("#only-waiting").is(":checked"),
+			ou: $("#only-unlock").is(":checked"),
+			cp: $("#copyright-hide").is(":checked"),
+			vp: $("#lower-vibration").is(":checked")
+		});
+	
+	
+		// $.cookie() 함수에 expires 옵션을 추가하여 쿠키의 저장 기한을 1년으로 설정
+		$.cookie('kks', JSON.stringify($data.opts));
+	}
 
-	$(".dialog-head .dialog-title").on('mousedown', function(e){
-		var $pd = $(e.currentTarget).parents(".dialog");
-		
-		$(".dialog-front").removeClass("dialog-front");
-		$pd.addClass("dialog-front");
-		startDrag($pd, e.pageX, e.pageY);
-	}).on('mouseup', function(e){
-		stopDrag();
-	});
+		$('.dialog-head, .dialog-title').mousedown(function(e) {
+		  var $dialog = $(this).closest('.dialog');
+		  var offsetX = e.clientX - $dialog.offset().left;
+		  var offsetY = e.clientY - $dialog.offset().top;
+		  $(".dialog-front").removeClass("dialog-front");
+		  $dialog.addClass("dialog-front");
+		  $(document).mousemove(function(e) {
+			var x = e.clientX - offsetX;
+			var y = e.clientY - offsetY;
+	  
+			$dialog.css({ 'left': x, 'top': y });
+		  });
+	  
+		  $(document).mouseup(function() {
+			$(document).off('mousemove');
+			$(document).off('mouseup');
+		  });
+		});
 	// addInterval(checkInput, 1);
 	$stage.chatBtn.on('click', function(e){
 		checkInput();
@@ -466,6 +496,7 @@ $(document).ready(function(){
 	$(window).on('beforeunload', function(e){
 		if($data.room) return L['sureExit'];
 	});
+
 	function startDrag($diag, sx, sy){
 		var pos = $diag.position();
 		$(window).on('mousemove', function(e){
@@ -473,10 +504,9 @@ $(document).ready(function(){
 			
 			$diag.css('left', pos.left + dx);
 			$diag.css('top', pos.top + dy);
+		}).one('mouseup', function(){
+			$(window).off('mousemove');
 		});
-	}
-	function stopDrag($diag){
-		$(window).off('mousemove');
 	}
 	
 	$(".result-me-gauge .graph-bar").addClass("result-me-before-bar");
@@ -781,6 +811,9 @@ $(document).ready(function(){
 	$stage.menu.dict.on('click', function(e){
 		showDialog($stage.dialog.dict);
 	});
+	$stage.menu.event.on('click', function(e){
+		showDialog($stage.dialog.event);
+	});
 	$stage.menu.dictIngame.on('click', function(e){
 		showDialog($stage.dialog.dict);
 	});
@@ -864,7 +897,8 @@ $(document).ready(function(){
 			su: $("#sort-user").is(":checked"),
 			ow: $("#only-waiting").is(":checked"),
 			ou: $("#only-unlock").is(":checked"),
-			cp: $("#copyright-hide").is(":checked")
+			cp: $("#copyright-hide").is(":checked"),
+			vp: $("#lower-vibration").is(":checked")
 		});
 	
 	
@@ -1032,13 +1066,49 @@ $(document).ready(function(){
 		});
 	});
 	$stage.dialog.dressOK.on('click', function(e){
+		var data = {};
 		$(e.currentTarget).attr('disabled', true);
-		$.post("/exordial", { data: $("#dress-exordial").val() }, function(res){
+
+		if($("#dress-nickname").val() != $data.nickname) data.nickname = $("#dress-nickname").val();
+		if($("#dress-exordial").val() != $data.exordial || ($("#dress-exordial").val() === "" && $data.exordial !== "")) data.exordial = $("#dress-exordial").val();
+
+		var message = "";
+
+		if(data.nickname && data.exordial){
+			message = "닉네임과 소개를 변경하시겠어요? 변경된 닉네임은 새로고침 후 반영돼요.";
+		}
+		else if (data.exordial){
+			message = "소개를 변경하시겠어요?";
+		}
+		else if (data.nickname){
+			message = "닉네임을 변경하시겠어요? 변경된 닉네임은 새로고침 후 반영돼요.";
+		}
+		else {
+			message = "프로필을 변경하시겠어요?";
+		}
+		if(confirm(message)){
+			$.post("/profile", data, function(res){
 			$stage.dialog.dressOK.attr('disabled', false);
 			if(res.error) return fail(res.error);
+			if(data.nickname) $data.users[$data.id].nickname = $data.nickname = data.nickname;
+			if(data.exordial || data.exordial === "") $data.users[$data.id].exordial = $data.exordial = data.exordial;
 			
+			if (!data.nickname && !data.exordial){
+				message = "수정되었습니다.";
+			}
+			else if (data.nickname) {
+				if (data.exordial || data.exordial === "") {
+					message = L.nickChanged + data.nickname + L.changed + " " + L.exorChanged + data.exordial + L.changed;
+				} else {
+					message = L.nickChanged + data.nickname + L.changed;
+				}
+			} else {
+				message = L.exorChanged + data.exordial + L.changed;
+			}
+			alert(message);
+			updateUserList(true);
 			$stage.dialog.dress.hide();
-		});
+		});}
 		});
 	$("#DressItemDiag .dress-type").on('click', function(e){
 		var $target = $(e.currentTarget);
@@ -2446,6 +2516,7 @@ function applyOptions(opt){
 	$("#deny-whisper").attr('checked', $data.opts.dw);
 	$("#deny-friend").attr('checked', $data.opts.df);
 	$("#auto-ready").attr('checked', $data.opts.ar);
+	$("#lower-vibration").attr('checked', $data.opts.vi);
 	$("#sort-user").attr('checked', $data.opts.su);
 	$("#only-waiting").attr('checked', $data.opts.ow);
 	$("#only-unlock").attr('checked', $data.opts.ou);
@@ -2610,6 +2681,9 @@ function onMessage(data){
 			$data._playTime = data.playTime;
 			$data._okg = data.okg;
 			$data._gaming = false;
+
+			$data.nickname = data.nickname;
+			$data.exordial = data.exordial;
 			$data.box = data.box;
 			if(data.test) alert(L['welcomeTestServer']);
 			if(location.hash[1]) tryJoin(location.hash.slice(1));
@@ -3370,6 +3444,23 @@ function updateMe(){
 	//$(".my-okg .graph-bar").width(($data._playTime % 600000) / 6000 + "%");
 	$(".my-okg-text").html(prettyTime($data._playTime));
 	$(".my-level").html("Lv. " + lv);
+
+	//200레벨이벤트
+	var startDate = new Date('2024-03-04');
+    var endDate = new Date('2024-03-18');
+    var today = new Date();
+
+    if (today >= startDate && today <= endDate) {
+	$("#event-content").show();
+	$("#pre-content").hide();
+    }
+	$("#userLevel").html("Lv. " + lv);
+	if(lv >= 200){
+		$("#lockedItem").click(function(){
+			window.open('https://docs.google.com/forms/d/e/1FAIpQLSc5uzMe6xxXrBSD_NprdUUP_F_0o5YJU8WNYwsG4D44LZaPcA/viewform?usp=sf_link', '_blank');
+	  });
+		$("#lockedItem").attr("src","img/event/acryll-get.png");
+	}
 
 	$(".my-rank-icon").attr("src","img/kkutu/ranking/"+rank+".png");
 	$(".my-rank").html(L[rank] + " " + my.data.rankPoint);
@@ -4825,6 +4916,7 @@ function onGoods(e){
 	}
 }
 function vibrate(level){
+	
 	if(level < 1) return;
 	
 	$("#Middle").css('padding-top', level);
@@ -4832,6 +4924,7 @@ function vibrate(level){
 		$("#Middle").css('padding-top', 0);
 		addTimeout(vibrate, 50, level * 0.7);
 	}, 50);
+
 }
 function pushDisplay(text, mean, theme, wc){
 	var len;
@@ -5179,6 +5272,7 @@ src = audioContext.createBufferSource();
 			gainNode.gain.value = 0;
 			src.buffer = audioContext.createBuffer(2, sound.length, audioContext.sampleRate);
 		}else{
+			
 			gainNode.gain.value = (loop ? $data.BGMVolume : $data.EffectVolume) || 0.5;
 src.buffer = sound;
 		}

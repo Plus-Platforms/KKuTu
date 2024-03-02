@@ -130,11 +130,26 @@ exports.roundReady = function(){
 	my.game.round++;
 	my.game.roundTime = my.time * 1000;
 	if(my.game.round <= my.round){
+        let isFirstRound = my.game.round == 1;
 		my.game.char = my.game.title[my.game.round - 1];
 		my.game.subChar = getSubChar.call(my, my.game.char);
 		my.game.chain = [];
 		if(my.opts.mission) my.game.mission = getMission(my.rule.lang);
 		if(my.opts.sami) my.game.wordLength = 2;
+		if (my.opts.item) {
+            if (isFirstRound) {
+                my.game.item = {};
+                my.game.used = {};
+                my.game.rev = false;
+                my.game.ilock = false;
+            }
+            for (o of my.game.seq) {
+                let t = o.robot ? o.id : o;
+                my.game.item[t] = [0, 0, 0, 0, 0];
+                my.game.used[t] = 0;
+                my.game.ilock = false;
+            }
+        }
 		
 		my.byMaster('roundReady', {
 			round: my.game.round,
@@ -309,6 +324,83 @@ exports.submit = function(client, text){
 		(l == "ko") ? [ 'type', Const.KOR_GROUP ] : [ '_id', Const.ENG_ID ]
 	).on(onDB);
 };
+
+exports.useItem = function(client, id){
+    let my = this;
+    if (id < 0 || id > 5) return; // 없는 아이템
+    if (my.game.late) return;
+    let mgt = my.game.seq[my.game.turn];
+    let uid = mgt.robot ? mgt.id : mgt;
+    let firstMove = my.game.chain.length < 1;
+    let isTurnEnd = true;
+    let denied = false;
+
+    if (!mgt) return;
+    if (uid != client.id) return;
+    if (my.game.ilock) return client.publish('turnError', {code: 420}, true); // 아이템 연속사용
+    if (firstMove) return client.publish('turnError', {code: 421}, true); // 첫 턴
+    if (my.game.used[uid] >= 5 || my.game.item[uid][id] >= 2) return client.publish('turnError', {code: 429}, true); // 횟수 초과
+
+    switch (id) {
+        case 0: // 넘기기 - 다음 사람으로 턴으로 넘김
+            break;
+        case 1: // 건너뛰기 - 다음 사람의 턴을 넘김
+            my.game.queue = 1;
+            break;
+        case 2: // 뒤로 - 턴 순서를 반대로 만듦
+            my.game.rev = !my.game.rev;
+            break;
+        case 3: // 제시어 변경 - 랜덤 제시어로 변경 (단, 쿵쿵따는 가운데 글자로 바꿈)
+            isTurnEnd = true;
+            let newChar;
+            if (GAME_TYPE[my.mode] == 'KKT') {
+                // 쿵쿵따 전용처리
+                let chainlen = my.game.chain.length;
+                if (!chainlen) {
+                    denied = true;
+                    break;
+                }
+                let lastword = my.game.chain[chainlen - 1];
+                newChar = lastword.charAt(lastword.length - 2); // 3글자면 2번째, 2글자면 1번째 글자로 제시어 변경
+
+                let count = getWordList.call(my, newChar, getSubChar.call(my, newChar), true).length;
+                if (count < 5) denied = true;
+            } else {
+                newChar = getRandomChar.call(this);
+            }
+            if (!newChar) denied = true;
+
+            if (!denied) {
+                my.game.char = newChar;
+                my.game.subChar = getSubChar.call(my, newChar)
+                my.game.queue = -1;
+            }
+            break;
+        case 4: // 한번 더 - 단어를 한번 더 입력함
+            isTurnEnd = false;
+            my.game.queue = -1;
+            break;
+        case 5: // 무작위 - 무작위 글자를 넘겨줍니다. 쿵쿵따에서는 가운데 글자로 넘겨줍니다.
+            isTurnEnd = false;
+            my.game.random = true;
+    }
+    if (denied) {
+        return client.publish('turnError', {code: 420}, true);
+    }
+    my.game.used[uid]++;
+    my.game.item[uid][id]++;
+    my.game.ilock = true;
+    client.publish('useItem', {
+        item: id,
+        isEnd: isTurnEnd
+    }, true);
+    // 아이템 사용으로 턴이 종료됨 or 턴을 다시 시작해야함
+    if (isTurnEnd) {
+        my.game.late = true;
+        setTimeout(runAs, my.game.turnTime / 6, my, my.turnNext);
+    }
+};
+
 exports.getScore = function(text, delay, ignoreMission){
 	var my = this;
 	var tr = 1 - delay / my.game.turnTime;

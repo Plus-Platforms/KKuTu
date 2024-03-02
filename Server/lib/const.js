@@ -43,7 +43,8 @@ exports.OPTIONS = {
 	'no2': { name: "No2" },
 	'rank': { name: "RankGame" },
 	'ulm': { name: "Unlimited" },
-	'sht': { name: "Short" }
+	'sht': { name: "Short" },
+	'item': { name: "Item" }
 };
 exports.MOREMI_PART = [ 'back', 'eye', 'mouth', 'shoes', 'clothes', 'head', 'lhand', 'rhand', 'front' ];
 exports.CATEGORIES = [ "all", "spec", "skin", "badge", "head", "eye", "mouth", "clothes", "hs", "back" ];
@@ -185,22 +186,6 @@ exports.RULE = {
 		ai: false,
 		big: true,
 		ewq: false
-	},
-	'KDG': { lang: "ko",
-		rule: "Drawing",
-		opts: [ "ijp", "sht", "ulm" ],
-		time: 1,
-		ai: false,
-		big: true,
-		ewq: true
-	},
-	'EDG': { lang: "en",
-		rule: "Drawing",
-		opts: [ "ijp", "sht", "ulm" ],
-		time: 1,
-		ai: false,
-		big: true,
-		ewq: true
 	}
 };
 exports.getPreScore = function(text, chain, tr){

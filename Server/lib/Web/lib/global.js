@@ -39,38 +39,29 @@ var L;
 		return null;
 	}*/
 	
-	function setCookie(cName, cValue, cDay) {
-		var expire = new Date();
+	function setCookie(cName, cValue, cDay){
+        var expire = new Date();
 		
-		// 쿠키 만료일을 1년으로 설정
-		expire.setDate(expire.getDate() + 365);
-	
-		var encodedValue = encodeURIComponent(cValue);
-		var cookies = cName + '=' + encodedValue + '; path=/ ';
+        expire.setDate(expire.getDate() + cDay);
+        cookies = cName + '=' + escape(cValue) + '; path=/ ';
+        if(typeof cDay != 'undefined') cookies += '; expires=' + expire.toGMTString() + ';';
 		
-		if (typeof cDay !== 'undefined') {
-			cookies += ';expires=' + expire.toGMTString() + ';';
-		}
-		
-		document.cookie = cookies;
-	}
-	
-	function getCookie(cName) {
-		var searchName = cName + "=";
+        document.cookie = cookies;
+    }
+    function getCookie(cName) {
+        //볕뉘 수정
+        var cName = cName+"=";
 		var allCookie = decodeURIComponent(document.cookie).split(';');
-		var cval = '';
-	
-		for (var i = 0; i < allCookie.length; i++) {
-			var cookie = allCookie[i].trim();
-	
-			if (cookie.indexOf(searchName) === 0) {
-				cval = cookie.substring(searchName.length, cookie.length);
-				break;
+		var cval = [];
+		for(var i=0; i < allCookie.length; i++) {
+			if (allCookie[i].trim().indexOf(cName) == 0) {
+				cval = allCookie[i].trim().split("=");
 			}
 		}
+		return unescape((cval.length > 0) ? cval[1] : "");
+		//볕뉘 수정 끝
+    }
 	
-		return cval;
-	}
 	
 	
 	$.prototype.hotkey = function($f, code){
@@ -92,11 +83,11 @@ var L;
 	$.prototype.bgColor = function(hex){
 		return $(this).css({ 'background-color': hex });
 	};
-	$.cookie = function(key, value){
+	$.cookie = function(key, value, expire){
 		if(value === undefined){
 			return getCookie(key);
 		}else{
-			setCookie(key, value);
+			setCookie(key, value, expire);
 		}
 	};
 	$(document).ready(function(e){
@@ -141,7 +132,7 @@ var L;
 		if($.cookie('lc') == "") $.cookie('lc', "ko_KR");
 		
 		if (global.profile.token) {
-			$("#account-info").html((global.profile.title || global.profile.name) + '<span class="fuckSeogom">님</span>').on('click', function(e){
+			$("#account-info").html((global.profile.nickname || global.profile.title || global.profile.name) + '<span class="fuckSeogom">님</span>').on('click', function(e){
 				if (confirm(L['ASK_LOGOUT'])) requestLogout(e);
 			});
 		}else{

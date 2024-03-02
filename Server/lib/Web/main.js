@@ -63,18 +63,19 @@ require("../sub/checkpub");
 JLog.info("<< KKuTu Web >>");
 Server.set('views', __dirname + "/views");
 Server.set('view engine', "pug");
+Server.use(Express.json({ limit: "8mb" }));
 Server.use(Express.static(__dirname + "/public"));
-Server.use(Express.urlencoded({ extended: true }));
+Server.use(Express.urlencoded({ extended: true, limit: "8mb" }));
 Server.use(Exession({
-	/* use only for redis-installed
-
 	store: new Redission({
-		client: Redis.createClient(),
-		ttl: 3600 * 12
-	}),*/
-	secret: 'kkutu',
+		client: Redis.createClient(DB.REDIS),
+		ttl: 3600 * 24 * 7
+	}),
+	secret: 'secret',
 	resave: false,
-	saveUninitialized: true
+	saveUninitialized: true,
+	cookie: { maxAge: 3600 * 24 * 1000 * 7 },
+	rolling: true
 }));
 //볕뉘 수정
 Server.use(passport.initialize());
@@ -83,6 +84,8 @@ Server.use((req, res, next) => {
 	if(req.session.passport) {
 		delete req.session.passport;
 	}
+	
+	res.set("X-Powered-By", "Infole");
 	next();
 });
 Server.use((req, res, next) => {
@@ -199,6 +202,21 @@ function GameClient(id, url){
 					gameServers[i].send('narrate-friend', { id: data.id, s: data.s, stat: data.stat, list: data.list[i] });
 				}
 				break;
+			case "notice":
+				for(i in gameServers) gameServers[i].send('notice', { value: data.value });
+				break;
+			case "friendTalk":
+				for(i in gameServers) gameServers[i].send('friendTalk', { value: data.value, friends: data.friends, profile: data.profile, user: data.user, id: data.id });
+				break;
+			case "postSent":
+				for(i in gameServers) gameServers[i].send('postSent', { target: data.target });
+				break;
+			case "all":
+				for(i in gameServers) gameServers[i].send('all', { data: data.data, _type: data._type });
+				break;
+			case "init12":
+				for(i in gameServers) gameServers[i].send('init12');
+				break;
 			default:
 		}
 	});
@@ -257,56 +275,6 @@ Server.get("/game", function(req, res){
 });
 
 
-Server.get("/game/old", function(req, res){
-	var server = req.query.server;
-	
-	//볕뉘 수정 구문삭제(220~229, 240)
-	DB.session.findOne([ '_id', req.session.id ]).on(function($ses){
-		// var sid = (($ses || {}).profile || {}).sid || "NULL";
-		if(global.isPublic){
-			onFinish($ses);
-			// DB.jjo_session.findOne([ '_id', sid ]).limit([ 'profile', true ]).on(onFinish);
-		}else{
-			if($ses) $ses.profile.sid = $ses._id;
-			onFinish($ses);
-		}
-	});
-	function onFinish($doc){
-		var id = req.session.id;
-
-		if($doc){
-			req.session.profile = $doc.profile;
-			id = $doc.profile.sid;
-		}else{
-			delete req.session.profile;
-		}
-		page(req, res, Const.MAIN_PORTS[server] ? "l_kkutu" : "l_portal", {
-			'_page': "kkutu",
-			'_id': id,
-			'PORT': Const.MAIN_PORTS[server],
-			'HOST': req.hostname,
-			'PROTOCOL': Const.IS_SECURED ? 'wss' : 'ws',
-			'TEST': req.query.test,
-			'MOREMI_PART': Const.MOREMI_PART,
-			'AVAIL_EQUIP': Const.AVAIL_EQUIP,
-			'CATEGORIES': Const.CATEGORIES,
-			'GROUPS': Const.GROUPS,
-			'MODE': Const.GAME_TYPE,
-			'RULE': Const.RULE,
-			'OPTIONS': Const.OPTIONS,
-			'KO_INJEONG': Const.KO_INJEONG,
-			'EN_INJEONG': Const.EN_INJEONG,
-			'KO_THEME': Const.KO_THEME,
-			'EN_THEME': Const.EN_THEME,
-			'IJP_EXCEPT': Const.IJP_EXCEPT,
-			'ogImage': "https://kkutu.cc/img/kkutu/og.png",
-			'ogURL': "https://kkutu.cc/",
-			'ogTitle': "두근두근 플러스끄투",
-			'ogDescription': "글자로 박진감 넘치는 게임을 즐겨보세요!"
-		});
-	}
-});
-
 Server.get("/servers", function(req, res){
 	var list = [];
 
@@ -315,6 +283,21 @@ Server.get("/servers", function(req, res){
 	});
 	res.send({ list: list, max: Const.KKUTU_MAX });
 });
+
+
+Server.get("/membercount", function(req, res){
+	var list = [], v;
+	
+	for(var i=0; i<1; i++){
+		v = gameServers[i];
+		if(!v) break;
+		
+		list[i] = v.seek;
+	}
+	
+	res.send({ list: list, max: Const.KKUTU_MAX.slice(0, 1) });
+});
+
 
 //볕뉘 수정 구문 삭제(274~353)
 

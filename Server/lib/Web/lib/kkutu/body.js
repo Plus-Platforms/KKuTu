@@ -61,6 +61,7 @@ function applyOptions(opt){
 	$("#deny-whisper").attr('checked', $data.opts.dw);
 	$("#deny-friend").attr('checked', $data.opts.df);
 	$("#auto-ready").attr('checked', $data.opts.ar);
+	$("#lower-vibration").attr('checked', $data.opts.vi);
 	$("#sort-user").attr('checked', $data.opts.su);
 	$("#only-waiting").attr('checked', $data.opts.ow);
 	$("#only-unlock").attr('checked', $data.opts.ou);
@@ -225,6 +226,9 @@ function onMessage(data){
 			$data._playTime = data.playTime;
 			$data._okg = data.okg;
 			$data._gaming = false;
+
+			$data.nickname = data.nickname;
+			$data.exordial = data.exordial;
 			$data.box = data.box;
 			if(data.test) alert(L['welcomeTestServer']);
 			if(location.hash[1]) tryJoin(location.hash.slice(1));
@@ -985,6 +989,23 @@ function updateMe(){
 	//$(".my-okg .graph-bar").width(($data._playTime % 600000) / 6000 + "%");
 	$(".my-okg-text").html(prettyTime($data._playTime));
 	$(".my-level").html("Lv. " + lv);
+
+	//200레벨이벤트
+	var startDate = new Date('2024-03-04');
+    var endDate = new Date('2024-03-18');
+    var today = new Date();
+
+    if (today >= startDate && today <= endDate) {
+	$("#event-content").show();
+	$("#pre-content").hide();
+    }
+	$("#userLevel").html("Lv. " + lv);
+	if(lv >= 200){
+		$("#lockedItem").click(function(){
+			window.open('https://docs.google.com/forms/d/e/1FAIpQLSc5uzMe6xxXrBSD_NprdUUP_F_0o5YJU8WNYwsG4D44LZaPcA/viewform?usp=sf_link', '_blank');
+	  });
+		$("#lockedItem").attr("src","img/event/acryll-get.png");
+	}
 
 	$(".my-rank-icon").attr("src","img/kkutu/ranking/"+rank+".png");
 	$(".my-rank").html(L[rank] + " " + my.data.rankPoint);
@@ -2440,6 +2461,7 @@ function onGoods(e){
 	}
 }
 function vibrate(level){
+	
 	if(level < 1) return;
 	
 	$("#Middle").css('padding-top', level);
@@ -2447,6 +2469,7 @@ function vibrate(level){
 		$("#Middle").css('padding-top', 0);
 		addTimeout(vibrate, 50, level * 0.7);
 	}, 50);
+
 }
 function pushDisplay(text, mean, theme, wc){
 	var len;
@@ -2794,6 +2817,7 @@ src = audioContext.createBufferSource();
 			gainNode.gain.value = 0;
 			src.buffer = audioContext.createBuffer(2, sound.length, audioContext.sampleRate);
 		}else{
+			
 			gainNode.gain.value = (loop ? $data.BGMVolume : $data.EffectVolume) || 0.5;
 src.buffer = sound;
 		}

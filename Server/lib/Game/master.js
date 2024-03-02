@@ -622,6 +622,22 @@ function processClientRequest($c, msg) {
 			$c.exordial = msg.exordial;
 			KKuTu.publish('updateProfile', msg);
 			$c.updateProfile(msg.nickname, msg.exordial);
+			$c.send('updateData', {
+				id: $c.id,
+				guest: $c.guest,
+				box: $c.box,
+				nickname: $c.nickname,
+				exordial: $c.exordial,
+				playTime: $c.data.playTime,
+				okg: $c.okgCount,
+				users: KKuTu.getUserList(),
+				rooms: KKuTu.getRoomList(),
+				friends: $c.friends,
+				admin: $c.admin,
+				test: global.test,
+				caj: $c._checkAjae ? true : false
+			});
+			break;
 		case 'updateData':
 			$c.send('updateData', {
 				id: $c.id,
@@ -638,10 +654,6 @@ function processClientRequest($c, msg) {
 				test: global.test,
 				caj: $c._checkAjae ? true : false
 			});
-		case 'updateProfile':
-				$data.users[data.id].nickname = data.nickname;
-				$data.users[data.id].exordial = data.exordial;
-				break;
 		case 'updateData':
 				$data.id = data.id;
 				$data.guest = data.guest;

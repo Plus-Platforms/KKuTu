@@ -79,6 +79,7 @@ block Jungle
 				button.mainbtn#QuickRoomBtn.for-lobby(style='display: none;')!= L('quickRoom')
 				button.mainbtn#ShopBtn.for-lobby(style='display: none;')!= L('shop')
 				button.mainbtn#DictionaryBtn.for-lobby(style='display: none;')!= L('dict')
+				button.mainbtn#LvEventBtn.for-lobby(style='display: none;')!= L('event')
 				// button#WordPlusBtn.for-lobby.for-master.for-normal.for-gaming(style='display: none;')!= L('wordPlus')
 				button.mainbtn#profile-dress.for-lobby(style='display: none;')!= L('dress')
 				button.mainbtn#ReplayBtn.for-lobby(style='display: none;')!= L('replay')
@@ -91,7 +92,7 @@ block Top
 
 block Middle
 	- var VERSION = L('version');
-	- var nick = SESSION.profile ? (SESSION.profile.title || SESSION.profile.name) : null;
+	- var nick = SESSION.profile ? (SESSION.nickname || SESSION.profile.title || SESSION.profile.name) : null;
 
 
 	div#dimmer(style="display: none;")
@@ -113,6 +114,7 @@ block Middle
 		div.dialog-bar
 			h4.opt!= L('ingames')
 			+SettingOption('auto-ready', L('autoReady', false))
+			+SettingOption('lower-vibration', "떨림 효과 감소", "display: none;")
 		div.dialog-bar
 			h4.opt!= L('etc')
 			+SettingOption('sort-user', L('sortUser'), "width: 200px;")
@@ -174,12 +176,13 @@ block Middle
 					option(value=3)= L('modeKSH')
 					option(value=2)= L('modeKKT')
 					option(value=8)= L('modeKAP')
-					option(value=6)= L('modeKTY')
 					option(value=10)= L('modeKDA')
 					option(value=5)= L('modeKCW')
 					option(value=12)= L('modeKSS')
 					option(value=4)= L('modeCSQ')
 					option(value=9)= L('modeHUN')
+				optgroup(label="XP 2배 이벤트 중")
+					option(value=6)= L('modeKTY')
 				optgroup(label=L('mcEnglish'))
 					option(value=1)= L('modeESH')
 					option(value=0)= L('modeEKT')
@@ -378,7 +381,10 @@ block Middle
 				img#infobtn(src="/img/kkutu/dress/info.png", alt="내 정보")
 				+Expl(true)
 					div!= "내 전적을 확인해 보세요"	
-	+Dialog('DressItemDiag', 600, 360, L('dress', false))
+	+Dialog('DressItemDiag', 600, 415, L('dress', false))
+		div.dialog-bar
+			h4(style='width: 150px;')= L('myNickname')
+			input#dress-nickname(type='textfield', placeholder=L('myNicknameX'), style='width: 435px;', maxlength=12)
 		div.dialog-bar
 			h4(style='width: 150px;')!= L('myExordial')
 			input#dress-exordial(type='textfield', placeholder=L('myExordialX'), style='width: 435px;', maxlength=100)
@@ -436,6 +442,17 @@ block Middle
 		div.dialog-bar.d2-bar.tail-button
 			button.primaryBtn#confirm-ok= L('OK')
 			button#confirm-cancel= "취소"
+
+	+Dialog('LvEventDiag', 720, 700, "이벤트 안내")
+		div#pre-content(style="background: #fff;")
+			img(src="/img/event/comingsoon.png")
+		div#event-content(style="display:none;background: #fff;")
+			img(src="/img/event/gift상단.png")
+			img(src="/img/event/current-level.png")
+			div(style="font-size: 40px;font-weight:bold; text-align: center;color: #000;background-color: #fff;")
+				p#userLevel(style="margin:0px") 300 Lv.
+			img#lockedItem(src="/img/event/acryll-lock.png")
+
 	+Dialog('CreditDiag', 390, 600, "제작진")
 		div(style="font-size: 16px; text-align: center;")
 			strong Team Infole

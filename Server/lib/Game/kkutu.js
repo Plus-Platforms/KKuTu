@@ -21,6 +21,8 @@ var Cluster = require("cluster");
 var Const = require('../const');
 var Lizard = require('../sub/lizard');
 var JLog = require('../sub/jjlog');
+
+//var randomEquip = require('../sub/equipAi');
 const DiffMatchPatch = require("diff-match-patch")
 // 망할 셧다운제 var Ajae = require("../sub/ajae");
 var DB;
@@ -205,6 +207,9 @@ exports.WebServer = function(socket){
 				break;
 			case 'narrate-friend':
 				exports.narrate(msg.list, 'friend', { id: msg.id, s: msg.s, stat: msg.stat });
+				break;
+			case 'all':
+				exports.publish(msg._type, msg.data);
 				break;
 			default:
 		}
@@ -1357,9 +1362,13 @@ exports.Room = function(room, channel){
 	my.submit = function(client, text, data){
 		return my.route("submit", client, text, data);
 	};
+    my.useItem = function(client, id) {
+        return this.route("useItem", client, id);
+    };    
 	my.getScore = function(text, delay, ignoreMission){
 		return my.routeSync("getScore", text, delay, ignoreMission);
 	};
+	
 	my.getTurnSpeed = function(rt){
 		if(rt < 5000) return 10;
 		else if(rt < 11000) return 9;
@@ -1463,7 +1472,7 @@ function getRewards(rankScore, mode, score, bonus, rank, all, ss, opts){
 			rw.score += score * 1.0;
 			break;
 		case 'KTY':
-			rw.score += score * 0.3;
+			rw.score += score * 0.6;
 			break;
 		case 'ETY':
 			rw.score += score * 0.37;
@@ -1491,6 +1500,9 @@ function getRewards(rankScore, mode, score, bonus, rank, all, ss, opts){
 			break;
 		case 'EDG':
 			rw.score += score * 0.57;
+			break;
+		case 'KJH':
+			rw.score = 0;
 			break;
 		default:
 			break;
