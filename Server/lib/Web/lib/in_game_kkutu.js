@@ -3446,7 +3446,11 @@ function updateMe(){
 	$(".my-level").html("Lv. " + lv);
 
 	//200레벨이벤트
+<<<<<<< HEAD
 	var startDate = new Date('2024-03-05');
+=======
+	var startDate = new Date('2024-03-04');
+>>>>>>> b642281e25171c18566a642980eb8d45720e75ba
     var endDate = new Date('2024-03-19');
     var today = new Date();
 
