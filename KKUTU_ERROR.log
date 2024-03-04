@@ -195,4 +195,103 @@ ReferenceError: isFirstRound is not defined
     at my.route.my.routeSync (C:\Users\이규빈\KKuTu\Server\lib\Game\kkutu.js:1398:13)
     at my.roundReady [as _onTimeout] (C:\Users\이규빈\KKuTu\Server\lib\Game\kkutu.js:1199:13)
     at listOnTimeout (node:internal/timers:573:17)
-    at process.processTimers (node:internal/timers:514:7)
+    at process.processTimers (node:internal/timers:514:7):8496 [2024. 3. 5. 오전 1:35:02] ERROR: TypeError: Cannot read properties of undefined (reading 'charCodeAt')
+TypeError: Cannot read properties of undefined (reading 'charCodeAt')
+    at exports.Room.getSubChar (C:\Users\이규빈\KKuTu\Server\lib\Game\games\classic.js:649:15)
+    at onDB (C:\Users\이규빈\KKuTu\Server\lib\Game\games\classic.js:246:31)
+    at callback (C:\Users\이규빈\KKuTu\Server\lib\sub\collection.js:316:13)
+    at Query.preCB (C:\Users\이규빈\KKuTu\Server\lib\sub\collection.js:298:6)
+    at Query.handleReadyForQuery (C:\Users\이규빈\KKuTu\Server\lib\node_modules\pg\lib\query.js:138:12)
+    at Client._handleReadyForQuery (C:\Users\이규빈\KKuTu\Server\lib\node_modules\pg\lib\client.js:290:19)
+    at Connection.emit (node:events:518:28)
+    at C:\Users\이규빈\KKuTu\Server\lib\node_modules\pg\lib\connection.js:114:12
+    at Parser.parse (C:\Users\이규빈\KKuTu\Server\lib\node_modules\pg-protocol\dist\parser.js:40:17)
+    at Socket.<anonymous> (C:\Users\이규빈\KKuTu\Server\lib\node_modules\pg-protocol\dist\index.js:11:42):8496 [2024. 3. 5. 오전 1:36:42] ERROR: TypeError: Cannot read properties of undefined (reading 'charCodeAt')
+TypeError: Cannot read properties of undefined (reading 'charCodeAt')
+    at exports.Room.getSubChar (C:\Users\이규빈\KKuTu\Server\lib\Game\games\classic.js:649:15)
+    at onDB (C:\Users\이규빈\KKuTu\Server\lib\Game\games\classic.js:246:31)
+    at callback (C:\Users\이규빈\KKuTu\Server\lib\sub\collection.js:316:13)
+    at Query.preCB (C:\Users\이규빈\KKuTu\Server\lib\sub\collection.js:298:6)
+    at Query.handleReadyForQuery (C:\Users\이규빈\KKuTu\Server\lib\node_modules\pg\lib\query.js:138:12)
+    at Client._handleReadyForQuery (C:\Users\이규빈\KKuTu\Server\lib\node_modules\pg\lib\client.js:290:19)
+    at Connection.emit (node:events:518:28)
+    at C:\Users\이규빈\KKuTu\Server\lib\node_modules\pg\lib\connection.js:114:12
+    at Parser.parse (C:\Users\이규빈\KKuTu\Server\lib\node_modules\pg-protocol\dist\parser.js:40:17)
+    at Socket.<anonymous> (C:\Users\이규빈\KKuTu\Server\lib\node_modules\pg-protocol\dist\index.js:11:42):8496 [2024. 3. 5. 오전 1:42:37] ERROR: ReferenceError: freeAble is not defined
+ReferenceError: freeAble is not defined
+    at onDB (C:\Users\이규빈\KKuTu\Server\lib\Game\games\classic.js:305:3)
+    at callback (C:\Users\이규빈\KKuTu\Server\lib\sub\collection.js:316:13)
+    at Query.preCB (C:\Users\이규빈\KKuTu\Server\lib\sub\collection.js:298:6)
+    at Query.handleReadyForQuery (C:\Users\이규빈\KKuTu\Server\lib\node_modules\pg\lib\query.js:138:12)
+    at Client._handleReadyForQuery (C:\Users\이규빈\KKuTu\Server\lib\node_modules\pg\lib\client.js:290:19)
+    at Connection.emit (node:events:518:28)
+    at C:\Users\이규빈\KKuTu\Server\lib\node_modules\pg\lib\connection.js:114:12
+    at Parser.parse (C:\Users\이규빈\KKuTu\Server\lib\node_modules\pg-protocol\dist\parser.js:40:17)
+    at Socket.<anonymous> (C:\Users\이규빈\KKuTu\Server\lib\node_modules\pg-protocol\dist\index.js:11:42)
+    at Socket.emit (node:events:518:28):8496 [2024. 3. 5. 오전 1:44:42] ERROR: ReferenceError: approved is not defined
+ReferenceError: approved is not defined
+    at onDB (C:\Users\이규빈\KKuTu\Server\lib\Game\games\classic.js:307:4)
+    at callback (C:\Users\이규빈\KKuTu\Server\lib\sub\collection.js:316:13)
+    at Query.preCB (C:\Users\이규빈\KKuTu\Server\lib\sub\collection.js:298:6)
+    at Query.handleReadyForQuery (C:\Users\이규빈\KKuTu\Server\lib\node_modules\pg\lib\query.js:138:12)
+    at Client._handleReadyForQuery (C:\Users\이규빈\KKuTu\Server\lib\node_modules\pg\lib\client.js:290:19)
+    at Connection.emit (node:events:518:28)
+    at C:\Users\이규빈\KKuTu\Server\lib\node_modules\pg\lib\connection.js:114:12
+    at Parser.parse (C:\Users\이규빈\KKuTu\Server\lib\node_modules\pg-protocol\dist\parser.js:40:17)
+    at Socket.<anonymous> (C:\Users\이규빈\KKuTu\Server\lib\node_modules\pg-protocol\dist\index.js:11:42)
+    at Socket.emit (node:events:518:28):8496 [2024. 3. 5. 오전 1:47:01] ERROR: TypeError: Cannot read properties of undefined (reading 'mean')
+TypeError: Cannot read properties of undefined (reading 'mean')
+    at approved (C:\Users\이규빈\KKuTu\Server\lib\Game\games\classic.js:273:17)
+    at C:\Users\이규빈\KKuTu\Server\lib\Game\games\classic.js:290:11
+    at exports.Tail.go (C:\Users\이규빈\KKuTu\Server\lib\sub\lizard.js:43:16)
+    at aft (C:\Users\이규빈\KKuTu\Server\lib\Game\games\classic.js:602:8)
+    at C:\Users\이규빈\KKuTu\Server\lib\Game\games\classic.js:613:22
+    at callback (C:\Users\이규빈\KKuTu\Server\lib\sub\collection.js:316:13)
+    at Query.preCB (C:\Users\이규빈\KKuTu\Server\lib\sub\collection.js:298:6)
+    at Query.handleReadyForQuery (C:\Users\이규빈\KKuTu\Server\lib\node_modules\pg\lib\query.js:138:12)
+    at Client._handleReadyForQuery (C:\Users\이규빈\KKuTu\Server\lib\node_modules\pg\lib\client.js:290:19)
+    at Connection.emit (node:events:518:28):8496 [2024. 3. 5. 오전 1:47:01] ERROR: TypeError: Cannot read properties of null (reading 'handleCommandComplete')
+TypeError: Cannot read properties of null (reading 'handleCommandComplete')
+    at Client._handleCommandComplete (C:\Users\이규빈\KKuTu\Server\lib\node_modules\pg\lib\client.js:360:22)
+    at Connection.emit (node:events:518:28)
+    at C:\Users\이규빈\KKuTu\Server\lib\node_modules\pg\lib\connection.js:114:12
+    at Parser.parse (C:\Users\이규빈\KKuTu\Server\lib\node_modules\pg-protocol\dist\parser.js:40:17)
+    at Socket.<anonymous> (C:\Users\이규빈\KKuTu\Server\lib\node_modules\pg-protocol\dist\index.js:11:42)
+    at Socket.emit (node:events:518:28)
+    at addChunk (node:internal/streams/readable:559:12)
+    at readableAddChunkPushByteMode (node:internal/streams/readable:510:3)
+    at Readable.push (node:internal/streams/readable:390:5)
+    at TCP.onStreamRead (node:internal/stream_base_commons:190:23):8496 [2024. 3. 5. 오전 1:52:31] ERROR: SyntaxError: Invalid regular expression: /^(?)./: Invalid group
+SyntaxError: Invalid regular expression: /^(?)./: Invalid group
+    at new RegExp (<anonymous>)
+    at produce (C:\Users\이규빈\KKuTu\Server\lib\Game\games\classic.js:595:23)
+    at C:\Users\이규빈\KKuTu\Server\lib\Game\games\classic.js:591:4
+    at callback (C:\Users\이규빈\KKuTu\Server\lib\sub\collection.js:316:13)
+    at Query.preCB (C:\Users\이규빈\KKuTu\Server\lib\sub\collection.js:298:6)
+    at Query.handleReadyForQuery (C:\Users\이규빈\KKuTu\Server\lib\node_modules\pg\lib\query.js:138:12)
+    at Client._handleReadyForQuery (C:\Users\이규빈\KKuTu\Server\lib\node_modules\pg\lib\client.js:290:19)
+    at Connection.emit (node:events:518:28)
+    at C:\Users\이규빈\KKuTu\Server\lib\node_modules\pg\lib\connection.js:114:12
+    at Parser.parse (C:\Users\이규빈\KKuTu\Server\lib\node_modules\pg-protocol\dist\parser.js:40:17):8496 [2024. 3. 5. 오전 1:52:37] ERROR: SyntaxError: Invalid regular expression: /^(?)./: Invalid group
+SyntaxError: Invalid regular expression: /^(?)./: Invalid group
+    at new RegExp (<anonymous>)
+    at produce (C:\Users\이규빈\KKuTu\Server\lib\Game\games\classic.js:595:23)
+    at C:\Users\이규빈\KKuTu\Server\lib\Game\games\classic.js:591:4
+    at callback (C:\Users\이규빈\KKuTu\Server\lib\sub\collection.js:316:13)
+    at Query.preCB (C:\Users\이규빈\KKuTu\Server\lib\sub\collection.js:298:6)
+    at Query.handleReadyForQuery (C:\Users\이규빈\KKuTu\Server\lib\node_modules\pg\lib\query.js:138:12)
+    at Client._handleReadyForQuery (C:\Users\이규빈\KKuTu\Server\lib\node_modules\pg\lib\client.js:290:19)
+    at Connection.emit (node:events:518:28)
+    at C:\Users\이규빈\KKuTu\Server\lib\node_modules\pg\lib\connection.js:114:12
+    at Parser.parse (C:\Users\이규빈\KKuTu\Server\lib\node_modules\pg-protocol\dist\parser.js:40:17):8496 [2024. 3. 5. 오전 1:57:31] ERROR: TypeError: CreateListFromArrayLike called on non-object
+TypeError: CreateListFromArrayLike called on non-object
+    at produce (C:\Users\이규빈\KKuTu\Server\lib\Game\games\classic.js:627:31)
+    at C:\Users\이규빈\KKuTu\Server\lib\Game\games\classic.js:585:26
+    at callback (C:\Users\이규빈\KKuTu\Server\lib\sub\collection.js:316:13)
+    at Query.preCB (C:\Users\이규빈\KKuTu\Server\lib\sub\collection.js:298:6)
+    at Query.handleReadyForQuery (C:\Users\이규빈\KKuTu\Server\lib\node_modules\pg\lib\query.js:138:12)
+    at Client._handleReadyForQuery (C:\Users\이규빈\KKuTu\Server\lib\node_modules\pg\lib\client.js:290:19)
+    at Connection.emit (node:events:518:28)
+    at C:\Users\이규빈\KKuTu\Server\lib\node_modules\pg\lib\connection.js:114:12
+    at Parser.parse (C:\Users\이규빈\KKuTu\Server\lib\node_modules\pg-protocol\dist\parser.js:40:17)
+    at Socket.<anonymous> (C:\Users\이규빈\KKuTu\Server\lib\node_modules\pg-protocol\dist\index.js:11:42)

@@ -186,6 +186,14 @@ exports.RULE = {
 		ai: false,
 		big: true,
 		ewq: false
+	},
+	'KJH': { lang: "ko",
+	rule: "Classic",
+	opts: [  ],
+	time: 1,
+	ai: true,
+	big: false,
+	ewq: true
 	}
 };
 exports.getPreScore = function(text, chain, tr){

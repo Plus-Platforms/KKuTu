@@ -1005,13 +1005,13 @@ $(document).ready(function(){
 		var message = "";
 
 		if(data.nickname && data.exordial){
-			message = "닉네임과 소개를 변경하시겠어요? 변경된 닉네임은 새로고침 후 반영돼요.";
+			message = "닉네임과 소개를 변경하시겠어요? 1주일 내에는 닉네임을 변경할 수 없으며, 변경된 닉네임은 새로고침 후 반영돼요.";
 		}
 		else if (data.exordial){
 			message = "소개를 변경하시겠어요?";
 		}
 		else if (data.nickname){
-			message = "닉네임을 변경하시겠어요? 변경된 닉네임은 새로고침 후 반영돼요.";
+			message = "닉네임을 변경하시겠어요? 1주일 내에는 닉네임을 변경할 수 없으며, 변경된 닉네임은 새로고침 후 반영돼요.";
 		}
 		else {
 			message = "프로필을 변경하시겠어요?";

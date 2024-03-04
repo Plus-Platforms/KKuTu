@@ -20,6 +20,7 @@ var Const = require('../../const');
 var Lizard = require('../../sub/lizard');
 var DB;
 var DIC;
+var freeAble;
 
 const ROBOT_START_DELAY = [ 1200, 800, 400, 200, 0 ];
 const ROBOT_TYPE_COEF = [ 1250, 750, 500, 250, 0 ];
@@ -57,6 +58,11 @@ exports.getTitle = function(){
 		case 'ESH':
 			eng = "^" + String.fromCharCode(97 + Math.floor(Math.random() * 26));
 			break;
+		case 'KJH':
+			freeAble = true;
+			ja = 44032 + 588 * Math.floor(Math.random() * 18);
+			eng = "^[\\u" + ja.toString(16) + "-\\u" + (ja + 587).toString(16) + "]";
+			break;
 		case 'KKT':
 			my.game.wordLength = 3;
 		case 'KSH':
@@ -73,6 +79,7 @@ exports.getTitle = function(){
 			R.go(EXAMPLE);
 			return;
 		}
+
 		DB.kkutu[l.lang].find(
 			[ '_id', new RegExp(eng + ".{" + Math.max(1, my.round - 1) + "}$") ],
 			// [ 'hit', { '$lte': h } ],
@@ -260,6 +267,7 @@ exports.submit = function(client, text){
 				my.game.char = preChar;
 				my.game.subChar = preSubChar;
 				client.game.score += score;
+				if(!freeAble){
 				client.publish('turnEnd', {
 					ok: true,
 					value: text,
@@ -270,11 +278,24 @@ exports.submit = function(client, text){
 					bonus: (my.game.mission === true) ? score - my.getScore(text, t, true) : 0,
 					baby: $doc.baby
 				}, true);
+			}
+			else{
+				client.publish('turnEnd', {
+					ok: true,
+					value: text,
+					mean: "",
+					theme: "",
+					wc: "",
+					score: score,
+					bonus: (my.game.mission === true) ? score - my.getScore(text, t, true) : 0,
+					baby: ""
+				}, true);
+			}
 				if(my.game.mission === true){
 					my.game.mission = getMission(my.rule.lang);
 				}
 				setTimeout(my.turnNext, my.game.turnTime / 6);
-				if(!client.robot){
+				if(!client.robot && !freeAble){
 					client.invokeWordPiece(text, 1);
 					DB.kkutu[l].update([ '_id', text ]).set([ 'hit', $doc.hit + 1 ]).on();
 				}
@@ -295,7 +316,11 @@ exports.submit = function(client, text){
 			my.game.loading = false;
 			client.publish('turnError', { code: code || 404, value: text }, true);
 		}
-		if($doc){
+		
+		if(freeAble){
+			preApproved();
+		}
+		else if($doc){
 			if(!my.opts.injeong && ($doc.flag & Const.KOR_FLAG.INJEONG)) denied();
 			else if(my.opts.strict && (!$doc.type.match(Const.KOR_STRICT) || $doc.flag >= 4)) denied(406);
 			else if(my.opts.loanword && ($doc.flag & Const.KOR_FLAG.LOANWORD)) denied(405);
@@ -453,7 +478,7 @@ exports.readyRobot = function(robot){
 	});
 	function denied() {
 		// 랜덤 단어 목록
-		const randomWords = ["ㅁㄴ엄ㄴ어ㅑㅇㅁㄴㅇㅂ", "ㅂㅂㅂ베ㅔㅂ레ㅏ", "ㅓㅜㄴ춘ㅊ", "벼ㅓㅑ뱝뎌", "?", "ㅑㅂ댑댜ㅐ", " 아잉", "??", "?어이업내", "한방어이없음", "단", "산", "퇴", "을", "남", "곡", "지", "천", "주", "해", "율", "서", "곰", "병", "신", "행", "크", "씨", "발"];
+		const randomWords = ["ㅁㄴ엄ㄴ어ㅑㅇㅁㄴㅇㅂ", "ㅂㅂㅂ베ㅔㅂ레ㅏ", "ㅓㅜㄴ춘ㅊ", "벼ㅓㅑ뱝뎌", "?", "ㅑㅂ댑댜ㅐ", " 아잉", "??", "?어이업내", "한방어이없음", "단", "산", "퇴", "을", "남", "곡", "지", "천", "주", "해", "율", "서", "곰", "병", "신", "행", "크", "씨", "발", "오", "최", "건", "희", "지", "랄", "관", "둬"];
 		const failWords = ["하 님 매너좀", "한방단어를 써버리내 ㅋㅋㅋ", "헋", "아잉", "에라이", "에휴", "gk", "하", "얼탱x", "어이없네", "선넘지 마세요", "선 넘지 마세요", "님 진짜 머하세요", "ㅜㅜ", "ㅠㅠ", "...", ";;", "."]
 		// 랜덤 단어 선택을 위한 함수
 		function getRandomWord(type) {
@@ -542,6 +567,9 @@ function getAuto(char, subc, type){
 		case 'KSH':
 			adv = `^(${adc}).`;
 			break;
+		case 'KJH':
+			adv = `.*`;
+			break;
 		case 'ESH':
 			adv = `^(${adc})...`;
 			break;
@@ -564,10 +592,10 @@ function getAuto(char, subc, type){
 		}
 	});
 	function produce(){
-		var aqs = [[ '_id', new RegExp(adv) ]];
 		var aft;
 		var lst;
 		
+		var aqs = [[ '_id', new RegExp(adv) ]];
 		if(!my.opts.injeong) aqs.push([ 'flag', { '$nand': Const.KOR_FLAG.INJEONG } ]);
 		if(my.rule.lang == "ko"){
 			if(my.opts.loanword) aqs.push([ 'flag', { '$nand': Const.KOR_FLAG.LOANWORD } ]);
@@ -576,6 +604,7 @@ function getAuto(char, subc, type){
 		}else{
 			aqs.push([ '_id', Const.ENG_ID ]);
 		}
+
 		switch(type){
 			case 0:
 			default:
@@ -635,6 +664,7 @@ function getChar(text){
 		case 'ESH':
 		case 'KKT':
 		case 'KSH': return text.slice(-1);
+		case 'KJH': return text.slice(-1);
 		case 'KAP': return text.charAt(0);
 	}
 };
@@ -649,7 +679,7 @@ function getSubChar(char){
 		case "EKT":
 			if(char.length > 2) r = char.slice(1);
 			break;
-		case "KKT": case "KSH": case "KAP":
+		case "KKT": case "KSH": case "KAP": case "KJH":
 			k = c - 0xAC00;
 			if(k < 0 || k > 11171) break;
 			ca = [ Math.floor(k/28/21), Math.floor(k/28)%21, k%28 ];
