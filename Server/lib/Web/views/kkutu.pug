@@ -444,10 +444,10 @@ block Middle
 			button.primaryBtn#confirm-ok= L('OK')
 			button#confirm-cancel= "취소"
 
-	+Dialog('LvEventDiag', 720, 700, "이벤트 안내")
+	+Dialog('LvEventDiag', 730, 700, "이벤트 안내")
 		div#pre-content(style="background: #fff;")
 			img(src="/img/event/comingsoon.png")
-		div#event-content(style="display:none;background: #fff;")
+		div#event-content(style="display:none;background: #fff;overflow-y: scroll;height: 660px;overflow-x: hidden;")
 			img(src="/img/event/gift상단.png")
 			img(src="/img/event/gift보산.png")
 			img(src="/img/event/gift산정기준.png")
