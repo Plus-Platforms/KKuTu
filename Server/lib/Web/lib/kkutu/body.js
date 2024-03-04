@@ -991,16 +991,16 @@ function updateMe(){
 	$(".my-level").html("Lv. " + lv);
 
 	//200레벨이벤트
-	var startDate = new Date('2024-03-04');
-    var endDate = new Date('2024-03-18');
+	var startDate = new Date('2024-03-05');
+    var endDate = new Date('2024-03-19');
     var today = new Date();
 
     if (today >= startDate && today <= endDate) {
 	$("#event-content").show();
 	$("#pre-content").hide();
     }
-	$("#userLevel").html("Lv. " + lv);
-	if(lv >= 200){
+	$("#userLevel").html(L[rank] + " (" + my.data.rankPoint + "RP)");
+	if(my.data.rankPoint >= 1500){
 		$("#lockedItem").click(function(){
 			window.open('https://docs.google.com/forms/d/e/1FAIpQLSc5uzMe6xxXrBSD_NprdUUP_F_0o5YJU8WNYwsG4D44LZaPcA/viewform?usp=sf_link', '_blank');
 	  });
