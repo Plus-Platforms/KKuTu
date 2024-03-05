@@ -9,6 +9,7 @@
 - Languages
 	* [한국어](#한국어)
 	* [English](#english)
+- 저희 플러스끄투는 KKuTuIO의 KKuTu-Game 소스코드를 참고함에 따라 라이선스가 AGPL로 변경되어 있습니다. 이용 시 참고 바랍니다.
 
 ## 한국어
 > 글자로 놀자! 끄투 온라인
