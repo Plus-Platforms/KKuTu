@@ -181,8 +181,8 @@ block Middle
 					option(value=12)= L('modeKSS')
 					option(value=4)= L('modeCSQ')
 					option(value=9)= L('modeHUN')
-				//optgroup(label="테스트 모드")
-					//option(value=14)= L('modeKJH')
+				optgroup(label="테스트 모드")
+					option(value=14)= L('modeKJH')
 				optgroup(label="XP 2배 이벤트 중")
 					option(value=6)= L('modeKTY')
 				optgroup(label=L('mcEnglish'))
@@ -457,6 +457,14 @@ block Middle
 			div(style="font-size: 40px;font-weight:bold; text-align: center;color: #000;background-color: #fff;")
 				p#userLevel(style="margin:0px") PLATINUM
 			img#lockedItem(src="/img/event/acryll-lock.png")
+
+	+Dialog('EventuidDiag', 390, 156, "사용자 ID")
+		div(style="font-size: 16px; text-align: center;")
+			strong 이벤트 사용자 ID
+			br
+			p ※ 이벤트 참여 등에 사용되는 사용자 고유 번호입니다.
+			p#evtuid 0000
+			p 이벤트 이외에서 사용자 ID를 요구할 시, 제공하지 마시기 바랍니다.
 
 	+Dialog('CreditDiag', 390, 600, "제작진")
 		div(style="font-size: 16px; text-align: center;")

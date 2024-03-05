@@ -318,7 +318,13 @@ exports.submit = function(client, text){
 		}
 		
 		if(freeAble){
-			preApproved();
+			var kkutuAble = /^[0-9가-힣ㄱ-ㅎㅏ-ㅣ]*$/;
+			if(kkutuAble.test(text)){
+				preApproved();
+			}
+			else{
+				denied(408);
+			}
 		}
 		else if($doc){
 			if(!my.opts.injeong && ($doc.flag & Const.KOR_FLAG.INJEONG)) denied();

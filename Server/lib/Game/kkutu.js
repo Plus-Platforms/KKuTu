@@ -251,6 +251,7 @@ exports.Client = function(socket, profile, sid){
 		};
 	}
 	my.nickname = null;
+	my.eventuid = null;
 	my.socket = socket;
 	my.place = 0;
 	my.team = 0;
@@ -356,6 +357,7 @@ exports.Client = function(socket, profile, sid){
 			o.money = my.money;
 			o.equip = my.equip;
 			o.nickname = my.nickname;
+			o.eventuid = my.eventuid;
 			o.exordial = my.exordial;
 		}
 		return o;
@@ -447,11 +449,27 @@ exports.Client = function(socket, profile, sid){
 		}else DB.users.findOne([ '_id', my.id ]).on(function($user){
 			var first = !$user;
 			var black = $user ? $user.black : null;
+			var eventuid = $user ? $user.eventuid : null;
 			/* Enhanced User Block System [S] */
 			const blockedUntil = $user ? $user.blockedUntil : 0;
 			/* Enhanced User Block System [E] */
 
-			if(first) $user = { nickname: my.profile.title || my.profile.name, money: 0 };
+			function generateRandomCode(length) {
+				const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+				let code = '';
+				for (let i = 0; i < length; i++) {
+					const randomIndex = Math.floor(Math.random() * characters.length);
+					code += characters.charAt(randomIndex);
+				}
+				return code;
+			}
+
+			if(first) $user = { nickname: my.profile.title || my.profile.name, money: 0, eventuid: generateRandomCode(8) };
+			if(eventuid == "unset"){
+				eventuid = generateRandomCode(8);
+				DB.users.update([ '_id', my.id ]).set([ 'eventuid', eventuid ]).on();
+			}
+			
 			if(black == "null") black = false;
 			if(black == "chat"){
 				black = false;

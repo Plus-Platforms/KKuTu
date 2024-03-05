@@ -563,6 +563,7 @@ function joinNewUser($c) {
 		guest: $c.guest,
 		box: $c.box,
 		nickname: $c.nickname,
+		eventuid: $c.eventuid,
 		exordial: $c.exordial,
 		playTime: $c.data.playTime,
 		rankPoint: $c.data.rankPoint,
@@ -627,6 +628,7 @@ function processClientRequest($c, msg) {
 				guest: $c.guest,
 				box: $c.box,
 				nickname: $c.nickname,
+				eventuid: $c.eventuid,
 				exordial: $c.exordial,
 				playTime: $c.data.playTime,
 				okg: $c.okgCount,
@@ -644,6 +646,7 @@ function processClientRequest($c, msg) {
 				guest: $c.guest,
 				box: $c.box,
 				nickname: $c.nickname,
+				eventuid: $c.eventuid,
 				exordial: $c.exordial,
 				playTime: $c.data.playTime,
 				okg: $c.okgCount,
@@ -664,6 +667,7 @@ function processClientRequest($c, msg) {
 				$data._playTime = data.playTime;
 				$data._okg = data.okg;
 				$data.nickname = data.nickname;
+				$data.eventuid = data.eventuid;
 				$data.exordial = data.exordial;
 				$data.box = data.box;
 				updateUI(undefined, true);
