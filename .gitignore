@@ -10,3 +10,4 @@ Server/lib/sub/global.json
 Server/lib/sub/logging.json
 node_modules/
 .vscode/
+KKUTU_ERROR.log
