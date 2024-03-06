@@ -191,7 +191,7 @@ exports.RULE = {
 	rule: "Classic",
 	opts: [  ],
 	time: 1,
-	ai: true,
+	ai: false,
 	big: false,
 	ewq: true
 	}

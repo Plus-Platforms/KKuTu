@@ -20,7 +20,7 @@ var Const = require('../../const');
 var Lizard = require('../../sub/lizard');
 var DB;
 var DIC;
-var freeAble;
+var freeAble = false;
 
 const ROBOT_START_DELAY = [ 1200, 800, 400, 200, 0 ];
 const ROBOT_TYPE_COEF = [ 1250, 750, 500, 250, 0 ];
