@@ -1,35 +1,23 @@
-<footer class="bg-gray-50 dark:bg-gray-900">
-    <div class="mx-auto max-w-screen-xl p-4 py-6 lg:py-8">
-      <div  class="flex items-center justify-center">
-    
-        <img src="/img/kkutu/intro/infole_logo.svg" class="inline-block h-8" alt="InfoleLogo"/>
-      
-      </div><br/>
-      <div  class="flex items-center justify-center">
-      <a href="https://www.grac.or.kr/Statistics/Popup/Pop_StatisticsDetails.aspx?850c3e6034aa5ae3efd1751a7b1bfabaa6c813a6a053e8e5ec12581d53453bb0" target="_blank"><img src="/grac.png" class="h-12" alt="Rating"/></a>
-    </div>
-      <br/>
-      <div class="w-full">
-      <p class="text-xs text-center w-full text-gray-500 dark:text-gray-400">
-      <a href="https://plus.oqupie.com/portal/2568/article/56555" target='_blank'><span>이용 약관</span></a>
+
+<footer class="p-4 bg-white sm:p-6 dark:bg-gray-800 ">
+  <div class="max-w-screen-xl mx-auto md:flex md:justify-between mb-6 mt-6">
+    <div class="">
+      <div class="flex items-center">
+        <img src="/img/kkutu/intro/infole_logo.svg" class="dark:hidden h-10 mr-4" alt="InfoleLogo"/>
+        <img src="/img/kkutu/intro/infole_logo_dark.svg" class="hidden dark:block h-10 mr-4" alt="InfoleLogo"/>
+      </div>
+
+      <div class="text-sm text-gray-500 dark:text-gray-400 mt-4">
+        서비스 문의 : support@kkutu.cc<br>
+        &copy; 2023 ~ 2024 Team Infole<br>
+      <a href="https://plus.oqupie.com/portal/2568/article/56555" target='_blank'><span>이용 약관</span></a> |
       <a href="https://plus.oqupie.com/portal/2568/article/56556" target='_blank'><span>개인정보처리방침</span></a>
-          </p><br/>
-          <p class="text-xs text-center w-full text-gray-500 dark:text-gray-400">
-            <span>© 2021~ Infole(support@kkutu.cc) All Rights Reserved.<br/>
-            WordNet 3.0 Copyright 2006 by Princeton University. All rights reserved.<br/>
-            NXDict Copyright 2024 by Infole. All rights reserved.<br/><br/>
-
-            이 프로그램은 제품에 대한 어떠한 형태의 보증도 제공되지 않습니다.<br/>
-이 프로그램은 자유 소프트웨어이며 배포 규정을 만족시키는 조건 아래 자유롭게 재배포할 수 있습니다.<br/>
-이에 대한 자세한 사항은 본 프로그램의 구현을 담은 다음 레포지토리에서 확인하십시오: https://github.com/Plus-Platforms/KKuTu
-            </span><br/><br/>
-            <span class="font-bold">사전 정보 제공: WordNet
-<br/></span>
-          </p>
-      </div>
-
-      <div class='mx-auto'>
-      <div class="talk_banner_div" data-id="141611" ></div>
       </div>
     </div>
+    <div class="">
+      <div>
+      <a href="https://www.grac.or.kr/Statistics/Popup/Pop_StatisticsDetails.aspx?850c3e6034aa5ae3efd1751a7b1bfabaa6c813a6a053e8e5ec12581d53453bb0" target="_blank"><img src="/grac.png" class="h-12" alt="Rating"/></a>
+      </div>
+    </div>
+  </div>
 </footer>
