@@ -55,7 +55,9 @@ exports.getTitle = function(){
 	
 	switch(Const.GAME_TYPE[my.mode]){
 		case 'EKT':
+			freeAble = false;
 		case 'ESH':
+			freeAble = false;
 			eng = "^" + String.fromCharCode(97 + Math.floor(Math.random() * 26));
 			break;
 		case 'KJH':
@@ -64,12 +66,15 @@ exports.getTitle = function(){
 			eng = "^[\\u" + ja.toString(16) + "-\\u" + (ja + 587).toString(16) + "]";
 			break;
 		case 'KKT':
+			freeAble = false;
 			my.game.wordLength = 3;
 		case 'KSH':
+			freeAble = false;
 			ja = 44032 + 588 * Math.floor(Math.random() * 18);
 			eng = "^[\\u" + ja.toString(16) + "-\\u" + (ja + 587).toString(16) + "]";
 			break;
 		case 'KAP':
+			freeAble = false;
 			ja = 44032 + 588 * Math.floor(Math.random() * 18);
 			eng = "[\\u" + ja.toString(16) + "-\\u" + (ja + 587).toString(16) + "]$";
 			break;
