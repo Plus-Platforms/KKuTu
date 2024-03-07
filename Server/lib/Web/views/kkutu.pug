@@ -80,6 +80,7 @@ block Jungle
 				button.mainbtn#ShopBtn.for-lobby(style='display: none;')!= L('shop')
 				button.mainbtn#DictionaryBtn.for-lobby(style='display: none;')!= L('dict')
 				button.mainbtn#LvEventBtn.for-lobby(style='display: none;')!= L('event')
+				button.mainbtn#DonationBtn.for-lobby(style='display: none;')!= L('payment')
 				// button#WordPlusBtn.for-lobby.for-master.for-normal.for-gaming(style='display: none;')!= L('wordPlus')
 				button.mainbtn#profile-dress.for-lobby(style='display: none;')!= L('dress')
 				button.mainbtn#ReplayBtn.for-lobby(style='display: none;')!= L('replay')
@@ -458,13 +459,15 @@ block Middle
 				p#userLevel(style="margin:0px") PLATINUM
 			img#lockedItem(src="/img/event/acryll-lock.png")
 
-	+Dialog('EventuidDiag', 390, 156, "사용자 ID")
+	+Dialog('DonateDiag', 390, 310, "후원하기")
 		div(style="font-size: 16px; text-align: center;")
-			strong 이벤트 사용자 ID
-			br
-			p ※ 이벤트 참여 등에 사용되는 사용자 고유 번호입니다.
-			p#evtuid 0000
-			p 이벤트 이외에서 사용자 ID를 요구할 시, 제공하지 마시기 바랍니다.
+			h3(style="font-size:24px; font-weight:700;") 플러스끄투 운영비를 모아 주세요!
+			p 저희 플러스끄투는 지난 2월 말, 구조조정을 통해 3명이 운영하고 있습니다.
+			p 그럼에도 불구하고 서버비 충당에 어려움이 있어 광고 수익과 사비를 사용하고 있습니다. 
+			p 플러스끄투를 재밌게 즐겨주고 계신다면, 신규 컨텐츠 개발에 더욱 힘 쓸 수 있도록 여러분들께서 조금이나마 보탬이 되어 주셨으면 합니다.
+		div.dialog-bar.d3-bar.tail-button
+			a(href="https://toss.me/plusp", target="_blank")
+				button.primaryBtn= "후원하기"
 
 	+Dialog('CreditDiag', 390, 600, "제작진")
 		div(style="font-size: 16px; text-align: center;")
@@ -532,7 +535,7 @@ block Middle
 					p Copyright &copy; 2021~ Infole
 			
 	div(style="width: 100%;display: flex;height: 680px;")
-		div.lowreshidden(style="width:160px;height:600px;background-image: url(/img/ad/placeholder-l.png);")
+		div.lowreshidden(style="width:160px;height:600px;/*background-image: url(/img/ad/placeholder-l.png);*/")
 			ins.adsbygoogle(style="display:inline-block;width:160px;height:600px", data-ad-client="ca-pub-3808496003691786", data-ad-slot="5307706929")
 
 		div(style="width: 1290px")
@@ -646,7 +649,7 @@ block Middle
 					+FA('paper-plane')
 					
 
-		div.lowreshidden(style="width:160px;height:600px; background-image: url(/img/ad/placeholder-r.png);")
+		div.lowreshidden(style="width:160px;height:600px;/*background-image: url(/img/ad/placeholder-r.png);*/")
 			ins.adsbygoogle(style="display:inline-block;width:160px;height:600px", data-ad-client="ca-pub-3808496003691786", data-ad-slot="3446996199")
 
 	script (adsbygoogle = window.adsbygoogle || []).push({});

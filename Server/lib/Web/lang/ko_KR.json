@@ -1,6 +1,6 @@
 {
 	"GLOBAL": {
-		"GPL": "<div style='color: #666;'>두근두근 플러스끄투 Copyright (C) 2021~ Infole (support@kkutu.cc)<br>이 프로그램은 제품에 대한 어떠한 형태의 보증도 제공되지 않습니다.<br>이 프로그램은 자유 소프트웨어이며 배포 규정을 만족시키는 조건 아래 자유롭게 재배포할 수 있습니다.<br>이에 대한 자세한 사항은 본 프로그램의 구현을 담은 다음 레포지토리에서 확인하십시오: <a target='_blank' href='https://github.com/10kwon/KKuTu'>확인하기</a></div>",
+		"GPL": "<div style='color: #666;'>플러스끄투 Copyright (C) 2021~ Infole (support@kkutu.cc)<br>이 프로그램은 제품에 대한 어떠한 형태의 보증도 제공되지 않습니다.<br>이 프로그램은 자유 소프트웨어이며 배포 규정을 만족시키는 조건 아래 자유롭게 재배포할 수 있습니다.<br>이에 대한 자세한 사항은 본 프로그램의 구현을 담은 다음 레포지토리에서 확인하십시오: <a target='_blank' href='https://github.com/10kwon/KKuTu'>확인하기</a></div>",
 
 		"CREATOR":	"개발자 블로그",
 		"HOME":		"FA{home}",
@@ -129,7 +129,7 @@
 		"login": "로그인"
 	},
 	"kkutu": {
-		"title": "두근두근 플러스끄투",
+		"title": "플러스끄투",
 		"version": "2.5.1",
 		
 		"meta_desc": "온라인 끝말잇기, 앞말잇기, 자음퀴즈, 십자말풀이, 타자 대결까지! 끄투에서 어휘력의 제왕이 되어 보세요.",
@@ -704,6 +704,7 @@
 		"inviteRobot": "AI 초대",
 		"dict": "FA{book}사전",
 		"event": "FA{gift}이벤트",
+		"payment": "FA{won-sign}후원하기",
 		"cafe": "FA{mug-hot}",
 		"wordPlus": "단어 추가",
 		"chatLog": "대화 기록",

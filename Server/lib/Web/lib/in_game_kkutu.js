@@ -125,6 +125,7 @@ $(document).ready(function(){
 			shop: $("#ShopBtn"),
 			dict: $("#DictionaryBtn"),
 			event: $("#LvEventBtn"),
+			donate: $("#DonationBtn"),
 			dictIngame: $("#DictionaryBtnIngame"),
 			wordPlus: $("#WordPlusBtn"),
 			invite: $("#InviteBtn"),
@@ -146,6 +147,7 @@ $(document).ready(function(){
 				commFriendAdd: $("#comm-friend-add"),
 			credit: $("#CreditDiag"),
 			event: $("#LvEventDiag"),
+			donate: $("#DonateDiag"),
 			room: $("#RoomDiag"),
 				roomOK: $("#room-ok"),
 			quick: $("#QuickDiag"),
@@ -590,6 +592,9 @@ $(document).ready(function(){
 		$('#sideMenuDiag').fadeOut();
 		$('#dimmer').fadeIn();
 		showDialog($stage.dialog.credit);
+	});
+	$stage.menu.donate.on('click', function(e){
+		showDialog($stage.dialog.donate);
 	});
 	$stage.menu.teamSelect.on('click', function(e){
 		showDialog($stage.dialog.teamSelect);
@@ -3431,7 +3436,6 @@ function updateMe(){
 	$(".my-okg-text").html(prettyTime($data._playTime));
 	$(".my-level").html("Lv. " + lv);
 	
-	$("#evtuid").html(my.eventuid);
 
 	//200레벨이벤트
 	var startDate = new Date('2024-03-04');

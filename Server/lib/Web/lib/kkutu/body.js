@@ -990,7 +990,6 @@ function updateMe(){
 	$(".my-okg-text").html(prettyTime($data._playTime));
 	$(".my-level").html("Lv. " + lv);
 	
-	$("#evtuid").html(my.eventuid);
 
 	//200레벨이벤트
 	var startDate = new Date('2024-03-04');

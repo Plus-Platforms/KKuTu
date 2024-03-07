@@ -268,7 +268,7 @@ Server.get("/game", function(req, res){
 			'IJP_EXCEPT': Const.IJP_EXCEPT,
 			'ogImage': "https://kkutu.cc/img/kkutu/og.png",
 			'ogURL': "https://kkutu.cc/",
-			'ogTitle': "두근두근 플러스끄투",
+			'ogTitle': "플러스끄투",
 			'ogDescription': "글자로 박진감 넘치는 게임을 즐겨보세요!"
 		});
 	}

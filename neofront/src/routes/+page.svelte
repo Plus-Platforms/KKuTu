@@ -50,7 +50,7 @@
 
   let jsonData = [];
   let jsonDataFull = [];
-  let jsonDataServers = { list: [null], max: 0 };
+  let jsonDataServers = { list: [0], max: 0 };
   const serverName = ["감자", "냉이", "다래", "레몬", "망고", "보리", "상추", "아욱", "20세 이상"];
 
 onMount(async () => {
