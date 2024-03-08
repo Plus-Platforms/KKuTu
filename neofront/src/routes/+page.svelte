@@ -107,7 +107,7 @@ function calculateTotalConnectedUsers() {
 
       {#if jsonDataServers.list[0] == null}
       <p
-      class="mt-16 hidden lg:flex inline-flex text-lg px-4 py-2 text-white"
+      class="mt-16 lg:flex inline-flex text-lg px-4 py-2 text-white"
     >
         현재 서버 점검 진행 중으로, 서버 접속이 불가능합니다.
       </p>

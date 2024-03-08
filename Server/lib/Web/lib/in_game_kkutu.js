@@ -4194,8 +4194,8 @@ function requestProfile(id){
 	$stage.dialog.profileWhisper.hide();
 	$stage.dialog.profileHandover.hide();
 	
-	//if($data.id == id) $stage.dialog.profileDress.show();
-	if(!o.robot){
+	if($data.id == id){}//$stage.dialog.profileDress.show();
+	else if(!o.robot){
 		$stage.dialog.profileShut.show();
 		$stage.dialog.profileWhisper.show();
 	}
@@ -5264,18 +5264,25 @@ src = audioContext.createBufferSource();
 			gainNode.gain.value = 0;
 			src.buffer = audioContext.createBuffer(2, sound.length, audioContext.sampleRate);
 		}else{
-			
-			gainNode.gain.value = (loop ? $data.BGMVolume : $data.EffectVolume) || 0.5;
-src.buffer = sound;
+			if(key.startsWith("T") && $data.BGMVolume == 0){
+				gainNode.gain.value = 0.01;
+			}
+			else{
+				gainNode.gain.value = (loop ? $data.BGMVolume : $data.EffectVolume) || 0.5;
+			}
+			src.buffer = sound;
 		}
 		gainNode.connect(audioContext.destination);
 		src.connect(gainNode);
 	}else{
 		if(sound.readyState) sound.audio.currentTime = 0;
 		sound.audio.loop = loop || false;
+		
 		sound.audio.volume = mute ? 0 : ((loop ? $data.BGMVolume : $data.EffectVolume) || 0.5);
 		src = sound;
 	}
+
+
 	if($_sound[key]) $_sound[key].stop();
 	$_sound[key] = src;
 	src.key = key;
