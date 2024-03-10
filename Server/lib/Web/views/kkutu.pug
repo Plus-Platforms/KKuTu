@@ -434,7 +434,7 @@ block Middle
 	+Dialog('LicenseDiag', 645, 200, "오픈소스 라이선스 / 이용 약관")
 		h4.opt(style='text-align: center;')!= L('dictionarySupport')
 		h4.opt(style='text-align: center;')!= "플러스끄투는 끄투리오(KKuTuIO)의 KKuTu-Game 프로젝트를 기반으로 하고 있습니다."
-		h4.opt(style='text-align: center;')!= "게임 이용약관 및 개인정보 처리방침은 우상단 고객센터 탭에서 확인 가능합니다. 이 창을 닫을 시 이에 동의하는 것으로 간주합니다."
+		h4.opt(style='text-align: center;')!= "개인정보 처리방침과 이용 약관이 최근 개정되었습니다. 우측 상단 [전체 메뉴]에서 반드시 읽어주세요."
 		h4.opt(style='text-align: center;')!= L('GPL')
 		+SettingOption('copyright-hide', "동의합니다")
 	+Dialog('NotificationDiag', 700, 180, "플러스끄투 안내")
@@ -529,6 +529,19 @@ block Middle
 				button.sidebtn#CreditBtn
 					+FA("circle-info")
 					h3 제작진
+				
+				a(href="https://cafe.naver.com/ArticleRead.nhn?clubid=31109813&page=1&menuid=7&boardtype=L&articleid=110&referrerAllArticles=false", target="_blank")
+					button.sidebtn
+						+FA("file")
+						h3 개인정보 처리방침
+				a(href="https://cafe.naver.com/ArticleRead.nhn?clubid=31109813&page=1&menuid=7&boardtype=L&articleid=109&referrerAllArticles=false", target="_blank")
+					button.sidebtn
+						+FA("file")
+						h3 이용 약관
+				a(href="https://cafe.naver.com/ArticleRead.nhn?clubid=31109813&page=1&menuid=7&boardtype=L&articleid=108&referrerAllArticles=false", target="_blank")
+					button.sidebtn
+						+FA("file")
+						h3 환불 정책
 
 				div.sideFooter
 					img(src="/img/kkutu/infole_gray.svg")

@@ -72,3 +72,6 @@
 .boardBg-13{
 	@apply bg-gray-500;
 }
+.boardBg-22{
+	@apply bg-red-500;
+}
