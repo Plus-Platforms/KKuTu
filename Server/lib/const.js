@@ -44,7 +44,10 @@ exports.OPTIONS = {
 	'rank': { name: "RankGame" },
 	'ulm': { name: "Unlimited" },
 	'sht': { name: "Short" },
-	'item': { name: "Item" }
+	'item': { name: "Item" },
+	'ele': { name: "Ele" },
+	'mid': { name: "Mid" },
+	'high': { name: "High" }
 };
 exports.MOREMI_PART = [ 'back', 'eye', 'mouth', 'shoes', 'clothes', 'head', 'lhand', 'rhand', 'front' ];
 exports.CATEGORIES = [ "all", "spec", "skin", "badge", "head", "eye", "mouth", "clothes", "hs", "back" ];
@@ -194,6 +197,14 @@ exports.RULE = {
 	ai: false,
 	big: false,
 	ewq: true
+	},
+	'KMQ': { lang: "ko",
+		rule: "MathQuiz",
+		opts: [ "ele" ],
+		time: 1,
+		ai: false,
+		big: false,
+		ewq: false
 	}
 };
 exports.getPreScore = function(text, chain, tr){

@@ -1101,6 +1101,12 @@ $(document).ready(function(){
 		}
 		showDialog($stage.dialog.injPick);
 	});
+
+	$('.ko-pick').click(function() {
+        $(this).find('input[type="checkbox"]').prop('checked', function(_, oldProp) {
+            return !oldProp;
+        });
+    });
 	$stage.dialog.injPickAll.on('click', function(e){
 		$("#injpick-list input").prop('checked', true);
 	});

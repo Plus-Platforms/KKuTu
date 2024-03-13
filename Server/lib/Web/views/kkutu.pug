@@ -184,6 +184,7 @@ block Middle
 					option(value=9)= L('modeHUN')
 				optgroup(label="테스트 모드")
 					option(value=14)= L('modeKJH')
+					option(value=15)= L('modeKMQ')
 				optgroup(label="XP 2배 이벤트 중")
 					option(value=6)= L('modeKTY')
 				optgroup(label=L('mcEnglish'))
@@ -215,7 +216,7 @@ block Middle
 				button#room-injeong-pick(style='font-size: 11px;')!= L('pickInjeong')
 		div.dialog-bar.tail-button.d3-bar
 			button.primaryBtn#room-ok= L('OK')
-	+Dialog('InjPickDiag', 1090, 720, L('pickInjeong', false))
+	+Dialog('InjPickDiag', 875, 720, L('pickInjeong', false))
 		h4.opt(style='font-size: 16px; text-align: center; color: #486AA3;')!= L('explInjPick')
 		div.dialog-bar
 			button#injpick-all= L('injpickAll')
@@ -225,9 +226,9 @@ block Middle
 				- locals.KO_THEME.concat(locals.KO_INJEONG).forEach(function(item){
 					- var name = "ko-pick-" + item;
 					- if(locals.IJP_EXCEPT.indexOf(item) != -1) return;
-					div(style='float: left; border: 1px solid gray; width: 320px; margin-bottom: 6px; margin-right: 6px; padding-top: 150px; padding-left: 15px; padding-right: 15px; padding-bottom: 15px; text-align: center; background-image: url(/img/kkutu/theme/' + item + '.png); background-size: cover;')
+					div(class="ko-pick", style='float: left; border-radius: 10px; width: 250px; margin-bottom: 8px; margin-right: 8px; padding-top: 150px; padding-left: 15px; padding-right: 15px; padding-bottom: 15px; text-align: center; background: #fff; background-image: url(/img/kkutu/theme/' + item + '.png); background-size: cover; background-position: center;')
 						input(id=name, type='checkbox', style='width: auto;')
-						label(for=name)!= LANG['theme_' + item]
+						label(for=name, style="color: #000; font-size: 26px;")!= LANG['theme_' + item]
 				- });
 			div.dialog-opt#en-pick-list(style='width: 100%;')
 				- locals.EN_THEME.concat(locals.EN_INJEONG).forEach(function(item){
@@ -462,9 +463,9 @@ block Middle
 	+Dialog('DonateDiag', 390, 310, "후원하기")
 		div(style="font-size: 16px; text-align: center;")
 			h3(style="font-size:24px; font-weight:700;") 플러스끄투 운영비를 모아 주세요!
-			p 저희 플러스끄투는 지난 2월 말, 구조조정을 통해 3명이 운영하고 있습니다.
+			p 저희 플러스끄투는 디렉터와 개발팀장, 둘이서 운영하고 있습니다.
 			p 그럼에도 불구하고 서버비 충당에 어려움이 있어 광고 수익과 사비를 사용하고 있습니다. 
-			p 플러스끄투를 재밌게 즐겨주고 계신다면, 신규 컨텐츠 개발에 더욱 힘 쓸 수 있도록 여러분들께서 조금이나마 보탬이 되어 주셨으면 합니다.
+			p 여러분들께서 조금이라도 후원해 주신다면 신규 컨텐츠 개발에 있어 활용하겠습니다.
 		div.dialog-bar.d3-bar.tail-button
 			a(href="https://toss.me/plusp", target="_blank")
 				button.primaryBtn= "후원하기"

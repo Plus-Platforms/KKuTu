@@ -1811,7 +1811,11 @@ function gameReady(){
 	stopBGM();
 	$stage.dialog.resultSave.attr('disabled', false);
 	clearBoard();
-	$stage.game.display.html(L['soon']);
+	$(".jjoDisplayBar").css('width', "");
+	
+	$(".jjo-turn-time").css('width', "");
+	$stage.game.display.html(L['soon']).css('font-size', "").css('width', "");
+
 	playSound('game_start');
 	forkChat();
 	addTimeout(function(){

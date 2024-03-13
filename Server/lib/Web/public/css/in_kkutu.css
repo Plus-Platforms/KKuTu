@@ -383,6 +383,10 @@ input[type='checkbox']:checked+label {
 }
 
 
+.ko-pick:hover{
+	filter: brightness(85%);
+}
+
 input[type="checkbox"] {
     display: none!important;
 }
