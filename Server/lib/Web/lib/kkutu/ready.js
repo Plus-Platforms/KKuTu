@@ -197,10 +197,10 @@ $(document).ready(function(){
 
 	$data._soundList = [
 		{ key: "k", value: "/media/kkutu/k.mp3" },
-		{ key: "lobby", value: "/media/kkutu/LobbyBGMS1.mp3" },
+		{ key: "lobby", value: "/media/kkutu/LobbyBGMS2.mp3" },
 		{ key: "dialog", value: "/media/kkutu/dialog.mp3" },
 		{ key: "legacylobby", value: "/media/kkutu/LobbyBGM.mp3" },
-		{ key: "ingame", value: "/media/kkutu/LobbyBGM2.mp3" },
+		{ key: "ingame", value: "/media/kkutu/LobbyBGMS2.mp3" },
 		{ key: "shop", value: "/media/kkutu/LobbySeolBGM.mp3" },
 		{ key: "credit", value: "/media/kkutu/Kkutu_Ending_Acoustic.mp3" },
 		{ key: "jaqwi", value: "/media/kkutu/JaqwiBGM.mp3" },
