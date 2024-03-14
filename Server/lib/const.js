@@ -224,7 +224,7 @@ exports.MISSION_en = [ "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l
 
 exports.KO_INJEONG = [
 	"IMS", "VOC", "KRR", "KTV",
-	"NSK", "KOT", "DOT", "DRR", "DGM", "RAG", "LVL",
+	"NSK", "KOT", "KOR", "DOT", "DRR", "DGM", "RAG", "LVL",
 	"LOL", "MRN", "MMM", "MAP", "MKK", "MNG",
 	"MOB", "HYK", "CYP", "HRH", "STA", "OIJ",
 	"KGR", "ESB", "ELW", "OIM", "OVW", "NEX", /*"WOW",*/

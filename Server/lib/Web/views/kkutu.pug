@@ -426,10 +426,12 @@ block Middle
 		div.dialog-bar#obtain-name(style='text-align: center;')
 		div.dialog-bar.tail-button.d3-bar
 			button.primaryBtn#obtain-ok= L('OK')
-	+Dialog('HelpDiag', 1000,591, L('helpText', false))
-		iframe#help-board(width=1000, height=480)
+	+Dialog('HelpDiag', 1000, 540, L('helpText', false))
+		iframe#help-board(width=1000, height=500)
 	+Dialog('PingShopDiag', 400, 760, "코인 상점")
 		iframe#ping-board(width=400, height=700)
+	+Dialog('CouponRegisterDiag', 400, 210, "쿠폰 등록")
+		iframe#coupon-board(width=400, height=180)
 	+Dialog('Community2Diag', 1280, 750, "공식 커뮤니티")
 		iframe#community2(width=1280, height=700)
 	+Dialog('LicenseDiag', 645, 200, "오픈소스 라이선스 / 이용 약관")
@@ -517,14 +519,13 @@ block Middle
 					h3 환경설정
 				button.sidebtn#HelpBtn
 					+FA("circle-question")
-					h3 고객센터
+					h3 도움말
 				button.sidebtn#Community2Btn
 					+FA("bullhorn")
 					h3 공지사항
-				a(href="https://pcor.me/coupon", target="_blank")
-					button.sidebtn
-						+FA("ticket")
-						h3 쿠폰 등록
+				button.sidebtn#CouponBtn
+					+FA("ticket")
+					h3 쿠폰 등록
 				button.sidebtn#CreditBtn
 					+FA("circle-info")
 					h3 제작진

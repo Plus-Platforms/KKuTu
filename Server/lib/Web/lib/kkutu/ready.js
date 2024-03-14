@@ -56,6 +56,7 @@ $(document).ready(function(){
 		chatBtn: $("#ChatBtn"),
 		menu: {
 			help: $("#HelpBtn"),
+			coupon: $("#CouponBtn"),
 			setting: $("#SettingBtn"),
 			community: $("#CommunityBtn"),
 			community2: $("#Community2Btn"),
@@ -146,6 +147,7 @@ $(document).ready(function(){
 			obtain: $("#ObtainDiag"),
 				obtainOK: $("#obtain-ok"),
 			help: $("#HelpDiag"),
+			coupon: $("#CouponRegisterDiag"),
 			pingShop: $("#PingShopDiag"),
 			community2: $("#Community2Diag"),
 			license: $("#LicenseDiag"),
@@ -519,8 +521,13 @@ $(document).ready(function(){
 
 	$stage.menu.help.on('click', function(e){
 		$('#sideMenuDiag').fadeOut();
-		$("#help-board").attr('src', "https://plus.oqupie.com/portal/2568");
+		$("#help-board").attr('src', "https://pcor.me/kkutu/help");
 		showDialog($stage.dialog.help);
+	});
+	$stage.menu.coupon.on('click', function(e){
+		$('#sideMenuDiag').fadeOut();
+		$("#coupon-board").attr('src', "https://pcor.me/kkutu/coupon");
+		showDialog($stage.dialog.coupon);
 	});
 	$stage.menu.community2.on('click', function(e){
 		$('#sideMenuDiag').fadeOut();
