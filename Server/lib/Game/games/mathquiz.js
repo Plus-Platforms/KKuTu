@@ -76,13 +76,13 @@ exports.roundReady = function(){
 			my.game.questionType = 0;
 
 			if(my.game.theme == "ELE"){
-				my.game.questionType = Math.floor(Math.random() * 7);
+				my.game.questionType = Math.floor(Math.random() * 5);
 				
 				if (my.game.questionType == 0){
 					//사칙연산
 					var num1 = Math.floor(Math.random() * 100);
 					var num2 = Math.floor(Math.random() * 100);
-					var operator = ['+', '-', '*', '/'][Math.floor(Math.random() * 4)];
+					var operator = ['+', '-', '*', '/'][Math.floor(Math.random() * 3)];
 					
 					my.game.mathQuestion = num1 + " " + operator + " " + num2;
 					my.game.mathAnswer = eval(my.game.mathQuestion);
@@ -104,7 +104,7 @@ exports.roundReady = function(){
 					}
 
 					my.game.mathAnswer = num1*num2;
-					my.game.mathQuestion = "가로 " + num1 + calclogic + ", 세로 " + num2 + calclogic + "인 직사각형 " + element + "의 넓이는? (숫자)";
+					my.game.mathQuestion = "가로 " + num1 + calclogic + ", 세로 " + num2 + calclogic + "인 직사각형의 넓이 " + element + "²는? (숫자로 입력)";
 				}
 				else if (my.game.questionType == 2){
 					var num1 = Math.floor(Math.random() * 10) + 1; // 1부터 100까지의 정수
@@ -171,17 +171,32 @@ exports.roundReady = function(){
 					var length = numStr.length;
 					var units = ["", "만", "억", "조", "경"];
 					var result = "";
-					
+				
+					// 숫자를 청크 단위로 나누어 처리
 					for (var i = 0; i < length; i += 4) {
-						var chunk = numStr.substring(length - i - 4, length - i);
-						if (chunk !== "0000") {
-							var unit = units[i / 4];
-							result = chunk + unit + " " + result;
+						var chunk = numStr.substring(i, i + 4);
+						var unit = units[i / 4];
+				
+						// 청크에 있는 0을 제외하고 추가해야 합니다.
+						var chunkStr = "";
+						for (var j = 0; j < chunk.length; j++) {
+							if (chunk[j] !== '0') {
+								chunkStr += chunk[j];
+							}
+						}
+				
+						// 천 자리가 있는 경우에만 '천'을 추가합니다.
+						if (chunkStr !== "") {
+							if (i > 0 && chunk[0] !== '0') {
+								chunkStr += "천";
+							}
+							result = chunkStr + unit + " " + result;
 						}
 					}
-					
+				
 					return result.trim();
 				}
+				
 				
 				function formatNumber(num) {
 					if (num >= 1e16) {
@@ -285,6 +300,7 @@ exports.turnEnd = function(){
 			answer: my.game.answer ? my.game.answer._id : ""
 		});
 	}
+
 	my.game._rrt = setTimeout(my.roundReady, 2500);
 };
 exports.submit = function(client, text){
@@ -324,7 +340,6 @@ exports.submit = function(client, text){
 			score: score,
 			bonus: 0
 		}, true);
-		client.invokeWordPiece(text, 0.9);
 		while(my.game.meaned < my.game.hint.length){
 			turnHint.call(my);
 		}
@@ -346,12 +361,30 @@ exports.submit = function(client, text){
 };
 exports.getScore = function(text, delay){
 	var my = this;
+
+	// delay와 my.game.roundTime 변수가 숫자가 아닌 경우에 대한 처리
+	if (isNaN(delay) || isNaN(my.game.roundTime)) {
+		return 0; // 또는 다른 적절한 기본값 반환
+	}
+
+	// delay가 0 이하이거나 my.game.roundTime 변수가 0 이하인 경우에 대한 처리
+	if (delay <= 0 || my.game.roundTime <= 0) {
+		return 0; // 또는 다른 적절한 기본값 반환
+	}
+
 	var rank = my.game.hum - my.game.primary + 3;
 	var tr = 1 - delay / my.game.roundTime;
-	var score = 6 * Math.pow(rank, 1.4) * ( 0.5 + 0.5 * tr );
+
+	// Math.pow 함수에 의해 NaN이 반환되는 경우를 처리
+	if (isNaN(rank) || isNaN(tr)) {
+		return 0; // 또는 다른 적절한 기본값 반환
+	}
+
+	var score = 6 * Math.pow(rank, 1.4) * (0.5 + 0.5 * tr);
 
 	return Math.round(score);
 };
+
 exports.readyRobot = function(robot){
 	var my = this;
 	var level = robot.level;
