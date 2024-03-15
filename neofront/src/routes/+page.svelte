@@ -89,54 +89,67 @@ function calculateTotalConnectedUsers() {
 </svelte:head>
 
 <div  class="dark:bg-gray-900 dark:text-white">
-  
-<section class="hero w-full">
-  <div class="mx-auto max-w-screen-2xl container px-4 md:px-6">
-        <!--
-      <h1 class="text-white text-center text-3xl lg:text-8xl font-bold text-black sm:text-4xl md:text-5xl lg:text-6xl">
-        벚꽃이 만개한 교문 너머로
-      </h1>
-      <p class="text-white mt-8 text-center sm:text-4xl text-black">
-        새 학기, 새 학년! 플끄에서도 새롭게 출발 해 보세요.
-      </p>-->
-
-      <div class="justify-center flex flex-col items-center">
-        
-      <img src="/img/web/tit_wordmark.svg" alt="벚꽃이 만개한 교문 너머로" class="h-12 xl:h-24">
-      <img src="/img/web/con_wordmark.svg" alt="새 학기, 새 학년! 플끄에서도 새롭게 출발 해 보세요." class="h-6 mt-8">
-
-      {#if jsonDataServers.list[0] == null}
-      <p
-      class="mt-16 lg:flex inline-flex text-lg px-4 py-2 text-white"
-    >
-        현재 서버 점검 진행 중으로, 서버 접속이 불가능합니다.
-      </p>
-        <a
-        class="mt-4 hidden lg:flex bg-white rounded-full text-gray-800 shadow-lg px-8 py-2 font-bold text-3xl"
-        href="https://cafe.naver.com/ArticleList.nhn?search.clubid=31109813&search.menuid=9&search.boardtype=L"
-      >
-        점검 공지 확인하기
-      </a>
-      {:else}
-        <a
-          class="mt-16 hidden lg:flex bg-white rounded-full text-gray-800 shadow-lg px-8 py-2 font-bold text-3xl"
-          href="https://kkutu.cc/game?server=0"
-        >
-          시작하기
-        </a>
-        
-      {/if}
-
-      <a
-      class="download-link mt-4 hidden lg:flex inline-flex text-lg px-4 py-2 text-white"
-      href="#"
-      on:click="{() => showModal()}"
-    >
-     클라이언트 다운로드
-    </a>
+  <section class="relative isolate bg-gray-800 w-full flex flex-col">
+    
+    <div class="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80" aria-hidden="true">
+      <div class="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-purple-500 to-purple-700 opacity-30 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]" style="clip-path: polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)"></div>
     </div>
-  </div>
-</section>
+
+    <div class="py-32 sm:py-48 lg:py-56">
+      <div class="mx-auto max-w-screen-2xl container px-4 md:px-6">
+        <div class="justify-center flex flex-col items-center">
+         
+          <h1 class="text-gray-300 text-center text-3xl lg:text-8xl font-bold text-black sm:text-4xl md:text-5xl lg:text-6xl">
+            끄투의 미래,<br>
+            지금 <span class="text-white">플러스끄투</span>에서.
+          </h1>
+
+          <p class="text-white mt-8 text-center sm:text-4xl text-black">
+            끄투의 틀에서 탈피한 아케이드 모드를 만나보세요.
+          </p>
+
+          <div class="mx-auto">
+            <!-- Layer2 -->
+            <div class="layer absolute top-0 left-0 w-full h-full bg-layer2 z-10 flex justify-center items-center">
+              <img src="/img/web/2024Renewal/Layer2.png" alt="레이어">
+            </div>
+            <!-- Layer3 -->
+            <div class="layer absolute top-0 left-0 w-full h-full bg-layer3 z-20 flex justify-center items-center">
+              <img src="/img/web/2024Renewal/Layer3.png" alt="레이어">
+            </div>
+            <!-- Layer4 -->
+            <div class="layer absolute top-0 left-0 w-full h-full bg-layer4 z-30 flex justify-center items-center">
+              <img src="/img/web/2024Renewal/Layer4.png" alt="레이어">
+            </div>
+          </div>
+          
+  
+          {#if jsonDataServers.list[0] == null}
+          <p class="mt-16 lg:flex inline-flex text-lg px-4 py-2 text-white">
+            현재 서버 점검 진행 중으로, 서버 접속이 불가능합니다.
+          </p>
+          <a class="mt-4 bg-white rounded-full text-gray-800 shadow-lg px-8 py-2 font-bold text-3xl" href="https://cafe.naver.com/ArticleList.nhn?search.clubid=31109813&search.menuid=9&search.boardtype=L">
+            점검 공지 확인하기
+          </a>
+          {:else}
+          <a class="mt-16 bg-white rounded-full text-gray-800 shadow-lg px-8 py-2 font-bold text-3xl" href="https://kkutu.cc/game?server=0">
+            시작하기
+          </a>
+          {/if}
+  
+          <a class="download-link mt-4 hidden lg:flex inline-flex text-lg px-4 py-2 text-white" href="#" on:click="{() => showModal()}">
+            클라이언트 다운로드
+          </a>
+          
+        </div>
+      </div>
+    </div>
+    
+    <div class="absolute inset-x-0 top-[calc(100%-13rem)] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[calc(100%-30rem)]" aria-hidden="true">
+      <div class="relative left-[calc(50%+3rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 bg-gradient-to-tr from-purple-500 to-purple-700 opacity-30 sm:left-[calc(50%+36rem)] sm:w-[72.1875rem]" style="clip-path: polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)"></div>
+    </div>
+  </section>
+  
 <div class="modal">
   <div class="modal-content">
     <button on:click="{() => isModalOpen = false}" class="modal-close text-2xl text-gray-500">×</button>
