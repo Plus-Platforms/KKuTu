@@ -76,16 +76,37 @@ exports.roundReady = function(){
 			my.game.questionType = 0;
 
 			if(my.game.theme == "ELE"){
-				my.game.questionType = Math.floor(Math.random() * 5);
+				my.game.questionType = Math.floor(Math.random() * 7);
 				
 				if (my.game.questionType == 0){
 					//사칙연산
 					var num1 = Math.floor(Math.random() * 100);
 					var num2 = Math.floor(Math.random() * 100);
 					var operator = ['+', '-', '*', '/'][Math.floor(Math.random() * 3)];
-					
+
+					// Define a function to perform the arithmetic operation
+					function calculate(operator, num1, num2) {
+						switch (operator) {
+							case '+':
+								return num1 + num2;
+							case '-':
+								return num1 - num2;
+							case '*':
+								return num1 * num2;
+							case '/':
+								// Check for division by zero
+								if (num2 !== 0) {
+									return num1 / num2;
+								} else {
+									// Handle division by zero gracefully
+									return NaN; // Not a Number
+								}
+						}
+					}
+
 					my.game.mathQuestion = num1 + " " + operator + " " + num2;
-					my.game.mathAnswer = eval(my.game.mathQuestion);
+					my.game.mathAnswer = calculate(operator, num1, num2);
+
 				}
 				else if (my.game.questionType == 1){
 					//넓이 구하기 문제
@@ -104,7 +125,7 @@ exports.roundReady = function(){
 					}
 
 					my.game.mathAnswer = num1*num2;
-					my.game.mathQuestion = "가로 " + num1 + calclogic + ", 세로 " + num2 + calclogic + "인 직사각형의 넓이 " + element + "²는? (숫자로 입력)";
+					my.game.mathQuestion = "가로 " + num1 + calclogic + ", 세로 " + num2 + calclogic + "인 "+element+"의 넓이 " + calclogic + "²는? (숫자로 입력)";
 				}
 				else if (my.game.questionType == 2){
 					var num1 = Math.floor(Math.random() * 10) + 1; // 1부터 100까지의 정수
@@ -150,20 +171,42 @@ exports.roundReady = function(){
 					
 					my.game.mathQuestion = num1 + "와 " + num2 + "의 최소공배수를 구하세요.";
 					my.game.mathAnswer = answer;
-				} else if (my.game.questionType == 5) {
-					        // 조의 자리 읽기 문제
-							var num = Math.floor(Math.random() * 9000000000000) + 1000000000000; // 1조부터 1조 미만의 정수
-        
-							my.game.mathQuestion = formatNumber(num) + "을(를) 한글로 읽어보세요.";
-							my.game.mathAnswer = readNumber(num);
-				} else if (my.game.questionType == 6) {
-					
-							// 숫자 읽기 문제
-							var num = Math.floor(Math.random() * 9000000000000000) + 1000000000000000; // 1경부터 1경 미만의 정수
-							
-							my.game.mathQuestion = formatNumber(num) + "을(를) 한글로 읽어보세요.";
-							my.game.mathAnswer = readNumber(num);
+				} else if (my.game.questionType == 5){
+					//넓이 구하기 문제
+					var num1 = parseFloat((Math.random() * 10).toFixed(1));
+					var num2 = Math.floor(Math.random() * 10);
+					var calclogic = ['cm', 'm', 'km'][Math.floor(Math.random() * 3)];
+					var element = "";
+					if (calclogic == "cm"){
+						var element = "트라이앵글"				
+					}
+					else if (calclogic = "m"){
+						var element = "삼각형"
+					}
+					else if (calclogic = "km"){
+						var element = "삼각지대"
+					}
+
+					my.game.mathAnswer = (num1*num2) / 2;
+					my.game.mathQuestion = "가로 " + num1 + calclogic + ", 세로 " + num2 + calclogic + "인 "+element+"의 넓이 " + calclogic + "²는? (숫자로 입력)";
+				}else if (my.game.questionType == 6){
+					var num2 = Math.floor(Math.random() * 100);
+					var calclogic = ['cm', 'm', 'km'][Math.floor(Math.random() * 3)];
+					var element = "";
+					if (calclogic == "cm"){
+						var element = "칠판 자석"				
+					}
+					else if (calclogic = "m"){
+						var element = "타이어"
+					}
+					else if (calclogic = "km"){
+						var element = "소행성 단면"
+					}
+
+					my.game.mathAnswer = num2*num2;
+					my.game.mathQuestion = "반지름이 " + num2 + calclogic + "인 "+element+"의 넓이 π" + calclogic + "²는? (숫자로 입력)";
 				}
+
 
 				
 				function readNumber(num) {
