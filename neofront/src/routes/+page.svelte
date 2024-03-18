@@ -108,7 +108,7 @@ function calculateTotalConnectedUsers() {
             끄투의 틀에서 탈피한 아케이드 모드를 만나보세요.
           </p>
 
-          <div class="mx-auto">
+          <div class="mx-auto gb">
             <!-- Layer2 -->
             <div class="layer absolute top-0 left-0 w-full h-full bg-layer2 z-10 flex justify-center items-center">
               <img src="/img/web/2024Renewal/Layer2.png" alt="레이어">

@@ -147,13 +147,9 @@
 		background-color: #1f2937!important;
 	}
 	#ChatBtn {
-		/*봄시즌 테마
 		background: #3b0764!important;
 		color: #a855f7!important;
-		border: 1px solid #581c87!important;*/
 		border: none;
-		background: #e9b1cd;
-		color: #562135;
 	}
 	.rooms-item {
 		background-color: #111827!important;
@@ -337,11 +333,8 @@ equ{
 
 /* 토스트 메시지 */
 #tost_message {
-	/* 봄시즌 테마
 	border-left: 5px solid rgba(21,169,255,1);
-    background: linear-gradient(180deg, rgba(23,25,100,1) 0%, rgba(23,32,107,1) 100%);*/
-	border-left: 5px solid #c3829e;
-    background: #e9b1cd;
+    background: linear-gradient(180deg, rgba(23,25,100,1) 0%, rgba(23,32,107,1) 100%);
     width: 480px;
     z-index: 300;
     opacity: 0;
@@ -475,9 +468,7 @@ iframe{
 }*/
 #ReadyBtn:hover, #ReadyBtn.toggled {
     animation: none;
-	/*봄시즌 테마
-    background: #2e1065;*/
-	background: #562135;
+    background: #2e1065;
 }
 .product-body{ font-size: 16px; }
 .deltaScore{
@@ -633,16 +624,10 @@ iframe{
 	color: #ffffff!important;
 }
 
-/* 봄시즌 테마 
 	.primaryBtn{
 		font-weight: 700;
 		color: #fff!important;
 		background-color: #3A82F6!important;
-	}*/
-	.primaryBtn{
-		font-weight: 700;
-		color: #562135!important;
-		background-color: #e9b1cd!important;
 	}
 	.dialog .closeBtn{
 		float: right;
@@ -738,15 +723,11 @@ iframe{
 }
 .product-title{
 	font-weight: 700;
-    /*봄시즌 테마
 	color: #6B7280;
     padding-left: 20px;
-    background-color: #ffffff;*/
-	color: #562135;
-    padding-left: 20px;
-    background-color: #ffe7de;
+    background-color: #ffffff;
 }
-.product-title i{ /*봄시즌 테마color: #6B7280;*/color: #562135; }
+.product-title i{ color: #6B7280; }
 .dialog-front{ z-index: 3; }
 #comm-friends div{ float: left; }
 	.cf-item{ margin: 2px 0px; width: 100%; }
@@ -938,21 +919,15 @@ iframe{
 		align-items: center;
 	}
 	#ExitBtn{
-		/*봄시즌 테마
-		background: var(--Warning-Text, #EF4444);*/
-		background: #c3829e;
+		background: var(--Warning-Text, #EF4444);
 		color: #fff;
 	}
 	#ReadyBtn{
-		/*봄시즌 테마
-		background: #9333EA;*/
-		background: #e9b1cd;
+		background: #9333EA;
 		color: #fff;
 	}
 	#StartBtn{
-		/*봄시즌 테마
-		background: var(--Secondary, #3A82F6);*/
-		background: #e9b1cd;
+		background: var(--Secondary, #3A82F6);
 		color: #fff;
 	}
 		.room-head-modified{ animation: ModifiedBlink 1s ease 3; }
@@ -1200,8 +1175,7 @@ iframe{
 		font-weight: bold;
 		text-align: center;
 		/* text-shadow: 30px 1px 5px #141414; */
-		/*봄시즌 테마 background-image: url(/img/kkutu/lefthand.png);*/
-		background-image: url('/img/kkutu/Mission(Spring).png');
+		background-image: url(/img/kkutu/lefthand.png);
 		background-size: cover;
 	}
 	.jjoriping{ width: 500px; }
@@ -1278,8 +1252,7 @@ iframe{
 				width: 100%;
 				position: absolute;
 				bottom: 0;
-				/*봄시즌 테마background-color: #223C6C;*/
-				background-color: #562135;
+				background-color: #223C6C;
 			}
 			.enterHere{
 				justify-content: center;
@@ -1288,9 +1261,8 @@ iframe{
 				width: 100%;
 				margin-top: 13px;
 			}
-			.jjo-turn-time .graph-bar{ /*봄시즌 테마 background-color: #CA8A04; */
-				background-color: #c3829e;height: 100%; }
-			.jjo-round-time .graph-bar{ /*봄시즌 테마 background-color: #3573E4;*/background-color: #e9b1cd; }
+			.jjo-turn-time .graph-bar{ background-color: #CA8A04;height: 100%; }
+			.jjo-round-time .graph-bar{ background-color: #3573E4; }
 				.round-extreme{ background-color: #FF6D6D !important; }
 			.cw .jjo-turn-time{ display: none; }
 			.cw .jjo-round-time{ width: 306px; }
@@ -1306,8 +1278,7 @@ iframe{
 		font-weight: bold;
 		text-align: center;
 		background-size: cover;
-		/*봄시즌 테마background-image: url(/img/kkutu/righthand.png);*/
-		background-image: url('/img/kkutu/Chain(Spring).png');
+		background-image: url(/img/kkutu/righthand.png);
 	}
 	.rounds{
 		margin-top: 64px;
@@ -1325,7 +1296,7 @@ iframe{
 		.rounds label{ margin: 0px 3px; }
 		.cw.rounds label{ cursor: pointer; }
 		.dg.rounds label{ cursor: default !important; }
-		.rounds-current{ /*봄시즌 테마 color: #8B5CF6;*/ color: #c3829e;
+		.rounds-current{ color: #8B5CF6;
 			font-size: 20px; }
 		.round-effect{ animation: RoundEffect 0.8s ease 1; }
 	.history-holder{
@@ -1712,12 +1683,8 @@ box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.10), 0px 4px 6px -4px rgba(0, 0, 
     border: 1px solid #D1D5DB!important;
     font-weight: 700;
 	
-	/* 봄시즌 테마
     background: #D8B4FE;
-    color: var(--Primary, #885CF6);*/
-
-    background: #e9b1cd;
-    color: #562135;
+    color: var(--Primary, #885CF6);
     float: left;
     border-left: none;
     margin-top: 5px;
