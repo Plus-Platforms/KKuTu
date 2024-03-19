@@ -60,7 +60,7 @@ WebInit.MOBILE_AVAILABLE = [
 
 require("../sub/checkpub");
 
-JLog.info("<< KKuTu Web >>");
+JLog.info("<< KKuTu Web Discord >>");
 Server.set('views', __dirname + "/views");
 Server.set('view engine', "pug");
 Server.use(Express.json({ limit: "8mb" }));
@@ -93,11 +93,30 @@ Server.use((req, res, next) => {
 		if(req.protocol == 'http') {
 			let url = 'https://'+req.get('host')+req.path;
 			res.status(302).redirect(url);
-		} else {
+		}
+		else {
 			next();
 		}
 	} else {
-		next();
+		if (req.protocol == 'ws' || req.protocol == 'wss') {
+			//proxy kkutu.cc:8080 's response
+            let options = {
+                hostname: 'kkutu.cc',
+                port: 8080,
+                path: req.path,
+                method: req.method,
+                headers: req.headers
+            };
+
+            let proxyReq = http.request(options, (proxyRes) => {
+                proxyRes.pipe(res, { end: true });
+            });
+
+            req.pipe(proxyReq, { end: true });
+		}
+		else{
+			next();
+		}
 	}
 });
 //볕뉘 수정 끝
@@ -221,6 +240,7 @@ function GameClient(id, url){
 		}
 	});
 }
+//g
 ROUTES.forEach(function(v){
 	require(`./routes/${v}`).run(Server, WebInit.page);
 });
@@ -247,10 +267,10 @@ Server.get("/game", function(req, res){
 		}else{
 			delete req.session.profile;
 		}
-		page(req, res, Const.MAIN_PORTS[server] ? "kkutu" : "portal", {
+		page(req, res, "kkutu", {
 			'_page': "kkutu",
 			'_id': id,
-			'PORT': Const.MAIN_PORTS[server],
+			'PORT': Const.MAIN_PORTS[0],
 			'HOST': req.hostname,
 			'PROTOCOL': Const.IS_SECURED ? 'wss' : 'ws',
 			'TEST': req.query.test,

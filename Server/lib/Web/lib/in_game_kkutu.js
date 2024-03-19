@@ -80,7 +80,7 @@ $(document).ready(function(){
 	$data.PUBLIC = $("#PUBLIC").html() == "true";
 	$data.URL = $("#URL").html();
 	$data.version = $("#version").html();
-	$data.server = location.href.match(/\?.*server=(\d+)/)[1];
+	$data.server = 0;
 	$data.shop = {};
 	$data._okg = 0;
 	$data._playTime = 0;

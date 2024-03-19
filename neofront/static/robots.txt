@@ -1,7 +1,0 @@
-User-agent: *
-Disallow: /login
-Disallow: /game
-Allow: /ads.txt
-
-User-agent: Mediapartners-Google
-Allow: /game

@@ -24,7 +24,7 @@ $(document).ready(function(){
 	$data.PUBLIC = $("#PUBLIC").html() == "true";
 	$data.URL = $("#URL").html();
 	$data.version = $("#version").html();
-	$data.server = location.href.match(/\?.*server=(\d+)/)[1];
+	$data.server = 0;
 	$data.shop = {};
 	$data._okg = 0;
 	$data._playTime = 0;
@@ -498,23 +498,6 @@ $(document).ready(function(){
 
 	//window.addEventListener('resize', checkResolution);
 	
-	function checkResolution() {
-			var screenWidth = window.innerWidth;
-			var screenHeight = window.innerHeight;
-			var thresholdWidth = 1600;
-			var thresholdHeight = 900;
-	
-			if (screenWidth < thresholdWidth || screenHeight < thresholdHeight) {
-				try{
-					document.getElementById('dimmer').style.display = 'none';
-					document.getElementById('Community2Diag').style.display = 'none';
-					document.getElementById('Community2Btn').style.display = 'none';
-				}
-				catch(err){
-				}
-				alert('화면 해상도가 1600x900 미만이므로 강제 조정되었습니다.\n정상적인 게임 플레이가 어려울 수 있으므로 외부 디스플레이를 연결하거나 전체화면 (F11)으로 게임을 플레이해주세요.');
-			}
-	}
  
 
  
