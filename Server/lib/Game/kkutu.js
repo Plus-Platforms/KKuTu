@@ -179,6 +179,7 @@ exports.Data = function(data){
 	this.playTime = data.playTime || 0;
 	this.connectDate = data.connectDate || 0;
 	this.rankPoint = data.rankPoint || 0;
+	this.forestPoint = data.forestPoint || 0;
 	this.record = {};
 	for(i in Const.GAME_TYPE){
 		this.record[j = Const.GAME_TYPE[i]] = data.record ? (data.record[Const.GAME_TYPE[i]] || [0, 0, 0, 0]) : [0, 0, 0, 0];
@@ -521,7 +522,7 @@ exports.Client = function(socket, profile, sid){
 		).on(function(__res){
 			DB.redis.getGlobal(my.id).then(function(_res){
 				DB.redis.putGlobal(my.id, my.data.score).then(function(res){
-					JLog.log(`FLUSHED [${my.id}] PTS=${my.data.score} MNY=${my.money} RP=${my.data.rankPoint}`);
+					JLog.log(`FLUSHED [${my.id}] PTS=${my.data.score} MNY=${my.money} RP=${my.data.rankPoint} 2024식목일 ${my.data.forestPoint}`);
 					R.go({ id: my.id, prev: _res });
 				});
 			});
@@ -1273,7 +1274,7 @@ exports.Room = function(room, channel){
 				res[i].rank = Number(i);
 			}
 			pv = res[i].score;
-			rw = getRewards(o.data.rankPoint, my.mode, o.game.score / res[i].dim, o.game.bonus, res[i].rank, rl, sumScore, my.opts);
+			rw = getRewards(o.data.rankPoint, my.mode, o.game.score / res[i].dim, o.game.bonus, res[i].rank, rl, sumScore, my.opts, o.data.forestPoint);
 			rw.playTime = now - o.playAt;
 			o.applyEquipOptions(rw); // 착용 아이템 보너스 적용
 			if(rw.together){
@@ -1284,6 +1285,7 @@ exports.Room = function(room, channel){
 			o.data.score += rw.score || 0;
 			o.money += rw.money || 0;
 			o.data.rankPoint += rw.rankPoint || 0;
+			o.data.forestPoint += rw.forestPoint || 0;
 			o.data.record[Const.GAME_TYPE[my.mode]][2] += rw.score || 0;
 			o.data.record[Const.GAME_TYPE[my.mode]][3] += rw.playTime;
 			if(!my.practice && rw.together){
@@ -1464,8 +1466,8 @@ function shuffle(arr){
 	
 	return r;
 }
-function getRewards(rankScore, mode, score, bonus, rank, all, ss, opts){
-	var rw = { score: 0, money: 0, rankPoint: 0};
+function getRewards(rankScore, mode, score, bonus, rank, all, ss, opts, forestPoint){
+	var rw = { score: 0, money: 0, rankPoint: 0, forestPoint: 0};
 	var sr = score / ss;
 	
 	// all은 1~8
@@ -1534,8 +1536,8 @@ function getRewards(rankScore, mode, score, bonus, rank, all, ss, opts){
 	//핫타임
 	var date = new Date();
 
-	if ((date.getHours() >= 12 && date.getHours() <= 14) || (date.getHours() >= 19 && date.getHours() <= 23)) {
-		rw.score *= 1.75;
+	if ((date.getHours() >= 19 && date.getHours() <= 23)) {
+		rw.score *= 2;
 	}
 
 	if(all < 2){
@@ -1556,7 +1558,13 @@ function getRewards(rankScore, mode, score, bonus, rank, all, ss, opts){
 	if (rankScore >= 5000){
 		rw.rankPoint = 0; //마스터 달성 시 추가 랭크 포인트 획득 제한
 	}
-
+	
+	//날짜는 GMT 기준이므로 한국시간으로 변환
+	/*var today = new Date();
+	today.setHours(today.getHours() + 9);
+	if (today.getMonth() == 3 && today.getDate() == 22){*/
+		rw.forestPoint = Math.floor(Math.random() * 10) + 1;
+	
 	
 	// applyEquipOptions에서 반올림한다.
 	return rw;

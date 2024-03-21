@@ -63,6 +63,9 @@ function useItem($user, $item, gid){
 		case 'boxB4':
 			got(pick([ 'b4_bb', 'b4_hongsi', 'b4_mint' ]), 1, 604800);
 			break;
+		case 'box2017':
+			got(pick(['bokjori', 'rio_seongwha', 'spanner']), 1, 604800);
+			break;
 		case 'dictPage':
 			R.exp = Math.round(Math.sqrt(1 + 2 * ($user.kkutu.score || 0)));
 			$user.kkutu.score += R.exp;

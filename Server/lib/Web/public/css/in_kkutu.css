@@ -402,7 +402,7 @@ input[type="checkbox"] {
   
   @keyframes zoomIn {
 	from {
-		transform: scale(0.8);
+		transform: scale(0.95);
 	}
 	to {
 		transform: scale(1);
@@ -414,7 +414,7 @@ input[type="checkbox"] {
 		transform: scale(1);
 	}
 	to {
-		transform: scale(0.8);
+		transform: scale(0.95);
 	}
   }
 
@@ -428,13 +428,20 @@ input[type="checkbox"] {
  }
 
 	.closing-effect {
-	animation: fadeOut 0.5s ease, zoomOut 0.5s ease!important;
+	animation: fadeOut 0.2s ease-in, zoomOut 0.2s ease-in!important;
+	animation-fill-mode: forwards;
 	}
 
   .dialog-front {
-	animation: fadeIn 0.5s ease, zoomIn 0.5s ease;
+	animation: fadeIn 0.3s ease-out, zoomIn 0.3s ease-out;
 	transform-origin: center;
 	position: fixed;
+  }
+
+  .dialog{
+    transition-property: all;
+    transition-timing-function: cubic-bezier(.4,0,.2,1);
+    transition-duration: .15s;
   }
 
   button:active {

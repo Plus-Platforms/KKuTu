@@ -460,7 +460,7 @@ $(document).ready(function(){
 			// Set a timeout to hide the dialog after the animation completes
 			setTimeout(function () {
 				$dialog.hide().removeClass("closing-effect");
-			}, 500); // Adjust the time based on your animation duration
+			}, 200); // Adjust the time based on your animation duration
 		}).hotkey(false, 27));
 	}
 	

@@ -548,8 +548,8 @@ function welcome() {
 
         var date = new Date();
 
-        if ((date.getHours() >= 12 && date.getHours() <= 14) || (date.getHours() >= 19 && date.getHours() <= 23)) {
-            notice('🔥 12시부터 15시, 19시부터 0시는 핫타임! 1.75배의 XP를 받아보세요.');
+        if ((date.getHours() >= 19 && date.getHours() <= 23)) {
+            notice('🔥 19시부터 0시는 핫타임! 2배의 XP를 받아보세요.');
         }
 
         playtime++;
@@ -558,7 +558,7 @@ function welcome() {
 
     showGameAlert();
 
-    if (mobile) {
+    if (1 == 1) {
         $("#intro-text").text(L['welcome']).on("click", function () {
             $("#intro-text").addClass("load-complete");
         });
@@ -2220,15 +2220,18 @@ function roundEnd(result, data){
 		var date = new Date();
 		
 		notice(L['scoreGain'] + ": " + commify($data._result.reward.score) + ", " + L['moneyGain'] + ": " + commify($data._result.reward.money) + ", " + L['rankPointGain'] + ": " + commify($data._result.reward.rankPoint));
-		if ((date.getHours() >= 12 && date.getHours() <= 14) || (date.getHours() >= 19 && date.getHours() <= 23)) {
-			notice("핫타임이 적용되어 XP가 1.75배 되었습니다.");
+		if ((date.getHours() >= 19 && date.getHours() <= 23)) {
+			notice("핫타임이 적용되어 XP가 2배 되었습니다.");
+		}
+		if($data._result.reward.forestPoint !== 0){
+			notice("🌳 2024 '식목일 기부 이벤트'에 "+ commify($data._result.reward.forestPoint)+"원의 기부금액이 모아졌습니다.");
 		}
 
 		$(".result-me").css('opacity', 1);
 		
 
-		if ((date.getHours() >= 12 && date.getHours() <= 14) || (date.getHours() >= 19 && date.getHours() <= 23)) {
-			$(".result-me-score").html("핫타임 XP 1.75배 +"+commify($data._result.reward.score)+addit);
+		if ((date.getHours() >= 19 && date.getHours() <= 23)) {
+			$(".result-me-score").html("핫타임 XP 2배 +"+commify($data._result.reward.score)+addit);
 		}
 		else{
 			$(".result-me-score").html(L['scoreGain']+" +"+commify($data._result.reward.score)+addit);
@@ -2384,20 +2387,30 @@ function loadShop(){
 	$(".shop-type.selected").removeClass("selected");
 	$("#shop-type-all").addClass("selected");
 }
-function filterShop(by){
-	var isAll = by === true;
-	var $o, obj;
-	var i;
-	
-	if(!isAll) by = by.split(',');
-	for(i in $data.shop){
-		obj = $data.shop[i];
-		if(obj.cost < 0) continue;
-		$o = $("#goods_" + i).show();
-		if(isAll) continue;
-		if(by.indexOf(obj.group) == -1) $o.hide();
-	}
+
+function filterShop(by) {
+    var isAll = by === true;
+    var $o, obj;
+    
+    if (!isAll) by = by.split(',');
+    
+    for (var i in $data.shop) {
+        obj = $data.shop[i];
+        if (obj.cost < 0) continue; // 가격이 음수인 경우 처리하지 않음
+        $o = $("#goods_" + i);
+        if (obj.name.startsWith("u_")) { // 이름이 'u_'로 시작하는 아이템
+            if (isAll || by.indexOf("usermarket") !== -1) {
+                $o.show();
+            } else {
+                $o.hide();
+            }
+        } else { // 다른 모든 아이템은 표시하지 않음
+            $o.hide();
+        }
+    }
 }
+
+
 function explainGoods(item, equipped, expire){
 	var i;
 	var $R = $("<div>").addClass("expl dress-expl")
@@ -3044,7 +3057,7 @@ function iDynImage(group, data){
 	var i;
 	
 	canvas.width = canvas.height = 50;
-	ctx.font = "24px NBGothic";
+	ctx.font = "24px Pretendard";
 	ctx.textAlign = "center";
 	ctx.textBaseline = "middle";
 	switch(group){

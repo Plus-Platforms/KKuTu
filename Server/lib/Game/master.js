@@ -567,6 +567,7 @@ function joinNewUser($c) {
 		exordial: $c.exordial,
 		playTime: $c.data.playTime,
 		rankPoint: $c.data.rankPoint,
+		forestPoint: $c.data.forestPoint2024,
 		okg: $c.okgCount,
 		users: KKuTu.getUserList(),
 		rooms: KKuTu.getRoomList(),
