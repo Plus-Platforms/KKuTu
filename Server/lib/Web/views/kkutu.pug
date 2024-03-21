@@ -44,7 +44,6 @@ block JS
 	script(type='text/javascript', src='/js/in_game_kkutu.min.js')
 	script(type='text/javascript', src='/js/fabric.min.js')
 	script(type='text/javascript', src='/js/diff-match-patch-compressed.js')
-	script(type='text/javascript', src='/js/ads-prebid.js')
 	script(src='https://challenges.cloudflare.com/turnstile/v0/api.js?compat=recaptcha', async, defer)
 
 block CSS
@@ -100,7 +99,7 @@ block Middle
 	div#tost_message
 	div#contextMenuContainer
 	
-	+Dialog('SettingDiag', 400, 500, L('settingsText', false))
+	+Dialog('SettingDiag', 400, 600, L('settingsText', false))
 		div.dialog-bar
 			h4.opt!= "배경음악 볼륨"
 			input#bgm-volume.range-input(type='range' min='0' max='1' value='0.5' step='0.01' style='width:50%;')
@@ -111,9 +110,16 @@ block Middle
 			h4.opt!= "글씨체"
 			select#fontSelect
 				option(value="Pretendard")= "프리텐다드 (기본)"
-				option(value="NBGothic")= "나눔바른고딕"
+				option(value="NanumBarunGothic")= "나눔바른고딕"
+				option(value="Galmuri14")= "갈무리 14px"
+				option(value="Galmuri11")= "갈무리 11px"
+				option(value="Galmuri9")= "갈무리 9px"
+				option(value="Galmuri7")= "갈무리 7px"
+				option(value="D2Coding")= "D2Coding"
 				option(value="맑은 고딕")= "맑은 고딕"
-				option(value="Noto Sans KR")= "Noto Sans KR"
+				option(value="굴림")= "굴림"
+				option(value="돋움")= "돋움"
+
 		div.dialog-bar
 			h4.opt!= L('denyReq')
 			+SettingOption('deny-invite', L('denyInvite', false))
@@ -679,3 +685,4 @@ block Middle
 
 	script (adsbygoogle = window.adsbygoogle || []).push({});
 	script(type='text/javascript', src='/js/onboarding.js')
+	script(type='text/javascript', src='/js/ads-prebid.js')
