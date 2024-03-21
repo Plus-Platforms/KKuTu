@@ -205,7 +205,15 @@ exports.RULE = {
 		ai: false,
 		big: false,
 		ewq: false
-	}
+	}/*,
+	'KHQ': { lang: "ko",
+		rule: "HanjaQuiz",
+		opts: [  ],
+		time: 1,
+		ai: false,
+		big: false,
+		ewq: false
+	}*/
 };
 exports.getPreScore = function(text, chain, tr){
 	return 2 * (Math.pow(5 + 7 * (text || "").length, 0.74) + 0.88 * (chain || []).length) * ( 0.5 + 0.5 * tr );

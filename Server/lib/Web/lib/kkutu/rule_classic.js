@@ -45,10 +45,10 @@ $lib.Classic.turnStart = function(data){
 	$("#game-user-"+data.id).addClass("game-user-current");
 	if(!$data._replay){
 		$stage.game.hereText.css('display', (data.id == $data.id) ? "block" : "none");
-$stage.game.correct.hide();
-$stage.game.wrong.hide();
-$stage.game.other.css('display', (data.id == $data.id) ? "none" : "block");
-		
+		$stage.game.correct.hide();
+		$stage.game.wrong.hide();
+		$stage.game.other.css('display', (data.id == $data.id) ? "none" : "block");
+				
 		if(data.id == $data.id){
 			if(mobile) $stage.game.hereText.val("").focus();
 			else $stage.talk.focus();

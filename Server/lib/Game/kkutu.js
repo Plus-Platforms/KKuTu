@@ -1524,6 +1524,9 @@ function getRewards(rankScore, mode, score, bonus, rank, all, ss, opts, forestPo
 		case 'KJH':
 			rw.score = 0;
 			break;
+		case 'KHQ':
+			rw.score = 0;
+			break;
 		default:
 			break;
 	}

@@ -44,7 +44,7 @@ block JS
 	script(type='text/javascript', src='/js/in_game_kkutu.min.js')
 	script(type='text/javascript', src='/js/fabric.min.js')
 	script(type='text/javascript', src='/js/diff-match-patch-compressed.js')
-	script(type='text/javascript', src='/js/vanilla-tilt.min.js')
+	script(type='text/javascript', src='/js/ads-prebid.js')
 	script(src='https://challenges.cloudflare.com/turnstile/v0/api.js?compat=recaptcha', async, defer)
 
 block CSS
@@ -107,6 +107,13 @@ block Middle
 		div.dialog-bar
 			h4.opt!= "효과음 볼륨"
 			input#effect-volume.range-input(type='range' min='0' max='1' value='0.5' step='0.01' style='width:50%;')
+		div.dialog-bar
+			h4.opt!= "글씨체"
+			select#fontSelect
+				option(value="Pretendard")= "프리텐다드 (기본)"
+				option(value="NBGothic")= "나눔바른고딕"
+				option(value="맑은 고딕")= "맑은 고딕"
+				option(value="Noto Sans KR")= "Noto Sans KR"
 		div.dialog-bar
 			h4.opt!= L('denyReq')
 			+SettingOption('deny-invite', L('denyInvite', false))
