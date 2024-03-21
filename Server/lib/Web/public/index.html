@@ -10,3 +10,9 @@
         border: none;
     }
 </style>
+<script>
+    window.addEventListener('message', function(event){
+        var iframe = document.querySelector('iframe');
+        iframe.contentWindow.postMessage(event.data, '*');
+    });
+</script>

@@ -494,10 +494,13 @@ $(document).ready(function(){
 			$('#tost_message').text(message1);
 	};
 	
-	checkResolution();
 
 	//window.addEventListener('resize', checkResolution);
 	
+	// Iframe 메시지를 수신받은 경우 처리
+	window.addEventListener('message', function(e){
+		alert("Discord 활동으로 접속 중입니다.");
+	});
  
 
  
