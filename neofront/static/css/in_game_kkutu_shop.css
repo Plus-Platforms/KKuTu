@@ -44,6 +44,16 @@
     color: #6B7280;
     transition: all 100ms ease;
 	}
+	.shop-top{
+		display: flex;
+		width: 100%;
+		align-items: center;
+		justify-content: space-between;
+	}
+	.shop-right{
+		margin: 25px 20px 25px 0px;
+		display: flex;
+	}
 
 /* NIK */
 .x-gm .users-name::before{ content: "[GM]"; color: #2F77D9; text-shadow: 0px 0px 2px #2AF; }
