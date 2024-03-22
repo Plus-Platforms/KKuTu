@@ -54,7 +54,7 @@ function calculateTotalConnectedUsers() {
   <div class="hidden lg:block w-[260px] lg:mr-[50px]">
     <div class="h-[170px] text-lg py-3 text-white text-center bg-black/20">
       글자로 놀자, 끄투 온라인!
-      <img src="/img/kkutu/logo-ingame-dark.svg" class="h-[120px]" alt="로고">
+      <img src="/img/2024fools/portallogo.png" class="h-[120px] mx-auto " alt="로고">
   </div>
   <div>
   {#if jsonDataServers.list[0] == null}
@@ -152,7 +152,7 @@ function calculateTotalConnectedUsers() {
             </a>
           </div>
             
-          <iframe width="342" height="195" src="https://www.youtube.com/embed/-qOu-WZ_MEM?si=0rfS2weIeUqkHFVq" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+          <iframe width="342" height="195" src="https://www.youtube.com/embed/FPaaf-DFH8Q" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
           <div class="mt-1 text-blue-900 text-lg bg-white px-2">
             <strong>배너</strong>
