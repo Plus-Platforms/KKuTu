@@ -461,7 +461,7 @@ code{
 }
 .jt-image{
 	float: left;
-	border-radius: 999px;
+	border-radius: 10px;
 	background-size: 100%;
 }
 .jt-btn-shadow{

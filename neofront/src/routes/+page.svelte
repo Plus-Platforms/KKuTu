@@ -145,21 +145,18 @@ function calculateTotalConnectedUsers() {
       </div>
     </div>
     
-    <div class="absolute inset-x-0 top-[calc(100%-13rem)] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[calc(100%-30rem)]" aria-hidden="true">
-      <div class="relative left-[calc(50%+3rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 bg-gradient-to-tr from-purple-500 to-purple-700 opacity-30 sm:left-[calc(50%+36rem)] sm:w-[72.1875rem]" style="clip-path: polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)"></div>
-    </div>
   </section>
   
 <div class="modal">
   <div class="modal-content">
     <button on:click="{() => isModalOpen = false}" class="modal-close text-2xl text-gray-500">×</button>
-    <h3 class="text-3xl font-bold text-center dark:text-black">PC 클라이언트 다운로드</h3>
-    <p class="text-gray-500 text-center">현재 Windows 기기만 지원합니다. (macOS 추후 지원 예정)</p>
+    <h3 class="text-3xl font-bold text-center dark:text-black">클라이언트는 지금 개편 중!</h3>
+    <p class="text-gray-500 text-center">언제, 어디서나 즐긴다!<br/>Windows, macOS, Linux, iOS, Android 크로스 플레이를 지원하는<br/>새로운 클라이언트를 개발 중에 있습니다.
+    <br/><br/>개발 완료 전까진 구 버전의 클라이언트를 이용할 수 있습니다.</p>
     <div class="px-4 w-full">
       <a href="https://github.com/Plus-Platforms/KKuTu/releases/download/1.0.0/install-1.0.0.exe">
       <button class="mt-3 px-3 w-full bg-blue-500 font-bold text-white text-center m-auto py-2 transform ease-in duration-100 active:scale-95 hover:bg-blue-700">
-        V 1.0.0 다운로드<br/>
-      (2024/02/01)
+        2024/02/01 클라이언트 다운로드
     </button>
   </a>
 
@@ -212,6 +209,7 @@ function calculateTotalConnectedUsers() {
   </div>
 </div>
 </section>
+<!--
 <div class="overflow-hidden bg-gray-100 py-24 dark:bg-gray-800 dark:text-white">
       <div class="mx-auto max-w-screen-xl px-6 lg:px-8">
         <div class="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 sm:gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-2">
@@ -271,36 +269,12 @@ function calculateTotalConnectedUsers() {
           />
         </div>
       </div>
-    </div>
-    <section class="max-w-screen-xl mx-auto my-10 p-4 md:grid md:grid-cols-2">
-      <div class="flex flex-col">
-        <a href="https://cafe.naver.com/pluskkutu/95"  target="_blank">
-          <img src="/img/봄시즌.png" alt="봄시즌배너">
-        </a>
-      </div>
-      <div class="mt-8 lg:mt-0">
-      <h2 class="text-3xl font-bold mb-4">업데이트</h2>
-      {#if jsonData && jsonData.message && jsonData.message.result}
-      {#each jsonData.message.result.articleList as { menuName, menuId, articleId, subject, writeDateTimestamp } (articleId)}
-      <a href={`https://cafe.naver.com/ArticleRead.nhn?clubid=31109813&page=1&menuid=${menuId}&boardtype=L&articleid=${articleId}&referrerAllArticles=false`} target="_blank" class="hover:text-blue-500 hover:underline">
-        <div class="post py-4 border-b dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800">
-          <h3 class="truncate">
-            <a href={`https://cafe.naver.com/ArticleList.nhn?search.clubid=31109813&search.menuid=${menuId}&search.boardtype=L`} target="_blank"><span class={`boardBg-${menuId} rounded-full px-2 text-white mr-2 hover:bg-blue-600`}>{menuName}</span></a>
-            <strong>{new Date(writeDateTimestamp).toLocaleDateString()}</strong>
-            {subject}</h3>
-        </div>
-      </a>
-      {/each}
-      {:else}
-      <p>불러오는 중</p>
-    {/if}
-    </div>
-
-    </section>
-    <div class="bg-gray-100 dark:bg-gray-950 py-24 sm:py-32">
+    </div>-->
+    
+    <div class="bg-gray-100 dark:bg-gray-800 py-24 sm:py-32">
       <div class="mx-auto max-w-7xl px-6 lg:px-8">
         <h2 class="text-center text-3xl font-bold text-gray-900 dark:text-gray-100">
-          새로운 소식을 가장 먼저 만나보세요.
+          공식 SNS에서 만나요!
         </h2>
         <div class="max-w-lg mx-auto mt-16 grid grid-cols-3 gap-x-8 items-center jusitfy-center">
           <div class="flex items-center justify-center">
@@ -339,5 +313,30 @@ function calculateTotalConnectedUsers() {
       </div>
     </div>
   </div>
+    <section class="max-w-screen-xl mx-auto py-10 p-4 md:grid md:grid-cols-2">
+      <div class="flex flex-col">
+        <a href="https://cafe.naver.com/ArticleRead.nhn?clubid=31109813&page=1&menuid=7&boardtype=L&articleid=118&referrerAllArticles=false"  target="_blank">
+          <img src="/img/2404 업데이트배너.png" alt="2404업데이트배너">
+        </a>
+      </div>
+      <div class="mt-8 lg:mt-0">
+      <h2 class="text-3xl font-bold mb-4">업데이트</h2>
+      {#if jsonData && jsonData.message && jsonData.message.result}
+      {#each jsonData.message.result.articleList as { menuName, menuId, articleId, subject, writeDateTimestamp } (articleId)}
+      <a href={`https://cafe.naver.com/ArticleRead.nhn?clubid=31109813&page=1&menuid=${menuId}&boardtype=L&articleid=${articleId}&referrerAllArticles=false`} target="_blank" class="hover:text-blue-500 hover:underline">
+        <div class="post py-4 border-b dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800">
+          <h3 class="truncate">
+            <a href={`https://cafe.naver.com/ArticleList.nhn?search.clubid=31109813&search.menuid=${menuId}&search.boardtype=L`} target="_blank"><span class={`boardBg-${menuId} rounded-full px-2 text-white mr-2 hover:bg-blue-600`}>{menuName}</span></a>
+            <strong>{new Date(writeDateTimestamp).toLocaleDateString()}</strong>
+            {subject}</h3>
+        </div>
+      </a>
+      {/each}
+      {:else}
+      <p>불러오는 중</p>
+    {/if}
+    </div>
+
+    </section>
 
 </div>

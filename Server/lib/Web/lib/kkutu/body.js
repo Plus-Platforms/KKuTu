@@ -2398,7 +2398,7 @@ function filterShop(by) {
         obj = $data.shop[i];
         if (obj.cost < 0) continue; // 가격이 음수인 경우 처리하지 않음
         $o = $("#goods_" + i);
-        if (obj.name.startsWith("u_")) { // 이름이 'u_'로 시작하는 아이템
+        if (obj._id.startsWith("u_")) { // 이름이 'u_'로 시작하는 아이템
             if (isAll || by.indexOf("usermarket") !== -1) {
                 $o.show();
             } else {
