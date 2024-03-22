@@ -6,26 +6,20 @@
 
 </script>
 
-<header class="top-0 lg:top-[20px] absolute py-4 lg:py-0 w-full z-10">
-	<nav class="max-w-screen-xl mx-auto flex items-center justify-between px-4 lg:px-8 lg:py-0" aria-label="Global">
+<header class="top-0 bg-[#252d3d] py-4 lg:py-0 w-full z-10">
+	<nav class="max-w-screen-2xl mx-auto flex items-center justify-between px-4 lg:px-8 lg:py-0" aria-label="Global">
 	  <div class="flex lg:flex-1">
 		<a href="/">
 	  <button class="-m-1.5 p-1.5 md:flex"><span class="sr-only">플러스끄투</span><img class="h-6" src="/img/logo_dark.png" alt=""/></button>
 	</a>
 	  </div>
-	  <div class="hidden py-4 lg:flex text-white">
-
-		<a href="https://cafe.naver.com/pluskkutu"
-			  class="mr-6 text-xl flex rounded-xl py-2 px-2 transform ease-in duration-100 active:scale-95 hover:backdrop-blur-lg hover:bg-white/20">
-				  카페
-				  </a>
-		<a href="https://discord.gg/5b8kNZJawd"
-				  class="mr-6 text-xl flex rounded-xl py-2 px-2 transform ease-in duration-100 active:scale-95 hover:backdrop-blur-lg hover:bg-white/20">
-					  디스코드
-					  </a>
+	  <div class="hidden lg:flex text-white">
 		<a href="https://kkutu.cc/login"
-					  class="mr-6 text-xl flex rounded-xl py-2 px-2 transform ease-in duration-100 active:scale-95 hover:backdrop-blur-lg hover:bg-white/20">
-					로그인
+					  class="mr-6 text-2xl flex font-bold leading-5 py-3 pt-5 text-right">
+					<div>로그인
+					<br><span class="text-sm text-[#ffff00] font-medium">로그인을 하고 더욱 즐거운 플러스끄투를 즐겨보세요!</span>
+				</div>
+				<img src="img/2024fools/logout.png" alt="로그아웃" class="h-12 -mt-2 pl-2">
 						  </a>
 				  </div>
 	  <div class="lg:hidden flex flex-1 justify-end">
@@ -44,4 +38,6 @@
 	</nav>
   </header>
 
-  
+  <div class="hidden lg:block bg-[#EEBB33] text-[#111111] text-center font-semibold py-1 text-xl">
+	플러스끄투가 2018년을 맞아 새로워졌습니다! 자세한 내용은 카페 공지사항을 확인해주세요.
+  </div>

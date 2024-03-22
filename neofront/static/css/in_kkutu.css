@@ -41,15 +41,6 @@
 		color: #ffffff!important;
 		background-color: #374151!important;
 	}
-	.kkutu-menu {
-		background-color: #1f2937!important;
-	}
-	.kkutu-menu button {
-		color: #e5e7eb!important;
-	}
-	.kkutu-menu .mainbtn:hover {
-		background: #374151!important;
-	}
 	#Background{
 		background: #374151!important;
 	}
@@ -493,7 +484,6 @@ iframe{
     bottom: 0;
     width: 100vw;
     min-width: 1600px;
-	background-color: #E5E7EB;
 }
 .kkutu-wrap{
 	padding-right: 30px;
@@ -525,12 +515,14 @@ iframe{
     border: none;
     width: 162px;
     height: 39px;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
 }
 	.kkutu-menu .mainbtn:hover{
 		border-radius: 12px 12px 0px 0px;
-		background: #FFF;
 		box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.10), 0px 4px 6px -4px rgba(0, 0, 0, 0.10);
 	}
+
 	.kkutu-menu .icnbtn:hover{
 		background: #FFFFFF00;
 	}
