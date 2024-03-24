@@ -1,9 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://tee8d5gog064"]
-
-[ext_resource type="Texture2D" uid="uid://i8haga2wr4se" path="res://infole_logo.svg" id="1_ea4sl"]
-
-[node name="Node2D" type="Node2D"]
-
-[node name="InfoleLogo" type="Sprite2D" parent="."]
-position = Vector2(785, 418)
-texture = ExtResource("1_ea4sl")
