@@ -537,7 +537,9 @@ $(document).ready(function(){
 	});
 	$stage.menu.sideMenu.on('click', function(e){
 		$('#dimmer').fadeIn();
-		$('#sideMenuDiag').fadeIn();
+		$('#sideMenuDiag').fadeIn().css('left', '100%').animate({
+			'left': $(window).width() - 740 // Adjust 740 as per your requirement
+		}, 200);
 	});
 	$stage.menu.credit.on('click', function(e){
 		$('#sideMenuDiag').fadeOut();

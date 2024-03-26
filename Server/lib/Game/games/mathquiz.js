@@ -92,7 +92,7 @@ exports.roundReady = function(){
 							case '-':
 								return num1 - num2;
 							case '*':
-								return num1 * num2;
+								return parseFloat(parseFloat((num1 * num2).toFixed(3)).toFixed(2));
 							case '/':
 								// Check for division by zero
 								if (num2 !== 0) {
@@ -203,8 +203,8 @@ exports.roundReady = function(){
 						var element = "소행성 단면"
 					}
 
-					my.game.mathAnswer = num2*num2;
-					my.game.mathQuestion = "반지름이 " + num2 + calclogic + "인 "+element+"의 넓이 π" + calclogic + "²는? (숫자로 입력)";
+					my.game.mathAnswer = num2*num2*3.14;
+					my.game.mathQuestion = "반지름이 " + num2 + calclogic + "인 "+element+"의 넓이 π" + calclogic + "²는? (숫자로 입력, π=3.14)";
 				}
 
 

@@ -18,6 +18,7 @@
 
 var Const = require('../../const');
 var Lizard = require('../../sub/lizard');
+const Hangul = require('hangul-js');
 var DB;
 var DIC;
 
@@ -27,6 +28,9 @@ const ROBOT_THINK_COEF = [ 4, 2, 1, 0, 0 ];
 const ROBOT_HIT_LIMIT = [ 8, 4, 2, 1, 0 ];
 // ㄱ, ㄴ, ㄷ, ㅁ, ㅂ, ㅅ, ㅇ, ㅈ, ㅊ, ㅌ, ㅍ, ㅎ
 const HUNMIN_LIST = [ 4352, 4354, 4355, 4358, 4359, 4361, 4363, 4364, 4366, 4368, 4369, 4370 ];
+// 모음
+const VOWEL_LIST = [ 0x314F, 0x3153, 0x3157, 0x315C, 0x3161, 0x3163 ];
+
 
 exports.init = function(_DB, _DIC){
 	DB = _DB;
@@ -224,18 +228,44 @@ exports.readyRobot = function(robot){
 	}
 };
 function isChainable(text, theme){
-	return toRegex(theme).exec(text) != null;
-}
-function toRegex(theme){
-	var arg = theme.split('').map(toRegexText).join('');
-	
-	return new RegExp(`^(${arg})$`);
+	if(getVowelsAsJamo(text) == theme){
+		return true;
+	}
+	else{
+		return null;
+	}
 }
 function toRegexText(item){
 	var c = item.charCodeAt();
 	var a = 44032 + 588 * (c - 4352), b = a + 587;
 	
 	return `[\\u${a.toString(16)}-\\u${b.toString(16)}]`;
+}
+
+function getVowelsAsJamo(text) {
+    // 주어진 텍스트에서 한글 음절을 분리합니다.
+    const characters = Hangul.disassemble(text);
+    
+    // 모음을 저장할 변수를 초기화합니다.
+    let vowels = '';
+    
+    // 분리된 음절을 순회하면서 모음인 경우만 추출합니다.
+    characters.forEach(char => {
+        if (Hangul.isVowel(char)) {
+            // 추출된 모음을 자모로 변환하여 저장합니다.
+            vowels += Hangul.assemble([char]);
+        }
+    });
+    
+    // 추출된 모음을 반환합니다.
+    return vowels;
+}
+
+
+function toRegex(theme){
+	var arg = theme.split('').map(getVowelsAsJamo).join('');
+	
+	return new RegExp(`^(${arg})$`);
 }
 function getMission(theme){
 	var flag;
@@ -290,14 +320,15 @@ function getAuto(theme, type){
 	return R;
 }
 function getTheme(len, ex){
-	var res = "";
-	var c, d;
-	
-	while(len > 0){
-		c = String.fromCharCode(HUNMIN_LIST[Math.floor(Math.random() * HUNMIN_LIST.length)]);
-		if(ex.includes(d = res + c)) continue;
-		res = d;
-		len--;
-	}
-	return res;
+    var res = "";
+    var d;
+    
+    while(len > 0){
+        var randomIndex = Math.floor(Math.random() * VOWEL_LIST.length);
+        var c = String.fromCharCode(VOWEL_LIST[randomIndex]);
+        if(ex.includes(d = res + c)) continue;
+        res = d;
+        len--;
+    }
+    return res;
 }

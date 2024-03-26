@@ -18,6 +18,7 @@
     "electron-pug": "^1.5.1"
   },
   "dependencies": {
-    "diff-match-patch": "^1.0.5"
+    "diff-match-patch": "^1.0.5",
+    "hangul-js": "^0.2.6"
   }
 }

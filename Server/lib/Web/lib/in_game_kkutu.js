@@ -47,7 +47,7 @@ var $stage;
 var $sound = {};
 var $_sound = {}; // 현재 재생 중인 것들
 var $data = {};
-var $lib = { Classic: {}, Jaqwi: {}, Crossword: {}, Typing: {}, Hunmin: {}, Daneo: {}, Sock: {}, Drawing: {}, MathQuiz: {}, All: {} };
+var $lib = { Classic: {}, Jaqwi: {}, Crossword: {}, Typing: {}, Hunmin: {}, Daneo: {}, Sock: {}, Drawing: {}, MathQuiz: {}, Moum: {}, All: {} };
 var $rec;
 var mobile;
 var audioContext = window.hasOwnProperty("AudioContext") ? (new AudioContext()) : false;
@@ -593,7 +593,9 @@ $(document).ready(function(){
 	});
 	$stage.menu.sideMenu.on('click', function(e){
 		$('#dimmer').fadeIn();
-		$('#sideMenuDiag').fadeIn();
+		$('#sideMenuDiag').fadeIn().css('left', '100%').animate({
+			'left': $(window).width() - 740 // Adjust 740 as per your requirement
+		}, 200);
 	});
 	$stage.menu.credit.on('click', function(e){
 		$('#sideMenuDiag').fadeOut();
@@ -2015,6 +2017,122 @@ $stage.game.other.css('display', (data.id == $data.id) ? "none" : "block");
 };
 $lib.Hunmin.turnGoing = $lib.Classic.turnGoing;
 $lib.Hunmin.turnEnd = function(id, data){
+	var $sc = $("<div>")
+		.addClass("deltaScore")
+		.html((data.score > 0) ? ("+" + (data.score - data.bonus)) : data.score);
+	var $uc = $(".game-user-current");
+	var hi;
+	
+	$data._turnSound.stop();
+	addScore(id, data.score);
+	clearInterval($data._tTime);
+	if(data.ok){
+		clearTimeout($data._fail);
+		$stage.game.hereText.hide();
+		if (!$stage.game.other.is(":visible")){ $stage.game.correct.show();
+}
+		$stage.game.chain.html(++$data.chain);
+		pushDisplay(data.value, data.mean, data.theme, data.wc);
+	}else{
+		$sc.addClass("lost");
+		$(".game-user-current").addClass("game-user-bomb");
+		$stage.game.hereText.hide();
+		if (!$stage.game.other.is(":visible")){ $stage.game.wrong.show();
+}
+		playSound('timeout');
+	}
+	if(data.hint){
+		data.hint = data.hint._id;
+		hi = data.hint.indexOf($data._chars[0]);
+		if(hi == -1) hi = data.hint.indexOf($data._chars[1]);
+		
+		$stage.game.display.empty()
+			.append($("<label>").html(data.hint.slice(0, hi + 1)))
+			.append($("<label>").css('color', "#AAAAAA").html(data.hint.slice(hi + 1)));
+	}
+	if(data.bonus){
+		mobile ? $sc.html("+" + (b.score - b.bonus) + "+" + b.bonus) : addTimeout(function(){
+			var $bc = $("<div>")
+				.addClass("deltaScore bonus")
+				.html("+" + data.bonus);
+			
+			drawObtainedScore($uc, $bc);
+		}, 500);
+	}
+	drawObtainedScore($uc, $sc).removeClass("game-user-current");
+	updateScore(id, getScore(id));
+};
+
+/**
+ * Rule the words! KKuTu Online
+ * Copyright (C) 2017 JJoriping(op@jjo.kr)
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ */
+
+$lib.Moum.roundReady = function(data){
+	var i, len = $data.room.game.title.length;
+	var $l;
+	
+	clearBoard();
+	$data._roundTime = $data.room.time * 1000;
+	$stage.game.display.html($data._char = "&lt;" + data.theme + "&gt;");
+	$stage.game.chain.show().html($data.chain = 0);
+	if($data.room.opts.mission){
+		$stage.game.items.show().css('opacity', 1).html($data.mission = data.mission);
+	}
+	drawRound(data.round);
+	playSound('round_start');
+	recordEvent('roundReady', { data: data });
+};
+$lib.Moum.turnStart = function(data){
+	$data.room.game.turn = data.turn;
+	if(data.seq) $data.room.game.seq = data.seq;
+	$data._tid = $data.room.game.seq[data.turn];
+	if($data._tid.robot) $data._tid = $data._tid.id;
+	data.id = $data._tid;
+	
+	$stage.game.display.html($data._char);
+	$("#game-user-"+data.id).addClass("game-user-current");
+	if(!$data._replay){
+		$stage.game.hereText.css('display', (data.id == $data.id) ? "block" : "none");
+$stage.game.correct.hide();
+$stage.game.wrong.hide();
+$stage.game.other.css('display', (data.id == $data.id) ? "none" : "block");
+		if(data.id == $data.id){
+			if(mobile) $stage.game.hereText.val("").focus();
+			else $stage.talk.focus();
+		}
+	}
+	$stage.game.items.html($data.mission = data.mission);
+	
+	ws.onmessage = _onMessage;
+	clearInterval($data._tTime);
+	clearTrespasses();
+	$data._chars = [ data.char, data.subChar ];
+	$data._speed = data.speed;
+	$data._tTime = addInterval(turnGoing, TICK);
+	$data.turnTime = data.turnTime;
+	$data._turnTime = data.turnTime;
+	$data._roundTime = data.roundTime;
+	$data._turnSound = playSound("T"+data.speed);
+	recordEvent('turnStart', {
+		data: data
+	});
+};
+$lib.Moum.turnGoing = $lib.Classic.turnGoing;
+$lib.Moum.turnEnd = function(id, data){
 	var $sc = $("<div>")
 		.addClass("deltaScore")
 		.html((data.score > 0) ? ("+" + (data.score - data.bonus)) : data.score);
@@ -4948,26 +5066,20 @@ function loadShop(){
 	$("#shop-type-all").addClass("selected");
 }
 
-function filterShop(by) {
-    var isAll = by === true;
-    var $o, obj;
-    
-    if (!isAll) by = by.split(',');
-    
-    for (var i in $data.shop) {
-        obj = $data.shop[i];
-        if (obj.cost < 0) continue; // 가격이 음수인 경우 처리하지 않음
-        $o = $("#goods_" + i);
-        if (obj.name.startsWith("u_")) { // 이름이 'u_'로 시작하는 아이템
-            if (isAll || by.indexOf("usermarket") !== -1) {
-                $o.show();
-            } else {
-                $o.hide();
-            }
-        } else { // 다른 모든 아이템은 표시하지 않음
-            $o.hide();
-        }
-    }
+
+function filterShop(by){
+	var isAll = by === true;
+	var $o, obj;
+	var i;
+	
+	if(!isAll) by = by.split(',');
+	for(i in $data.shop){
+		obj = $data.shop[i];
+		if(obj.cost < 0) continue;
+		$o = $("#goods_" + i).show();
+		if(isAll) continue;
+		if(by.indexOf(obj.group) == -1) $o.hide();
+	}
 }
 
 
