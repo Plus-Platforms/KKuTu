@@ -34,7 +34,7 @@ $lib.MathQuiz.roundReady = function(data){
 	$(".jjo-turn-time").css('width', "760px");
 	$(".jjoDisplayBar").css('width', "760px");
 	drawRound(data.round);
-	playSound('success');
+	playSound('question');
 	clearInterval($data._tTime);
 };
 $lib.MathQuiz.turnStart = function(data){
