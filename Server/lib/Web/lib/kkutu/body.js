@@ -2655,8 +2655,8 @@ function processWord(word, _mean, _theme, _wcs){
 				var $m3 = $("<label>").addClass("word-m3");
 				var _t = tl.shift();
 				
-				if(m2s) $m3.append($("<label>").addClass("word-head word-m3-head").html(x3 + 1));
-				if(_t) $m3.append($("<label>").addClass("word-theme").html(_t));
+				$m3.append($("<label>").addClass("word-head word-m3-head").html(x3 + 1));
+				$m3.append($("<label>").addClass("word-theme").html(_t));
 				$m3.append($("<label>").addClass("word-m3-body").html(formMean(m3)));
 				
 				$m2.append($m3);
@@ -2666,18 +2666,22 @@ function processWord(word, _mean, _theme, _wcs){
 		$R.append($m1);
 	});
 	function formMean(v){
-		return v.replace(/\$\$[^\$]+\$\$/g, function(item){
-			var txt = item.slice(2, item.length - 2)
-				.replace(/\^\{([^\}]+)\}/g, "<sup>$1</sup>")
-				.replace(/_\{([^\}]+)\}/g, "<sub>$1</sub>")
-				.replace(/\\geq/g, "≥")
-			;
-			
-			return "<equ>" + txt + "</equ>";
-		})
-		.replace(/\*\*([^\*]+)\*\*/g, "<sup>$1</sup>")
-		.replace(/\*([^\*]+)\*/g, "<sub>$1</sub>");
+		var lines = v.split("\n");
+		var output = "";
+	
+		for (var i = 0; i < lines.length; i++) {
+			var line = lines[i];
+			output += (i + 1) + ". ";
+			line = line.replace(/\[([^\]]+)\]/g, function(match, label) {
+				return "<label class='wordMeanClass'>" + label + "</label>&nbsp;";
+			});
+	
+			output += line + "<br>";
+		}
+	
+		return output;
 	}
+	
 	return $R;
 }
 function getCharText(char, subChar, wordLength){
