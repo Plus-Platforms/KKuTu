@@ -104,7 +104,8 @@ $(document).ready(function(){
 			connList: $("#connList"),
 			roomListTitle: $(".RoomListBox .product-title"),
 			roomList: $(".RoomListBox .product-body"),
-			createBanner: $("<div>").addClass("rooms-item rooms-create").append($("<div>").html("<i class='fa-solid fa-plus'></i>방 만들기"))
+			createBanner: $("<div>").addClass("rooms-item rooms-create").append($("<div>").html("<i class='fa-solid fa-plus'></i>방 만들기")),
+			singleBanner: $("<div>").addClass("rooms-item rooms-single").append($("<div>").html("<i class='fa-solid fa-user'></i>혼자서 놀기"))
 		},
 		chat: $("#Chat"),
 		chatLog: $("#chat-log-board"),
@@ -3768,6 +3769,7 @@ function updateRoomList(refresh){
 	
 	if(!refresh){
 		$(".rooms-create").remove();
+		$(".rooms-single").remove();
 		for(i in $data.rooms) len++;
 	}else{
 		$stage.lobby.roomList.empty();
@@ -3778,11 +3780,11 @@ function updateRoomList(refresh){
 	}
 	$stage.lobby.roomListTitle.html(L['RoomList'].replace("FA{bars}", "<i class='fa fa-bars'></i>") + " [" + len + L['GAE'] + "]");
 	
+	$stage.lobby.roomList.append($stage.lobby.createBanner.clone().on('click', onBanner));
+	$stage.lobby.roomList.append($stage.lobby.singleBanner.clone());
 	if(len){
 		$(".rooms-gaming").css('display', $data.opts.ow ? "none" : "");
 		$(".rooms-locked").css('display', $data.opts.ou ? "none" : "");
-	}else{
-		$stage.lobby.roomList.append($stage.lobby.createBanner.clone().on('click', onBanner));
 	}
 	function onBanner(e){
 		$stage.menu.newRoom.trigger('click');

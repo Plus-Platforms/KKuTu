@@ -1097,6 +1097,7 @@ function updateRoomList(refresh){
 	
 	if(!refresh){
 		$(".rooms-create").remove();
+		$(".rooms-single").remove();
 		for(i in $data.rooms) len++;
 	}else{
 		$stage.lobby.roomList.empty();
