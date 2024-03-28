@@ -466,14 +466,6 @@ $(document).ready(function(){
 	
 
 
-	if($data.opts.cp !== true){
-		showDialog($stage.dialog.license);
-		$("#community2").attr('src', "https://pcor.me/plKkkutuCafe");
-		$('#dimmer').fadeIn();
-		showDialog($stage.dialog.community2);
-	}
-
-
 
 
 	var tostMessage = document.getElementById('tost_message');
@@ -512,7 +504,7 @@ $(document).ready(function(){
 				}
 				catch(err){
 				}
-				alert('화면 해상도가 1600x900 미만이므로 강제 조정되었습니다.\n정상적인 게임 플레이가 어려울 수 있으므로 외부 디스플레이를 연결하거나 전체화면 (F11)으로 게임을 플레이해주세요.');
+				alert('화면 해상도가 1600x900 미만입니다.\n정상적인 게임 플레이가 어려울 수 있으므로 외부 디스플레이를 연결하거나 전체화면 (F11)으로 게임을 플레이해주세요.');
 			}
 	}
  

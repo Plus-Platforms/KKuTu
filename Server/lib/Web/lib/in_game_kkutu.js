@@ -522,15 +522,6 @@ $(document).ready(function(){
 	
 
 
-	if($data.opts.cp !== true){
-		showDialog($stage.dialog.license);
-		$("#community2").attr('src', "https://pcor.me/plKkkutuCafe");
-		$('#dimmer').fadeIn();
-		showDialog($stage.dialog.community2);
-	}
-
-
-
 
 	var tostMessage = document.getElementById('tost_message');
 
