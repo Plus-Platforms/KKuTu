@@ -288,19 +288,19 @@ block Middle
 			button.primaryBtn#result-ok= L('OK')
 			button#result-save= L('saveReplay')
 	+Dialog('DictionaryDiag', 400, 428, L('dict', false))
-		h4.opt(style='font-size: 14px; text-align: center; color: #486AA3;')= "단어 신청은 공식 디스코드의 피드백 -> 단어 신청 및 카페로만 받고 있습니다."
+		h4.opt(style='font-size: 14px; text-align: center; color: #486AA3;')= "단어 신청은 디스코드 피드백 -> 단어 신청에서만 받고 있습니다."
 		div.dialog-bar
 			h4.opt!= "키워드 입력"
 			input#dict-input(style='width: 283px;border-radius: 10px 0px 0px 10px;', placeholder=L('wpInput'), maxlength=200)
 			button#dict-search= "검색"
-		div.dialog-bar
+		//-div.dialog-bar
 			h4.opt!= "주제 선택"
 			select#dict-theme
 				option(value="")!= L('pickInjeong')
 				- locals.KO_INJEONG.forEach(function(item){
 					option(value=item)!= L('theme_' + item)
 				- });
-		div.dialog-bar#dict-output(style='height: 195px; overflow-y: scroll; color: #000; background-color: #fff;')
+		div.dialog-bar#dict-output(style='height: 270px; border-radius: 12px; overflow-y: scroll; color: #000; background-color: #fff; box-sizing: border-box; padding: 4px; margin-top: 8px;')
 		div.dialog-bar.tail-button.d3-bar
 			button#dict-injeong(style="display:none;")= L('injeongReq')
 	+Dialog('InviteDiag', 300, 445, L('invite', false))
@@ -346,7 +346,7 @@ block Middle
 			button#profile-handover= L('handover')
 	+Dialog('KickVoteDiag', 300, 160, L('kickVote', false))
 		div.dialog-bar#kick-vote-text(style='text-align: center;')
-		div.dialog-bar(style='text-align: center;')!= L('kickVoteNotice')
+		div.dialog-bar(style='text-dict-themealign: center;')!= L('kickVoteNotice')
 		div.dialog-bar
 			+GraphBar('kick-vote-time')
 		div.dialog-bar.tail-button.d3-bar

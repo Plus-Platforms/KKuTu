@@ -919,6 +919,7 @@ $(document).ready(function(){
 		$("#Jungle").append($a);
 		$a[0].click();
 	});
+	/*
 	$stage.dialog.dictInjeong.on('click', function(e){
 		var $target = $(e.currentTarget);
 		
@@ -934,7 +935,7 @@ $(document).ready(function(){
 			
 			$("#dict-output").html(L['wpSuccess'] + "(" + res.message + ")");
 		});
-	});
+	});*/
 	$stage.dialog.dictSearch.on('click', function(e){
 		var $target = $(e.currentTarget);
 		
