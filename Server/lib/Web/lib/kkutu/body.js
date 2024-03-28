@@ -1107,11 +1107,11 @@ function updateRoomList(refresh){
 	}
 	$stage.lobby.roomListTitle.html(L['RoomList'].replace("FA{bars}", "<i class='fa fa-bars'></i>") + " [" + len + L['GAE'] + "]");
 	
+	$stage.lobby.roomList.append($stage.lobby.createBanner.clone().on('click', onBanner));
+	$stage.lobby.roomList.append($stage.lobby.singleBanner.clone());
 	if(len){
 		$(".rooms-gaming").css('display', $data.opts.ow ? "none" : "");
 		$(".rooms-locked").css('display', $data.opts.ou ? "none" : "");
-	}else{
-		$stage.lobby.roomList.append($stage.lobby.createBanner.clone().on('click', onBanner));
 	}
 	function onBanner(e){
 		$stage.menu.newRoom.trigger('click');
