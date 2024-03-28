@@ -205,6 +205,14 @@ exports.RULE = {
 		ai: false,
 		big: false,
 		ewq: false
+	},
+	'KMU': { lang: "ko",
+		rule: "Moum",
+		opts: [ "ext", "mis", "loa", "str" ],
+		time: 1,
+		ai: true,
+		big: false,
+		ewq: true
 	}/*,
 	'KHQ': { lang: "ko",
 		rule: "HanjaQuiz",

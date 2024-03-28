@@ -2388,26 +2388,20 @@ function loadShop(){
 	$("#shop-type-all").addClass("selected");
 }
 
-function filterShop(by) {
-    var isAll = by === true;
-    var $o, obj;
-    
-    if (!isAll) by = by.split(',');
-    
-    for (var i in $data.shop) {
-        obj = $data.shop[i];
-        if (obj.cost < 0) continue; // 가격이 음수인 경우 처리하지 않음
-        $o = $("#goods_" + i);
-        if (obj._id.startsWith("u_")) { // 이름이 'u_'로 시작하는 아이템
-            if (isAll || by.indexOf("usermarket") !== -1) {
-                $o.show();
-            } else {
-                $o.hide();
-            }
-        } else { // 다른 모든 아이템은 표시하지 않음
-            $o.hide();
-        }
-    }
+
+function filterShop(by){
+	var isAll = by === true;
+	var $o, obj;
+	var i;
+	
+	if(!isAll) by = by.split(',');
+	for(i in $data.shop){
+		obj = $data.shop[i];
+		if(obj.cost < 0) continue;
+		$o = $("#goods_" + i).show();
+		if(isAll) continue;
+		if(by.indexOf(obj.group) == -1) $o.hide();
+	}
 }
 
 
