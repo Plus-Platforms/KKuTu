@@ -270,6 +270,7 @@ $(document).ready(function(){
 		{ key: "lvup", value: "/media/kkutu/lvup.mp3" },
 		{ key: "Al", value: "/media/kkutu/Al.mp3" },
 		{ key: "success", value: "/media/kkutu/success.mp3" },
+		{ key: "question", value: "/media/kkutu/question.mp3" },
 		{ key: "missing", value: "/media/kkutu/missing.mp3" },
 		{ key: "mission", value: "/media/kkutu/mission.mp3" },
 		{ key: "kung", value: "/media/kkutu/kung.mp3" },
@@ -1606,7 +1607,7 @@ $lib.MathQuiz.roundReady = function(data){
 	$(".jjo-turn-time").css('width', "760px");
 	$(".jjoDisplayBar").css('width', "760px");
 	drawRound(data.round);
-	playSound('success');
+	playSound('question');
 	clearInterval($data._tTime);
 };
 $lib.MathQuiz.turnStart = function(data){
