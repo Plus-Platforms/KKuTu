@@ -1379,9 +1379,32 @@ iframe{
 				.word-m3-head{ color: #EEEEEE; }
 					.word-m3-head::before{ content: "("; }
 					.word-m3-head::after{ content: ")"; }
-			.word-theme{ color: #6B7280; }
-				.word-theme::before{ content: "<"; }
-				.word-theme::after{ content: ">"; }
+			.word-theme{ display: block;
+				font-size: 20px!important;
+				margin-bottom: 8px;
+				color: #6B7280;
+			 }
+			.word-m3-body{
+				font-size: 20px!important;
+			}
+			.wordMeanClass{
+				background-color: #6B7280;
+				font-size: 16px!important;
+				color: #fff;
+				padding: 4.5px;
+			}
+			.word-title{ font-size: 30px!important;
+				display: block;
+				font-weight: 700;
+				margin-bottom: 4px;}
+
+			.word-m3-source{
+				font-size:12px!important;
+				display: block;
+				margin-top: 20px;
+				color: #6B7280;
+			}
+			
 	.game-input{
 		border-radius: 25px;
 border: 3px solid #FFF;

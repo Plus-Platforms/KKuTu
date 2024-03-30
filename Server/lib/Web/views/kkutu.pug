@@ -288,7 +288,6 @@ block Middle
 			button.primaryBtn#result-ok= L('OK')
 			button#result-save= L('saveReplay')
 	+Dialog('DictionaryDiag', 400, 428, L('dict', false))
-		h4.opt(style='font-size: 14px; text-align: center; color: #486AA3;')= "단어 신청은 디스코드 피드백 -> 단어 신청에서만 받고 있습니다."
 		div.dialog-bar
 			h4.opt!= "키워드 입력"
 			input#dict-input(style='width: 283px;border-radius: 10px 0px 0px 10px;', placeholder=L('wpInput'), maxlength=200)
@@ -300,9 +299,11 @@ block Middle
 				- locals.KO_INJEONG.forEach(function(item){
 					option(value=item)!= L('theme_' + item)
 				- });
-		div.dialog-bar#dict-output(style='height: 270px; border-radius: 12px; overflow-y: scroll; color: #000; background-color: #fff; box-sizing: border-box; padding: 4px; margin-top: 8px;')
+		div.dialog-bar#dict-output(style='height: 270px; border-radius: 12px; overflow-y: scroll; color: #000; background-color: #fff; box-sizing: border-box; padding: 12px; margin-top: 8px;')
+		
+		h4.opt(style='font-size: 14px; text-align: center; color: #486AA3;')= "단어 신청은 디스코드 피드백 -> 단어 신청에서만 받고 있습니다."
 		div.dialog-bar.tail-button.d3-bar
-			button#dict-injeong(style="display:none;")= L('injeongReq')
+			//button#dict-injeong(style="display:none;")= L('injeongReq')
 	+Dialog('InviteDiag', 300, 445, L('invite', false))
 		div.invite-board(style='height: 355px; overflow-y: scroll;')
 		div.dialog-bar.tail-button.d3-bar

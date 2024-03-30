@@ -109,6 +109,7 @@ Server.get("/injeong/:word", function(req, res){
 		});
 	});
 });
+
 Server.get("/cf/:word", function(req, res){
 	res.send(getCFRewards(req.params.word, Number(req.query.l || 0), req.query.b == "1"));
 });
