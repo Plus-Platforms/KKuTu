@@ -118,7 +118,7 @@ $lib.Crossword.onBar = function(e){
 	$data._sel = [ $data.selectedRound - 1, pos[0], pos[1], pos[2] ];
 	$(".cw-q-head").html(L[vert ? 'cwVert' : 'cwHorz'] + data.len + L['cwL']);
 	$("#cw-q-input").val("").focus();
-	$(".cw-q-body").html(processWord("★", data.mean, data.theme, data.type.split(',')));
+	$(".cw-q-body").html(processWord("★", data.mean, data.theme, data.type.split(','), "ingame"));
 };
 $lib.Crossword.turnStart = function(data, spec){
 	var i, j;

@@ -948,7 +948,7 @@ $(document).ready(function(){
 			}, 500);
 			if(res.error) return $("#dict-output").html(res.error + ": " + L['wpFail_' + res.error]);
 			
-			$("#dict-output").html(processWord(res.word, res.mean, res.theme, res.type.split(',')));
+			$("#dict-output").html(processWord(res.word, res.mean, res.theme, res.type.split(','), "dictionary"));
 		});
 	}).hotkey($("#dict-input"), 13);
 	$stage.dialog.wordPlusOK.on('click', function(e){

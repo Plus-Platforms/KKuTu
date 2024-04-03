@@ -1531,7 +1531,7 @@ function drawCharFactory(){
 			}
 			viewReward(word, level, blend);
 			$stage.dialog.cfCompose.addClass("cf-composable");
-			if(!res.error) $dict.html(processWord(res.word, res.mean, res.theme, res.type.split(',')));
+			if(!res.error) $dict.html(processWord(res.word, res.mean, res.theme, res.type.split(','), "charfactory"));
 		});
 		if(word == "") trayEmpty();
 	}
@@ -2579,7 +2579,7 @@ function pushDisplay(text, mean, theme, wc){
 	}, sg);
 }
 function pushHint(hint){
-	var v = processWord("", hint);
+	var v = processWord("", hint, kkt="ingame");
 	var $obj;
 	
 	$stage.game.hints.append(
@@ -2605,7 +2605,7 @@ function pushHistory(text, mean, theme, wc){
 	if($w.length > 6){
 		$w.last().remove();
 	}
-	val = processWord(text, mean, theme, wcs);
+	val = processWord(text, mean, theme, wcs, "ingame");
 	/*val = mean;
 	if(theme) val = "<label class='history-theme-c'>&lt;" + theme + "&gt;</label> " + val;*/
 	
@@ -2624,7 +2624,7 @@ function pushHistory(text, mean, theme, wc){
 function processNormal(word, mean){
 	return $("<label>").addClass("word").html(mean);
 }
-function processWord(word, _mean, _theme, _wcs){
+function processWord(word, _mean, _theme, _wcs, kkt){
 	if(!_mean || _mean.indexOf("＂") == -1) return processNormal(word, _mean);
 	var $R = $("<label>").addClass("word");
 	var means = _mean.split(/＂[0-9]+＂/).slice(1).map(function(m1){
@@ -2656,11 +2656,13 @@ function processWord(word, _mean, _theme, _wcs){
 				var $m3 = $("<label>").addClass("word-m3");
 				var _t = tl.shift();
 				
-				$m3.append($("<label>").addClass("word-title").html(word));
+				if(kkt !== "ingame"){$m3.append($("<label>").addClass("word-title").html(word));}
 				if(m2s) $m3.append($("<label>").addClass("word-head word-m3-head").html(x3 + 1));
-				$m3.append($("<label>").addClass("word-theme").html(_t));
+				if (_t !== null) {
+					$m3.append($("<label>").addClass("word-theme").html(_t));
+				}
 				$m3.append($("<label>").addClass("word-m3-body").html(formMean(m3)));
-				$m3.append($("<label>").addClass("word-m3-source").html("단어 DB 제공: CC-BY 국립국어원 우리말샘 / Copyright (C) NXDict"));
+				if(kkt !== "ingame"){$m3.append($("<label>").addClass("word-m3-source").html("단어 DB 제공: CC-BY 국립국어원 우리말샘 / Copyright (C) NXDict"));}
 				$m2.append($m3);
 			});
 			$m1.append($m2);
