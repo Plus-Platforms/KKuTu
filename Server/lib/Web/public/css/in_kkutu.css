@@ -1381,7 +1381,7 @@ iframe{
 					.word-m3-head::after{ content: ")"; }
 			.word-theme{ display: block;
 				font-size: 20px!important;
-				margin-bottom: 8px;
+				margin-bottom: 12px;
 				color: #6B7280;
 			 }
 			.word-m3-body{
@@ -1391,7 +1391,8 @@ iframe{
 				background-color: #6B7280;
 				font-size: 16px!important;
 				color: #fff;
-				padding: 4.5px;
+				margin-left: 4.5px;
+				margin-right: 4.5px;
 			}
 			.word-title{ font-size: 30px!important;
 				display: block;

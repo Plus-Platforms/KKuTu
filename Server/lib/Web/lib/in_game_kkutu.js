@@ -5331,7 +5331,9 @@ function processWord(word, _mean, _theme, _wcs, kkt){
 				
 				if(kkt !== "ingame"){$m3.append($("<label>").addClass("word-title").html(word));}
 				if(m2s) $m3.append($("<label>").addClass("word-head word-m3-head").html(x3 + 1));
-				$m3.append($("<label>").addClass("word-theme").html(_t));
+				if (_t !== null) {
+					$m3.append($("<label>").addClass("word-theme").html(_t));
+				}
 				$m3.append($("<label>").addClass("word-m3-body").html(formMean(m3)));
 				if(kkt !== "ingame"){$m3.append($("<label>").addClass("word-m3-source").html("단어 DB 제공: CC-BY 국립국어원 우리말샘 / Copyright (C) NXDict"));}
 				$m2.append($m3);

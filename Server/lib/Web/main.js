@@ -61,6 +61,7 @@ WebInit.MOBILE_AVAILABLE = [
 require("../sub/checkpub");
 
 JLog.info("<< KKuTu Web >>");
+Server.set("trust proxy", true);
 Server.set('views', __dirname + "/views");
 Server.set('view engine', "pug");
 Server.use(Express.json({ limit: "8mb" }));
@@ -148,10 +149,12 @@ DB.ready = function(){
 			}
 		}
 	});
-	Server.listen(80);
 	if(Const.IS_SECURED) {
 		const options = Secure();
-		https.createServer(options, Server).listen(443);
+		https.createServer(options, Server).listen(10291);
+	}
+	else{
+		Server.listen(10291);
 	}
 };
 Const.MAIN_PORTS.forEach(function(v, i){
@@ -252,7 +255,7 @@ Server.get("/game", function(req, res){
 			'_id': id,
 			'PORT': Const.MAIN_PORTS[server],
 			'HOST': req.hostname,
-			'PROTOCOL': Const.IS_SECURED ? 'wss' : 'ws',
+			'PROTOCOL': 'wss',
 			'TEST': req.query.test,
 			'MOREMI_PART': Const.MOREMI_PART,
 			'AVAIL_EQUIP': Const.AVAIL_EQUIP,
