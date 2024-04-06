@@ -265,7 +265,7 @@ KKuTu.onClientMessage = function($c, msg){
 			if(stable){
 				if(msg.title.length > 20) stable = false;
 				if(msg.password.length > 20) stable = false;
-				if(msg.limit < 2 || msg.limit > 10){
+				if(msg.limit < 2 || msg.limit > 25){
 					msg.code = 432;
 					stable = false;
 				}

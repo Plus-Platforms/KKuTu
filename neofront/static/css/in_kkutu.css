@@ -634,6 +634,11 @@ iframe{
 	color: #ffffff!important;
 }
 
+.room-users{
+	overflow-y: scroll;
+    height: 630px;
+}
+
 	.primaryBtn{
 		font-weight: 700;
 		color: #fff!important;

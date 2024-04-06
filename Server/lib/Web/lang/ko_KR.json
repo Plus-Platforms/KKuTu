@@ -350,6 +350,8 @@
 		"misc": "특수 규칙",
 		"optManner": "매너",
 		"explManner": "한방 단어를 사용할 수 없게 합니다.",
+		"optReuse": "리턴",
+		"explReuse": "사용한 단어를 계속 사용할 수 있습니다.",
 		"optInjeong": "어인정",
 		"explInjeong": "특수한 단어의 사용을 인정합니다.",
 		"optRankGame": "경쟁전",

@@ -34,6 +34,7 @@ exports.IS_SECURED = GLOBAL.IS_SECURED;
 exports.SSL_OPTIONS = GLOBAL.SSL_OPTIONS;
 exports.OPTIONS = {
 	'man': { name: "Manner" },
+	'reu': { name: "Reuse" },
 	'ext': { name: "Injeong" },
 	'mis': { name: "Mission" },
 	'loa': { name: "Loanword" },
@@ -103,7 +104,7 @@ exports.RULE = {
 	},
 	'KSH': { lang: "ko",
 		rule: "Classic",
-		opts: [ "man", "ext", "mis", "loa", "str", "rank" ],
+		opts: [ "man", "ext", "mis", "loa", "str", "rank", "reu" ],
 		time: 1,
 		ai: true,
 		big: false,

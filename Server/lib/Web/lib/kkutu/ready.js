@@ -407,7 +407,7 @@ $(document).ready(function(){
 		var $target = $(e.currentTarget);
 		var value = $target.val();
 		
-		if(value < 2 || value > 10){
+		if(value < 2 || value > 25){
 			$target.css('color', "#FF4444");
 		}else{
 			$target.css('color', "");
@@ -417,7 +417,7 @@ $(document).ready(function(){
 		var $target = $(e.currentTarget);
 		var value = $target.val();
 		
-		if(value < 1 || value > 10){
+		if(value < 1 || value > 25){
 			$target.css('color', "#FF4444");
 		}else{
 			$target.css('color', "");
