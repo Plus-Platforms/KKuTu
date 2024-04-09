@@ -4,7 +4,7 @@
     <div class="">
       <div class="flex items-center">
         <img src="/img/logo.png" class="dark:hidden h-10 mr-4" alt="Plus KKuTuLogo"/>
-        <img src="/img/logo_dark.png class="hidden dark:block h-10 mr-4" alt="Plus KKuTuLogo"/>
+        <img src="/img/logo_dark.png" class="hidden dark:block h-10 mr-4" alt="Plus KKuTuLogo"/>
       </div>
 
       <div class="text-sm text-gray-500 dark:text-gray-400 mt-4">
