@@ -89,7 +89,11 @@ block Jungle
 block Top 
 	div#Top
 		+Menu()
-
+		div#global-notice
+			div#gn-content
+				include ../public/global_notice.html
+		+Expl(L('GLOBAL_NOTICE'))
+		
 block Middle
 	- var VERSION = L('version');
 	- var nick = SESSION.profile ? (SESSION.nickname || SESSION.profile.title || SESSION.profile.name) : null;
