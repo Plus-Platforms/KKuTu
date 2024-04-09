@@ -86,7 +86,7 @@ Server.use((req, res, next) => {
 		delete req.session.passport;
 	}
 	
-	res.set("X-Powered-By", "Infole");
+	res.set("X-Powered-By", "Plus KKuTu");
 	next();
 });
 Server.use((req, res, next) => {

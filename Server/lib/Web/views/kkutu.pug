@@ -489,10 +489,9 @@ block Middle
 			a(href="https://toss.me/plusp", target="_blank")
 				button.primaryBtn= "후원하기"
 
-	+Dialog('CreditDiag', 390, 600, "제작진")
+	+Dialog('CreditDiag', 390, 580, "만든 사람들")
 		div(style="font-size: 16px; text-align: center;")
-			strong Team Infole
-			br
+			p(style="font-size: 32px;font-weight: 700;margin-top: -2px;margin-bottom: -5px;") Plus KKuTu Team
 			strong DIRECTOR
 			p 유한선
 
@@ -500,20 +499,18 @@ block Middle
 			p 이규빈
 
 			strong CLOSED BETA TEST
-			p Sqlare
-			p 파수
+			p Sqlare, 파수
 
 			strong ILLUST
-			p 파슈
+			p 파슈, 교육
 
 			strong MUSIC
-			p Xpolcore
-			p 유뚠뚠
-			p Roman Rajczyk
+			p Xpolcore, 유뚠뚠, Roman Rajczyk
 
 			strong SPECIAL THANKS TO
 			p JJoriping (Original KKuTu)
 			p KKuTu.IO (KKuTu-Game)
+			p KKuTu.WORLD (World KKuTu)
 
 	+Dialog('TeamSelectDiag', 500, 85, "팀 설정")
 		div.team-selector
@@ -562,8 +559,8 @@ block Middle
 						h3 환불 정책
 
 				div.sideFooter
-					img(src="/img/kkutu/infole_gray.svg")
-					p Copyright &copy; 2021~ Infole
+					//img(src="/img/kkutu/infole_gray.svg")
+					p Copyright &copy; 2021~ Plus KKuTu
 			
 	div(style="width: 100%;display: flex;height: 680px;")
 		div.lowreshidden(style="width:160px;height:600px;/*background-image: url(/img/ad/placeholder-l.png);*/")
