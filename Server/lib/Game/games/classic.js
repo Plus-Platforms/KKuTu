@@ -239,14 +239,16 @@ exports.submit = function(client, text){
 	var my = this;
 	var tv = (new Date()).getTime();
 	var mgt = my.game.seq[my.game.turn];
-	
+	var returnNuff = false;
+
 	if(!mgt) return;
 	if(!mgt.robot) if(mgt != client.id) return;
 	if(!my.game.char) return;
 	
 	if(!isChainable(text, my.mode, my.game.char, my.game.subChar)) return client.chat(text);
 	if(my.game.chain.indexOf(text) != -1 && !my.opts.reuse) return client.publish('turnError', { code: 409, value: text }, true);
-	
+	if(my.game.chain.indexOf(text) != -1 && my.opts.reuse) returnNuff = true;
+
 	l = my.rule.lang;
 	my.game.loading = true;
 	function onDB($doc){
@@ -265,7 +267,7 @@ exports.submit = function(client, text){
 				my.game.late = true;
 				clearTimeout(my.game.turnTimer);
 				t = tv - my.game.turnAt;
-				score = my.getScore(text, t);
+				score = (returnNuff) ? 0 : my.getScore(text, t, false, returnNuff);
 				my.game.dic[text] = (my.game.dic[text] || 0) + 1;
 				my.game.chain.push(text);
 				my.game.roundTime -= t;
@@ -280,7 +282,7 @@ exports.submit = function(client, text){
 					theme: $doc.theme,
 					wc: $doc.type,
 					score: score,
-					bonus: (my.game.mission === true) ? score - my.getScore(text, t, true) : 0,
+					bonus: (my.game.mission === true) ? score - my.getScore(text, t, true, returnNuff) : 0,
 					baby: $doc.baby
 				}, true);
 			}
@@ -292,7 +294,7 @@ exports.submit = function(client, text){
 					theme: "",
 					wc: "",
 					score: score,
-					bonus: (my.game.mission === true) ? score - my.getScore(text, t, true) : 0,
+					bonus: (my.game.mission === true) ? score - my.getScore(text, t, true, returnNuff) : 0,
 					baby: ""
 				}, true);
 			}
@@ -437,7 +439,7 @@ exports.useItem = function(client, id){
     }
 };
 
-exports.getScore = function(text, delay, ignoreMission){
+exports.getScore = function(text, delay, ignoreMission, returnNuff){
 	var my = this;
 	var tr = 1 - delay / my.game.turnTime;
 	var score, arr;
@@ -450,6 +452,8 @@ exports.getScore = function(text, delay, ignoreMission){
 		score += score * 0.5 * arr.length;
 		my.game.mission = true;
 	}
+
+	if(returnNuff) score = 0;
 	return Math.round(score);
 };
 exports.readyRobot = function(robot){

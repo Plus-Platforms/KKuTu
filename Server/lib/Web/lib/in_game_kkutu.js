@@ -5341,15 +5341,16 @@ function processWord(word, _mean, _theme, _wcs, kkt){
 			$m1.append($m2);
 		});
 		$R.append($m1);
-	});
-	function formMean(v){
+	});function formMean(v){
 		var lines = v.split("\n");
 		var output = "";
 	
 		for (var i = 0; i < lines.length; i++) {
 			var line = lines[i];
 			output += (i + 1) + ". ";
+	
 			line = line.replace(/\[([^\]]+)\]/g, function(match, label) {
+				label = label.replace(/\\pmod\s+(.*?)\s*\)/g, "\\pmod{$1}");
 				return "<label class='wordMeanClass'>" + label + "</label>";
 			});
 	
@@ -5358,6 +5359,7 @@ function processWord(word, _mean, _theme, _wcs, kkt){
 	
 		return output;
 	}
+	
 	
 	return $R;
 }
