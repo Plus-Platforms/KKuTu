@@ -1566,7 +1566,7 @@ function getRewards(rankScore, mode, score, bonus, rank, all, ss, opts, forestPo
 	/*var today = new Date();
 	today.setHours(today.getHours() + 9);
 	if (today.getMonth() == 3 && today.getDate() == 22){*/
-		rw.forestPoint = Math.floor(Math.random() * 10) + 1;
+		rw.forestPoint = 0;
 	
 	
 	// applyEquipOptions에서 반올림한다.
