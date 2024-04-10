@@ -3,13 +3,13 @@
   <div class="max-w-screen-xl mx-auto md:flex md:justify-between mb-6 mt-6">
     <div class="">
       <div class="flex items-center">
-        <img src="/img/logo.png" class="dark:hidden h-10 mr-4" alt="Plus KKuTuLogo"/>
-        <img src="/img/logo_dark.png" class="hidden dark:block h-10 mr-4" alt="Plus KKuTuLogo"/>
+        <img src="/img/kkutu/intro/moremme_light.svg" class="dark:hidden h-10 mr-4" alt="Morem.MELogo"/>
+        <img src="/img/kkutu/intro/moremme_dark.svg" class="hidden dark:block h-10 mr-4" alt="Morem.MELogo"/>
       </div>
 
       <div class="text-sm text-gray-500 dark:text-gray-400 mt-4">
-        서비스 문의 : support@kkutu.cc<br>
-        &copy; 2023 ~ 2024 Team Plus KKuTu<br>
+        서비스 문의 : support@morem.me<br>
+        &copy; 2023 ~ 2024 Morem.ME<br>
         확률형 아이템 포함<br>
       <a href="https://cafe.naver.com/ArticleRead.nhn?clubid=31109813&page=1&menuid=7&boardtype=L&articleid=109&referrerAllArticles=false" target='_blank'>
         <span>이용 약관</span></a> |

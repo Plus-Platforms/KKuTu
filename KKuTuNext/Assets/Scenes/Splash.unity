@@ -1656,7 +1656,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Copyright (C) 2024 Team Plus KKuTu | Moremi, KKuTu by JJoriping (CC-BY)
+  m_text: Copyright (C) 2024 Morem.ME | Moremi, KKuTu by JJoriping (CC-BY)
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 78d54e43077fee04fa767734e5ee6cbd, type: 2}
   m_sharedMaterial: {fileID: -7777544291767894385, guid: 78d54e43077fee04fa767734e5ee6cbd, type: 2}
