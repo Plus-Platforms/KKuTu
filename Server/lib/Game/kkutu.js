@@ -486,9 +486,9 @@ exports.Client = function(socket, profile, sid){
 			my.friends = $user.friends || {};
 			if(first){
 				my.flush();
-				DB.users.update([ '_id', my.id ]).set([ 'nickname', my.nickname || "닉네임 없음" ]).on(function($body){
+				DB.users.update([ '_id', my.id ]).set([ 'nickname', "닉네임 없음" ]).on(function($body){
 					if(!my.nickname) JLog.warn(`OAuth로부터 닉네임을 받아오지 못한 유저가 있습니다. #${my.id}`);
-					DB.session.update([ '_id', sid ]).set([ 'nickname', my.nickname || "닉네임 없음" ]).on();
+					DB.session.update([ '_id', sid ]).set([ 'nickname', "닉네임 없음" ]).on();
 				});
 			}else{
 				my.checkExpire();

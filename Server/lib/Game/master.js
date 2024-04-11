@@ -690,6 +690,10 @@ function processClientRequest($c, msg) {
 			}
 			checkTailUser($c.id, $c.place, msg);
 			if (msg.whisper) {
+				if ($c.guest) {
+					$c.send('error', {code: 401});
+					return;
+				}
 				msg.whisper.split(',').forEach(v => {
 					if (temp = DIC[DNAME[v]]) {
 						temp.send('chat', {

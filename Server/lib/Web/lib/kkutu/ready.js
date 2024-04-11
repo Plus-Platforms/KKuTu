@@ -147,6 +147,8 @@ $(document).ready(function(){
 			chatLog: $("#ChatLogDiag"),
 			obtain: $("#ObtainDiag"),
 				obtainOK: $("#obtain-ok"),
+			newbie: $("#NewbieDiag"),
+				newbieOK: $("#setNickname"),
 			help: $("#HelpDiag"),
 			coupon: $("#CouponRegisterDiag"),
 			pingShop: $("#PingShopDiag"),
@@ -1174,6 +1176,18 @@ $(document).ready(function(){
 	});
 	$stage.dialog.confirmCancel.on('click', function(e){
 		$stage.dialog.confirm.hide();
+	});
+	
+	$stage.dialog.newbieOK.on('click', function(e){
+		$stage.dialog.newbie.hide();
+		$.get("/box", function(res){
+			$('#dimmer').fadeIn();
+			if(res.error) return fail(res.error);
+			
+			$data.box = res;
+			drawMyDress();
+		});
+		showDialog($stage.dialog.dressitem);
 	});
 	
 	for(i=0; i<5; i++) $("#team-" + i).on('click', onTeam);

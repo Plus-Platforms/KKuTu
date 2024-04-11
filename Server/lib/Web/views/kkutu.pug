@@ -96,7 +96,7 @@ block Top
 		
 block Middle
 	- var VERSION = L('version');
-	- var nick = SESSION.profile ? (SESSION.nickname || SESSION.profile.title || SESSION.profile.name) : null;
+	- var nick = SESSION.profile ? (SESSION.nickname || SESSION.profile.title || SESSION.profile.name) : "닉네임 없음";
 
 
 	div#dimmer(style="display: none;")
@@ -440,7 +440,7 @@ block Middle
 			button.primaryBtn#cf-compose= L('cfCompose')
 	+Dialog('ChatLogDiag', 350, 500, L('chatLog', false))
 		div#chat-log-board(style='height: 475px; font-size: 11px; overflow-y: scroll;')
-	+Dialog('ObtainDiag', 1291, 681, "", true)
+	+Dialog('ObtainDiag', 300, 220, "아이템 획득", true)
 		div.dialog-bar
 			h4(style='width: 100%;')!= L('obtained') + '!'
 		div.jt-image#obtain-image(style='margin-left: 110px; width: 80px; height: 80px;')
@@ -449,12 +449,32 @@ block Middle
 			button.primaryBtn#obtain-ok= L('OK')
 	+Dialog('HelpDiag', 1000, 540, L('helpText', false))
 		iframe#help-board(width=1000, height=500)
-	+Dialog('PingShopDiag', 400, 760, "코인 상점")
+	+Dialog('PingShopDiag', 400, 760, "MVP권 구매하기")
 		iframe#ping-board(width=400, height=700)
 	+Dialog('CouponRegisterDiag', 400, 210, "쿠폰 등록")
 		iframe#coupon-board(width=400, height=180)
 	+Dialog('Community2Diag', 1280, 750, "공식 커뮤니티")
 		iframe#community2(width=1280, height=700)
+	+Dialog('NewbieDiag', 390, 230, "시작하기")
+		div(style="font-size: 16px; text-align: center;")
+			p
+				| 처음 만나는 것 같네요? 먼저
+				strong 닉네임을 설정
+				| 하고,
+				br
+				strong 방 만들기
+				| 를 통해 방을 만들어 첫 판을 플레이 해 보세요!
+				br
+				br
+				| 아참, 
+				strong 디스코드나 카페
+				| 에서 게임 정보를 받아볼 수 있어요.
+				br
+				br
+				small 계속하시면 Morem.ME의 개인정보처리방침 및 이용약관에 동의합니다.
+		div.dialog-bar.d2-bar.tail-button
+			button.primaryBtn#setNickname(style="width:300px;") 동의하고 닉네임 설정하러 가기
+
 	+Dialog('LicenseDiag', 645, 200, "오픈소스 라이선스 / 이용 약관")
 		h4.opt(style='text-align: center;')!= L('dictionarySupport')
 		h4.opt(style='text-align: center;')!= "플러스끄투는 끄투리오(KKuTuIO)의 KKuTu-Game 프로젝트를 기반으로 하고 있습니다."

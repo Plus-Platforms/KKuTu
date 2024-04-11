@@ -1014,6 +1014,11 @@ function updateMe(){
 	//$(".my-gauge .graph-bar").width((my.data.score-prev)/(goal-prev)*190);
 	var progress = Math.round((my.data.score-prev)/(goal-prev)*100); // 진행도 계산
 	$(".my-gauge-text").html(commify(my.data.score) + "/" + commify(goal)); // 진행도 추가하여 표시
+
+	if(my.profile.title == "닉네임 없음"){
+		$('#dimmer').fadeIn();
+		showDialog($stage.dialog.newbie);
+	}
 }
 function prettyTime(time){
 	var min = Math.floor(time / 60000) % 60, sec = Math.floor(time * 0.001) % 60;

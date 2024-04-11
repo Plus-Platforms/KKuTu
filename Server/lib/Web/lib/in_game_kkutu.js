@@ -203,6 +203,8 @@ $(document).ready(function(){
 			chatLog: $("#ChatLogDiag"),
 			obtain: $("#ObtainDiag"),
 				obtainOK: $("#obtain-ok"),
+			newbie: $("#NewbieDiag"),
+				newbieOK: $("#setNickname"),
 			help: $("#HelpDiag"),
 			coupon: $("#CouponRegisterDiag"),
 			pingShop: $("#PingShopDiag"),
@@ -1230,6 +1232,18 @@ $(document).ready(function(){
 	});
 	$stage.dialog.confirmCancel.on('click', function(e){
 		$stage.dialog.confirm.hide();
+	});
+	
+	$stage.dialog.newbieOK.on('click', function(e){
+		$stage.dialog.newbie.hide();
+		$.get("/box", function(res){
+			$('#dimmer').fadeIn();
+			if(res.error) return fail(res.error);
+			
+			$data.box = res;
+			drawMyDress();
+		});
+		showDialog($stage.dialog.dressitem);
 	});
 	
 	for(i=0; i<5; i++) $("#team-" + i).on('click', onTeam);
@@ -3687,6 +3701,11 @@ function updateMe(){
 	//$(".my-gauge .graph-bar").width((my.data.score-prev)/(goal-prev)*190);
 	var progress = Math.round((my.data.score-prev)/(goal-prev)*100); // 진행도 계산
 	$(".my-gauge-text").html(commify(my.data.score) + "/" + commify(goal)); // 진행도 추가하여 표시
+
+	if(my.profile.title == "닉네임 없음"){
+		$('#dimmer').fadeIn();
+		showDialog($stage.dialog.newbie);
+	}
 }
 function prettyTime(time){
 	var min = Math.floor(time / 60000) % 60, sec = Math.floor(time * 0.001) % 60;
