@@ -243,6 +243,9 @@ $(document).ready(function(){
 			correct: $("#game-correct"),
 			wrong: $("#game-wrong"),
 			other: $("#other-enter"),
+			wrongText: $("#wrong-text"),
+			correctText: $("#correct-text"),
+			otherText: $("#other-text"),
 			history: $(".history"),
 			roundBar: $(".jjo-round-time .graph-bar"),
 			turnBar: $(".jjo-turn-time .graph-bar")
@@ -1502,7 +1505,7 @@ $lib.Classic.turnEnd = function(id, data){
 
 $lib.Jaqwi.roundReady = function(data){
 	var tv = L['jqTheme'] + ": " + L['theme_' + data.theme];
-	$stage.game.wrong.html("오답입니다!");
+	$stage.game.wrongText.html("오답입니다!");
 	clearBoard();
 	$data._roundTime = $data.room.time * 1000;
 	$data._fastTime = 10000;
@@ -1555,7 +1558,7 @@ $lib.Jaqwi.turnEnd = function(id, data){
 	var $sc = $("<div>").addClass("deltaScore").html("+" + data.score);
 	var $uc = $("#game-user-" + id);
 	$stage.game.wrong.hide();
-	$stage.game.wrong.html("오답입니다!");
+	$stage.game.wrongText.html("오답입니다!");
 	if(data.giveup){
 		$uc.addClass("game-user-bomb");
 	}else if(data.answer){
@@ -1569,7 +1572,7 @@ $lib.Jaqwi.turnEnd = function(id, data){
 		// if(data.mean) turnHint(data);
 		if(id == $data.id) $stage.game.hereText.hide();
 		if (!$stage.game.other.is(":visible")){ $stage.game.wrong.show();
-			$stage.game.wrong.html("서두르세요! 다른 사람이 이미 단어를 맞췄어요!");
+			$stage.game.wrongText.html("서두르세요! 다른 사람이 이미 단어를 맞췄어요!");
 			}
 		addScore(id, data.score);
 		if($data._roundTime > 10000) $data._roundTime = 10000;
@@ -1599,7 +1602,7 @@ $lib.Jaqwi.turnEnd = function(id, data){
 
 $lib.MathQuiz.roundReady = function(data){
 	var tv = L['selectLevel'] + ": " + L['level_' + data.theme];
-	$stage.game.wrong.html("오답입니다!");
+	$stage.game.wrongText.html("오답입니다!");
 	clearBoard();
 	$data._roundTime = $data.room.time * 1000;
 	$data._fastTime = 10000;
@@ -1656,7 +1659,7 @@ $lib.MathQuiz.turnEnd = function(id, data){
 	var $sc = $("<div>").addClass("deltaScore").html("+" + data.score);
 	var $uc = $("#game-user-" + id);
 	$stage.game.wrong.hide();
-	$stage.game.wrong.html("오답입니다!");
+	$stage.game.wrongText.html("오답입니다!");
 	if(data.giveup){
 		$uc.addClass("game-user-bomb");
 	}else if(data.answer){
@@ -1670,7 +1673,7 @@ $lib.MathQuiz.turnEnd = function(id, data){
 		// if(data.mean) turnHint(data);
 		if(id == $data.id) $stage.game.hereText.hide();
 		if (!$stage.game.other.is(":visible")){ $stage.game.wrong.show();
-			$stage.game.wrong.html("서두르세요! 다른 사람이 이미 문제를 맞췄어요!");
+			$stage.game.wrongText.html("서두르세요! 다른 사람이 이미 문제를 맞췄어요!");
 			}
 		addScore(id, data.score);
 		if($data._roundTime > 10000) $data._roundTime = 10000;
@@ -3668,7 +3671,7 @@ function updateMe(){
 
 	for(i in my.data.record) gw += my.data.record[i][1];
 	//renderMoremi(".my-image", my.equip);
-	// $(".my-image").css('background-image', "url('"+my.profile.image+"')");
+	//$(".my-image").css('background-image', "url('"+my.profile.image+"')");
 	$(".my-stat-level").replaceWith(getLevelImage(my.data.score).addClass("my-stat-level"));
 	$(".my-stat-name").text(my.profile.title || my.profile.name);
 	$(".my-stat-record").html(gw);
@@ -3758,7 +3761,7 @@ function userListBar(o, forInvite){
 	
 	if(forInvite){
 		$R = $("<div>").attr('id', "invite-item-"+o.id).addClass("invite-item users-item")
-		.append($("<div>").addClass("jt-image users-image").css('background-image', "url('"+o.profile.image+"')"))
+		//.append($("<div>").addClass("jt-image users-image").css('background-image', "url('"+o.profile.image+"')"))
 		.append(getLevelImage(o.data.score).addClass("users-level"))
 		// .append($("<div>").addClass("jt-image users-from").css('background-image', "url('/img/kkutu/"+o.profile.type+".png')"))
 		.append($("<div>").addClass("users-name").text(o.profile.title || o.profile.name))
@@ -3767,7 +3770,7 @@ function userListBar(o, forInvite){
 		});
 	}else{
 		$R = $("<div>").attr('id', "users-item-"+o.id).addClass("users-item")
-		.append($("<div>").addClass("jt-image users-image").css('background-image', "url('"+o.profile.image+"')"))
+		//.append($("<div>").addClass("jt-image users-image").css('background-image', "url('"+o.profile.image+"')"))
 		.append(getLevelImage(o.data.score).addClass("users-level"))
 		// .append($("<div>").addClass("jt-image users-from").css('background-image', "url('/img/kkutu/"+o.profile.type+".png')"))
 		.append($("<div>").addClass("users-name ellipse").text(o.profile.title || o.profile.name))
@@ -4379,7 +4382,7 @@ function requestProfile(id){
 	$("#ProfileDiag .dialog-title").html((o.profile.title || o.profile.name) + L['sProfile']);
 	$(".profile-head").empty().append($pi = $("<div>").addClass("moremi profile-moremi"))
 		.append($("<div>").addClass("profile-head-item")
-			.append(getImage(o.profile.image).addClass("profile-image"))
+			//.append(getImage(o.profile.image).addClass("profile-image"))
 			.append($("<div>").addClass("profile-title ellipse").html(o.profile.title || o.profile.name)
 				.append($("<label>").addClass("profile-tag").html(" #" + o.id.toString().substr(0, 5)))
 			)
@@ -4790,7 +4793,7 @@ function turnHint(data){
 	route("turnHint", data);
 }
 function turnError(code, text){
-	$stage.game.wrong.empty().text((L['turnError_'+code] ? (L['turnError_'+code] + ": ") : "") + text);
+	$stage.game.wrongText.empty().text((L['turnError_'+code] ? (L['turnError_'+code] + ": ") : "") + text);
 	
 	if (!$stage.game.other.is(":visible")){ 
 		$stage.game.wrong.show();$stage.game.hereText.hide();$stage.game.correct.hide();
@@ -4799,7 +4802,7 @@ function turnError(code, text){
 	clearTimeout($data._fail);
 
 	$data._fail = addTimeout(function(){
-		$stage.game.wrong.html("오답입니다!");
+		$stage.game.wrongText.html("오답입니다!");
 		$stage.game.wrong.hide();
 		$stage.game.hereText.show();
 	}, 300);
@@ -4816,7 +4819,7 @@ function turnError(code, text){
 		playSound('fail');
 		clearTimeout($data._fail);
 		$data._fail = addTimeout(function(){
-			$stage.game.wrong.html("오답입니다!");
+			$stage.game.wrongText.html("오답입니다!");
 			$stage.game.wrong.hide();
 			$stage.game.other.show();
 		}, 300);
@@ -5206,7 +5209,7 @@ function pushDisplay(text, mean, theme, wc){
 			
 			$stage.game.display.append($l = $("<div>")
 				.addClass("display-text")
-				.css({ 'float': isRev ? "right" : "left", 'margin-top': -12, 'font-size': 24 })
+				.css({ 'float': "center", 'margin-top': -12, 'font-size': 24 })
 				.hide()
 				.html(isRev ? text.charAt(len - j - 1) : text.charAt(j))
 			);
@@ -5226,7 +5229,7 @@ function pushDisplay(text, mean, theme, wc){
 			}, Number(i) * tick, $l, ta);
 		}
 		i = $stage.game.display.children("div").get(0);
-		$(i).css(isRev ? 'margin-right' : 'margin-left', ($stage.game.display.width() - 20 * len) * 0.5);
+		//$(i).css(isRev ? 'margin-right' : 'margin-left', ($stage.game.display.width() - 20 * len) * 0.5);
 	}else{
 		j = "";
 		if(isRev) for(i=0; i<len; i++){
@@ -5345,15 +5348,18 @@ function processWord(word, _mean, _theme, _wcs, kkt){
 			
 			if(m1s) $m2.append($("<label>").addClass("word-head word-m2-head").html(x2 + 1));
 			m2.forEach(function(m3, x3){
-				var $m3 = $("<label>").addClass("word-m3");
+				if(kkt !== "ingame"){var $m3 = $("<label>").addClass("word-m3");}
+				else{var $m3 = $("<label>").addClass("word-m3-legacy");}
 				var _t = tl.shift();
 				
 				if(kkt !== "ingame"){$m3.append($("<label>").addClass("word-title").html(word));}
 				if(m2s) $m3.append($("<label>").addClass("word-head word-m3-head").html(x3 + 1));
 				if (_t !== null) {
-					$m3.append($("<label>").addClass("word-theme").html(_t));
+					if(kkt !== "ingame"){$m3.append($("<label>").addClass("word-theme").html(_t));}
+					else{$m3.append($("<label>").addClass("word-theme-legacy").html(_t));}
 				}
-				$m3.append($("<label>").addClass("word-m3-body").html(formMean(m3)));
+				if(kkt !== "ingame"){$m3.append($("<label>").addClass("word-m3-body").html(formMean(m3)));}
+				else{$m3.append($("<label>").addClass("word-m3-legacy").html(formMean(m3)));}
 				if(kkt !== "ingame"){$m3.append($("<label>").addClass("word-m3-source").html("단어 DB 제공: CC-BY 국립국어원 우리말샘 / Copyright (C) NXDict"));}
 				$m2.append($m3);
 			});
@@ -5649,9 +5655,8 @@ function chat(profile, msg, from, timestamp){
 		chatBalloon(msg, profile.id, $bar);
 	}
 	$stage.chat.append($item = $("<div>").addClass("chat-item")
-		.append($bar = $("<div>").addClass("chat-head ellipse").text(profile.title || profile.name))
+		.append($bar = $("<div>").addClass("chat-head ellipse").text(profile.title || profile.name).append($("<div>").addClass("chat-stamp").text(time.toLocaleTimeString())))
 		.append($msg = $("<div>").addClass("chat-body").text(msg))
-		.append($("<div>").addClass("chat-stamp").text(time.toLocaleTimeString()))
 	);
 	if(timestamp) $bar.prepend($("<i>").addClass("fa fa-video-camera"));
 	$bar.on('click', function(e){
@@ -5687,8 +5692,8 @@ function notice(msg, head){
 	stackChat();
 	$("#Chat,#chat-log-board").append($("<div>").addClass("chat-item chat-notice")
 		.append($("<div>").addClass("chat-head").text(head || L['notice']))
+		.append($("<div>").addClass("chat-stamp chat-notice-stamp").text(time.toLocaleTimeString()))
 		.append($("<div>").addClass("chat-body").text(msg))
-		.append($("<div>").addClass("chat-stamp").text(time.toLocaleTimeString()))
 	);
 	$stage.chat.scrollTop(999999999);
 	if(head == "tail") console.warn(time.toLocaleString(), msg);

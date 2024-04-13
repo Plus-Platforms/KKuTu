@@ -18,7 +18,7 @@
 
 $lib.Jaqwi.roundReady = function(data){
 	var tv = L['jqTheme'] + ": " + L['theme_' + data.theme];
-	$stage.game.wrong.html("오답입니다!");
+	$stage.game.wrongText.html("오답입니다!");
 	clearBoard();
 	$data._roundTime = $data.room.time * 1000;
 	$data._fastTime = 10000;
@@ -71,7 +71,7 @@ $lib.Jaqwi.turnEnd = function(id, data){
 	var $sc = $("<div>").addClass("deltaScore").html("+" + data.score);
 	var $uc = $("#game-user-" + id);
 	$stage.game.wrong.hide();
-	$stage.game.wrong.html("오답입니다!");
+	$stage.game.wrongText.html("오답입니다!");
 	if(data.giveup){
 		$uc.addClass("game-user-bomb");
 	}else if(data.answer){
@@ -85,7 +85,7 @@ $lib.Jaqwi.turnEnd = function(id, data){
 		// if(data.mean) turnHint(data);
 		if(id == $data.id) $stage.game.hereText.hide();
 		if (!$stage.game.other.is(":visible")){ $stage.game.wrong.show();
-			$stage.game.wrong.html("서두르세요! 다른 사람이 이미 단어를 맞췄어요!");
+			$stage.game.wrongText.html("서두르세요! 다른 사람이 이미 단어를 맞췄어요!");
 			}
 		addScore(id, data.score);
 		if($data._roundTime > 10000) $data._roundTime = 10000;

@@ -89,10 +89,10 @@ block Jungle
 block Top 
 	div#Top
 		+Menu()
-		div#global-notice
+		//div#global-notice
 			div#gn-content
 				include ../public/global_notice.html
-		+Expl(L('GLOBAL_NOTICE'))
+			+Expl(L('GLOBAL_NOTICE'))
 		
 block Middle
 	- var VERSION = L('version');
@@ -392,20 +392,16 @@ block Middle
 			h4.dialog-bar-value#replay-players -
 		div.dialog-bar.tail-button.d3-bar
 			button.primaryBtn#replay-view= L('replayView')
-	+Dialog('DressDiag', 1000, 510, L('dress', false))
+	+Dialog('DressDiag', 1016, 510, L('dress', false))
 		div(style="display:flex;")
 			div
-				img#dressitembtn(src="/img/kkutu/dress/deco.png", alt="꾸미기")
-				+Expl(true)
-					div!= "프로필을 휘장과 여러가지 장식으로 꾸며 보세요"
+				img#infobtn(src="/img/kkutu/dress/info.png", alt="내 정보")
 			div
 				img#dress-cf(src="/img/kkutu/dress/lab.png" alt="조합소")
-				+Expl(true)
-					div!= "게임에서 수집한 글자 조각을 조합해 보세요"
 			div
-				img#infobtn(src="/img/kkutu/dress/info.png", alt="내 정보")
-				+Expl(true)
-					div!= "내 전적을 확인해 보세요"	
+				img#dressitembtn(src="/img/kkutu/dress/deco_new.png", alt="꾸미기")
+				img#CouponBtn(src="/img/kkutu/dress/coupon.png", alt="쿠폰")
+
 	+Dialog('DressItemDiag', 600, 415, L('dress', false))
 		div.dialog-bar
 			h4(style='width: 150px;')= L('myNickname')
@@ -562,9 +558,6 @@ block Middle
 				button.sidebtn#Community2Btn
 					+FA("bullhorn")
 					h3 공지사항
-				button.sidebtn#CouponBtn
-					+FA("ticket")
-					h3 쿠폰 등록
 				button.sidebtn#CreditBtn
 					+FA("circle-info")
 					h3 제작진
@@ -668,9 +661,15 @@ block Middle
 					div.enterHere
 						div.game-input
 							input#game-input.game-inputs(placeholder=L('yourTurn')+' '+L('inputChat'), readonly)
-							div#game-correct.game-inputs= "정답입니다!"
-							div#game-wrong.game-inputs= "오답입니다."
-							div#other-enter.game-inputs= "다른 사람이 입력하고 있어요"
+							div#game-correct.game-inputs
+								+FA("check")
+								span#correct-text 정답입니다!
+							div#game-wrong.game-inputs
+								+FA("xmark")
+								span#wrong-text 오답입니다.
+							div#other-enter.game-inputs
+								+FA("pencil")
+								span#other-text 다른 사람이 입력하고 있어요
 					div.history-holder
 						div.history
 				div.game-body

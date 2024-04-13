@@ -108,6 +108,13 @@
 	.chat-head:hover {
 		background-color: #000!important;
 	}
+	.chat-notice .chat-body{
+		color: #fff!important;
+	}
+	.chat-item{
+		background-color: #1f2937!important;
+	}
+
 	.users-item {
 		background-color: #1f2937!important;
 	}
@@ -173,6 +180,21 @@
 	}
 	.rooms-single>div {
 		color: #ffffff!important;
+	}
+	.jjoDisplayBar {
+		border: 3px solid #000000!important;
+	}
+	.game-input {
+		border: 3px solid #000!important;
+		background: #000!important;
+	}
+	#other-enter{
+		color: #6b7280!important;
+    	background-color: #374151!important;
+	}
+	.history-item{
+		color: #fff!important;
+		background-color: #1f2937!important;
 	}
   }
 
@@ -624,11 +646,29 @@ iframe{
 		border: none;
 }
 #DressDiag{
-	box-shadow: none;
-    background: transparent;
+	box-shadow: none!important;
+    background: transparent!important;
 }
 #DressDiag .dialog-head{
 	color: #ffffff!important;
+}
+#infobtn, #dress-cf{
+	margin-right: 8px;
+}
+#dressitembtn{
+	margin-bottom: 8px;
+}
+#DressDiag img:hover{
+	transform: scale(1);
+    transition: transform 0.1s ease;
+}
+#DressDiag img:active{
+	transform: scale(0.9) !important;
+    transition: transform 0.1s ease;
+}
+#DressDiag img{
+	transform: scale(0.95);
+	transition: all 200ms ease;
 }
 
 #Community2Diag{
@@ -1233,15 +1273,22 @@ iframe{
 		}
 		.cw .jjoDisplayBar{ width: 308px; height: 330px; transition: all 0.5s ease; }
 			.jjo-display{
+				align-items: center;
+				justify-items: center;
+				display: flex;
 				padding: 29px 5px;
 				border-radius: 25px;
 				width: 506px;
-				height: 33px;
+				/* height: 33px; */
 				font-size: 36px;
 				text-align: center;
 				color: #EEEEEE;
 				background: #4b556300;
-    			font-weight: 700;
+				font-weight: 700;
+				justify-content: center;
+				flex-direction: row;
+				flex-wrap: nowrap;
+
 			}
 			.jjo-turn-time{
 				position: absolute;
@@ -1253,7 +1300,6 @@ iframe{
 			}
 			.jjo-display-word-length{ color: orange; font-size: 14px; }
 			.cw .jjo-display{ position: relative; padding: 5px; width: 298px; height: 298px; }
-				.display-text{ width: 20px; text-align: center; z-index: 1; margin-right: 10px;}
 				.game-fail-text{ animation: FailBlink 2s linear; color: #FF7777; }
 				.cw-bar{
 					position: absolute;
@@ -1318,7 +1364,7 @@ iframe{
 		background-image: url(/img/kkutu/righthand.png);
 	}
 	.rounds{
-		margin-top: 64px;
+		margin-top: 50px;
 		width: 100%;
 		color: #787878;
 		font-weight: 600;
@@ -1394,6 +1440,16 @@ iframe{
 				margin-bottom: 12px;
 				color: #6B7280;
 			 }
+			 .word-theme-legacy{
+				color: #6B7280;
+				margin-top: 2px;
+			 }
+			 .word-m3-legacy{
+				justify-content: center;
+				display: flex;
+			 }
+			.word-theme-legacy::before{ content: "<"; }
+			.word-theme-legacy::after{ content: "> "; }
 			.word-m3-body{
 				font-size: 20px!important;
 			}
@@ -1427,12 +1483,23 @@ box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.10), 0px 4px 6px -4px rgba(0, 0, 
 	}
 		
 		.game-inputs{
+			position: absolute;
 			width: 512px;
 			height: 55px;
 			border-radius: 25px;
 			font-size: 20px;
 			font-weight: 600;
 			border: none;
+			padding-left: 25px;
+		}
+		.game-input{
+			width: 537px;
+			position: relative;
+			height: 64px;
+		}
+		#game-input{
+			width: 507px;
+			height: 54px;
 		}
 		#game-correct{
 			background: #22C55E;
@@ -1458,10 +1525,13 @@ box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.10), 0px 4px 6px -4px rgba(0, 0, 
 			padding-left: 25px;
 			height:auto;
 		}
+		#wrong-text, #correct-text, #other-text{
+			display: inline-block;
+			margin-left: 10px;
+		}
 	.game-body{
 		display: flex;
-		margin: 0px -1px;
-		width: 1290px;
+		margin: 0px 25px;
 		height: 100%;
 		overflow-x: scroll;
 	}
@@ -1722,7 +1792,7 @@ box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.10), 0px 4px 6px -4px rgba(0, 0, 
 		background-image: url('/img/kkutu/balloonbot.png');
 	}
 #Chat{
-	padding: 13px;
+	padding: 13px 0px;
     width: 100%;
     overflow-y: scroll;
     box-sizing: border-box;
@@ -1742,7 +1812,7 @@ box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.10), 0px 4px 6px -4px rgba(0, 0, 
     font-size: 18px;
 }
 #ChatBtn{
-    border: 1px solid #D1D5DB!important;
+    padding: 6px 5px;
     font-weight: 700;
 	
     background: #D8B4FE;
@@ -1760,6 +1830,9 @@ box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.10), 0px 4px 6px -4px rgba(0, 0, 
 		border: 0px;
 		border-bottom: 1px dashed #999999;
 		margin: 2px 0px;
+		background-color: transparent !important;
+		box-shadow: none;
+		border-radius: 0px;
 	}
 	.chat-item{
 		float: left;
@@ -1772,17 +1845,34 @@ box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.10), 0px 4px 6px -4px rgba(0, 0, 
 	/*background.chat-notice{
 		-color: #ffffff;
 	}*/
-		.chat-notice .chat-head{ color: #1767CA; }
+		.chat-notice .chat-head{ 
+			padding: 1px 8px;
+			background-color: #1767CA;
+			border-radius: 6px;
+			width: auto;
+		 }
+		 .chat-item{
+			margin: 4px 0px;
+			padding: 7px 11px;
+			border-radius: 8px;
+			background-color: #FFF;
+			box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.15);
+			box-sizing: border-box;
+		 }
 		.chat-stamp{
-			float: left;
+			float: right;
 			padding-top: 2px;
 			width: 70px;
 			font-size: 11px;
 			text-align: right;
 			color: #999999;
-			display: none;
+			font-weight: 300;
 		}
 		.chat-head{
+			justify-content: space-between;
+			align-items: baseline;
+			width: 100%;
+			display: flex;
 			float: left;
 			padding-right: 4px;
 			margin-right: 5px;
@@ -1791,7 +1881,7 @@ box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.10), 0px 4px 6px -4px rgba(0, 0, 
 			cursor: pointer;
 		}
 			.chat-head:hover{ background-color: #FFF; }
-		.chat-body{ float: left; min-height: 14px; }
+		.chat-body{ float: left; min-height: 14px; width: 100%; }
 .ADBox{
 	width: calc(100% - 280px);
 	box-shadow: none;

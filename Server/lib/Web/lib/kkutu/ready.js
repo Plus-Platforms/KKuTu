@@ -187,6 +187,9 @@ $(document).ready(function(){
 			correct: $("#game-correct"),
 			wrong: $("#game-wrong"),
 			other: $("#other-enter"),
+			wrongText: $("#wrong-text"),
+			correctText: $("#correct-text"),
+			otherText: $("#other-text"),
 			history: $(".history"),
 			roundBar: $(".jjo-round-time .graph-bar"),
 			turnBar: $(".jjo-turn-time .graph-bar")

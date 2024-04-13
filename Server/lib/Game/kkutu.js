@@ -465,7 +465,7 @@ exports.Client = function(socket, profile, sid){
 				return code;
 			}
 
-			if(first) $user = { nickname: "닉네임 없음", money: 0, eventuid: generateRandomCode(8) };
+			if(first) $user = { nickname: my.profile.title || my.profile.name || "닉네임 없음", money: 0, eventuid: generateRandomCode(8) };
 			if(eventuid == "unset"){
 				eventuid = generateRandomCode(8);
 				DB.users.update([ '_id', my.id ]).set([ 'eventuid', eventuid ]).on();
