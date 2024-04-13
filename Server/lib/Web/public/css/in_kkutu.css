@@ -34,7 +34,7 @@
 	.aISub {
 		color: #fff!important;
 	}
-	.fuckSeogom {
+	.topText {
 		color: #e5e7eb!important;
 	}
 	.iconItem {
@@ -111,12 +111,19 @@
 	.chat-notice .chat-body{
 		color: #fff!important;
 	}
-	.chat-item{
+	.chat-item, .users-item {
 		background-color: #1f2937!important;
 	}
-
-	.users-item {
-		background-color: #1f2937!important;
+	.result-me-money, .result-me-score {
+		background-color: #374151!important;
+		color: #fff!important;
+	}
+	
+	.result-board-me{
+		background: #052e16!important;
+	}
+	.result-board-item{
+		background: #111827!important;
 	}
 	.room-user {
 		background: #111827!important;
@@ -363,8 +370,9 @@ equ{
 
 /* 토스트 메시지 */
 #tost_message {
-	border-left: 5px solid rgba(21,169,255,1);
-    background: linear-gradient(180deg, rgba(23,25,100,1) 0%, rgba(23,32,107,1) 100%);
+	border-left: 5px solid #dc2626;
+    background: #11182778;
+	backdrop-filter: blur(15px);
     width: 480px;
     z-index: 300;
     opacity: 0;
@@ -652,8 +660,11 @@ iframe{
 #DressDiag .dialog-head{
 	color: #ffffff!important;
 }
-#dressitembtn, #dress-cf{
+#infobtn, #dress-cf{
 	margin-right: 8px;
+}
+#dressitembtn{
+	margin-bottom: 8px;
 }
 #DressDiag img:hover{
 	transform: scale(1);
@@ -1252,9 +1263,9 @@ iframe{
 		background-image: url(/img/kkutu/lefthand.png);
 		background-size: cover;
 	}
-	.jjoriping{ width: 500px; }
-	.cw.jjoriping{ margin-top: -10px; width: 322px; }
-	.dg.jjoriping{ margin-left: -25.8em }
+	.luod{ width: 500px; }
+	.cw.luod{ margin-top: -10px; width: 322px; }
+	.dg.luod{ margin-left: -25.8em }
 		.jjoObj{ position: relative; }
 		.jjoEyeL{ top: 11px; left: 0px; }
 		.jjoNose{ top: 9px; left: 181px; }
@@ -1586,24 +1597,33 @@ box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.10), 0px 4px 6px -4px rgba(0, 0, 
 	#ResultDiag .dialog-body div{ float: left; }
 		.result-board{
 			width: 400px;
-			height: 377px;
+			height: 435px;
+			overflow-y: scroll;
+			overflow-x: hidden;
 		}
 			.result-board-item{
 				padding: 5px;
-				margin: 1px;
-				width: 388px;
-				height: 25px;
-				box-shadow: 0px 1px 1px #CCCCCC;
-				background-color: #F4F4F4;
+				margin: 4px 1px;
+				width: 375px;
+				background: #F4F4F4;
+				border-radius: 8px;
+				font-size: 20px;
+				box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.15);
 			}
 			.result-board-me{
 				padding: 4px;
-				border: 1px solid #CCCCCC;
-				background-color: #FAFAFA;
+				background: #bbf7d0;
 			}
-				.result-board-rank{ padding-top: 3px; border-radius: 10px; width: 45px; height: 17px; text-align: center; }
-				.result-board-level{ width: 20px; height: 20px; }
-				.result-board-name{ font-weight: 700; padding-top: 3px; margin-left: 5px; width: 100px; }
+				.result-board-rank{ padding-top: 3px;
+					width: 30px;
+    				height: 28px;
+					background-color: #7c3aed;
+					color: #fff;
+					text-align: center;
+					font-weight: bold;
+					margin-right: 5px; }
+				.result-board-level{ width: 28px; height: 28px; }
+				.result-board-name{ font-weight: 700; padding: 3px 5px; width: 100px; }
 				.result-board-score{ padding-top: 3px; width: 80px; text-align: center; }
 				.result-board-reward{ padding-top: 3px; width: 80px; text-align: center; }
 				.result-board-lvup{
@@ -1618,44 +1638,67 @@ box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.10), 0px 4px 6px -4px rgba(0, 0, 
 					.result-board-lvup div{ padding-top: 3px; }
 		.result-me{
 			padding: 3px;
-			border: 1px solid #CCCCCC;
+			border-left: 1px solid #CCCCCC;
 			margin: 1px;
 			width: 390px;
-			height: 80px;
-			font-size: 13px;
+			height: 430px;
+			font-size: 20px;
 		}
-			.result-me-score{ width: 195px; color: #3C5FC2; text-align: center; }
-				.result-me-bonus{ color: #4BBBFF; font-weight: bold; text-shadow: 0px 0px 2px #C8C8F7; }
-			.result-me-money{ width: 195px; color: #555555; text-align: center; }
-			.result-me-level{ margin-top: 5px; width: 80px; }
-				.result-me-level-head{ width: 80px; text-align: center; }
+		.result-abt{
+			width:100%;
+		}
+			.result-me-score{ width: calc(50% - 8px);
+				padding: 7px 11px;
+				margin: 0px 2px 16px 2px;
+				border-radius: 8px;
+				background-color: #FFF;
+				box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.15);
+				box-sizing: border-box;
+				color: #3C5FC2;    height: 100px;text-align: center; }
+				.result-me-bonus{
+					color: #4BBBFF;
+					font-weight: bold;
+					text-shadow: 0px 0px 2px #C8C8F7; }
+			.result-me-money{     width: calc(50% - 8px);
+				margin: 0px 2px 16px 2px;
+				padding: 7px 11px;
+				border-radius: 8px;
+				background-color: #FFF;
+				box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.15);
+				box-sizing: border-box;
+				color: #555555;    height: 100px;text-align: center; }
+			.resultIcons{
+				height: 22px;
+				display: inline-block;
+				margin-right: 5px;
+			}
+			.result-me-level{     padding: 8px;}
+				.result-me-level-head{ text-align: center; }
 				.result-me-level-body{
-					font-family: 'Pretendard';
-					width: 80px;
 					text-align: center;
-					margin-top: -10px;
 					font-size: 30px;
 					font-weight: 800;
 				}
 			.result-me-gauge{
-				margin-top: 5px;
-				width: 308px;
-				height: 49px;
+				margin-top: 10px;
+				width: 285px;
+				height: 10px;
 				overflow: hidden;
-				box-shadow: 0px 1px 1px #CCCCCC;
+				border-radius: 8px;
 				background-color: #333333;
 			}
+			.xpCounter, .moneyCounter{
+				font-size: 30px;
+    			font-weight: 700;
+			}
+
 				.result-me-before-bar{ background-image: url('/img/kkutu/scorebar.png'); }
 				.result-me-current-bar{ background-image: url('/img/kkutu/currentbar.png'); }
 				.result-me-bonus-bar{ background-image: url('/img/kkutu/bonusbar.png'); }
 				.result-me-score-text{
-					margin-top: -45px;
-    margin-left: 80px;
-    width: 308px;
-    color: #EEEEEE;
-    text-align: center;
-    text-shadow: 0px 1px 1px #141414;
-    font-size: 20px;
+				width: 285px;
+				color: #EEEEEE;
+				font-size: 20px;
 				}
 			.result-me-expl h4{ color: #FFFF44; }
 			.result-me-expl div{ margin-bottom: 4px; width: 140px; }

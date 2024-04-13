@@ -18,7 +18,7 @@
 
 var Web		 = require("request");
 var MainDB	 = require("../db");
-var JLog	 = require("../../sub/jjlog");
+var PLLog	 = require("../../sub/jjlog");
 var GLOBAL	 = require("../../sub/global.json");
 var Const	 = require("../../const");
 
@@ -184,7 +184,7 @@ Server.post("/buy/:id", function(req, res){
 					[ 'box', $user.box ]
 				).on(function($fin){
 					res.send({ result: 200, money: postM, box: $user.box });
-					JLog.log("[PURCHASED] " + gid + " by " + uid);
+					PLLog.log("[PURCHASED] " + gid + " by " + uid);
 				});
 				// HIT를 올리는 데에 동시성 문제가 발생한다. 조심하자.
 				MainDB.kkutu_shop.update([ '_id', gid ]).set([ 'hit', $item.hit + 1 ]).on();

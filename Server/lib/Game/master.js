@@ -25,7 +25,7 @@ var HTTPS_Server;
 var KKuTu = require('./kkutu');
 var GLOBAL = require("../sub/global.json");
 var Const = require("../const");
-var JLog = require('../sub/jjlog');
+var PLLog = require('../sub/jjlog');
 var Secure = require('../sub/secure');
 var Recaptcha = require('../sub/recaptcha');
 
@@ -70,7 +70,7 @@ process.on('uncaughtException', function(err){
 	var text = `:${PORT} [${new Date().toLocaleString()}] ERROR: ${err.toString()}\n${err.stack}\n`;
 	
 	File.appendFile("/jjolol/KKUTU_ERROR.log", text, function(res){
-		JLog.error(`ERROR OCCURRED ON THE MASTER!`);
+		PLLog.error(`ERROR OCCURRED ON THE MASTER!`);
 		console.log(text);
 	});
 });
@@ -114,11 +114,11 @@ function processAdmin(id, value){
 			if(DIC[id]) DIC[id].send('yell', { value: "This feature is not supported..." });
 			/*Heapdump.writeSnapshot("/home/kkutu_memdump_" + Date.now() + ".heapsnapshot", function(err){
 				if(err){
-					JLog.error("Error when dumping!");
-					return JLog.error(err.toString());
+					PLLog.error("Error when dumping!");
+					return PLLog.error(err.toString());
 				}
 				if(DIC[id]) DIC[id].send('yell', { value: "DUMP OK" });
-				JLog.success("Dumping success.");
+				PLLog.success("Dumping success.");
 			});*/
 			return null;
 		/* Enhanced User Block System [S] */
@@ -131,7 +131,7 @@ function processAdmin(id, value){
 					MainDB.users.update([ '_id', args[0].trim() ]).set([ 'black', args[1].trim() ], [ 'blockedUntil', addDate(parseInt(args[2].trim())) ]).on();				
 				}else return null;
 				
-				JLog.info(`[Block] 사용자 #${args[0].trim()}(이)가 이용제한 처리되었습니다.`);
+				PLLog.info(`[Block] 사용자 #${args[0].trim()}(이)가 이용제한 처리되었습니다.`);
 				
 				if(temp = DIC[args[0].trim()]){
 					temp.socket.send('{"type":"error","code":410}');
@@ -150,7 +150,7 @@ function processAdmin(id, value){
 					MainDB.ip_block.update([ '_id', args[0].trim() ]).set([ 'reasonBlocked', args[1].trim() ], [ 'ipBlockedUntil', addDate(parseInt(args[2].trim())) ]).on();				
 				}else return null;
 				
-				JLog.info(`[Block] IP 주소 ${args[0].trim()}(이)가 이용제한 처리되었습니다.`);
+				PLLog.info(`[Block] IP 주소 ${args[0].trim()}(이)가 이용제한 처리되었습니다.`);
 			}catch(e){
 				processAdminErrorCallback(e, id);
 			}
@@ -158,7 +158,7 @@ function processAdmin(id, value){
 		case 'unban':
 			try {
 				MainDB.users.update([ '_id', value ]).set([ 'black', null ], [ 'blockedUntil', 0 ]).on();								
-				JLog.info(`[Block] 사용자 #${value}(이)가 이용제한 해제 처리되었습니다.`);
+				PLLog.info(`[Block] 사용자 #${value}(이)가 이용제한 해제 처리되었습니다.`);
 			}catch(e){
 				processAdminErrorCallback(e, id);
 			}
@@ -166,7 +166,7 @@ function processAdmin(id, value){
 		case 'ipunban':
 			try {
 				MainDB.ip_block.update([ '_id', value ]).set([ 'reasonBlocked', null ], [ 'ipBlockedUntil', 0 ]).on();								
-				JLog.info(`[Block] IP 주소 ${value}(이)가 이용제한 해제 처리되었습니다.`);
+				PLLog.info(`[Block] IP 주소 ${value}(이)가 이용제한 해제 처리되었습니다.`);
 			}catch(e){
 				processAdminErrorCallback(e, id);
 			}
@@ -176,19 +176,19 @@ function processAdmin(id, value){
 		case 'allowguestenter':
             if(allowGuestEnter) {
                 allowGuestEnter = false;
-                JLog.info(`[Entrance] ${id} 님이 손님 계정의 출입을 비활성화했습니다.`);
+                PLLog.info(`[Entrance] ${id} 님이 손님 계정의 출입을 비활성화했습니다.`);
             } else {
                 allowGuestEnter = true;
-                JLog.info(`[Entrance] ${id} 님이 손님 계정의 출입을 활성화했습니다.`);
+                PLLog.info(`[Entrance] ${id} 님이 손님 계정의 출입을 활성화했습니다.`);
             }
             return null;
 		case 'allowenter':
             if(allowEnter) {
                 allowEnter = false;
-                JLog.info(`[Entrance] ${id} 님이 사용자의 출입을 비활성화했습니다.`);
+                PLLog.info(`[Entrance] ${id} 님이 사용자의 출입을 비활성화했습니다.`);
             } else {
                 allowEnter = true;
-                JLog.info(`[Entrance] ${id} 님이 사용자의 출입을 허용했습니다.`);
+                PLLog.info(`[Entrance] ${id} 님이 사용자의 출입을 허용했습니다.`);
             }
             return null;
         case 'kickguest':
@@ -201,7 +201,7 @@ function processAdmin(id, value){
                     }
                 });
             } catch (e) {
-                JLog.error(e);
+                PLLog.error(e);
             }
             return null;
         case 'kickuser':
@@ -214,7 +214,7 @@ function processAdmin(id, value){
                     }
                 });
             } catch (e) {
-                JLog.error(e);
+                PLLog.error(e);
             }
             return null;
 		/* Toggle Guest Entrance & User Kick [E] */
@@ -229,7 +229,7 @@ function addDate(num){
 
 function processAdminErrorCallback(error, id){
 	DIC[id].send('notice', { value: `명령을 처리하는 도중 오류가 발생하였습니다: ${error}` });
-	JLog.warn(`[Block] 명령을 처리하는 도중 오류가 발생하였습니다: ${error}`);
+	PLLog.warn(`[Block] 명령을 처리하는 도중 오류가 발생하였습니다: ${error}`);
 }
 /* Enhanced User Block System [E] */
 function checkTailUser(id, place, msg){
@@ -320,14 +320,14 @@ Cluster.on('message', function(worker, msg){
 			if(ROOM[msg.id] && DIC[msg.target]){
 				ROOM[msg.id].come(DIC[msg.target]);
 			}else{
-				JLog.warn(`Wrong room-come id=${msg.id}&target=${msg.target}`);
+				PLLog.warn(`Wrong room-come id=${msg.id}&target=${msg.target}`);
 			}
 			break;
 		case "room-spectate":
 			if(ROOM[msg.id] && DIC[msg.target]){
 				ROOM[msg.id].spectate(DIC[msg.target], msg.pw);
 			}else{
-				JLog.warn(`Wrong room-spectate id=${msg.id}&target=${msg.target}`);
+				PLLog.warn(`Wrong room-spectate id=${msg.id}&target=${msg.target}`);
 			}
 			break;
 		case "room-go":
@@ -335,14 +335,14 @@ Cluster.on('message', function(worker, msg){
 				ROOM[msg.id].go(DIC[msg.target]);
 			}else{
 				// 나가기 말고 연결 자체가 끊겼을 때 생기는 듯 하다.
-				JLog.warn(`Wrong room-go id=${msg.id}&target=${msg.target}`);
+				PLLog.warn(`Wrong room-go id=${msg.id}&target=${msg.target}`);
 				if(ROOM[msg.id] && ROOM[msg.id].players){
 					// 이 때 수동으로 지워준다.
 					var x = ROOM[msg.id].players.indexOf(msg.target);
 					
 					if(x != -1){
 						ROOM[msg.id].players.splice(x, 1);
-						JLog.warn(`^ OK`);
+						PLLog.warn(`^ OK`);
 					}
 				}
 				if(msg.removed) delete ROOM[msg.id];
@@ -378,14 +378,14 @@ Cluster.on('message', function(worker, msg){
 			delete ROOM[msg.room.id];
 			break;
 		default:
-			JLog.warn(`Unhandled IPC message type: ${msg.type}`);
+			PLLog.warn(`Unhandled IPC message type: ${msg.type}`);
 	}
 });
 exports.init = function(_SID, CHAN){
 	SID = _SID;
 	MainDB = require('../Web/db');
 	MainDB.ready = function(){
-		JLog.success("Master DB is ready.");
+		PLLog.success("Master DB is ready.");
 		
 		MainDB.users.update([ 'server', SID ]).set([ 'server', "" ]).on();
 		if(Const.IS_SECURED) {
@@ -404,15 +404,15 @@ exports.init = function(_SID, CHAN){
 			var $c;
 			
 			socket.on('error', function(err){
-				JLog.warn("Error on #" + key + " on ws: " + err.toString());
+				PLLog.warn("Error on #" + key + " on ws: " + err.toString());
 			});
 			// 웹 서버
 			if(info.headers.host.startsWith(GLOBAL.GAME_SERVER_HOST + ":")){
 				if(WDIC[key]) WDIC[key].socket.close();
 				WDIC[key] = new KKuTu.WebServer(socket);
-				JLog.info(`New web server #${key}`);
+				PLLog.info(`New web server #${key}`);
 				WDIC[key].socket.on('close', function(){
-					JLog.alert(`Exit web server #${key}`);
+					PLLog.alert(`Exit web server #${key}`);
 					WDIC[key].socket.removeAllListeners();
 					delete WDIC[key];
 				});
@@ -482,7 +482,7 @@ exports.init = function(_SID, CHAN){
 						if ($body && $body.reasonBlocked) {
 							if($body.ipBlockedUntil < Date.now()) {
 								MainDB.ip_block.update([ '_id', $c.remoteAddress ]).set([ 'ipBlockedUntil', 0 ], [ 'reasonBlocked', null ]).on();
-								JLog.info(`IP 주소 ${$c.remoteAddress}의 이용제한이 해제되었습니다.`);
+								PLLog.info(`IP 주소 ${$c.remoteAddress}의 이용제한이 해제되었습니다.`);
 							}
 							else {
 								$c.socket.send(JSON.stringify({
@@ -510,7 +510,7 @@ exports.init = function(_SID, CHAN){
 					if (Date.now() < blockedUntilTimestamp) {
 						DIC[$c.id] = $c;
 						MainDB.users.update([ '_id', $c.id ]).set([ 'blockedUntil', 0 ], [ 'black', null ]).on();
-						JLog.info(`사용자 #${$c.id}의 이용제한이 해제되었습니다.`);
+						PLLog.info(`사용자 #${$c.id}의 이용제한이 해제되었습니다.`);
 						isBlockRelease = true;
 					}
 					
@@ -545,13 +545,13 @@ exports.init = function(_SID, CHAN){
 						
 						$c._error = ref.result;
 						$c.socket.close();
-						// JLog.info("Black user #" + $c.id);
+						// PLLog.info("Black user #" + $c.id);
 					}
 				});
 			});
 		});
 		Server.on('error', function (err) {
-			JLog.warn("Error on ws: " + err.toString());
+			PLLog.warn("Error on ws: " + err.toString());
 		});
 		KKuTu.init(MainDB, DIC, ROOM, GUEST_PERMISSION, CHAN);
 	};
@@ -579,7 +579,7 @@ function joinNewUser($c) {
 	narrateFriends($c.id, $c.friends, "on");
 	KKuTu.publish('conn', {user: $c.getData()});
 
-	JLog.info("New user #" + $c.id);
+	PLLog.info("New user #" + $c.id);
 }
 
 KKuTu.onClientMessage = function ($c, msg) {
@@ -597,7 +597,7 @@ KKuTu.onClientMessage = function ($c, msg) {
 
 					processClientRequest($c, msg);
 				} else {
-					JLog.warn(`Recaptcha failed from IP ${$c.remoteAddress}`);
+					PLLog.warn(`Recaptcha failed from IP ${$c.remoteAddress}`);
 
 					$c.sendError(447);
 					$c.socket.close();
@@ -825,5 +825,5 @@ KKuTu.onClientClosed = function($c, code){
 	if($c.friends) narrateFriends($c.id, $c.friends, "off");
 	KKuTu.publish('disconn', { id: $c.id });
 
-	JLog.alert("Exit #" + $c.id);
+	PLLog.alert("Exit #" + $c.id);
 };

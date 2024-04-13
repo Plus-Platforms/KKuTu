@@ -18,12 +18,12 @@
 
 var DB	 = require("../Web/db");
 var File = require("fs");
-var JLog = require("../sub/jjlog");
+var PLLog = require("../sub/jjlog");
 
 /* 상품 group 명세
 NIK	이름 스킨; 이름의 색상을 변경합니다.
 */
-JLog.info("KKuTu Goods Manager");
+PLLog.info("KKuTu Goods Manager");
 DB.ready = function(){
 	var data = {
 		type: process.argv[2],
@@ -32,7 +32,7 @@ DB.ready = function(){
 	
 	File.readFile(data.url, function(err, _file){
 		if(err){
-			JLog.error("URL not found: " + data.url);
+			PLLog.error("URL not found: " + data.url);
 			process.exit();
 		}else{
 			var i, dv = _file.toString();
@@ -43,7 +43,7 @@ DB.ready = function(){
 			run(data);
 		}
 	});
-	JLog.success("DB is ready.");
+	PLLog.success("DB is ready.");
 };
 function run(data){
 	var i, o;
@@ -63,7 +63,7 @@ function run(data){
 			for(i in data.list){
 				o = data.list[i];
 				
-				JLog.log(i);
+				PLLog.log(i);
 				DB.kkutu_shop.upsert([ '_id', Number(o.id) ]).set(
 					[ 'group', o.group ],
 					[ 'title', o.title ],
@@ -77,8 +77,8 @@ function run(data){
 			}
 			break;
 		default:
-			JLog.error("Unhandled type " + data.type);
-			JLog.log("Avails: A");
+			PLLog.error("Unhandled type " + data.type);
+			PLLog.log("Avails: A");
 			process.exit();
 	}
 }

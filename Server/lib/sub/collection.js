@@ -39,7 +39,7 @@ var Escape = function(str){
 	});
 };
 var Lizard = require('./lizard');
-var JLog = require('./jjlog');
+var PLLog = require('./jjlog');
 
 // (JSON ENDPOINT) KEY
 _Escape.asSKey = function(val){
@@ -148,7 +148,7 @@ function sqlWhere(q){
 }
 function sqlSet(q, inc){
 	if(!q){
-		JLog.warn("[sqlSet] Invalid query.");
+		PLLog.warn("[sqlSet] Invalid query.");
 		return null;
 	}
 	var doN = inc ? function(k, v){
@@ -156,7 +156,7 @@ function sqlSet(q, inc){
 	} : function(k, v){
 		return Escape("%K=%V", k, v);
 	}, doJ = inc ? function(k, p, ok, v){
-		JLog.warn("[sqlSet] Cannot increase a value in JSON object.");
+		PLLog.warn("[sqlSet] Cannot increase a value in JSON object.");
 		return null; //Escape("%K=jsonb_set(%K,%V,CAST(CAST(%k AS bigint)+%V AS text),true)", k, k, p, ok, Number(v));
 	} : function(k, p, ok, v){
 		return Escape("%K=jsonb_set(%K,%V,%V,true)", k, k, p, v);
@@ -282,10 +282,10 @@ exports.Agent = function(type, origin){
 				
 				function preCB(err, res){
 					if(err){
-						JLog.error("Error when querying: "+sql);
-						JLog.error("Context: "+err.toString());
+						PLLog.error("Error when querying: "+sql);
+						PLLog.error("Context: "+err.toString());
 						if(onFail){
-							JLog.log("onFail calling...");
+							PLLog.log("onFail calling...");
 							onFail(err);
 						}
 						return;
@@ -311,7 +311,7 @@ exports.Agent = function(type, origin){
 							else{
 								if(onFail) onFail(doc);
 								else if(DEBUG) throw new Error("The data from "+mode+"["+JSON.stringify(q)+"] was not available.");
-								else JLog.warn("The data from ["+JSON.stringify(q)+"] was not available. Callback has been canceled.");
+								else PLLog.warn("The data from ["+JSON.stringify(q)+"] was not available. Callback has been canceled.");
 							}
 						}else f(doc);
 					}
@@ -353,10 +353,10 @@ exports.Agent = function(type, origin){
 						sql = Escape("ALTER TABLE %I ADD COLUMN %K %I", col, q[0], q[1]);
 						break;
 					default:
-						JLog.warn("Unhandled mode: " + mode);
+						PLLog.warn("Unhandled mode: " + mode);
 				}
-				if(!sql) return JLog.warn("SQL is undefined. This call will be ignored.");
-				// JLog.log("Query: " + sql.slice(0, 100));
+				if(!sql) return PLLog.warn("SQL is undefined. This call will be ignored.");
+				// PLLog.log("Query: " + sql.slice(0, 100));
 				origin.query(sql, preCB);
 				/*if(_my.findLimit){
 					
@@ -420,7 +420,7 @@ exports.Agent = function(type, origin){
 			return new pointer("createColumn", [ name, type ]);
 		};
 		my.direct = function(q, f){
-			JLog.warn("Direct query: " + q);
+			PLLog.warn("Direct query: " + q);
 			origin.query(q, f);
 		};
 	};
@@ -446,8 +446,8 @@ exports.Agent = function(type, origin){
 			}
 			function callback(err, doc){
 				if(err){
-					JLog.error("Error when querying: "+JSON.stringify(q));
-					JLog.error("Context: "+err.toString());
+					PLLog.error("Error when querying: "+JSON.stringify(q));
+					PLLog.error("Context: "+err.toString());
 					return;
 				}
 				
@@ -457,7 +457,7 @@ exports.Agent = function(type, origin){
 						else{
 							if(onFail) onFail(doc);
 							else if(DEBUG) throw new Error("The data from "+mode+"["+JSON.stringify(q)+"] was not available.");
-							else JLog.warn("The data from ["+JSON.stringify(q)+"] was not available. Callback has been canceled.");
+							else PLLog.warn("The data from ["+JSON.stringify(q)+"] was not available. Callback has been canceled.");
 						}
 					}else f(doc);
 				}

@@ -20,7 +20,7 @@ $lib.Crossword.roundReady = function(data, spec){
 	var turn = data.seq ? data.seq.indexOf($data.id) : -1;
 	
 	clearBoard();
-	$(".jjoriping,.rounds,.game-body").addClass("cw");
+	$(".luod,.rounds,.game-body").addClass("cw");
 	$data._roundTime = $data.room.time * 1000;
 	$data._fastTime = 30000;
 	$data.selectedRound = (turn == -1) ? 1 : (turn % $data.room.round + 1);

@@ -20,8 +20,8 @@ $lib.Drawing.roundReady = function (data, spec) {
   var tv = L['jqTheme'] + ': ' + L['theme_' + data.theme]
 
   clearBoard()
-  $('.jjoriping,.rounds,.game-body').addClass('cw')
-  $('.jjoriping,.rounds').addClass('dg')
+  $('.luod,.rounds,.game-body').addClass('cw')
+  $('.luod,.rounds').addClass('dg')
   $('.game-user-drawing').removeClass('game-user-drawing')
   $stage.game.tools.hide()
   $data._relay = false

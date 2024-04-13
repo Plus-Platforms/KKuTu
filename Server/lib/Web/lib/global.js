@@ -132,7 +132,7 @@ var L;
 		if($.cookie('lc') == "") $.cookie('lc', "ko_KR");
 		
 		if (global.profile.token) {
-			$("#account-info").html((global.profile.nickname || global.profile.title || global.profile.name) + '<span class="fuckSeogom">님</span>').on('click', function(e){
+			$("#account-info").html((global.profile.nickname || global.profile.title || global.profile.name) + '<span class="topText">님</span>').on('click', function(e){
 				if (confirm(L['ASK_LOGOUT'])) requestLogout(e);
 			});
 		}else{

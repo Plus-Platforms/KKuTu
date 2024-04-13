@@ -21,7 +21,7 @@ $lib.Sock.roundReady = function(data, spec){
 	
 	clearBoard();
 	$data._relay = true;
-	$(".jjoriping,.rounds,.game-body").addClass("cw");
+	$(".luod,.rounds,.game-body").addClass("cw");
 	$data._va = [];
 	$data._lang = RULE[MODE[$data.room.mode]].lang;
 	$data._board = data.board;

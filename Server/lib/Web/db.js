@@ -20,7 +20,7 @@ const LANG = [ "ko", "en" ];
 
 var PgPool	 = require("pg").Pool;
 var GLOBAL	 = require("../sub/global.json");
-var JLog	 = require("../sub/jjlog");
+var PLLog	 = require("../sub/jjlog");
 var Collection = require("../sub/collection");
 var Pub = require("../sub/checkpub");
 var Lizard = require("../sub/lizard");
@@ -51,15 +51,15 @@ Pub.ready = function(isPub){
 		connectPg();
 	});
 	Redis.on('error', function(err){
-		JLog.error("Error from Redis: " + err);
-		JLog.alert("Run with no-redis mode.");
+		PLLog.error("Error from Redis: " + err);
+		PLLog.alert("Run with no-redis mode.");
 		Redis.quit();
 		connectPg(true);
 	});
 	function connectPg(noRedis){
 		Pg.connect(function(err, pgMain){
 			if(err){
-				JLog.error("Error when connect to PostgreSQL server: " + err.toString());
+				PLLog.error("Error when connect to PostgreSQL server: " + err.toString());
 				return;
 			}
 			var redisAgent = noRedis ? null : new Collection.Agent("Redis", Redis);
@@ -89,7 +89,7 @@ Pub.ready = function(isPub){
 			/* Enhanced User Block System [E] */
 			
 			if(exports.ready) exports.ready(Redis, Pg);
-			else JLog.warn("DB.onReady was not defined yet.");
+			else PLLog.warn("DB.onReady was not defined yet.");
 		});
 	}
 };

@@ -20,7 +20,7 @@ var GUEST_PERMISSION;
 var Cluster = require("cluster");
 var Const = require('../const');
 var Lizard = require('../sub/lizard');
-var JLog = require('../sub/jjlog');
+var PLLog = require('../sub/jjlog');
 
 //var randomEquip = require('../sub/equipAi');
 const DiffMatchPatch = require("diff-match-patch")
@@ -299,10 +299,10 @@ exports.Client = function(socket, profile, sid){
 		if(!my) return;
 		if(!msg) return;
 		
-		if(JSON.parse(msg).type != 'refreshData') JLog.log(`Chan @${channel} Msg #${my.id}: ${msg}`);
+		if(JSON.parse(msg).type != 'refreshData') PLLog.log(`Chan @${channel} Msg #${my.id}: ${msg}`);
 		try{ data = JSON.parse(msg); }catch(e){ data = { error: 400 }; }
 
-		JLog.log(`Chan @${channel} Msg #${my.id}: ${data.type == 'drawingCanvas' ? JSON.stringify({type: data.type, diffed: data.diffed}) : msg}`);
+		PLLog.log(`Chan @${channel} Msg #${my.id}: ${data.type == 'drawingCanvas' ? JSON.stringify({type: data.type, diffed: data.diffed}) : msg}`);
 		if(Cluster.isWorker) process.send({ type: "tail-report", id: my.id, chan: channel, place: my.place, msg: data.error ? msg : data });
 		
 		exports.onClientMessage(my, data);
@@ -487,7 +487,7 @@ exports.Client = function(socket, profile, sid){
 			if(first){
 				my.flush();
 				DB.users.update([ '_id', my.id ]).set([ 'nickname', my.nickname || "닉네임 없음" ]).on(function($body){
-					if(!my.nickname) JLog.warn(`OAuth로부터 닉네임을 받아오지 못한 유저가 있습니다. #${my.id}`);
+					if(!my.nickname) PLLog.warn(`OAuth로부터 닉네임을 받아오지 못한 유저가 있습니다. #${my.id}`);
 				});
 			}else{
 				my.checkExpire();
@@ -521,7 +521,7 @@ exports.Client = function(socket, profile, sid){
 		).on(function(__res){
 			DB.redis.getGlobal(my.id).then(function(_res){
 				DB.redis.putGlobal(my.id, my.data.score).then(function(res){
-					JLog.log(`FLUSHED [${my.id}] PTS=${my.data.score} MNY=${my.money} RP=${my.data.rankPoint} 2024식목일 ${my.data.forestPoint}`);
+					PLLog.log(`FLUSHED [${my.id}] PTS=${my.data.score} MNY=${my.money} RP=${my.data.rankPoint} 2024식목일 ${my.data.forestPoint}`);
 					R.go({ id: my.id, prev: _res });
 				});
 			});
@@ -543,7 +543,7 @@ exports.Client = function(socket, profile, sid){
 		
 		if(my.place){
 			my.send('roomStuck');
-			JLog.warn(`Enter the room ${room.id} in the place ${my.place} by ${my.id}!`);
+			PLLog.warn(`Enter the room ${room.id} in the place ${my.place} by ${my.id}!`);
 			return;
 		}else if(room.id){
 			// 이미 있는 방에 들어가기... 여기서 유효성을 검사한다.
@@ -1419,9 +1419,9 @@ exports.Room = function(room, channel){
 	my.checkRoute = function(func){
 		var c;
 		
-		if(!my.rule) return JLog.warn("Unknown mode: " + my.mode), false;
-		if(!(c = Rule[my.rule.rule])) return JLog.warn("Unknown rule: " + my.rule.rule), false;
-		if(!c[func]) return JLog.warn("Unknown function: " + func), false;
+		if(!my.rule) return PLLog.warn("Unknown mode: " + my.mode), false;
+		if(!(c = Rule[my.rule.rule])) return PLLog.warn("Unknown rule: " + my.rule.rule), false;
+		if(!c[func]) return PLLog.warn("Unknown function: " + func), false;
 		return c[func];
 	};
 	my.set(room);

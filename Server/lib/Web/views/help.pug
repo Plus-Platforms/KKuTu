@@ -75,7 +75,7 @@ block Middle
 				label 사용자 정보
 				ul
 					li: label 손님
-					li: label 레벨과 경험치
+					li: label 레벨과 XP
 					li: label 핑
 					li: label 모레미
 					li: label 글자 조합소
@@ -343,16 +343,16 @@ block Middle
 				| 손님 계정은 저장이 필요한 콘텐츠들을 이용할 수 없으니 양해 바랍니다.
 			h4 저장이 필요한 콘텐츠:
 			ul
-				li 레벨과 경험치
+				li 레벨과 XP
 				li 랭킹 등록
 				li 핑 지급
 				li 상점 이용
 				li 프로필 관리
 		div.page-body#box-c5p2
 			p
-				| 끄투 서버는 여러분의 게임 이용에 따라 계정으로 경험치를 부여합니다.
+				| 끄투 서버는 여러분의 게임 이용에 따라 계정으로 XP를 부여합니다.
 				| 이 수치는 레벨로 환산되어 이름표에 여러분의 이름과 계급장이 함께 나타납니다.
-				| 레벨에 따른 계급장 및 필요 경험치는 아래와 같습니다.
+				| 레벨에 따른 계급장 및 필요 XP는 아래와 같습니다.
 			table#box-exp-table
 				-
 					function getRequiredScore(lv){
@@ -365,8 +365,8 @@ block Middle
 				thead: tr
 					td(style='width: 40px;') 계급장
 					td 레벨
-					td 필요 경험치
-					td 총 경험치
+					td 필요 XP
+					td 총 XP
 				tbody(style='text-align: center;')
 					- var MAX_LEVEL = 360;
 					- var curr, integ = 0;

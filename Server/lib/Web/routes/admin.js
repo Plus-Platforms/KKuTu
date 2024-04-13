@@ -19,7 +19,7 @@
 var File	 = require("fs");
 var MainDB	 = require("../db");
 var GLOBAL	 = require("../../sub/global.json");
-var JLog	 = require("../../sub/jjlog");
+var PLLog	 = require("../../sub/jjlog");
 var Lizard	 = require("../../sub/lizard.js");
 
 exports.run = function(Server, page){
@@ -189,7 +189,7 @@ function onKKuTuDB(req, res){
 				$doc.mean += `＂${len+1}＂`;
 				TABLE.update([ '_id', item ]).set([ 'type', $doc.type ], [ 'theme', $doc.theme ], [ 'mean', $doc.mean ]).on();
 			}else{
-				JLog.warn(`Word '${item}' already has the theme '${theme}'!`);
+				PLLog.warn(`Word '${item}' already has the theme '${theme}'!`);
 			}
 		});
 	});
@@ -260,7 +260,7 @@ Server.post("/gwalli/shop", function(req, res){
 
 };
 function noticeAdmin(req, ...args){
-	JLog.info(`[ADMIN] ${req.originalUrl} ${req.ip} | ${args.join(' | ')}`);
+	PLLog.info(`[ADMIN] ${req.originalUrl} ${req.ip} | ${args.join(' | ')}`);
 }
 function checkAdmin(req, res){
 	if(global.isPublic){
@@ -300,7 +300,7 @@ function parseKKuTuHot(){
 		var R = new Lizard.Tail();
 		
 		MainDB.kkutu['ko'].direct(q, function(err, $docs){
-			if(err) return JLog.error(err.toString());
+			if(err) return PLLog.error(err.toString());
 			R.go($docs.rows);
 		});
 		return R;

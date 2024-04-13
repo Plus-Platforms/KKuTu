@@ -31,7 +31,7 @@ var DDDoS	 = require("dddos");
 var Server	 = Express();
 var DB		 = require("./db");
 //볕뉘 수정 구문삭제 (28)
-var JLog	 = require("../sub/jjlog");
+var PLLog	 = require("../sub/jjlog");
 var WebInit	 = require("../sub/webinit");
 var GLOBAL	 = require("../sub/global.json");
 var Secure = require('../sub/secure');
@@ -60,7 +60,7 @@ WebInit.MOBILE_AVAILABLE = [
 
 require("../sub/checkpub");
 
-JLog.info("<< KKuTu Web >>");
+PLLog.info("<< KKuTu Web >>");
 Server.set("trust proxy", true);
 Server.set('views', __dirname + "/views");
 Server.set('view engine', "pug");
@@ -117,7 +117,7 @@ DDDoS = new DDDoS({
 	}]
 });
 DDDoS.rules[0].logFunction = DDDoS.rules[1].logFunction = function(ip, path){
-	JLog.warn(`DoS from IP ${ip} on ${path}`);
+	PLLog.warn(`DoS from IP ${ip} on ${path}`);
 };
 Server.use(DDDoS.express());
 
@@ -134,7 +134,7 @@ DB.ready = function(){
 			else v.seek = undefined;
 		});
 	}, 4000);
-	JLog.success("DB is ready.");
+	PLLog.success("DB is ready.");
 
 	DB.kkutu_shop_desc.find().on(function($docs){
 		var i, j;
@@ -180,13 +180,13 @@ function GameClient(id, url){
 		my.socket.send(JSON.stringify(data));
 	};
 	my.socket.on('open', function(){
-		JLog.info(`Game server #${my.id} connected`);
+		PLLog.info(`Game server #${my.id} connected`);
 	});
 	my.socket.on('error', function(err){
-		JLog.warn(`Game server #${my.id} has an error: ${err.toString()}`);
+		PLLog.warn(`Game server #${my.id} has an error: ${err.toString()}`);
 	});
 	my.socket.on('close', function(code){
-		JLog.error(`Game server #${my.id} closed: ${code}`);
+		PLLog.error(`Game server #${my.id} closed: ${code}`);
 		my.socket.removeAllListeners();
 		delete my.socket;
 	});

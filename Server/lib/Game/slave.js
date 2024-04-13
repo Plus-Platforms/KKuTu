@@ -39,7 +39,7 @@ var Master = require('./master');
 var KKuTu = require('./kkutu');
 var Lizard = require('../sub/lizard');
 var MainDB = require('../Web/db');
-var JLog = require('../sub/jjlog');
+var PLLog = require('../sub/jjlog');
 var GLOBAL = require('../sub/global.json');
 
 var DIC = {};
@@ -54,7 +54,7 @@ const ENABLE_ROUND_TIME = Master.ENABLE_ROUND_TIME;
 const ENABLE_FORM = Master.ENABLE_FORM;
 const MODE_LENGTH = Master.MODE_LENGTH;
 
-JLog.info(`<< KKuTu Server:${Server.options.port} >>`);
+PLLog.info(`<< KKuTu Server:${Server.options.port} >>`);
 
 process.on('uncaughtException', function(err){
 	var text = `:${process.env['KKUTU_PORT']} [${new Date().toLocaleString()}] ERROR: ${err.toString()}\n${err.stack}`;
@@ -63,7 +63,7 @@ process.on('uncaughtException', function(err){
 		DIC[i].send('dying');
 	}
 	File.appendFile("../KKUTU_ERROR.log", text, function(res){
-		JLog.error(`ERROR OCCURRED! This worker will die in 10 seconds.`);
+		PLLog.error(`ERROR OCCURRED! This worker will die in 10 seconds.`);
 		console.log(text);
 	});
 	setTimeout(function(){
@@ -95,11 +95,11 @@ process.on('message', function(msg){
 			delete ROOM[msg.room.id];
 			break;
 		default:
-			JLog.warn(`Unhandled IPC message type: ${msg.type}`);
+			PLLog.warn(`Unhandled IPC message type: ${msg.type}`);
 	}
 });
 MainDB.ready = function(){
-	JLog.success("DB is ready.");
+	PLLog.success("DB is ready.");
 	KKuTu.init(MainDB, DIC, ROOM, GUEST_PERMISSION);
 };
 Server.on('connection', function(socket, info){
@@ -109,10 +109,10 @@ Server.on('connection', function(socket, info){
 	var $c;
 	
 	socket.on('error', function(err){
-		JLog.warn("Error on #" + key + " on ws: " + err.toString());
+		PLLog.warn("Error on #" + key + " on ws: " + err.toString());
 	});
 	if(CHAN != Number(chunk[1])){
-		JLog.warn(`Wrong channel value ${chunk[1]} on @${CHAN}`);
+		PLLog.warn(`Wrong channel value ${chunk[1]} on @${CHAN}`);
 		socket.close();
 		return;
 	}
@@ -125,7 +125,7 @@ Server.on('connection', function(socket, info){
 		delete reserve._expiration;
 		delete RESERVED[key];
 	}else{
-		JLog.warn(`Not reserved from ${key} on @${CHAN}`);
+		PLLog.warn(`Not reserved from ${key} on @${CHAN}`);
 		socket.close();
 		return;
 	}
@@ -170,7 +170,7 @@ Server.on('connection', function(socket, info){
 				}else{ // 입장 실패
 					$c.socket.close();
 				}
-				JLog.info(`Chan @${CHAN} New #${$c.id}`);
+				PLLog.info(`Chan @${CHAN} New #${$c.id}`);
 			}else{
 				$c.send('error', {
 					code: ref.result, message: ref.black
@@ -182,7 +182,7 @@ Server.on('connection', function(socket, info){
 	});
 });
 Server.on('error', function(err){
-	JLog.warn("Error on ws: " + err.toString());
+	PLLog.warn("Error on ws: " + err.toString());
 });
 KKuTu.onClientMessage = function($c, msg){
 	var stable = true;
@@ -422,5 +422,5 @@ KKuTu.onClientClosed = function($c, code){
 	if($c.socket) $c.socket.removeAllListeners();
 	KKuTu.publish('disconnRoom', { id: $c.id });
 
-	JLog.alert(`Chan @${CHAN} Exit #${$c.id}`);
+	PLLog.alert(`Chan @${CHAN} Exit #${$c.id}`);
 };

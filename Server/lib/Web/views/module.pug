@@ -72,25 +72,25 @@ mixin Menu()
 			span#profile= SESSION.profile ? JSON.stringify(SESSION.profile) : '{}'
 			div.accountItem
 				div.flex
-					img.fuckHank(src='/img/kkutu/currency/xp.png')
+					img.topIcon(src='/img/kkutu/currency/xp.png')
 					span.aISub.my-level
-					span.my-gauge-text.fuckHoSeo.fuckSeogom
+					span.my-gauge-text.topGauge.topText
 				//+GraphBar('my-gauge')
 			div.accountItem
 				div.flex
-					img.fuckHank(src='/img/kkutu/currency/okg.png')
+					img.topIcon(src='/img/kkutu/currency/okg.png')
 					span.my-okg-text.aISub
 			div.accountItem
 				div.flex
-					img.fuckHank(src='/img/kkutu/currency/ping.png')
+					img.topIcon(src='/img/kkutu/currency/ping.png')
 					span.my-stat-ping.aISub#accping
-					span.fuckSeogom= "핑"
-					//img.fuckHank#addBalance(src='/img/kkutu/currency/charge.svg')
+					span.topText= "핑"
+					//img.topIcon#addBalance(src='/img/kkutu/currency/charge.svg')
 			div.accountItem
 				div.flex
-					img.fuckHank.my-rank-icon(src='/img/kkutu/currency/rp.png')
+					img.topIcon.my-rank-icon(src='/img/kkutu/currency/rp.png')
 					span.aISub.my-rank
-					span.fuckSeogom= "RP"
+					span.topText= "RP"
 			div.accountItem#signin(data-intro='Hello step one!')
 				div.flex
 					//img.my-stat-level

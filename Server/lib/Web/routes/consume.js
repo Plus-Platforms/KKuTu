@@ -17,7 +17,7 @@
  */
 
 var MainDB	 = require("../db");
-var JLog	 = require("../../sub/jjlog");
+var PLLog	 = require("../../sub/jjlog");
 
 exports.run = function(Server, page){
 
@@ -71,7 +71,7 @@ function useItem($user, $item, gid){
 			$user.kkutu.score += R.exp;
 			break;
 		default:
-			JLog.warn(`Unhandled consumption type: ${$item._id}`);
+			PLLog.warn(`Unhandled consumption type: ${$item._id}`);
 	}
 	function got(key, value, term){
 		obtain($user, key, value, term);

@@ -279,17 +279,20 @@ block Middle
 				option(value=4) D
 		div.dialog-bar.tail-button.d3-bar
 			button.primaryBtn#practice-ok= L('OK')
-	+Dialog('ResultDiag', 400,591, L('gameResult'), true)
+	+Dialog('ResultDiag', 800, 515, L('gameResult'), true)
 		div.result-board
 		div.result-me
-			div.result-me-score
-			div.result-me-money
-			div.result-me-level
-				div.result-me-level-head= L('LEVEL')
-				div.result-me-level-body
-			+GraphBar('result-me-gauge')
-			div.result-me-score-text
-			div.expl.result-me-expl
+			div.result-abt
+				div.result-me-score
+				div.result-me-money
+				div.expl.result-me-expl
+			div.result-me-btm
+				div.result-me-level
+					div.result-me-level-head= "Lv."
+					div.result-me-level-body
+				+GraphBar('result-me-gauge')
+				div.result-me-score-text
+			ins.adsbygoogle(style="display:inline-block;width:300px;height:250px", data-ad-client="ca-pub-3808496003691786", data-ad-slot="7232299121")
 		div.dialog-bar.tail-button.d3-bar
 			button.primaryBtn#result-ok= L('OK')
 			button#result-save= L('saveReplay')
@@ -653,7 +656,7 @@ block Middle
 						input#cw-q-input(placeholder=L('inputHere'), style='width: 313px; height: 20px; font-size: 15px;')
 						div.cw-q-body
 					div.b-left.bb(style='display: none;')
-					div.jjoriping
+					div.luod
 						div.jjoDisplayBar
 							div.jjo-display.ellipse
 							+GraphBar('jjo-turn-time')

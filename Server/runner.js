@@ -17,7 +17,7 @@
  */
 
 const Spawn = require("child_process").spawn;
-const JLog = require("./lib/sub/jjlog");
+const PLLog = require("./lib/sub/jjlog");
 const PKG = require("./package.json");
 const LANG = require("../language.json");
 const SETTINGS = require("../settings.json");
@@ -103,7 +103,7 @@ class ChildProcess{
 			let msg;
 
 			this.process.removeAllListeners();
-			JLog.error(msg = `${id}: CLOSED WITH CODE ${code}`);
+			PLLog.error(msg = `${id}: CLOSED WITH CODE ${code}`);
 			this.process = null;
 
 			exports.send('log', 'e', msg);

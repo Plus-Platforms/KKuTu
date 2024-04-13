@@ -17,7 +17,7 @@
  */
 
 const MainDB	 = require("../db");
-const JLog	 = require("../../sub/jjlog");
+const PLLog	 = require("../../sub/jjlog");
 // const Ajae	 = require("../../sub/ajaejs").checkAjae;
 const passport = require('passport');
 const glob = require('glob-promise');
@@ -79,10 +79,10 @@ exports.run = (Server, page) => {
 				fontColor: auth.config.fontColor
 			};
 
-			JLog.info(`OAuth Strategy ${i} loaded successfully.`)
+			PLLog.info(`OAuth Strategy ${i} loaded successfully.`)
 		} catch (error) {
-			JLog.error(`OAuth Strategy ${i} is not loaded`)
-			JLog.error(error.message)
+			PLLog.error(`OAuth Strategy ${i} is not loaded`)
+			PLLog.error(error.message)
 		}
 	}
 	

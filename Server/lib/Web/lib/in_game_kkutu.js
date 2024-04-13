@@ -1705,7 +1705,7 @@ $lib.Crossword.roundReady = function(data, spec){
 	var turn = data.seq ? data.seq.indexOf($data.id) : -1;
 	
 	clearBoard();
-	$(".jjoriping,.rounds,.game-body").addClass("cw");
+	$(".luod,.rounds,.game-body").addClass("cw");
 	$data._roundTime = $data.room.time * 1000;
 	$data._fastTime = 30000;
 	$data.selectedRound = (turn == -1) ? 1 : (turn % $data.room.round + 1);
@@ -2329,8 +2329,8 @@ $lib.Drawing.roundReady = function (data, spec) {
   var tv = L['jqTheme'] + ': ' + L['theme_' + data.theme]
 
   clearBoard()
-  $('.jjoriping,.rounds,.game-body').addClass('cw')
-  $('.jjoriping,.rounds').addClass('dg')
+  $('.luod,.rounds,.game-body').addClass('cw')
+  $('.luod,.rounds').addClass('dg')
   $('.game-user-drawing').removeClass('game-user-drawing')
   $stage.game.tools.hide()
   $data._relay = false
@@ -2600,7 +2600,7 @@ $lib.Sock.roundReady = function(data, spec){
 	
 	clearBoard();
 	$data._relay = true;
-	$(".jjoriping,.rounds,.game-body").addClass("cw");
+	$(".luod,.rounds,.game-body").addClass("cw");
 	$data._va = [];
 	$data._lang = RULE[MODE[$data.room.mode]].lang;
 	$data._board = data.board;
@@ -4761,8 +4761,8 @@ function clearBoard(){
 	$stage.dialog.result.hide();
 	$stage.dialog.dress.hide();
 	$stage.dialog.charFactory.hide();
-	$(".jjoriping,.rounds,.game-body").removeClass("cw");
-	$('.jjoriping,.rounds').removeClass('dg')
+	$(".luod,.rounds,.game-body").removeClass("cw");
+	$('.luod,.rounds').removeClass('dg')
 	$('.rounds').removeClass('painter')
 	$stage.game.display.empty();
 	$stage.game.chain.hide();
@@ -4927,13 +4927,13 @@ function roundEnd(result, data){
 		
 
 		if ((date.getHours() >= 19 && date.getHours() <= 23)) {
-			$(".result-me-score").html("핫타임 XP 2배 +"+commify($data._result.reward.score)+addit);
+			$(".result-me-score").html("<img src='/img/kkutu/currency/xp.png' alt='XP' class='resultIcons'>핫타임×2 XP<h3 class='xpCounter'>+"+commify($data._result.reward.score)+"</h3>"+addp);
 		}
 		else{
-			$(".result-me-score").html(L['scoreGain']+" +"+commify($data._result.reward.score)+addit);
+			$(".result-me-score").html("<img src='/img/kkutu/currency/xp.png' alt='XP' class='resultIcons'>"+L['scoreGain']+"<h3 class='xpCounter'>+"+commify($data._result.reward.score)+"</h3>"+addp);
 		}
 		
-		$(".result-me-money").html(L['moneyGain']+" +"+commify($data._result.reward.money)+addp);
+		$(".result-me-money").html("<img src='/img/kkutu/currency/ping.png' alt='Money' class='resultIcons'>"+L['moneyGain']+" <h3 class='moneyCounter'>+"+commify($data._result.reward.money)+"</h3>"+addp);
 	}
 	function roundEndAnimation(first){
 		var v, nl;
@@ -5651,7 +5651,7 @@ function chat(profile, msg, from, timestamp){
 	playSound('k');
 	stackChat();
 	if(!mobile && $data.room){
-		$bar = ($data.room.gaming ? 2 : 0) + ($(".jjoriping").hasClass("cw") ? 1 : 0);
+		$bar = ($data.room.gaming ? 2 : 0) + ($(".luod").hasClass("cw") ? 1 : 0);
 		chatBalloon(msg, profile.id, $bar);
 	}
 	$stage.chat.append($item = $("<div>").addClass("chat-item")

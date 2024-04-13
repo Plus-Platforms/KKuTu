@@ -212,7 +212,7 @@ span{
     font-weight: 700;
     line-height: normal;
 }
-.fuckSeogom{
+.topText{
 	display: inline-block;
     color: #6B7280;
     font-size: 20px;
@@ -225,11 +225,11 @@ span{
     height: 16px;
 	filter: none;
 }
-.fuckHank {
+.topIcon {
 	height: 20px;
 	margin-right: 4px;
 }
-.fuckHoSeo{
+.topGauge{
 	padding-left: 4px;
 }
 

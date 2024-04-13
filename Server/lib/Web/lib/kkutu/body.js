@@ -2071,8 +2071,8 @@ function clearBoard(){
 	$stage.dialog.result.hide();
 	$stage.dialog.dress.hide();
 	$stage.dialog.charFactory.hide();
-	$(".jjoriping,.rounds,.game-body").removeClass("cw");
-	$('.jjoriping,.rounds').removeClass('dg')
+	$(".luod,.rounds,.game-body").removeClass("cw");
+	$('.luod,.rounds').removeClass('dg')
 	$('.rounds').removeClass('painter')
 	$stage.game.display.empty();
 	$stage.game.chain.hide();
@@ -2237,13 +2237,13 @@ function roundEnd(result, data){
 		
 
 		if ((date.getHours() >= 19 && date.getHours() <= 23)) {
-			$(".result-me-score").html("핫타임 XP 2배 +"+commify($data._result.reward.score)+addit);
+			$(".result-me-score").html("<img src='/img/kkutu/currency/xp.png' alt='XP' class='resultIcons'>핫타임×2 XP<h3 class='xpCounter'>+"+commify($data._result.reward.score)+"</h3>"+addp);
 		}
 		else{
-			$(".result-me-score").html(L['scoreGain']+" +"+commify($data._result.reward.score)+addit);
+			$(".result-me-score").html("<img src='/img/kkutu/currency/xp.png' alt='XP' class='resultIcons'>"+L['scoreGain']+"<h3 class='xpCounter'>+"+commify($data._result.reward.score)+"</h3>"+addp);
 		}
 		
-		$(".result-me-money").html(L['moneyGain']+" +"+commify($data._result.reward.money)+addp);
+		$(".result-me-money").html("<img src='/img/kkutu/currency/ping.png' alt='Money' class='resultIcons'>"+L['moneyGain']+" <h3 class='moneyCounter'>+"+commify($data._result.reward.money)+"</h3>"+addp);
 	}
 	function roundEndAnimation(first){
 		var v, nl;
@@ -2961,7 +2961,7 @@ function chat(profile, msg, from, timestamp){
 	playSound('k');
 	stackChat();
 	if(!mobile && $data.room){
-		$bar = ($data.room.gaming ? 2 : 0) + ($(".jjoriping").hasClass("cw") ? 1 : 0);
+		$bar = ($data.room.gaming ? 2 : 0) + ($(".luod").hasClass("cw") ? 1 : 0);
 		chatBalloon(msg, profile.id, $bar);
 	}
 	$stage.chat.append($item = $("<div>").addClass("chat-item")
