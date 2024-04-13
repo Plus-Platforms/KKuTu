@@ -24,8 +24,8 @@ module.exports.strategy = (process, MainDB, Ajae) => {
 
         $p.authType = "discord";
         $p.id = $p.authType+"-"+profile.id;
-        $p.name = profile.username;
-        $p.title = profile.username;
+        $p.name = "닉네임 없음";
+        $p.title = "닉네임 없음";
         $p.image = `https://cdn.discordapp.com/avatars/${profile.id}/${profile.avatar}.png`;
 
         process(req, accessToken, MainDB, $p, done);

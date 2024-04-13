@@ -52,8 +52,13 @@ function callLog(text, severity) {
     }
   });
 
+  
+  if (logText.includes('Cannot read properties of null')) {
+    console.log('로그인버그걸림!!!!!!');
+  }
   // 콘솔에 로그 출력
   console.log(logText);
+  
 }
 
 exports.log = function (text) {

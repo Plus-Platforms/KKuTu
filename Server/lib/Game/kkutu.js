@@ -465,7 +465,7 @@ exports.Client = function(socket, profile, sid){
 				return code;
 			}
 
-			if(first) $user = { nickname: my.profile.title || my.profile.name, money: 0, eventuid: generateRandomCode(8) };
+			if(first) $user = { nickname: "닉네임 없음", money: 0, eventuid: generateRandomCode(8) };
 			if(eventuid == "unset"){
 				eventuid = generateRandomCode(8);
 				DB.users.update([ '_id', my.id ]).set([ 'eventuid', eventuid ]).on();
@@ -486,9 +486,8 @@ exports.Client = function(socket, profile, sid){
 			my.friends = $user.friends || {};
 			if(first){
 				my.flush();
-				DB.users.update([ '_id', my.id ]).set([ 'nickname', "닉네임 없음" ]).on(function($body){
+				DB.users.update([ '_id', my.id ]).set([ 'nickname', my.nickname || "닉네임 없음" ]).on(function($body){
 					if(!my.nickname) JLog.warn(`OAuth로부터 닉네임을 받아오지 못한 유저가 있습니다. #${my.id}`);
-					DB.session.update([ '_id', sid ]).set([ 'nickname', "닉네임 없음" ]).on();
 				});
 			}else{
 				my.checkExpire();

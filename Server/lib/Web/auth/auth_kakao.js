@@ -22,8 +22,8 @@ module.exports.strategy = (process, MainDB, Ajae) => {
 
         $p.authType = "kakao";
         $p.id = profile.id.toString();
-        $p.name = profile.username;
-        $p.title = profile.displayName;
+        $p.name = "닉네임 없음";
+        $p.title = "닉네임 없음";
         $p.image = profile._json.properties.profile_image;
 
         process(req, accessToken, MainDB, $p, done);

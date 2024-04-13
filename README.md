@@ -9,8 +9,9 @@
 - Languages
 	* [한국어](#한국어)
 	* [English](#english)
-- 저희 플러스끄투는 KKuTuIO의 KKuTu-Game 소스코드를 참고함에 따라 라이선스가 AGPL로 변경되어 있습니다. 이용 시 참고 바랍니다.
-
+- **라이선스가 AGPL 라이선스이므로 원작 KKuTu를 참고하실 경우 LICENSE파일을 변경 적용하시기 바랍니다.**
+- 본 프로젝트는 [KKuTuIO](https://github.com/KKuTuIO)의 KKuTu-Game을 일부 포함하고 있습니다.
+- 본 프로젝트는 [pinkleaves](https://github.com/pinkleaves)의 [KKuTu](https://github.com/pinkleaves/KKuTu)를 일부 포함하고 있습니다.
 ## 한국어
 > 글자로 놀자! 끄투 온라인
 
