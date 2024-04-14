@@ -173,7 +173,48 @@ function calculateTotalConnectedUsers() {
     
   </div>
 </div>
+    <div class="bg-gray-100 dark:bg-gray-800 py-24 sm:py-32">
+      <div class="mx-auto max-w-7xl px-6 lg:px-8">
+        <h2 class="text-center text-3xl font-bold text-gray-900 dark:text-gray-100">
+          공식 SNS에서 만나요!
+        </h2>
+        <div class="max-w-lg mx-auto mt-16 grid grid-cols-3 gap-x-8 items-center jusitfy-center">
+          <div class="flex items-center justify-center">
+          <a href="https://cafe.naver.com/pluskkutu" target="_blank" class="px-4 py-4 rounded-full bg-white">
+          <img
+            class="col-span-2 max-h-8 w-8 object-contain lg:col-span-1"
+            src="/img/cafe.png"
+            alt="NaverCafe"
+            width={48}
+            height={48}
+          /></a>
+        </div>
 
+        <div class="flex items-center justify-center">
+          <a href="https://youtube.com/@pluskkutu" target="_blank" class="px-4 py-5 rounded-full bg-white">
+          <img
+            class="col-span-2 max-h-8 w-8 object-contain lg:col-span-1"
+            src="/img/youtube.png"
+            alt="YouTube"
+            width={48}
+            height={48}
+          /></a>
+        </div>
+
+      <div class="flex items-center justify-center">
+        <a href="https://discord.gg/5b8kNZJawd" target="_blank" class="px-4 py-5 rounded-full bg-white">
+        <img
+          class="col-span-2 max-h-8 w-8 object-contain lg:col-span-1"
+          src="/img/discord.png"
+          alt="Discord"
+          width={48}
+          height={48}
+        /></a>
+      </div>
+
+      </div>
+    </div>
+  </div>
 <section class="max-w-screen-xl mx-auto my-10 p-4 md:grid md:grid-cols-2">
   <div>
   <h2 class="text-3xl font-bold mb-4">카페 이야기</h2>
@@ -271,48 +312,7 @@ function calculateTotalConnectedUsers() {
       </div>
     </div>-->
     
-    <div class="bg-gray-100 dark:bg-gray-800 py-24 sm:py-32">
-      <div class="mx-auto max-w-7xl px-6 lg:px-8">
-        <h2 class="text-center text-3xl font-bold text-gray-900 dark:text-gray-100">
-          공식 SNS에서 만나요!
-        </h2>
-        <div class="max-w-lg mx-auto mt-16 grid grid-cols-3 gap-x-8 items-center jusitfy-center">
-          <div class="flex items-center justify-center">
-          <a href="https://cafe.naver.com/pluskkutu" target="_blank" class="px-4 py-4 rounded-full bg-white">
-          <img
-            class="col-span-2 max-h-8 w-8 object-contain lg:col-span-1"
-            src="/img/cafe.png"
-            alt="NaverCafe"
-            width={48}
-            height={48}
-          /></a>
-        </div>
 
-        <div class="flex items-center justify-center">
-          <a href="https://youtube.com/@pluskkutu" target="_blank" class="px-4 py-5 rounded-full bg-white">
-          <img
-            class="col-span-2 max-h-8 w-8 object-contain lg:col-span-1"
-            src="/img/youtube.png"
-            alt="YouTube"
-            width={48}
-            height={48}
-          /></a>
-        </div>
-
-      <div class="flex items-center justify-center">
-        <a href="https://discord.gg/5b8kNZJawd" target="_blank" class="px-4 py-5 rounded-full bg-white">
-        <img
-          class="col-span-2 max-h-8 w-8 object-contain lg:col-span-1"
-          src="/img/discord.png"
-          alt="Discord"
-          width={48}
-          height={48}
-        /></a>
-      </div>
-
-      </div>
-    </div>
-  </div>
     <section class="max-w-screen-xl mx-auto py-10 p-4 md:grid md:grid-cols-2">
       <div class="flex flex-col">
         <a href="https://cafe.naver.com/ArticleRead.nhn?clubid=31109813&page=1&menuid=7&boardtype=L&articleid=118&referrerAllArticles=false"  target="_blank">

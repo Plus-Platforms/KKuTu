@@ -2622,7 +2622,7 @@ function pushHistory(text, mean, theme, wc){
 	});
 	$v.append($w = $("<div>").addClass("history-mean ellipse").append(val))
 		.append($x = $("<div>").addClass("expl").css({ 'width': 200, 'white-space': "normal" })
-			.html("<h5 style='color: #BBBBBB;'>" + val.html() + "</h5>")
+			.html("<h5 style='color: #BBBBBB;'>" + processWord(text, mean, theme, wcs, "tooltip").html() + "</h5>")
 		);
 	global.expl($v);
 }

@@ -1845,7 +1845,7 @@ $lib.Crossword.turnHint = function(data){
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-﻿$lib.Typing.roundReady = function(data){
+$lib.Typing.roundReady = function(data){
 	var i, len = $data.room.game.title.length;
 	var $l;
 	
@@ -1869,7 +1869,7 @@ function onSpace(e){
 }
 function drawList(){
 	var wl = $data._list.slice($data.chain);
-	var lv = $data.room.opts.proverb ? 1 : 5;
+	var lv = $data.room.opts.proverb ? 1 : 3;
 	var pts = "";
 	var w0l = wl[0].length;
 	
@@ -5312,7 +5312,7 @@ function pushHistory(text, mean, theme, wc){
 	});
 	$v.append($w = $("<div>").addClass("history-mean ellipse").append(val))
 		.append($x = $("<div>").addClass("expl").css({ 'width': 200, 'white-space': "normal" })
-			.html("<h5 style='color: #BBBBBB;'>" + val.html() + "</h5>")
+			.html("<h5 style='color: #BBBBBB;'>" + processWord(text, mean, theme, wcs, "tooltip").html() + "</h5>")
 		);
 	global.expl($v);
 }

@@ -66,6 +66,9 @@ function useItem($user, $item, gid){
 		case 'box2017':
 			got(pick(['bokjori', 'rio_seongwha', 'spanner']), 1, 604800);
 			break;
+		case 'boxspring':
+			got(pick(['picnic_bag', 'sakura', 'selfie', 'spring_bg', 'hair']), 1, "unexpire");
+			break;
 		case 'dictPage':
 			R.exp = Math.round(Math.sqrt(1 + 2 * ($user.kkutu.score || 0)));
 			$user.kkutu.score += R.exp;
@@ -95,7 +98,7 @@ function consume($user, key, value){
 function obtain($user, key, value, term, addValue){
     var now = Math.round(Date.now() * 0.001);
     
-    if(term){
+    if(term !== "unexpire"){
         if($user.box[key]){
             if(addValue) $user.box[key].value += value;
             else $user.box[key].expire += term;

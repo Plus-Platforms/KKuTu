@@ -16,7 +16,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-﻿$lib.Typing.roundReady = function(data){
+$lib.Typing.roundReady = function(data){
 	var i, len = $data.room.game.title.length;
 	var $l;
 	
@@ -40,7 +40,7 @@ function onSpace(e){
 }
 function drawList(){
 	var wl = $data._list.slice($data.chain);
-	var lv = $data.room.opts.proverb ? 1 : 5;
+	var lv = $data.room.opts.proverb ? 1 : 3;
 	var pts = "";
 	var w0l = wl[0].length;
 	
