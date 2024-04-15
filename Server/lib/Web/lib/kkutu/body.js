@@ -990,7 +990,9 @@ function updateMe(){
 	$(".my-okg-text").html(prettyTime($data._playTime));
 	$(".my-level").html("Lv. " + lv);
 	
-
+	if(my.profile.title || my.profile.name !== "닉네임 없음"){
+		$("#usernameCredit").text(my.profile.title || my.profile.name);
+	}
 	//200레벨이벤트
 	var startDate = new Date('2024-03-04');
     var endDate = new Date('2024-03-19');

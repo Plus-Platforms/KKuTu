@@ -329,6 +329,30 @@ equ{
 .sidebtn h3 {
     font-size: 24px;
 }
+#creditpopup-close{
+	color: #fff;
+    border: none;
+    font-size: 48px;
+}
+#creditpopup-content{
+	display: flex;
+    position: absolute;
+    top: 100%;
+    width: 100%;
+    justify-content: center;
+}
+.animating-credit{
+	animation: 80s credits linear infinite;
+	animation-delay: 1s;
+}
+@keyframes credits {
+	0% {
+	top: 100%;
+	}
+	100% {
+	top: -400%;
+	}
+}
 #dict-search{
 	color: #ffffff;
     font-weight: 700;

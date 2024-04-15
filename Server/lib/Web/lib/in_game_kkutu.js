@@ -118,6 +118,7 @@ $(document).ready(function(){
 			community: $("#CommunityBtn"),
 			community2: $("#Community2Btn"),
 			credit: $("#CreditBtn"),
+			closeCredit: $("#creditpopup-close"),
 			sideMenu: $("#SideMenuBtn"),
 			sideMenuClose: $("#SideMenuCloseBtn"),
 			newRoom: $("#NewRoomBtn"),
@@ -266,7 +267,7 @@ $(document).ready(function(){
 		{ key: "legacylobby", value: "/media/kkutu/LobbyBGM.mp3" },
 		{ key: "ingame", value: "/media/kkutu/LobbyBGMS2.mp3" },
 		{ key: "shop", value: "/media/kkutu/LobbySeolBGM.mp3" },
-		{ key: "credit", value: "/media/kkutu/Kkutu_Ending_Acoustic.mp3" },
+		{ key: "credit", value: "/media/kkutu/kkutuEnding.mp3" },
 		{ key: "jaqwi", value: "/media/kkutu/JaqwiBGM.mp3" },
 		{ key: "jaqwiF", value: "/media/kkutu/JaqwiFastBGM.mp3" },
 		{ key: "game_start", value: "/media/kkutu/game_start.mp3" },
@@ -596,11 +597,21 @@ $(document).ready(function(){
 			'left': $(window).width() - 740 // Adjust 740 as per your requirement
 		}, 200);
 	});
+	
 	$stage.menu.credit.on('click', function(e){
 		$('#sideMenuDiag').fadeOut();
-		$('#dimmer').fadeIn();
-		showDialog($stage.dialog.credit);
+		$('#dimmer').fadeOut();
+		$('#creditpopup').fadeIn(3000);
+		stopBGM();
+		playBGM("credit");
+		$('#creditpopup-content').addClass('animating-credit');
 	});
+	$stage.menu.closeCredit.on('click', function(e){
+		$('#creditpopup').fadeOut(3000);
+		stopBGM();
+		playBGM("lobby");
+	});
+
 	$stage.menu.donate.on('click', function(e){
 		showDialog($stage.dialog.donate);
 	});
@@ -3680,7 +3691,9 @@ function updateMe(){
 	$(".my-okg-text").html(prettyTime($data._playTime));
 	$(".my-level").html("Lv. " + lv);
 	
-
+	if(my.profile.title || my.profile.name !== "닉네임 없음"){
+		$("#usernameCredit").text(my.profile.title || my.profile.name);
+	}
 	//200레벨이벤트
 	var startDate = new Date('2024-03-04');
     var endDate = new Date('2024-03-19');

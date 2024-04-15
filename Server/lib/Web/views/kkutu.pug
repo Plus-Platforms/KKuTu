@@ -103,11 +103,84 @@ block Middle
 	div#tost_message
 	div#contextMenuContainer
 	
-	div#evtpopup(style="display: none;position: absolute;height: 100%;width: 100%;align-items: center;justify-content: center;align-content: center;z-index: 3;")
+	div#evtpopup(style="display: none;position: absolute;height: 100%;width: 100%;align-items: center;justify-content: center;align-content: center;z-index: 3;background-color: rgba(0, 0, 0, 0.6);")
 		div(style='text-align: center;font-size: 18px;')
 			img(src="/img/event/벚꽃은졌지만.webp", style="height: 500px;")
 			div.dialog-bar.d2-bar.tail-button
 				button.primaryBtn#evtpopup-ok= L("close")
+	div#creditpopup(style="display: none;position: absolute;height: 100%;width: 100%;align-items: center;justify-content: center;align-content: center;z-index: 2;background-color:#000;")
+		div.topCloseInfo(style="right: 0;position: fixed;bottom: 0;z-index:10;")
+			button#creditpopup-close= "×"
+		div#creditpopup-content
+			div(style="width:50%;font-size: 24px; text-align: center;color:#fff;")
+				p(style="font-size: 36px;font-weight: 700;") Morem.ME Team
+				strong DIRECTOR
+				p 유한선
+				br
+				strong DEVELOPMENT LEADER
+				p 이규빈
+				br
+				strong CLOSED BETA TEST
+				p Sqlare Team
+				p Kompasu
+				p PSP Members
+				br
+				strong ILLUST
+				p DrawingPasu
+				p 교육
+				br
+				strong MUSIC
+				p Xpolcore
+				p Yooddunddun
+				p Roman Rajczyk
+				p JJoriping (Original KKuTu)
+				br
+				strong SPECIAL THANKS TO
+				p JJoriping (Original KKuTu)
+				p KKuTu.IO (KKuTu-Game)
+				br
+				strong DICTIONARY DATA
+				p WordNet
+				p Standard Korean Dictionary
+				p 우리말샘 by 국립국어원
+				p 국토교통부 버스 정류장 데이터
+				p 한국철도공사 역명 데이터
+				p 워크넷 직업 데이터
+				br
+				strong Open Source License
+				p Pinkflower (Pink KKuTu, GPL)
+				p KKuTu.IO (KKuTu-Game, AGPL)
+				p JJoriping (Original KKuTu, GPL)
+				p lshqqytiger (KKuTu-Game, GPL)
+				p Fabric.JS Copyright (c) 2008-2015 Printio
+				p Diff-Match-Patch (Apache License 2.0)
+				p Intro.JS (MIT License)
+				p jQuery (MIT License)
+				p Moremi by JJoriping (CC-BY)
+				p KKuTu by JJoriping (CC-BY)
+				br
+				strong GPL License
+				p Copyright © 2007 Free Software Foundation, Inc. <https://fsf.org/>
+				p Everyone is permitted to copy and distribute verbatim copies of this license document, but changing it is not allowed.
+				br
+				strong CC-BY License
+				p This work is licensed under the Creative Commons Attribution 4.0 International License. To view a copy of this license, visit http://creativecommons.org/licenses/by/4.0/
+				br
+				strong AGPL License
+				p This program is free software: you can redistribute it and/or modify it under the terms of the GNU Affero General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+				br
+				strong MIT License
+				p Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+				p The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+				br
+				strong Apache License 2.0
+				p Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
+				br
+				strong LAST BUT NOT LEAST...
+				p#usernameCredit(style="font-size: 24px;")= "Unknown Player"
+				p YOU! Thank you for playing Plus KKuTu!
+
+
 
 	+Dialog('SettingDiag', 400, 600, L('settingsText', false))
 		div.dialog-bar

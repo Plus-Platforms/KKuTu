@@ -38,7 +38,6 @@
     var day = today.getDate();
     var todayStr = year + "" + (month < 10 ? "0" + month : month) + "" + (day < 10 ? "0" + day : day);
     if (!evtpopup || evtpopup < "20240414") {
-      document.getElementById("dimmer").style.display = "block";
       document.getElementById("evtpopup").style.display = "flex";
     }
   };
@@ -58,6 +57,5 @@
     var day = today.getDate();
     var todayStr = year + "" + (month < 10 ? "0" + month : month) + "" + (day < 10 ? "0" + day : day);
     setCookie("evtpopup", todayStr, 30);
-    document.getElementById("dimmer").style.display = "none";
     document.getElementById("evtpopup").style.display = "none";
   });
