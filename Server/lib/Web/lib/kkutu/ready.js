@@ -232,6 +232,14 @@ $(document).ready(function(){
 		{ key: "K"+i, value: "/media/kkutu/K"+i+".mp3" },
 		{ key: "As"+i, value: "/media/kkutu/As"+i+".mp3" }
 	);
+
+	const options = $.cookie('kks');
+	if(options){
+		var opts = JSON.parse(options);
+		if (opts.bo && opts.bo != "" && opts.bo != "undefined") {
+			$data._soundList[1].value = "/audioProxy?link="+encodeURI(opts.bo);
+		}
+	}
 	loadSounds($data._soundList, function(){
 		processShop(connect);
 	});
@@ -310,7 +318,6 @@ $(document).ready(function(){
 			return false;
 		}
 	});
-	const options = $.cookie('kks');
 	if(options){
 		var opts = JSON.parse(options);
 		$("#bgm-volume").val(opts.bv);
@@ -321,6 +328,7 @@ $(document).ready(function(){
 		applyOptions({
 			bv: $("#bgm-volume").val(),
 			ev: $("#effect-volume").val(),
+			bo: $("#bgm-override").val(),
 			di: $("#deny-invite").is(":checked"),
 			dw: $("#deny-whisper").is(":checked"),
 			df: $("#deny-friend").is(":checked"),
@@ -844,6 +852,7 @@ $(document).ready(function(){
 		applyOptions({
 			bv: $("#bgm-volume").val(),
 			ev: $("#effect-volume").val(),
+			bo: $("#bgm-override").val(),
 			di: $("#deny-invite").is(":checked"),
 			dw: $("#deny-whisper").is(":checked"),
 			df: $("#deny-friend").is(":checked"),

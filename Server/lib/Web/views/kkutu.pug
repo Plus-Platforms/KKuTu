@@ -182,7 +182,7 @@ block Middle
 
 
 
-	+Dialog('SettingDiag', 400, 600, L('settingsText', false))
+	+Dialog('SettingDiag', 400, 655, L('settingsText', false))
 		div.dialog-bar
 			h4.opt!= L("bgmVol")
 			input#bgm-volume.range-input(type='range' min='0' max='1' value='0.5' step='0.01' style='width:50%;')
@@ -202,7 +202,9 @@ block Middle
 				option(value=L("font_mgothic"))= L("font_mgothic")
 				option(value=L("font_gulim"))= L("font_gulim")
 				option(value=L("font_dotum"))= L("font_dotum")
-
+		div.dialog-bar
+			h4.opt!= L("bgmOverride")
+			input#bgm-override(type='input', placeholder=L('overrideUrl'), maxlength=200)
 		div.dialog-bar
 			h4.opt!= L('denyReq')
 			+SettingOption('deny-invite', L('denyInvite', false))
@@ -764,6 +766,7 @@ block Middle
 					div#connList 불러오는 중
 			+Product('RoominfoList')
 				div.roomInfo
+				div.replayInfo
 				div.roomControls
 					div.rc1Row
 						button.roomBtn.room2row#SetRoomBtn.for-master(style='display: none;')!= L('setRoom')

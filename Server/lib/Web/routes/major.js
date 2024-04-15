@@ -21,6 +21,8 @@ var MainDB	 = require("../db");
 var PLLog	 = require("../../sub/jjlog");
 var GLOBAL	 = require("../../sub/global.json");
 var Const	 = require("../../const");
+const axios = require('axios');
+const fs = require('fs');
 
 function obtain($user, key, value, term, addValue){
 	var now = (new Date()).getTime();
@@ -69,6 +71,29 @@ Server.get("/help", function(req, res){
 	page(req, res, "help", {
 		'KO_INJEONG': Const.KO_INJEONG
 	});
+});
+
+Server.get("/audioProxy", async function(req, res){
+	if (!req.headers.referer || !req.headers.referer.includes('kkutu.cc')) {
+		return res.status(403).send('Forbidden');
+	}
+
+    const encodedURL = req.query.link;
+    var decodedURL = decodeURIComponent(encodedURL);
+	const defaultURL = "https://kkutu.cc/media/kkutu/LobbyBGMS2.mp3";
+
+	if (!decodedURL.match(/\.mp3$|\.ogg$|\.wav$/)) {
+		decodedURL = defaultURL;
+	}
+
+    try {
+        const response = await axios.get(decodedURL, { responseType: 'arraybuffer' });
+        res.send(response.data);
+    } catch (error) {
+		decodedURL = defaultURL;
+		const response = await axios.get(decodedURL, { responseType: 'arraybuffer' });
+        res.send(response.data);
+    }
 });
 
 Server.get("/ranking", function(req, res){

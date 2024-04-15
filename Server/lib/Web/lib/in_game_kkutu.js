@@ -288,6 +288,14 @@ $(document).ready(function(){
 		{ key: "K"+i, value: "/media/kkutu/K"+i+".mp3" },
 		{ key: "As"+i, value: "/media/kkutu/As"+i+".mp3" }
 	);
+
+	const options = $.cookie('kks');
+	if(options){
+		var opts = JSON.parse(options);
+		if (opts.bo && opts.bo != "" && opts.bo != "undefined") {
+			$data._soundList[1].value = "/audioProxy?link="+encodeURI(opts.bo);
+		}
+	}
 	loadSounds($data._soundList, function(){
 		processShop(connect);
 	});
@@ -366,7 +374,6 @@ $(document).ready(function(){
 			return false;
 		}
 	});
-	const options = $.cookie('kks');
 	if(options){
 		var opts = JSON.parse(options);
 		$("#bgm-volume").val(opts.bv);
@@ -377,6 +384,7 @@ $(document).ready(function(){
 		applyOptions({
 			bv: $("#bgm-volume").val(),
 			ev: $("#effect-volume").val(),
+			bo: $("#bgm-override").val(),
 			di: $("#deny-invite").is(":checked"),
 			dw: $("#deny-whisper").is(":checked"),
 			df: $("#deny-friend").is(":checked"),
@@ -900,6 +908,7 @@ $(document).ready(function(){
 		applyOptions({
 			bv: $("#bgm-volume").val(),
 			ev: $("#effect-volume").val(),
+			bo: $("#bgm-override").val(),
 			di: $("#deny-invite").is(":checked"),
 			dw: $("#deny-whisper").is(":checked"),
 			df: $("#deny-friend").is(":checked"),
@@ -2757,6 +2766,7 @@ function applyOptions(opt){
 	
 	$("#bgm-volume").val($data.BGMVolume);
 	$("#effect-volume").val($data.EffectVolume);
+	$("#bgm-override").val($data.opts.bo);
 	$("#pause-video").attr('checked', $data.opts.vp);
 	$("#deny-invite").attr('checked', $data.opts.di);
 	$("#deny-whisper").attr('checked', $data.opts.dw);
@@ -4591,20 +4601,22 @@ function replayReady(){
 	$stage.dialog.replay.hide();
 	gameReady();
 	updateRoom(true);
-	$data.$gp = $(".GameBox .product-title").empty()
+	$data.$gp = $(".replayInfo").empty()
 		.append($data.$gpt = $("<div>").addClass("game-replay-title"))
+		.append($data.$gpp = $("<progress>").addClass("game-replay-progress"))
 		.append($data.$gpc = $("<div>").addClass("game-replay-controller")
-			.append($("<button>").html(L['replayNext']).on('click', replayNext))
-			.append($("<button>").html(L['replayPause']).on('click', replayPause))
 			.append($("<button>").html(L['replayPrev']).on('click', replayPrev))
+			.append($("<button>").html(L['replayPause']).on('click', replayPause))
+			.append($("<button>").html(L['replayNext']).on('click', replayNext))
 		);
-	$data._gpp = L['replay'] + " - " + (new Date($rec.time)).toLocaleString();
+	$data._gpp = (new Date($rec.time)).toLocaleString();
 	$data._gtt = $data.room.events[$data.room.events.length - 1].time;
 	$data._eventTime = 0;
 	$data._rt = addTimeout(replayTick, 2000);
 	$data._rprev = 0;
 	$data._rpause = false;
 	replayStatus();
+	$("#DictionaryBtnIngame").show();
 }
 function replayPrev(e){
 	var ev = $data.room.events[--$data._rf];
@@ -4664,11 +4676,24 @@ function replayNext(e){
 	replayTick();
 }
 function replayStatus(){
-	$data.$gpt.html($data._gpp
-		+ " (" + ($data._eventTime * 0.001).toFixed(1) + L['SECOND']
-		+ " / " + ($data._gtt * 0.001).toFixed(1) + L['SECOND']
-		+ ")"
-	);
+		var eventTimeInSeconds = ($data._eventTime / 1000).toFixed(0);
+		var eventMinutes = Math.floor(eventTimeInSeconds / 60);
+		var eventSeconds = (eventTimeInSeconds % 60).toFixed(0);
+
+		var gttTimeInSeconds = ($data._gtt / 1000).toFixed(0);
+		var gttMinutes = Math.floor(gttTimeInSeconds / 60);
+		var gttSeconds = (gttTimeInSeconds % 60).toFixed(0);
+
+		eventSeconds = eventSeconds < 10 ? '0' + eventSeconds : eventSeconds;
+		gttSeconds = gttSeconds < 10 ? '0' + gttSeconds : gttSeconds;
+
+		var eventTimeFormatted = eventMinutes + ':' + eventSeconds;
+		var gttFormatted = gttMinutes + ':' + gttSeconds;
+
+		$data.$gpt.html(
+			$data._gpp + "<br>" + eventTimeFormatted + " / " + gttFormatted
+		);
+	$data.$gpp.attr('max', $data._gtt).attr('value', $data._eventTime);
 }
 function replayTick(stay){
 	var event = $data.room.events[$data._rf];
@@ -4820,7 +4845,8 @@ function turnError(code, text){
 		$stage.game.hereText.show();
 	}, 300);
 
-	$stage.game.hereText.val.on('change', function() {
+	//when hereText(input)'s value changes
+	$stage.game.hereText.on('input', function(){
 		clearTimeout($data._fail); // 기존 타임아웃을 취소합니다.
 		$stage.game.wrong.hide();
 		$stage.game.hereText.show();
@@ -5470,49 +5496,60 @@ function setRoomHead($obj, room){
 		}) + "</h5>"));
 		global.expl($obj);
 	}
+}function loadSounds(list, callback){
+    $data._lsRemain = list.length;
+    
+    list.forEach(function(v){
+        getAudio(v.key, v.value, callback);
+    });
 }
-function loadSounds(list, callback){
-	$data._lsRemain = list.length;
-	
-	list.forEach(function(v){
-		getAudio(v.key, v.value, callback);
-	});
-}
+
 function getAudio(k, url, cb){
-	var req = new XMLHttpRequest();
-	
-	req.open("GET", /*($data.PUBLIC ? "http://jjo.kr" : "") +*/ url);
-	req.responseType = "arraybuffer";
-	req.onload = function(e){
-		if(audioContext) audioContext.decodeAudioData(e.target.response, function(buf){
-			$sound[k] = buf;
-			done();
-		}, onErr); else onErr();
-	};
-	function onErr(err){
-		$sound[k] = new AudioSound(url);
-		done();
-	}
-	function done(){
-		if(--$data._lsRemain == 0){
-			if(cb) cb();
-		}else loading(L['loadRemain'] + $data._lsRemain);
-	}
-	function AudioSound(url){
-		var my = this;
-		
-		this.audio = new Audio(url);
-		this.audio.load();
-		this.start = function(){
-			my.audio.play();
-		};
-		this.stop = function(){
-			my.audio.currentTime = 0;
-			my.audio.pause();
-		};
-	}
-	req.send();
+    var req = new XMLHttpRequest();
+    
+    req.open("GET", url);
+    req.responseType = "arraybuffer";
+    req.onload = function(e){
+        if(audioContext) {
+            audioContext.decodeAudioData(e.target.response, function(buf){
+                $sound[k] = buf;
+                done();
+            }, onErr);
+        } else {
+            onErr();
+        }
+    };
+    
+    function onErr(err){
+        $sound[k] = new AudioSound('/media/kkutu/LobbyBGMS2.mp3'); // Use /media/m.mp3 on error
+        done();
+    }
+    
+    function done(){
+        if(--$data._lsRemain == 0){
+            if(cb) cb();
+        } else {
+            loading(L['loadRemain'] + $data._lsRemain);
+        }
+    }
+    
+    function AudioSound(url){
+        var my = this;
+        
+        this.audio = new Audio(url);
+        this.audio.load();
+        this.start = function(){
+            my.audio.play();
+        };
+        this.stop = function(){
+            my.audio.currentTime = 0;
+            my.audio.pause();
+        };
+    }
+    
+    req.send();
 }
+
 
 var currentlyPlayingBGM = null;
 

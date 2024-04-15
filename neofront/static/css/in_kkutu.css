@@ -1134,14 +1134,28 @@ iframe{
 	.GameBox .product-title h5{ float: left; font-size:20px; }
 	.GameBox div{ float: left; }
 	.GameBox .product-body{ padding-top: 0px; }
-	.game-replay-controller{ float: right !important;}
+	.game-replay-controller{ 
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+	.game-replay-title{
+		margin-top: 75px;
+	}
 	.game-replay-controller button{
+		margin-right: 10px;
+		border-radius: 999px;
+		height: 30px;
 		background-color: #ffffff;
-		float: right;
+		border: none;
 		margin-top: -2px;
 		padding: 1px;
 		width: 30px;
 		font-size: 22px;
+	}
+
+	.game-replay-progress{
+		width: 100%;
 	}
 	.hints{
 		margin: 40px 10px 0px 10px;
