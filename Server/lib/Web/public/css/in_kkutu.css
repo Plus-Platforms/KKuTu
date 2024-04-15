@@ -266,6 +266,18 @@ equ{
     display: flex;
     align-items: center;
 	}
+	.fa-circle-notch{
+		margin-right: 15px;
+		animation: spin 1s linear infinite;
+	}
+	@keyframes spin {
+		0% {
+			transform: rotate(0deg);
+		}
+		100% {
+			transform: rotate(360deg);
+		}
+	}
 #Loading{
 	position: fixed;
 	padding-top: 200px;
@@ -1138,6 +1150,9 @@ iframe{
 		display: flex;
 		justify-content: center;
 		align-items: center;
+	}
+	.game-replay-title{
+		margin-top: 75px;
 	}
 	.game-replay-controller button{
 		margin-right: 10px;

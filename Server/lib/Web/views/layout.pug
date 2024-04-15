@@ -58,7 +58,9 @@ html
 			div#intro-rc
 				img(style="height: 108px", class="light", src="/img/kkutu/intro/kkutu_logo_dark.svg")
 				img(style="height: 108px", class="dark", src="/img/kkutu/intro/kkutu_logo_dark.svg")
-				div#intro-text= L('LOADING')
+				div#intro-text
+					+FA("circle-notch")
+					label#intro-inner= L('LOADING')
 				div#version= VERSION
 		block Top
 		div#Jungle

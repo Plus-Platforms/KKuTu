@@ -39,15 +39,15 @@ var L;
 		return null;
 	}*/
 	
-	function setCookie(cName, cValue, cDay){
-        var expire = new Date();
-		
-        expire.setDate(expire.getDate() + cDay);
-        cookies = cName + '=' + escape(cValue) + '; path=/ ';
-        if(typeof cDay != 'undefined') cookies += '; expires=' + expire.toGMTString() + ';';
-		
-        document.cookie = cookies;
-    }
+	function setCookie(name, value, days) {
+		var expires = "";
+		if (days) {
+		  var date = new Date();
+		  date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+		  expires = "; expires=" + date.toUTCString();
+		}
+		document.cookie = name + "=" + (value || "") + expires + "; path=/";
+	  }
     function getCookie(cName) {
         //볕뉘 수정
         var cName = cName+"=";
@@ -87,12 +87,13 @@ var L;
 		if(value === undefined){
 			return getCookie(key);
 		}else{
-			setCookie(key, value, expire);
+			setCookie(key, value, 30);
 		}
 	};
 	$(document).ready(function(e){
 		const LANG = {
-			'ko_KR': "한국어"
+			'ko_KR': "한국어",
+			'en_US': "English"
 		};
 		var $gn = $("#global-notice").hide();
 		var $c;

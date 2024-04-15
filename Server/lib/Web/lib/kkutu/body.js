@@ -42,7 +42,7 @@ function loading(text){
 	if(text){
 		if($("#Intro").is(':visible')){
 			$stage.loading.hide();
-			$("#intro-text").html(text);
+			$("#intro-inner").html(text);
 		}else $stage.loading.show().html(text);
 	}else $stage.loading.hide();
 }
@@ -202,7 +202,7 @@ function onMessage(data){
 
     switch (data.type) {
         case 'recaptcha':
-            var $introText = $("#intro-text");
+            var $introText = $("#intro-inner");
             $introText.empty();
             $introText.html('게스트는 캡챠 인증이 필요합니다.' +
                 '<br/>로그인을 하시면 캡챠 인증을 건너뛰실 수 있습니다.' +
@@ -560,8 +560,8 @@ function welcome() {
     showGameAlert();
 
     if (1 == 1) {
-        $("#intro-text").text(L['welcome']).on("click", function () {
-            $("#intro-text").addClass("load-complete");
+        $("#intro-inner").text(L['welcome']).on("click", function () {
+            $("#intro-inner").addClass("load-complete");
         });
         $("#Intro").animate({ 'opacity': 1 }, 1000).animate({ 'opacity': 0 }, 1000);
         addTimeout(function () {
@@ -570,8 +570,8 @@ function welcome() {
         }, 2000);
     } else {
         stopBGM();
-        $("#intro-text").text(L['welcome'])
-		$("#intro-text").addClass("load-complete");
+        $("#intro-inner").text(L['welcome'])
+		$("#intro-inner").addClass("load-complete");
 
 
 		function hideIntro(){
@@ -588,7 +588,7 @@ function welcome() {
         function keydownHandler() {
 			hideIntro();
         }
-		$("#intro-text").on("click", function () {
+		$("#intro-inner").on("click", function () {
 			hideIntro();
 		});
 
@@ -2787,8 +2787,14 @@ function setRoomHead($obj, room){
 		global.expl($obj);
 	}
 }function loadSounds(list, callback){
-    $data._lsRemain = list.length;
-    
+	/*if (list.length != 0) {
+		$data._lsRemain = (100 - (($data._soundList.length / list.length) * 100)).toFixed(0); // Initialize remaining sounds to the total number of sounds in the list
+    }
+	else{
+		$data._lsRemain = 0;
+	}*/
+	$data._lsRemain = list.length;
+	
     list.forEach(function(v){
         getAudio(v.key, v.value, callback);
     });
@@ -2819,7 +2825,7 @@ function getAudio(k, url, cb){
         if(--$data._lsRemain == 0){
             if(cb) cb();
         } else {
-            loading(L['loadRemain'] + $data._lsRemain);
+            loading($data._lsRemain + " asset(s) left...");
         }
     }
     

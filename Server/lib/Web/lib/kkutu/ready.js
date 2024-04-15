@@ -341,7 +341,6 @@ $(document).ready(function(){
 		});
 	
 	
-		// $.cookie() 함수에 expires 옵션을 추가하여 쿠키의 저장 기한을 1년으로 설정
 		$.cookie('kks', JSON.stringify($data.opts));
 	}
 
