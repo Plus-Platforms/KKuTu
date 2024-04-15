@@ -44,6 +44,9 @@ block JS
 	script(type='text/javascript', src='/js/in_game_kkutu.min.js')
 	script(type='text/javascript', src='/js/fabric.min.js')
 	script(type='text/javascript', src='/js/diff-match-patch-compressed.js')
+	script(type='text/javascript', src='/js/crypto-js.min.js')
+	script(type='text/javascript', src='/js/aes.min.js')
+	script(type='text/javascript', src='/js/enc-base64.min.js')
 	script(src='https://challenges.cloudflare.com/turnstile/v0/api.js?compat=recaptcha', async, defer)
 
 block CSS
@@ -464,7 +467,7 @@ block Middle
 			button#purchase-no= L('NO')
 			button.primaryBtn#purchase-ok= L('OK')
 	+Dialog('ReplayDiag', 300, 470, L('replay', false))
-		input#replay-file(type='file', style='width: 288px;', accept=".kkt")
+		input#replay-file(type='file', style='width: 288px;', accept=".replay,.kkt")
 		div.dialog-bar
 			h4.opt!= L('replayDate')
 			h4.dialog-bar-value#replay-date -

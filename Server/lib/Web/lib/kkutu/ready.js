@@ -928,12 +928,16 @@ $(document).ready(function(){
 	});
 	$stage.dialog.resultSave.on('click', function(e){
 		var date = new Date($rec.time);
-		var blob = new Blob([ JSON.stringify($rec) ], { type: "text/plain" });
+		var jsonData = JSON.stringify($rec);
+	
+		var encryptedData = CryptoJS.AES.encrypt(jsonData, '3GDRwHFgxUvcSvZ49RMXN3GUXsp5amPH').toString();
+	
+		var blob = new Blob([ encryptedData ], { type: "text/plain" });
 		var url = URL.createObjectURL(blob);
-		var fileName = "KKuTu" + (
-			date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + " "
-			+ date.getHours() + "-" + date.getMinutes() + "-" + date.getSeconds()
-		) + ".kkt";
+		var fileName = "PlusKKuTu_" + (
+			date.getFullYear() + "_" + (date.getMonth() + 1) + "_" + date.getDate() + "_"
+			+ date.getHours() + "_" + date.getMinutes() + "_" + date.getSeconds()
+		) + ".replay";
 		var $a = $("<a>").attr({
 			'download': fileName,
 			'href': url
@@ -943,6 +947,7 @@ $(document).ready(function(){
 		$("#Jungle").append($a);
 		$a[0].click();
 	});
+	
 	/*
 	$stage.dialog.dictInjeong.on('click', function(e){
 		var $target = $(e.currentTarget);
@@ -1222,6 +1227,7 @@ $(document).ready(function(){
 	function initReplayDialog(){
 		$stage.dialog.replayView.attr('disabled', true);
 	}
+
 	$("#replay-file").on('change', function(e){
 		var file = e.target.files[0];
 		var reader = new FileReader();
@@ -1232,19 +1238,38 @@ $(document).ready(function(){
 		$rec = false;
 		$stage.dialog.replayView.attr('disabled', true);
 		if(!file) return;
+		
+		// Check if the file extension is .replay or .kkt
+		var fileName = file.name;
+		var isEncrypted = fileName.endsWith('.replay');
+	
+		// Read file as text
 		reader.readAsText(file);
+		
 		reader.onload = function(e){
-			var i, data;
-			
-			try{
-				data = JSON.parse(e.target.result);
+			var decryptedData;
+			try {
+				var fileContents = e.target.result;
+	
+				if (isEncrypted) {
+					// Decrypt the data using CryptoJS
+					decryptedData = CryptoJS.AES.decrypt(fileContents, '3GDRwHFgxUvcSvZ49RMXN3GUXsp5amPH').toString(CryptoJS.enc.Utf8);
+				} else {
+					// No need for decryption, use the file content directly
+					decryptedData = fileContents;
+				}
+				
+				// Parse decrypted JSON data
+				var data = JSON.parse(decryptedData);
+	
 				$date.html((new Date(data.time)).toLocaleString());
 				$version.html(data.version);
 				$players.empty();
-				for(i in data.players){
+				
+				for(var i in data.players){
 					var u = data.players[i];
 					var $p;
-					
+	
 					$players.append($p = $("<div>").addClass("replay-player-bar ellipse")
 						.text(u.title)
 						.prepend(getLevelImage(u.data.score).addClass("users-level"))
@@ -1253,12 +1278,14 @@ $(document).ready(function(){
 				}
 				$rec = data;
 				$stage.dialog.replayView.attr('disabled', false);
-			}catch(ex){
+			} catch(ex) {
 				console.warn(ex);
-				return alert(L['replayError']);
+				alert(L['replayError']);
 			}
 		};
 	});
+	
+	
 	$stage.dialog.replayView.on('click', function(e){
 		replayReady();
 	});
