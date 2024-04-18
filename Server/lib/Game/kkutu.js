@@ -360,6 +360,9 @@ exports.Client = function(socket, profile, sid){
 			o.nickname = my.nickname;
 			o.eventuid = my.eventuid;
 			o.exordial = my.exordial;
+			o.patreonUid = my.patreon_uid;
+			o.patreonExpiry = my.patreon_expiry;
+			o.patreonProduct = my.patreon_product;
 		}
 		return o;
 	};
@@ -484,6 +487,10 @@ exports.Client = function(socket, profile, sid){
 			my.data = new exports.Data($user.kkutu);
 			my.money = Number($user.money);
 			my.friends = $user.friends || {};
+			my.patreon_uid = $user.patreon_uid || "";
+			my.patreon_expiry = $user.patreon_expiry || 0;
+			my.patreon_product = $user.patreon_product || "";
+			
 			if(first){
 				my.flush();
 				DB.users.update([ '_id', my.id ]).set([ 'nickname', my.nickname || "닉네임 없음" ]).on(function($body){

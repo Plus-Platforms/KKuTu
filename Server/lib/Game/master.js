@@ -568,6 +568,9 @@ function joinNewUser($c) {
 		playTime: $c.data.playTime,
 		rankPoint: $c.data.rankPoint,
 		forestPoint: $c.data.forestPoint2024,
+		patreon_uid: $c.data.patreon_uid,
+		patreon_expiry: $c.data.patreon_expiry,
+		patreon_product: $c.data.patreon_product,
 		okg: $c.okgCount,
 		users: KKuTu.getUserList(),
 		rooms: KKuTu.getRoomList(),
@@ -635,6 +638,9 @@ function processClientRequest($c, msg) {
 				okg: $c.okgCount,
 				users: KKuTu.getUserList(),
 				rooms: KKuTu.getRoomList(),
+				patreon_uid: $c.data.patreon_uid,
+				patreon_expiry: $c.data.patreon_expiry,
+				patreon_product: $c.data.patreon_product,
 				friends: $c.friends,
 				admin: $c.admin,
 				test: global.test,
@@ -653,6 +659,9 @@ function processClientRequest($c, msg) {
 				okg: $c.okgCount,
 				users: KKuTu.getUserList(),
 				rooms: KKuTu.getRoomList(),
+				patreon_uid: $c.data.patreon_uid,
+				patreon_expiry: $c.data.patreon_expiry,
+				patreon_product: $c.data.patreon_product,
 				friends: $c.friends,
 				admin: $c.admin,
 				test: global.test,
@@ -670,6 +679,9 @@ function processClientRequest($c, msg) {
 				$data.nickname = data.nickname;
 				$data.eventuid = data.eventuid;
 				$data.exordial = data.exordial;
+				$data.patreon_uid = data.patreon_uid;
+				$data.patreon_product = data.patreon_product;
+				$data.patreon_expiry = data.patreon_expiry;
 				$data.box = data.box;
 				updateUI(undefined, true);
 				updateCommunity();
