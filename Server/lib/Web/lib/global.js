@@ -118,16 +118,10 @@ var L;
 			
 
 			$("#Bottom").width(size[0]);
+		}).on('mousemove', function(e){
+			if(explSize == null) return;
+			$(".expl-active").css({ 'left': Math.min(e.clientX + 5, size[0] - explSize[0] - 12), 'top': Math.min(e.clientY + 23, size[1] - explSize[1] - 12) });
 		}).trigger('resize');
-		
-		$("#quick-search-btn").on('click', function(e){
-			var v;
-			
-			if($("#quick-search-btn").hasClass("searching")) return;
-			if(v = $(".autocomp-select").html()) $("#quick-search-tf").val(v);
-			$("#quick-search-btn").addClass("searching").html($("<i>").addClass("fa fa-spin fa-spinner"));
-			location.href = "http://jjo.kr?q=" + encodeURI($("#quick-search-tf").val());
-		}).hotkey($("#quick-search-tf"), 13);
 	
 	// 계정
 		if($.cookie('lc') == "") $.cookie('lc', "ko_KR");
@@ -150,19 +144,19 @@ var L;
 			requestLogout();
 		}*/
 		global.watchInput($("#quick-search-tf"));
-		(global.expl = function ($mother) {
+		(global.expl = function($mother){
 			var $q = $mother ? $mother.find(".expl") : $(".expl");
-		
-			$q.parent().addClass("expl-mother").on('mouseenter', function (e) {
+			
+			$q.parent().addClass("expl-mother").on('mouseenter', function(e){
 				var $e = $(e.currentTarget).children(".expl");
-		
-				explSize = [$e.width(), $e.height()];
+				
+				explSize = [ $e.width(), $e.height() ];
 				$(".expl-active").removeClass("expl-active");
 				$e.addClass("expl-active");
-			}).on('mouseleave', function (e) {
+			}).on('mouseleave', function(e){
 				$(e.currentTarget).children(".expl").removeClass("expl-active");
 			});
-		})();		
+		})();
 	});
 	
 	function requestLogin(e){

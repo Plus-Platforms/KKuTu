@@ -102,18 +102,36 @@ block Middle
 		div#intro-inner= L('LOADING')
 	+Dialog('SettingDiag', 300, 240, L('settingsText'))
 		div.dialog-bar
-			h4.opt!= L('mute')
-			+SettingOption('mute-bgm', L('bgm'))
-			+SettingOption('mute-effect', L('effect'))
+			h4.opt!= L("bgmVol")
+			input#bgm-volume.range-input(type='range' min='0' max='1' value='0.5' step='0.01' style='width:50%;')
+		div.dialog-bar
+			h4.opt!= L("effVol")
+			input#effect-volume.range-input(type='range' min='0' max='1' value='0.5' step='0.01' style='width:50%;')
+		div.dialog-bar
+			h4.opt!= L("font")
+			select#fontSelect
+				option(value="Pretendard")= L("font_pretendard")
+				option(value="NanumBarunGothic")= L("font_nanum")
+				option(value="Galmuri14")= L("font_galmuri14")
+				option(value="Galmuri11")= L("font_galmuri11")
+				option(value="Galmuri9")= L("font_galmuri9")
+				option(value="Galmuri7")= L("font_galmuri7")
+				option(value="D2Coding")= L("font_d2coding")
+		div.dialog-bar
+			h4.opt!= L("bgmOverride")
+			input#bgm-override(type='input', placeholder=L('overrideUrl'), maxlength=200)
+		div.dialog-bar
+			h4.opt!= L("splashOverride")
+			input#img-override(type='input', placeholder=L('overrideImgUrl'), maxlength=200)
 		div.dialog-bar
 			h4.opt!= L('denyReq')
-			+SettingOption('deny-invite', L('denyInvite'))
-			+SettingOption('deny-whisper', L('whisper'))
-			h4
-			+SettingOption('deny-friend', L('friendAdd'))
+			+SettingOption('deny-invite', L('denyInvite', false))
+			+SettingOption('deny-whisper', L('whisper', false))
+			+SettingOption('deny-friend', L('friendAdd', false))
 		div.dialog-bar
 			h4.opt!= L('ingames')
-			+SettingOption('auto-ready', L('autoReady'))
+			+SettingOption('auto-ready', L('autoReady', false))
+			+SettingOption('lower-vibration', L("vibration"), "display: none;")
 		div.dialog-bar
 			h4.opt!= L('etc')
 			+SettingOption('sort-user', L('sortUser'), "width: 200px;")

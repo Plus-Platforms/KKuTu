@@ -108,7 +108,8 @@ block Middle
 	
 	div#evtpopup(style="display: none;position: absolute;height: 100%;width: 100%;align-items: center;justify-content: center;align-content: center;z-index: 3;background-color: rgba(0, 0, 0, 0.6);")
 		div(style='text-align: center;font-size: 18px;')
-			img(src="/img/event/벚꽃은졌지만.webp", style="height: 500px;")
+			a(href="https://www.youtube.com/watch?v=Js1xahtabis", target="_blank")
+				img(src="/img/event/4월2주차패치노트.webp", style="height: 500px;")
 			div.dialog-bar.d2-bar.tail-button
 				button.primaryBtn#evtpopup-ok= L("close")
 	div#creditpopup(style="display: none;position: absolute;height: 100%;width: 100%;align-items: center;justify-content: center;align-content: center;z-index: 2;background-color:#000;")
@@ -124,18 +125,13 @@ block Middle
 				p 이규빈
 				br
 				strong CLOSED BETA TEST
-				p Sqlare Team
-				p Kompasu
-				p PSP Members
+				p Sqlare Team Kompasu PSP Members
 				br
 				strong ILLUST
-				p DrawingPasu
-				p 교육
+				p DrawingPasu Dolias10
 				br
 				strong MUSIC
-				p Xpolcore
-				p Yooddunddun
-				p Roman Rajczyk
+				p Xpolcore Yooddunddun Roman Rajczyk
 				p JJoriping (Original KKuTu)
 				br
 				strong SPECIAL THANKS TO
@@ -179,13 +175,16 @@ block Middle
 				strong Apache License 2.0
 				p Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 				br
+				strong MVP USERS
+				p#mvpUsers= "Be first!"
+				br
 				strong LAST BUT NOT LEAST...
 				p#usernameCredit(style="font-size: 24px;")= "Unknown Player"
 				p YOU! Thank you for playing Plus KKuTu!
 
 
 
-	+Dialog('SettingDiag', 400, 655, L('settingsText', false))
+	+Dialog('SettingDiag', 400, 733, L('settingsText', false))
 		div.dialog-bar
 			h4.opt!= L("bgmVol")
 			input#bgm-volume.range-input(type='range' min='0' max='1' value='0.5' step='0.01' style='width:50%;')
@@ -208,6 +207,9 @@ block Middle
 		div.dialog-bar
 			h4.opt!= L("bgmOverride")
 			input#bgm-override(type='input', placeholder=L('overrideUrl'), maxlength=200)
+		div.dialog-bar
+			h4.opt!= L("splashOverride")
+			input#img-override(type='input', placeholder=L('overrideImgUrl'), maxlength=200)
 		div.dialog-bar
 			h4.opt!= L('denyReq')
 			+SettingOption('deny-invite', L('denyInvite', false))
@@ -519,6 +521,7 @@ block Middle
 		div.dialog-bar
 			div#cf-goods.goods-box
 		div.dialog-bar.tail-button.d3-bar
+			button#cf-reset= L('cfReset')
 			button.primaryBtn#cf-compose= L('cfCompose')
 	+Dialog('ChatLogDiag', 350, 500, L('chatLog', false))
 		div#chat-log-board(style='height: 475px; font-size: 11px; overflow-y: scroll;')
@@ -584,39 +587,6 @@ block Middle
 			div(style="font-size: 40px;font-weight:bold; text-align: center;color: #000;background-color: #fff;")
 				p#userLevel(style="margin:0px") PLATINUM
 			img#lockedItem(src="/img/event/acryll-lock.png")
-
-	+Dialog('DonateDiag', 390, 310, "후원하기")
-		div(style="font-size: 16px; text-align: center;")
-			h3(style="font-size:24px; font-weight:700;") 플러스끄투 운영비를 모아 주세요!
-			p 저희 플러스끄투는 디렉터와 개발팀장, 둘이서 운영하고 있습니다.
-			p 그럼에도 불구하고 서버비 충당에 어려움이 있어 광고 수익과 사비를 사용하고 있습니다. 
-			p 여러분들께서 조금이라도 후원해 주신다면 신규 컨텐츠 개발에 있어 활용하겠습니다.
-		div.dialog-bar.d3-bar.tail-button
-			a(href="https://toss.me/plusp", target="_blank")
-				button.primaryBtn= "후원하기"
-
-	+Dialog('CreditDiag', 390, 580, "만든 사람들")
-		div(style="font-size: 16px; text-align: center;")
-			p(style="font-size: 32px;font-weight: 700;margin-top: -2px;margin-bottom: -5px;") Morem.ME Team
-			strong DIRECTOR
-			p 유한선
-
-			strong DEVELOPMENT LEADER
-			p 이규빈
-
-			strong CLOSED BETA TEST
-			p Sqlare, 파수
-
-			strong ILLUST
-			p 파슈, 교육
-
-			strong MUSIC
-			p Xpolcore, 유뚠뚠, Roman Rajczyk
-
-			strong SPECIAL THANKS TO
-			p JJoriping (Original KKuTu)
-			p KKuTu.IO (KKuTu-Game)
-			p KKuTu.WORLD (World KKuTu)
 
 	+Dialog('TeamSelectDiag', 500, 85, "팀 설정")
 		div.team-selector

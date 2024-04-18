@@ -141,6 +141,7 @@ $(document).ready(function(){
 				dressOK: $("#dress-ok"),
 			charFactory: $("#CharFactoryDiag"),
 				cfCompose: $("#cf-compose"),
+				cfReset: $("#cf-reset"),
 			injPick: $("#InjPickDiag"),
 				injPickAll: $("#injpick-all"),
 				injPickNo: $("#injpick-no"),
@@ -239,7 +240,13 @@ $(document).ready(function(){
 		if (opts.bo && opts.bo != "" && opts.bo != "undefined") {
 			$data._soundList[1].value = "/audioProxy?link="+encodeURI(opts.bo);
 		}
+		if (opts.io && opts.io != "" && opts.io != "undefined") {
+			$('#Intro').css('background-image', 'url("' + opts.io + '")');
+		}
 	}
+
+	
+
 	loadSounds($data._soundList, function(){
 		processShop(connect);
 	});
@@ -328,7 +335,8 @@ $(document).ready(function(){
 		applyOptions({
 			bv: $("#bgm-volume").val(),
 			ev: $("#effect-volume").val(),
-			bo: $("#bgm-override").val(),
+			bo: encodeURI($("#bgm-override").val()).replace(";", ''),
+			io: encodeURI($("#img-override").val()).replace(";", ''),
 			di: $("#deny-invite").is(":checked"),
 			dw: $("#deny-whisper").is(":checked"),
 			df: $("#deny-friend").is(":checked"),
@@ -851,7 +859,8 @@ $(document).ready(function(){
 		applyOptions({
 			bv: $("#bgm-volume").val(),
 			ev: $("#effect-volume").val(),
-			bo: $("#bgm-override").val(),
+			bo: encodeURI($("#bgm-override").val()).replace(";", ''),
+			io: encodeURI($("#img-override").val()).replace(";", ''),
 			di: $("#deny-invite").is(":checked"),
 			dw: $("#deny-whisper").is(":checked"),
 			df: $("#deny-friend").is(":checked"),

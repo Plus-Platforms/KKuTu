@@ -56,7 +56,31 @@ function applyOptions(opt){
 	
 	$("#bgm-volume").val($data.BGMVolume);
 	$("#effect-volume").val($data.EffectVolume);
-	$("#bgm-override").val($data.opts.bo);
+	$("#bgm-override").val(function() {
+		if ($data.opts.bo && $data.opts.bo != "" && $data.opts.bo != "undefined") {
+			var decodedBo = decodeURIComponent($data.opts.bo);
+			if (decodedBo === $data.opts.bo) {
+				return $data.opts.bo;
+			} else {
+				return decodedBo;
+			}
+		} else {
+			return "";
+		}
+	});
+	
+	$("#img-override").val(function() {
+		if ($data.opts.io && $data.opts.io != "" && $data.opts.io != "undefined") {
+			var decodedIo = decodeURIComponent($data.opts.io);
+			if (decodedIo === $data.opts.io) {
+				return $data.opts.io;
+			} else {
+				return decodedIo;
+			}
+		} else {
+			return "";
+		}
+	});
 	$("#pause-video").attr('checked', $data.opts.vp);
 	$("#deny-invite").attr('checked', $data.opts.di);
 	$("#deny-whisper").attr('checked', $data.opts.dw);
@@ -1542,6 +1566,13 @@ function drawCharFactory(){
 			if(!res.error) $dict.html(processWord(res.word, res.mean, res.theme, res.type.split(','), "charfactory"));
 		});
 		if(word == "") trayEmpty();
+
+		
+		$("#cf-reset").on('click', function(e){
+			$(".cf-tray-selected").removeClass("cf-tray-selected");
+			$data._tray = [];
+			trayEmpty();
+		});
 	}
 	function viewReward(text, level, blend){
 		$.get("/cf/" + text + "?l=" + level + "&b=" + (blend ? "1" : ""), function(res){

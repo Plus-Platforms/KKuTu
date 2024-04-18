@@ -197,6 +197,7 @@ $(document).ready(function(){
 				dressOK: $("#dress-ok"),
 			charFactory: $("#CharFactoryDiag"),
 				cfCompose: $("#cf-compose"),
+				cfReset: $("#cf-reset"),
 			injPick: $("#InjPickDiag"),
 				injPickAll: $("#injpick-all"),
 				injPickNo: $("#injpick-no"),
@@ -295,7 +296,13 @@ $(document).ready(function(){
 		if (opts.bo && opts.bo != "" && opts.bo != "undefined") {
 			$data._soundList[1].value = "/audioProxy?link="+encodeURI(opts.bo);
 		}
+		if (opts.io && opts.io != "" && opts.io != "undefined") {
+			$('#Intro').css('background-image', 'url("' + opts.io + '")');
+		}
 	}
+
+	
+
 	loadSounds($data._soundList, function(){
 		processShop(connect);
 	});
@@ -384,7 +391,8 @@ $(document).ready(function(){
 		applyOptions({
 			bv: $("#bgm-volume").val(),
 			ev: $("#effect-volume").val(),
-			bo: $("#bgm-override").val(),
+			bo: encodeURI($("#bgm-override").val()).replace(";", ''),
+			io: encodeURI($("#img-override").val()).replace(";", ''),
 			di: $("#deny-invite").is(":checked"),
 			dw: $("#deny-whisper").is(":checked"),
 			df: $("#deny-friend").is(":checked"),
@@ -907,7 +915,8 @@ $(document).ready(function(){
 		applyOptions({
 			bv: $("#bgm-volume").val(),
 			ev: $("#effect-volume").val(),
-			bo: $("#bgm-override").val(),
+			bo: encodeURI($("#bgm-override").val()).replace(";", ''),
+			io: encodeURI($("#img-override").val()).replace(";", ''),
 			di: $("#deny-invite").is(":checked"),
 			dw: $("#deny-whisper").is(":checked"),
 			df: $("#deny-friend").is(":checked"),
@@ -2792,7 +2801,31 @@ function applyOptions(opt){
 	
 	$("#bgm-volume").val($data.BGMVolume);
 	$("#effect-volume").val($data.EffectVolume);
-	$("#bgm-override").val($data.opts.bo);
+	$("#bgm-override").val(function() {
+		if ($data.opts.bo && $data.opts.bo != "" && $data.opts.bo != "undefined") {
+			var decodedBo = decodeURIComponent($data.opts.bo);
+			if (decodedBo === $data.opts.bo) {
+				return $data.opts.bo;
+			} else {
+				return decodedBo;
+			}
+		} else {
+			return "";
+		}
+	});
+	
+	$("#img-override").val(function() {
+		if ($data.opts.io && $data.opts.io != "" && $data.opts.io != "undefined") {
+			var decodedIo = decodeURIComponent($data.opts.io);
+			if (decodedIo === $data.opts.io) {
+				return $data.opts.io;
+			} else {
+				return decodedIo;
+			}
+		} else {
+			return "";
+		}
+	});
 	$("#pause-video").attr('checked', $data.opts.vp);
 	$("#deny-invite").attr('checked', $data.opts.di);
 	$("#deny-whisper").attr('checked', $data.opts.dw);
@@ -4278,6 +4311,13 @@ function drawCharFactory(){
 			if(!res.error) $dict.html(processWord(res.word, res.mean, res.theme, res.type.split(','), "charfactory"));
 		});
 		if(word == "") trayEmpty();
+
+		
+		$("#cf-reset").on('click', function(e){
+			$(".cf-tray-selected").removeClass("cf-tray-selected");
+			$data._tray = [];
+			trayEmpty();
+		});
 	}
 	function viewReward(text, level, blend){
 		$.get("/cf/" + text + "?l=" + level + "&b=" + (blend ? "1" : ""), function(res){
