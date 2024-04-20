@@ -783,6 +783,16 @@ $(document).ready(function(){
 	$stage.menu.event.on('click', function(e){
 		showDialog($stage.dialog.event);
 	});
+	
+	$('#event1').click(function(){
+		$('#event1-content').show();
+		$('#event2-content').hide();
+	});
+	$('#event2').click(function(){
+		$('#event2-content').show();
+		$('#event1-content').hide();
+	});
+
 	$stage.menu.dictIngame.on('click', function(e){
 		showDialog($stage.dialog.dict);
 	});

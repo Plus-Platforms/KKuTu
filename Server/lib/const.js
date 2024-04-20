@@ -240,7 +240,7 @@ exports.MISSION_ko = [ "가", "나", "다", "라", "마", "바", "사", "아", "
 exports.MISSION_en = [ "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z" ];
 
 exports.KO_INJEONG = [
-	"JOT", "BUS", "NCA", "OCP", /*"TRC",*/
+	"JOT", "BUS", "NCA", "OCP", /*"TRC",*/ "KEM",
 	"IMS", "VOC", "KRR", "KTV",
 	"NSK", "KOT", "KOR", "DOT", "DRR", "DGM", "RAG", "LVL",
 	"LOL", "MRN", "MMM", "MAP", "MKK", "MNG",
@@ -267,7 +267,6 @@ exports.EN_THEME = [
 	"e18", "e20", "e43"
 ];
 exports.IJP_EXCEPT = [
-	"OIJ"
 ];
 exports.KO_IJP = exports.KO_INJEONG.concat(exports.KO_THEME).filter(function(item){ return !exports.IJP_EXCEPT.includes(item); });
 exports.EN_IJP = exports.EN_INJEONG.concat(exports.EN_THEME).filter(function(item){ return !exports.IJP_EXCEPT.includes(item); });

@@ -97,6 +97,9 @@ Server.get("/audioProxy", async function(req, res){
 });
 
 Server.get("/ranking", function(req, res){
+	if (!req.headers.referer || !req.headers.referer.includes('kkutu.cc')) {
+		return res.status(403).send('Forbidden');
+	}
 	var pg = Number(req.query.p);
 	var id = req.query.id;
 	
@@ -138,6 +141,108 @@ Server.get("/injeong/:word", function(req, res){
 Server.get("/cf/:word", function(req, res){
 	res.send(getCFRewards(req.params.word, Number(req.query.l || 0), req.query.b == "1"));
 });
+
+Server.get("/welcomes2/nquery", function(req, res){
+    if(!req.session.profile) return res.send({ result: "loggedout" });
+    var uid = req.session.profile.id;
+
+    MainDB.users.findOne([ '_id', req.session.profile.id ]).on(function($user){
+        var nickname = "";
+        if($user){
+            nickname = $user.nickname;
+        }
+
+        MainDB.welcome_kkutu_s2.findOne([ 'nickname', nickname ]).on(function($word){
+            if($word){
+                const rank = Number($word.rank);
+                const level = Number($word.level);
+                const score = Number($word.score);
+
+                // WP calculation
+                var wpRank = 5000 - rank;
+                if (500 >= wpRank){wpRank = 500;}
+                var wpCalc = Math.round(((wpRank) + (level)) * (10));
+
+                if($word.claimed !== "true"){
+                    return res.send({ result: "available", score: $word.score, rank: $word.rank, nickname: $word.rank, level: $word.level, wp: wpCalc });
+                }
+                else{
+                    return res.send({ result: "unavailable", score: $word.score, rank: $word.rank, nickname: $word.rank, level: $word.level, wp: wpCalc });
+                }
+            }
+            else{
+                return res.send({ result: "notfound" });
+            }
+        });
+    });
+});
+Server.get("/welcomes2/claim", function(req, res){
+    if(!req.session.profile) return res.send({ result: "loggedout" });
+    var uid = req.session.profile.id;
+
+    MainDB.users.findOne([ '_id', req.session.profile.id ]).on(function($user){
+        var nickname = "";
+        if($user){
+            nickname = $user.nickname;
+
+            MainDB.welcome_kkutu_s2.findOne([ 'nickname', nickname ]).on(function($word){
+                if($word){
+                    if($word.claimed !== "true"){
+                        MainDB.users.findOne([ '_id', uid ]).on(function($user){
+                            if($user){
+                                const rank = Number($word.rank);
+                                const level = Number($word.level);
+                                const score = Number($word.score);
+
+                                // WP calculation
+                                var wpRank = 5000 - rank;
+                                if (500 >= wpRank){
+                                    wpRank = 500;
+                                }
+
+                                var wpCalc = Math.round((wpRank + level) * 10);
+								var resultwp = $user.kkutu.score + wpCalc;
+								
+                                MainDB.users.findOne([ '_id', uid ]).on(function($user){
+									if($user){
+										var kkutu = $user.kkutu;
+										kkutu.score = resultwp;
+								
+										MainDB.users.update([ '_id', uid ]).set({ 'kkutu': kkutu }).on(function($res){
+											if($res){
+												MainDB.welcome_kkutu_s2.update([ '_id', $word._id ]).set({ 'claimed': "true" }).on(function($res){
+													return res.send({ result: "claimed", wp: wpCalc, score: $word.score, nickname: $word.rank, level: $word.level });
+												});
+											} else {
+												return res.send({ result: "claimerror" });
+											}
+										});
+									} else {
+										return res.send({ result: "claimerror" });
+									}
+								});
+								
+                            }
+                            else{
+                                return res.send({ result: "claimerror" });
+                            }
+                        });
+                    }
+                    else{
+                        return res.send({ result: "unavailable" });
+                    }
+                }
+                else{
+                    return res.send({ result: "notfound" });
+                }
+            });
+        }
+        else{
+            return res.send({ result: "claimerror" });
+        }
+    });
+});
+
 Server.get("/shop", function(req, res){
 	MainDB.kkutu_shop.find().limit([ 'cost', true ], [ 'term', true ], [ 'group', true ], [ 'options', true ], [ 'updatedAt', true ]).on(function($goods){
 		res.json({ goods: $goods });
@@ -172,7 +277,7 @@ Server.post("/profile", function(req, res){
 				var regex = /^[a-zA-Z0-9ㄱ-ㅎㅏ-ㅣ가-힣ぁ-んァ-ヶ一-龯々〆〤〥〩ぁ-ゞァ-ヾ\s!#$%&()*+,-./:;=?@[\\\]^_`{|}~]*$/;
 				var BAD = new RegExp([
 					"느으*[^가-힣]*금마?", "니[^가-힣]*(엄|앰|엠)", "(ㅄ|ㅅㅂ|ㅂㅅ)", "미친[^가-힣](년|놈|개)?", "(병|븅|빙|등)[^가-힣]*(신|딱)", "보[^가-힣]*지", "(새|섀|쌔|썌)[^가-힣]*(기|끼)", "섹[^가-힣]*스", "(시|씨|쉬|쒸)이*입?[^가-힣]*(발|빨|벌|뻘|팔|펄)", "십[^가-힣]*새", "(애|에)[^가-힣]*미", "자[^가-힣]*지", "(졸|존)[^가-힣]*(나|라|만)","좃|좆|죶", "지랄", "창[^가-힣]*(녀|년|놈)", "개[^가-힣]*(년|녀|쓰레기|스레기|돼지|되지|초딩)", "나가[^가-힝]*(뒤져|디져|죽어)","(닥|닭)[^가-힣]*(쳐|처)", "(또|똘)[^가-힣]*(아이|라이)","빡(통대가리|대가리)", "썩을", "(fuck|뻑큐|뻐큐)", "(부|불)[^가-힣]*(알|랄)","씹", "십[^가-힣]*(년|놈)" , "아가리[^가-힣]*?","(엠|엄)[^가-힣]*창","(짱|장)[^가-힣]*(깨|꼴라|궤)","(찐|왕)[^가-힣]*(따|다)", "틀딱", "페[^가-힣]*미", "한남",  "(염|옘)[^가-힣]*병", "sex",
-					"엄[^가-힣]*마", "아[^가-힣]*빠", "어[^가-힣]*머[^가-힣]*니", "아[^가-힣]*버[^가-힣]*지", "어[^가-힣]*머[^가-힣]*님", "한선", "규빈", "시현", "승[^가-힣]*만", "정[^가-힣]*희", "두[^가-힣]*환", "무[^가-힣]*현", "명[^가-힣]*박", "근[^가-힣]*혜", "재[^가-힣]*인", "석[^가-힣]*열", "진[^가-힣]*핑", "국민의힘", "국힘", "민주당", "개혁신당", "GM", "관리자", "운영자", "서버장"
+					"엄[^가-힣]*마", "아[^가-힣]*빠", "어[^가-힣]*머[^가-힣]*니", "아[^가-힣]*버[^가-힣]*지", "어[^가-힣]*머[^가-힣]*님", "한선", "규빈", "시현", "도훈", "대운", "쪼리핑", "염한선", "밥먹나", "승[^가-힣]*만", "정희", "두[^가-힣]*환", "태우", "영삼", "무[^가-힣]*현", "명박", "근혜", "재인", "석열", "진핑", "국민의힘", "국힘", "민주당", "개혁신당", "조국혁신", "GM", "관리자", "운영자", "서버장", "천안문", "난징", "센징", "끄투코리아", "끄투리오"
 				  ].join('|'), "g");
 
 				if (!regex.test(nickname)) return res.send({ error: 458 });

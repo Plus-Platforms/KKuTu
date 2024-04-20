@@ -839,6 +839,16 @@ $(document).ready(function(){
 	$stage.menu.event.on('click', function(e){
 		showDialog($stage.dialog.event);
 	});
+	
+	$('#event1').click(function(){
+		$('#event1-content').show();
+		$('#event2-content').hide();
+	});
+	$('#event2').click(function(){
+		$('#event2-content').show();
+		$('#event1-content').hide();
+	});
+
 	$stage.menu.dictIngame.on('click', function(e){
 		showDialog($stage.dialog.dict);
 	});
@@ -3764,21 +3774,54 @@ function updateMe(){
 		$("#usernameCredit").text(my.profile.title || my.profile.name);
 	}
 	//200레벨이벤트
-	var startDate = new Date('2024-03-04');
-    var endDate = new Date('2024-03-19');
+	var startDate = new Date('2024-04-19');
+    var endDate = new Date('2025-01-01');
     var today = new Date();
 
     if (today >= startDate && today <= endDate) {
 	$("#event-content").show();
 	$("#pre-content").hide();
     }
-	$("#userLevel").html(L[rank] + " (" + my.data.rankPoint + "RP)");
-	if(my.data.rankPoint >= 1500){
+
+	$.get("/welcomes2/nquery", function(res){
+		if(res.result == "loggedout"){
+			$("#userLevel").html("로그인 후 확인하세요");
+			$("#lockedItem").attr("src","img/event/어서와요S2_데이터x.png");
+		} else if (res.result == "notfound"){
+			$("#userLogic").html("");
+			$("#userLevel").html("0WP");
+			$("#lockedItem").attr("src","img/event/어서와요S2_데이터x.png");
+		} else {
+			$("#userLogic").html("((5000 - 순위: " + res.rank + ") + 레벨: "+ res.level +") * 10 =");
+			$("#userLevel").html(res.wp + "WP");
+			if (res.result == "available"){
+				$("#lockedItem").attr("src","img/event/어서와요S2_통합.png");
+				$("#lockedItem").click(function(){
+					$.get("/welcomes2/claim", function(res){
+						if(res.result == "claimed"){
+							playSound("lvup");
+							alert("🥳축하합니다! "+res.wp+"XP 적용 완료~! 새로고침해서 지금 확인해보세요.");
+							$("#lockedItem").attr("src","img/event/어서와요S2_리딤.png");
+							$("#lockedItem").off("click");
+						}
+						else{
+							alert("적용 중 오류가 발생하였습니다.");
+						}
+					});
+			  	});
+			}
+			else{
+				$("#lockedItem").attr("src","img/event/어서와요S2_리딤.png");
+			}
+		}
+	});
+
+	/*if(my.data.rankPoint >= 1500){
 		$("#lockedItem").click(function(){
 			window.open('https://docs.google.com/forms/d/e/1FAIpQLSc5uzMe6xxXrBSD_NprdUUP_F_0o5YJU8WNYwsG4D44LZaPcA/viewform?usp=sf_link', '_blank');
 	  });
 		$("#lockedItem").attr("src","img/event/acryll-get.png");
-	}
+	}*/
 
 	$(".my-rank-icon").attr("src","img/kkutu/ranking/"+rank+".png");
 	$(".my-rank").html(L[rank] + " " + my.data.rankPoint);
