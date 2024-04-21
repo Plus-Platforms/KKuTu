@@ -6,7 +6,7 @@
 
 </script>
 
-<header class="top-0 lg:top-[20px] absolute py-4 lg:py-0 w-full z-10">
+<header class="top-0 bg-gray-900/70 backdrop-blur-xl fixed py-4 lg:py-0 w-full z-10">
 	<nav class="max-w-screen-xl mx-auto flex items-center justify-between px-4 lg:px-8 lg:py-0" aria-label="Global">
 	  <div class="flex lg:flex-1">
 		<a href="/">
@@ -23,7 +23,7 @@
 				  class="mr-6 text-xl flex rounded-xl py-2 px-2 transform ease-in duration-100 active:scale-95 hover:backdrop-blur-lg hover:bg-white/20">
 					  디스코드
 					  </a>
-		<a href="https://kkutu.cc/login"
+		<a href="/login"
 					  class="mr-6 text-xl flex rounded-xl py-2 px-2 transform ease-in duration-100 active:scale-95 hover:backdrop-blur-lg hover:bg-white/20">
 					로그인
 						  </a>

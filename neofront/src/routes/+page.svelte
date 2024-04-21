@@ -2,6 +2,8 @@
   import { onMount } from 'svelte';
 	const title = '혼자도 같이도 즐거운 온라인 단어 게임';
   var isModalOpen = false;
+  var userLang = "";
+
   // Function to show the modal
   function showModal() {
     // Check if the modal is already open
@@ -77,11 +79,17 @@ onMount(async () => {
       }
 
       jsonDataServers = await responseServers.json();
+
+      
 });
+
+onMount(() => {
+    userLang = navigator.language.replace("-", "_");
+  });
 
 function calculateTotalConnectedUsers() {
     return jsonDataServers.list.reduce((total, current) => total + (current || 0), 0);
-  }
+}
 </script>
 
 <svelte:head>
@@ -138,11 +146,11 @@ function calculateTotalConnectedUsers() {
             점검 공지 확인하기
           </a>
           {:else}
-          <a class="mt-16 bg-white rounded-full text-gray-800 shadow-lg px-8 py-2 font-bold text-3xl" href="https://kkutu.cc/game?server=0">
+          <a class="mt-16 bg-white rounded-full text-gray-800 shadow-lg px-8 py-2 font-bold text-3xl" href="https://kkutu.cc/game?server=0&locale={userLang}">
             시작하기
           </a>
           {/if}
-  
+
           <a class="download-link mt-4 hidden lg:flex inline-flex text-lg px-4 py-2 text-white" href="#" on:click="{() => showModal()}">
             클라이언트 다운로드
           </a>

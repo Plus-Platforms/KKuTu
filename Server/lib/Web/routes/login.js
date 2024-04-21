@@ -86,9 +86,13 @@ exports.run = (Server, page) => {
 		}
 	}
 	
+	Server.get("/login/old", (req, res) => {
+		page(req, res, "login", { '_id': req.session.id, 'text': req.query.desc, 'loginList': strategyList });
+	});
 	Server.get("/login", (req, res) => {
 		if (global.isPublic) {
-			page(req, res, "login", { '_id': req.session.id, 'text': req.query.desc, 'loginList': strategyList });
+			//
+			res.sendFile(path.resolve(__dirname, '..',  'public', 'login.html'))
 		} else {
 			let now = Date.now();
 			let id = req.query.id || "ADMIN";
