@@ -99,13 +99,19 @@ function calculateTotalConnectedUsers() {
       <div class="mx-auto max-w-screen-2xl container px-4 md:px-6">
         <div class="justify-center flex flex-col items-center">
          
+         
+          <p class="text-white mb-8 text-center sm:text-4xl text-black">
+            <strong>NEW!</strong>&nbsp;어서와요 플끄 시즌2 진행중!
+          </p>
+
           <h1 class="text-gray-300 text-center text-3xl lg:text-8xl font-bold text-black sm:text-4xl md:text-5xl lg:text-6xl">
-            끄투의 미래,<br>
-            지금 <span class="text-white">플러스끄투</span>에서.
+            모든 것이 플러스,<br>
+            <span class="text-white">플러스끄투</span>
           </h1>
 
           <p class="text-white mt-8 text-center sm:text-4xl text-black">
-            끄투의 틀에서 탈피한 아케이드 모드를 만나보세요.
+            자유 끝말잇기, 수학퀴즈부터, 상식적인 패치까지!<br/>
+            플러스끄투는 끄투의 새로운 기준을 제시하고 있습니다.
           </p>
 
           <div class="mx-auto gb">
