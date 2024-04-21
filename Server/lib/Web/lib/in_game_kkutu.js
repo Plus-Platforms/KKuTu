@@ -3866,7 +3866,7 @@ function updateUserList(refresh){
 		for(i in $data.users) len++;
 	}
 	$stage.lobby.userListTitle.html("<i class='fa fa-users'></i>"
-		+ "<b>" + L['server_' + $data.server] + "</b> 서버 "
+		+ "<b>" + L['server_' + $data.server] + "</b> "
 		+ " (" + len + L['MN'] + ")");
 	
 	if(refresh){

@@ -93,7 +93,9 @@ var L;
 	$(document).ready(function(e){
 		const LANG = {
 			'ko_KR': "한국어",
-			'en_US': "English"
+			'en_US': "English",
+			'ja_JP': "日本語",
+			'es_MX': "Español"
 		};
 		var $gn = $("#global-notice").hide();
 		var $c;
