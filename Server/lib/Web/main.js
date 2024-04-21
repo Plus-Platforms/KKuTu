@@ -41,6 +41,7 @@ var passport = require('passport');
 var Const	 = require("../const");
 var https	 = require('https');
 var fs		 = require('fs');
+var path	 = require('path');
 
 var Language = {
 	'ko_KR': require("./lang/ko_KR.json"),
@@ -308,4 +309,9 @@ Server.get("/membercount", function(req, res){
 
 Server.get("/legal/:page", function(req, res){
 	page(req, res, "legal/"+req.params.page);
+});
+
+// 404 page
+Server.use(function(req, res){
+	res.sendFile(path.resolve(__dirname, 'public', '404.html'))
 });
