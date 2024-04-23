@@ -852,13 +852,7 @@
 		"CORRECT": "정답입니다!",
 		"WRONG": "오답입니다.",
 		"OTHERENTER": "다른 사람이 입력하고 있어요",
-		"gachaProb": "확률형 아이템 정보",
-
-		"bgm": "배경 음악",
-		"effect": "효과음",
-		"bgm_2014": "끄투 (2014)",
-		"bgm_2023": "Sound of 플끄 (2023)",
-		"bgm_2024": "플끄 Lo-Fi (2024)"
+		"gachaProb": "확률형 아이템 정보"
 	},
 	"game/fates": {
 		"title": "카드 뽑기",
