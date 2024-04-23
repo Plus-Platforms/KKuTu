@@ -239,6 +239,8 @@
 		"turnError_407": "다른 주제",
 		"turnError_408": "한국어, 숫자, 자/모음만 입력 가능해요!",
 		"turnError_409": "이미 쓰인 단어",
+		"turnError_412": "신조어 금지",
+		"turnError_414": "사전에 있는 단어",
 		"checkAgeAsk": "끄투에서는 본인 확인을 위해 생년월일을 입력받고 있습니다. 입력된 생년월일은 본인 확인 및 내부 정보 처리에만 이용되며 제3자에게 공개되지 않습니다.\n본인 확인을 진행합니까?",
 		"checkAgeNo": "입력 값이 올바르지 않습니다. 다시 확인해 주세요.",
 		"checkAgeInput1": "생년월일 중 연도를 입력해 주세요. (4자리)",
@@ -266,7 +268,7 @@
 		"ctrCancel": "연결 취소",
 		"linkWarning": "링크를 클릭하셨습니다. 해당 링크로 이동하는 것으로 발생하는 피해는 본 서비스에서 책임지지 않습니다. 계속합니까?",
 		"trollWarning": "두 번 연속 턴을 넘기지 못했습니다. 세 번째로 턴을 넘기지 못하는 경우 방에서 퇴장하게 됩니다.",
-		"changeServer": "서버 이동",
+		"changeServer": "UI 변경",
 		"friend": "친구",
 		"fstat_on": "님이 접속했습니다.",
 		"fstat_off": "님이 접속을 종료했습니다.",
@@ -369,6 +371,10 @@
 		"explInjeongListTitle": "사용 가능한 단어 그룹",
 		"optLoanword": "우리말",
 		"explLoanword": "외래어를 사용할 수 없게 합니다.",
+		"optUnknownword": "언노운워드",
+		"explUnknownword": "사전에 등재되지 않은 단어를 사용할 수 있게 합니다.",
+		"optNooij": "신조어 금지",
+		"explNooij": "신조어를 사용할 수 없게 합니다.",
 		"optProverb": "속담",
 		"explProverb": "화면에 낱말 대신 한 문장씩 나타납니다.",
 		"optStrict": "깐깐",
@@ -846,7 +852,13 @@
 		"CORRECT": "정답입니다!",
 		"WRONG": "오답입니다.",
 		"OTHERENTER": "다른 사람이 입력하고 있어요",
-		"gachaProb": "확률형 아이템 정보"
+		"gachaProb": "확률형 아이템 정보",
+
+		"bgm": "배경 음악",
+		"effect": "효과음",
+		"bgm_2014": "끄투 (2014)",
+		"bgm_2023": "Sound of 플끄 (2023)",
+		"bgm_2024": "플끄 Lo-Fi (2024)"
 	},
 	"game/fates": {
 		"title": "카드 뽑기",

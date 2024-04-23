@@ -76,7 +76,7 @@ exports.roundReady = function(){
 			my.game.questionType = 0;
 
 			if(my.game.theme == "ELE"){
-				my.game.questionType = Math.floor(Math.random() * 7);
+				my.game.questionType = Math.floor(Math.random() * 6);
 				
 				if (my.game.questionType == 0){
 					//사칙연산
@@ -171,7 +171,7 @@ exports.roundReady = function(){
 					
 					my.game.mathQuestion = num1 + "와 " + num2 + "의 최소공배수를 구하세요.";
 					my.game.mathAnswer = answer;
-				} else if (my.game.questionType == 5){
+				}/* else if (my.game.questionType == 5){
 					//넓이 구하기 문제
 					var num1 = parseFloat((Math.random() * 10).toFixed(1));
 					var num2 = Math.floor(Math.random() * 10);
@@ -187,9 +187,9 @@ exports.roundReady = function(){
 						var element = "삼각지대"
 					}
 
-					my.game.mathAnswer = (num1*num2) / 2;
+					my.game.mathAnswer = ((num1*num2) / 2).toFixed(1);
 					my.game.mathQuestion = "가로 " + num1 + calclogic + ", 세로 " + num2 + calclogic + "인 "+element+"의 넓이 " + calclogic + "²는? (숫자로 입력)";
-				}else if (my.game.questionType == 6){
+				}*/else if (my.game.questionType == 5){
 					var num2 = Math.floor(Math.random() * 100);
 					var calclogic = ['cm', 'm', 'km'][Math.floor(Math.random() * 3)];
 					var element = "";
@@ -203,7 +203,7 @@ exports.roundReady = function(){
 						var element = "소행성 단면"
 					}
 
-					my.game.mathAnswer = num2*num2*3.14;
+					my.game.mathAnswer = (num2*num2*3.14).toFixed(2);
 					my.game.mathQuestion = "반지름이 " + num2 + calclogic + "인 "+element+"의 넓이 π" + calclogic + "²는? (숫자로 입력, π=3.14)";
 				}
 

@@ -278,12 +278,12 @@ exports.submit = function(client, text){
 				client.publish('turnEnd', {
 					ok: true,
 					value: text,
-					mean: $doc.mean,
-					theme: $doc.theme,
-					wc: $doc.type,
-					score: score,
-					bonus: (my.game.mission === true) ? score - my.getScore(text, t, true, returnNuff) : 0,
-					baby: $doc.baby
+					mean: $doc ? $doc.mean : null,
+					theme: $doc ? $doc.theme : null,
+                    wc: $doc ? $doc.type : null,
+                    score: score,
+                    bonus: (my.game.mission === true) ? score - my.getScore(text, t, true, returnNuff) : 0,
+                    baby: $doc ? $doc.baby : null
 				}, true);
 			}
 			else{
@@ -302,12 +302,13 @@ exports.submit = function(client, text){
 					my.game.mission = getMission(my.rule.lang);
 				}
 				setTimeout(my.turnNext, my.game.turnTime / 6);
-				if(!client.robot && !freeAble){
+				if(!client.robot){
 					client.invokeWordPiece(text, 1);
-					DB.kkutu[l].update([ '_id', text ]).set([ 'hit', $doc.hit + 1 ]).on();
+					try{DB.kkutu[l].update([ '_id', text ]).set([ 'hit', $doc.hit + 1 ]).on()}
+                    catch(a){}
 				}
 			}
-			if(firstMove || my.opts.manner) getAuto.call(my, preChar, preSubChar, 1).then(function(w){
+			if(!my.opts.unknownword && firstMove || my.opts.manner) getAuto.call(my, preChar, preSubChar, 1).then(function(w){
 				if(w) approved();
 				else{
 					my.game.loading = false;
@@ -323,7 +324,11 @@ exports.submit = function(client, text){
 			my.game.loading = false;
 			client.publish('turnError', { code: code || 404, value: text }, true);
 		}
-		
+
+		function check_word(word){
+            return word.match(/^[ \-\_0-9A-Za-zぁ-ヾㄱ-ㅣ가-힣]*$/)
+        }
+
 		if(freeAble){
 			var kkutuAble = /^[0-9가-힣ㄱ-ㅎㅏ-ㅣ]*$/;
 			if(kkutuAble.test(text)){
@@ -334,11 +339,17 @@ exports.submit = function(client, text){
 			}
 		}
 		else if($doc){
-			if(!my.opts.injeong && ($doc.flag & Const.KOR_FLAG.INJEONG)) denied();
+			if(my.opts.unknownword) denied(414);
+			else if(!my.opts.injeong && ($doc.flag & Const.KOR_FLAG.INJEONG)) denied();
+			else if(my.opts.nooij && $doc.theme.indexOf("OIJ") != -1) denied(412);
 			else if(my.opts.strict && (!$doc.type.match(Const.KOR_STRICT) || $doc.flag >= 4)) denied(406);
 			else if(my.opts.loanword && ($doc.flag & Const.KOR_FLAG.LOANWORD)) denied(405);
 			else preApproved();
 		}else{
+			if(my.opts.unknownword){
+                if (check_word(text)) preApproved();
+                else denied(413);
+            }
 			denied();
 		}
 	}

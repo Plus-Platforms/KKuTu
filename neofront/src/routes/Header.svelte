@@ -19,6 +19,10 @@
 					class="mr-6 text-xl flex rounded-xl py-2 px-2 transform ease-in duration-100 active:scale-95 hover:backdrop-blur-lg hover:bg-white/20">
 						게임 소개
 						</a>
+			<a href="https://kkutu.cc/o/game?server=0"
+						class="mr-6 text-xl flex rounded-xl py-2 px-2 transform ease-in duration-100 active:scale-95 hover:backdrop-blur-lg hover:bg-white/20">
+						클래식 모드
+							</a>
 			<a href="/login"
 						class="mr-6 text-xl flex rounded-xl py-2 px-2 transform ease-in duration-100 active:scale-95 hover:backdrop-blur-lg hover:bg-white/20">
 						로그인

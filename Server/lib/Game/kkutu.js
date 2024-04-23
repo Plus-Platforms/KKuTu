@@ -1489,7 +1489,12 @@ function getRewards(rankScore, mode, score, bonus, rank, all, ss, opts, forestPo
 			rw.score += score * 1.42;
 			break;
 		case "KSH":
-			rw.score += score * 0.55;
+			if(!opts.unknownword){
+				rw.score += score * 0.55;
+			}
+			else{
+				rw.score += 0;
+			}
 			break;
 		case "CSQ":
 			rw.score += score * 0.4;

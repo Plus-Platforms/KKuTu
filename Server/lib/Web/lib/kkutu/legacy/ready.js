@@ -17,8 +17,6 @@
  */
 
 $(document).ready(function(){
-	window.differ = new diff_match_patch()
-
 	var i;
 	
 	$data.PUBLIC = $("#PUBLIC").html() == "true";
@@ -45,11 +43,9 @@ $(document).ready(function(){
 		lobby: {
 			userListTitle: $(".UserListBox .product-title"),
 			userList: $(".UserListBox .product-body"),
-			connList: $("#connList"),
 			roomListTitle: $(".RoomListBox .product-title"),
 			roomList: $(".RoomListBox .product-body"),
-			createBanner: $("<div>").addClass("rooms-item rooms-create").append($("<div>").html("<i class='fa-solid fa-plus'></i>방 만들기")),
-			singleBanner: $("<div>").addClass("rooms-item rooms-single").append($("<div>").html("<i class='fa-solid fa-user'></i>혼자서 놀기"))
+			createBanner: $("<div>").addClass("rooms-item rooms-create").append($("<div>").html(L['newRoom']))
 		},
 		chat: $("#Chat"),
 		chatLog: $("#chat-log-board"),
@@ -57,23 +53,14 @@ $(document).ready(function(){
 		chatBtn: $("#ChatBtn"),
 		menu: {
 			help: $("#HelpBtn"),
-			coupon: $("#CouponBtn"),
 			setting: $("#SettingBtn"),
 			community: $("#CommunityBtn"),
-			community2: $("#Community2Btn"),
-			credit: $("#CreditBtn"),
-			closeCredit: $("#creditpopup-close"),
-			sideMenu: $("#SideMenuBtn"),
-			sideMenuClose: $("#SideMenuCloseBtn"),
 			newRoom: $("#NewRoomBtn"),
 			setRoom: $("#SetRoomBtn"),
 			quickRoom: $("#QuickRoomBtn"),
 			spectate: $("#SpectateBtn"),
 			shop: $("#ShopBtn"),
 			dict: $("#DictionaryBtn"),
-			event: $("#LvEventBtn"),
-			donate: $("#DonationBtn"),
-			dictIngame: $("#DictionaryBtnIngame"),
 			wordPlus: $("#WordPlusBtn"),
 			invite: $("#InviteBtn"),
 			practice: $("#PracticeBtn"),
@@ -82,8 +69,7 @@ $(document).ready(function(){
 			exit: $("#ExitBtn"),
 			notice: $("#NoticeBtn"),
 			replay: $("#ReplayBtn"),
-			leaderboard: $("#LeaderboardBtn"),
-			teamSelect: $("#TeamSelectBtn")
+			leaderboard: $("#LeaderboardBtn")
 		},
 		dialog: {
 			setting: $("#SettingDiag"),
@@ -93,9 +79,6 @@ $(document).ready(function(){
 			community: $("#CommunityDiag"),
 				commFriends: $("#comm-friends"),
 				commFriendAdd: $("#comm-friend-add"),
-			credit: $("#CreditDiag"),
-			event: $("#LvEventDiag"),
-			donate: $("#DonateDiag"),
 			room: $("#RoomDiag"),
 				roomOK: $("#room-ok"),
 			quick: $("#QuickDiag"),
@@ -113,7 +96,6 @@ $(document).ready(function(){
 			invite: $("#InviteDiag"),
 				inviteList: $(".invite-board"),
 				inviteRobot: $("#invite-robot"),
-				inviteLink: $("#invite-link"),
 			roomInfo: $("#RoomInfoDiag"),
 				roomInfoJoin: $("#room-info-join"),
 			profile: $("#ProfileDiag"),
@@ -138,11 +120,9 @@ $(document).ready(function(){
 				lbMe: $("#lb-me"),
 				lbPrev: $("#lb-prev"),
 			dress: $("#DressDiag"),
-			dressitem: $("#DressItemDiag"),
 				dressOK: $("#dress-ok"),
 			charFactory: $("#CharFactoryDiag"),
 				cfCompose: $("#cf-compose"),
-				cfReset: $("#cf-reset"),
 			injPick: $("#InjPickDiag"),
 				injPickAll: $("#injpick-all"),
 				injPickNo: $("#injpick-no"),
@@ -150,24 +130,11 @@ $(document).ready(function(){
 			chatLog: $("#ChatLogDiag"),
 			obtain: $("#ObtainDiag"),
 				obtainOK: $("#obtain-ok"),
-			newbie: $("#NewbieDiag"),
-				newbieOK: $("#setNickname"),
-			help: $("#HelpDiag"),
-			coupon: $("#CouponRegisterDiag"),
-			pingShop: $("#PingShopDiag"),
-			community2: $("#Community2Diag"),
-			license: $("#LicenseDiag"),
-			alert: $("#NotificationDiag"),
-				alertOK: $("#alert-ok"),
-			confirm: $("#ConfirmDiag"),
-				confirmOK: $("#confirm-ok"),
-				confirmCancel: $("#confirm-cancel"),
-			teamSelect: $("#TeamSelectDiag"),
+			help: $("#HelpDiag")
 		},
 		box: {
 			chat: $(".ChatBox"),
 			userList: $(".UserListBox"),
-			roominfoList: $(".RoominfoListBox"),
 			roomList: $(".RoomListBox"),
 			shop: $(".ShopBox"),
 			room: $(".RoomBox"),
@@ -177,22 +144,13 @@ $(document).ready(function(){
 		game: {
 			display: $(".jjo-display"),
 			hints: $(".GameBox .hints"),
-			tools: $('.GameBox .tools'),
-			drawingTitle: $('#drawing-title'),
-			themeisTitle: $('#themeis-title'),
 			cwcmd: $(".GameBox .cwcmd"),
 			bb: $(".GameBox .bb"),
 			items: $(".GameBox .items"),
 			chain: $(".GameBox .chain"),
 			round: $(".rounds"),
-			here: $(".game-input"),
+			here: $(".game-input").hide(),
 			hereText: $("#game-input"),
-			correct: $("#game-correct"),
-			wrong: $("#game-wrong"),
-			other: $("#other-enter"),
-			wrongText: $("#wrong-text"),
-			correctText: $("#correct-text"),
-			otherText: $("#other-text"),
 			history: $(".history"),
 			roundBar: $(".jjo-round-time .graph-bar"),
 			turnBar: $(".jjo-turn-time .graph-bar")
@@ -205,15 +163,9 @@ $(document).ready(function(){
 		alert(L['websocketUnsupport']);
 		return;
 	}
-
 	$data._soundList = [
 		{ key: "k", value: "/media/kkutu/k.mp3" },
-		{ key: "lobby", value: "/media/kkutu/LobbyBGMS2.mp3" },
-		{ key: "dialog", value: "/media/kkutu/dialog.mp3" },
-		{ key: "legacylobby", value: "/media/kkutu/LobbyBGM.mp3" },
-		{ key: "ingame", value: "/media/kkutu/LobbyBGMS2.mp3" },
-		{ key: "shop", value: "/media/kkutu/LobbySeolBGM.mp3" },
-		{ key: "credit", value: "/media/kkutu/kkutuEnding.mp3" },
+		{ key: "lobby", value: "/media/kkutu/LobbyBGM.mp3" },
 		{ key: "jaqwi", value: "/media/kkutu/JaqwiBGM.mp3" },
 		{ key: "jaqwiF", value: "/media/kkutu/JaqwiFastBGM.mp3" },
 		{ key: "game_start", value: "/media/kkutu/game_start.mp3" },
@@ -223,7 +175,6 @@ $(document).ready(function(){
 		{ key: "lvup", value: "/media/kkutu/lvup.mp3" },
 		{ key: "Al", value: "/media/kkutu/Al.mp3" },
 		{ key: "success", value: "/media/kkutu/success.mp3" },
-		{ key: "question", value: "/media/kkutu/question.mp3" },
 		{ key: "missing", value: "/media/kkutu/missing.mp3" },
 		{ key: "mission", value: "/media/kkutu/mission.mp3" },
 		{ key: "kung", value: "/media/kkutu/kung.mp3" },
@@ -234,23 +185,6 @@ $(document).ready(function(){
 		{ key: "K"+i, value: "/media/kkutu/K"+i+".mp3" },
 		{ key: "As"+i, value: "/media/kkutu/As"+i+".mp3" }
 	);
-	const uiPref = $.cookie('uipreference');
-	if(uiPref && uiPref == 'classic'){
-		window.location.href = '/o/game?server=0';
-	}
-
-	const options = $.cookie('kks');
-	if(options){
-		var opts = JSON.parse(options);
-		if (opts.bo && opts.bo != "" && opts.bo != "undefined") {
-			$data._soundList[1].value = "/audioProxy?link="+encodeURI(opts.bo);
-		}
-		if (opts.io && opts.io != "" && opts.io != "undefined") {
-			$('#Intro').css('background-image', 'url("' + opts.io + '")');
-		}
-	}
-
-	
 
 	loadSounds($data._soundList, function(){
 		processShop(connect);
@@ -302,7 +236,7 @@ $(document).ready(function(){
 				$obj = userListBar(data, only == "for-master");
 				
 				if(only == "for-master") $stage.dialog.inviteList.append($obj);
-				else $stage.lobby.connList.append($obj);
+				else $stage.lobby.userList.append($obj);
 			}
 			$data.users[id] = data;
 			if(needed){
@@ -317,7 +251,6 @@ $(document).ready(function(){
 		$("#intro-start").hide();
 		$("#intro").show();
 	}, 1400);*/
-
 	$(document).on('paste', function(e){
 		if($data.room) if($data.room.gaming){
 			e.preventDefault();
@@ -330,56 +263,24 @@ $(document).ready(function(){
 			return false;
 		}
 	});
-	if(options){
-		var opts = JSON.parse(options);
-		$("#bgm-volume").val(opts.bv);
-		$("#effect-volume").val(opts.ev);
-		applyOptions(opts);
+	$data.opts = $.cookie('kks');
+	if($data.opts){
+		applyOptions(JSON.parse($data.opts));
 	}
-	else{
-		applyOptions({
-			bv: $("#bgm-volume").val(),
-			ev: $("#effect-volume").val(),
-			bo: encodeURI($("#bgm-override").val()).replace(";", ''),
-			io: encodeURI($("#img-override").val()).replace(";", ''),
-			di: $("#deny-invite").is(":checked"),
-			dw: $("#deny-whisper").is(":checked"),
-			df: $("#deny-friend").is(":checked"),
-			ar: $("#auto-ready").is(":checked"),
-			su: $("#sort-user").is(":checked"),
-			ow: $("#only-waiting").is(":checked"),
-			ou: $("#only-unlock").is(":checked"),
-			cp: $("#copyright-hide").is(":checked"),
-			vp: $("#lower-vibration").is(":checked")
-		});
-	
-	
-		$.cookie('kks', JSON.stringify($data.opts));
-	}
-
-		$('.dialog-head, .dialog-title').mousedown(function(e) {
-		  var $dialog = $(this).closest('.dialog');
-		  var offsetX = e.clientX - $dialog.offset().left;
-		  var offsetY = e.clientY - $dialog.offset().top;
-		  $(".dialog-front").removeClass("dialog-front");
-		  $dialog.addClass("dialog-front");
-		  $(document).mousemove(function(e) {
-			var x = e.clientX - offsetX;
-			var y = e.clientY - offsetY;
-	  
-			$dialog.css({ 'left': x, 'top': y });
-		  });
-	  
-		  $(document).mouseup(function() {
-			$(document).off('mousemove');
-			$(document).off('mouseup');
-		  });
-		});
+	$(".dialog-head .dialog-title").on('mousedown', function(e){
+		var $pd = $(e.currentTarget).parents(".dialog");
+		
+		$(".dialog-front").removeClass("dialog-front");
+		$pd.addClass("dialog-front");
+		startDrag($pd, e.pageX, e.pageY);
+	}).on('mouseup', function(e){
+		stopDrag();
+	});
 	// addInterval(checkInput, 1);
 	$stage.chatBtn.on('click', function(e){
 		checkInput();
 		
-		var value = (mobile && $stage.game.hereText.is(':visible'))
+		var value = (mobile && $stage.game.here.is(':visible'))
 			? $stage.game.hereText.val()
 			: $stage.talk.val();
 		if(!value) return;
@@ -388,7 +289,7 @@ $(document).ready(function(){
 			o.cmd = o.value.split(" ");
 			runCommand(o.cmd);
 		}else{
-			if($stage.game.hereText.is(":visible") || $data._relay){
+			if($stage.game.here.is(":visible") || $data._relay){
 				o.relay = true;
 			}
 			send('talk', o);
@@ -401,20 +302,6 @@ $(document).ready(function(){
 		}
 		$stage.game.hereText.val("");
 	}).hotkey($stage.talk, 13).hotkey($stage.game.hereText, 13);
-
-
-	$(document).keydown(function(e) {
-		// 만약 눌린 키가 Ctrl 키인 경우
-		if(e.keyCode == 13){
-		if(!$("#Talk").is(":focus")) {
-			$("#Talk").focus();
-        }
-		}
-		else if (e.keyCode === 27) {
-			$("#Talk").blur();
-		}
-	});
-	
 	$("#cw-q-input").on('keydown', function(e){
 		if(e.keyCode == 13){
 			var $target = $(e.currentTarget);
@@ -433,7 +320,7 @@ $(document).ready(function(){
 		var $target = $(e.currentTarget);
 		var value = $target.val();
 		
-		if(value < 2 || value > 25){
+		if(value < 2 || value > 8){
 			$target.css('color', "#FF4444");
 		}else{
 			$target.css('color', "");
@@ -443,13 +330,13 @@ $(document).ready(function(){
 		var $target = $(e.currentTarget);
 		var value = $target.val();
 		
-		if(value < 1 || value > 25){
+		if(value < 1 || value > 10){
 			$target.css('color', "#FF4444");
 		}else{
 			$target.css('color', "");
 		}
 	});
-	$stage.game.hereText.on('click', function(e){
+	$stage.game.here.on('click', function(e){
 		mobile || $stage.talk.focus();
 	});
 	$stage.talk.on('keyup', function(e){
@@ -458,7 +345,6 @@ $(document).ready(function(){
 	$(window).on('beforeunload', function(e){
 		if($data.room) return L['sureExit'];
 	});
-
 	function startDrag($diag, sx, sy){
 		var pos = $diag.position();
 		$(window).on('mousemove', function(e){
@@ -466,147 +352,27 @@ $(document).ready(function(){
 			
 			$diag.css('left', pos.left + dx);
 			$diag.css('top', pos.top + dy);
-		}).one('mouseup', function(){
-			$(window).off('mousemove');
 		});
 	}
-	
+	function stopDrag($diag){
+		$(window).off('mousemove');
+	}
 	$(".result-me-gauge .graph-bar").addClass("result-me-before-bar");
 	$(".result-me-gauge")
 		.append($("<div>").addClass("graph-bar result-me-current-bar"))
 		.append($("<div>").addClass("graph-bar result-me-bonus-bar"));
-	
-	// 메뉴 버튼
-	for (i in $stage.dialog) {
-		if ($stage.dialog[i].children(".dialog-head").hasClass("no-close")) continue;
-	
-		if(mobile){
-		$stage.dialog[i].children(".dialog-head").prepend($("<div>").addClass("closeBtn").on('click', function (e) {
-			var $dialog = $(e.currentTarget).parent().parent();
-			$('#dimmer').fadeOut();
-			// Add the opposite effect class
-			$dialog.addClass("closing-effect");
-			// Set a timeout to hide the dialog after the animation completes
-			setTimeout(function () {
-				$dialog.hide().removeClass("closing-effect");
-			}, 200); // Adjust the time based on your animation duration
+// 메뉴 버튼
+	for(i in $stage.dialog){
+		if($stage.dialog[i].children(".dialog-head").hasClass("no-close")) continue;
+		
+		$stage.dialog[i].children(".dialog-head").append($("<div>").addClass("closeBtn").on('click', function(e){
+			$(e.currentTarget).parent().parent().hide();
 		}).hotkey(false, 27));
 	}
-	else{
-		$stage.dialog[i].children(".dialog-head").append($("<div>").addClass("closeBtn").on('click', function (e) {
-			var $dialog = $(e.currentTarget).parent().parent();
-			$('#dimmer').fadeOut();
-			// Add the opposite effect class
-			$dialog.addClass("closing-effect");
-			// Set a timeout to hide the dialog after the animation completes
-			setTimeout(function () {
-				$dialog.hide().removeClass("closing-effect");
-			}, 200); // Adjust the time based on your animation duration
-		}).hotkey(false, 27));
-	}
-	}
-	
-
-
-
-
-	var tostMessage = document.getElementById('tost_message');
-
-	function tostOn(){
-		tostMessage.classList.remove('hidden');
-		tostMessage.classList.add('active');
-		setTimeout(function(){
-			tostMessage.classList.remove('active');
-			setTimeout(function(){tostMessage.classList.add('hidden');}, 500);
-		}, 3000);
-	}
-
-   
-	window.alert = function (message1) {
-			tostOn();
-			console.log(message1);
-			$('#tost_message').text(message1);
-	};
-	
-	checkResolution();
-
-	//window.addEventListener('resize', checkResolution);
-	
-	function checkResolution() {
-			var screenWidth = window.innerWidth;
-			var screenHeight = window.innerHeight;
-			var thresholdWidth = 1600;
-			var thresholdHeight = 900;
-	
-			if (screenWidth < thresholdWidth || screenHeight < thresholdHeight) {
-				try{
-					document.getElementById('dimmer').style.display = 'none';
-					document.getElementById('Community2Diag').style.display = 'none';
-					document.getElementById('Community2Btn').style.display = 'none';
-				}
-				catch(err){
-				}
-				alert('화면 해상도가 1600x900 미만입니다.\n정상적인 게임 플레이가 어려울 수 있으므로 외부 디스플레이를 연결하거나 전체화면 (F11)으로 게임을 플레이해주세요.');
-			}
-	}
- 
-
- 
-
 	$stage.menu.help.on('click', function(e){
-		$('#sideMenuDiag').fadeOut();
-		$("#help-board").attr('src', "https://pcor.me/kkutu/help");
 		showDialog($stage.dialog.help);
 	});
-	$stage.menu.coupon.on('click', function(e){
-		$('#sideMenuDiag').fadeOut();
-		$("#coupon-board").attr('src', "https://pcor.me/kkutu/coupon");
-		showDialog($stage.dialog.coupon);
-	});
-	$stage.menu.community2.on('click', function(e){
-		$('#sideMenuDiag').fadeOut();
-		$("#community2").attr('src', "https://pcor.me/plKkkutuCafe");
-		$('#dimmer').fadeIn();
-		showDialog($stage.dialog.community2);
-	});
-	$stage.menu.sideMenu.on('click', function(e){
-		$('#dimmer').fadeIn();
-		if(!mobile){
-		$('#sideMenuDiag').fadeIn().css('left', '100%').animate({
-			'left': $(window).width() - 740 // Adjust 740 as per your requirement
-		}, 200);
-		}
-		else{
-		$('#sideMenuDiag').fadeIn();
-		}
-	});
-	
-	$stage.menu.credit.on('click', function(e){
-		$('#sideMenuDiag').fadeOut();
-		$('#dimmer').fadeOut();
-		$('#creditpopup').fadeIn(3000);
-		stopBGM();
-		playBGM("credit");
-		$('#creditpopup-content').addClass('animating-credit');
-	});
-	$stage.menu.closeCredit.on('click', function(e){
-		$('#creditpopup').fadeOut(3000);
-		stopBGM();
-		playBGM("lobby");
-	});
-
-	$stage.menu.donate.on('click', function(e){
-		showDialog($stage.dialog.donate);
-	});
-	$stage.menu.teamSelect.on('click', function(e){
-		showDialog($stage.dialog.teamSelect);
-	});
-	$stage.menu.sideMenuClose.on('click', function(e){
-		$('#dimmer').fadeOut();
-		$('#sideMenuDiag').fadeOut();
-	});
 	$stage.menu.setting.on('click', function(e){
-		$('#sideMenuDiag').fadeOut();
 		showDialog($stage.dialog.setting);
 	});
 	$stage.menu.community.on('click', function(e){
@@ -623,32 +389,13 @@ $(document).ready(function(){
 	});
 	$stage.menu.newRoom.on('click', function(e){
 		var $d;
-	
+		
 		$stage.dialog.quick.hide();
-	
-		// 무작위 방 제목을 선택하기 위한 배열
-		var roomTitles = [
-			'기체크로마토질량분석법',
-			'즐거운 끝말잇기~!',
-			'PLUS KKUTU',
-			'레디 누르세요!!!',
-			'들어오세요~ 즐겜해요~',
-			'매칭 그만돌려라',
-			'키보드 부서질라 고만 눌러라',
-			'신나는 플러스끄투!',
-			'오늘도 플끄 내일도 플끄',
-			'오끄감 채우는 방'
-		];
-	
-		// 무작위 방 제목 선택
-		var randomTitle = roomTitles[Math.floor(Math.random() * roomTitles.length)];
-	
-		//$("#room-title").val(randomTitle);
+		
 		$data.typeRoom = 'enter';
 		showDialog($d = $stage.dialog.room);
 		$d.find(".dialog-title").html(L['newRoom']);
 	});
-	
 	$stage.menu.setRoom.on('click', function(e){
 		var $d;
 		var rule = RULE[MODE[$data.room.mode]];
@@ -666,7 +413,7 @@ $(document).ready(function(){
 		}
 		$data._injpick = $data.room.opts.injpick;
 		showDialog($d = $stage.dialog.room);
-		$d.find(".dialog-title").html("방 설정하기");
+		$d.find(".dialog-title").html(L['setRoom']);
 	});
 	function updateGameOptions(opts, prefix){
 		var i, k;
@@ -804,22 +551,6 @@ $(document).ready(function(){
 	$stage.menu.dict.on('click', function(e){
 		showDialog($stage.dialog.dict);
 	});
-	$stage.menu.event.on('click', function(e){
-		showDialog($stage.dialog.event);
-	});
-	
-	$('#event1').click(function(){
-		$('#event1-content').show();
-		$('#event2-content').hide();
-	});
-	$('#event2').click(function(){
-		$('#event2-content').show();
-		$('#event1-content').hide();
-	});
-
-	$stage.menu.dictIngame.on('click', function(e){
-		showDialog($stage.dialog.dict);
-	});
 	$stage.menu.wordPlus.on('click', function(e){
 		showDialog($stage.dialog.wordPlus);
 	});
@@ -829,7 +560,7 @@ $(document).ready(function(){
 	});
 	$stage.menu.practice.on('click', function(e){
 		if(RULE[MODE[$data.room.mode]].ai){
-			$("#PracticeDiag .dialog-title").html(L['stat_practice']);
+			$("#PracticeDiag .dialog-title").html(L['practice']);
 			$("#ai-team").val(0).prop('disabled', true);
 			showDialog($stage.dialog.practice);
 		}else{
@@ -899,29 +630,19 @@ $(document).ready(function(){
 	});
 	$stage.dialog.settingOK.on('click', function(e){
 		applyOptions({
-			bv: $("#bgm-volume").val(),
-			ev: $("#effect-volume").val(),
-			bo: encodeURI($("#bgm-override").val()).replace(";", ''),
-			io: encodeURI($("#img-override").val()).replace(";", ''),
+			mb: $("#mute-bgm").is(":checked"),
+			me: $("#mute-effect").is(":checked"),
 			di: $("#deny-invite").is(":checked"),
 			dw: $("#deny-whisper").is(":checked"),
 			df: $("#deny-friend").is(":checked"),
 			ar: $("#auto-ready").is(":checked"),
 			su: $("#sort-user").is(":checked"),
 			ow: $("#only-waiting").is(":checked"),
-			ou: $("#only-unlock").is(":checked"),
-			cp: $("#copyright-hide").is(":checked"),
-			vp: $("#lower-vibration").is(":checked")
+			ou: $("#only-unlock").is(":checked")
 		});
-	
-	
-		// $.cookie() 함수에 expires 옵션을 추가하여 쿠키의 저장 기한을 1년으로 설정
 		$.cookie('kks', JSON.stringify($data.opts));
-	
 		$stage.dialog.setting.hide();
-		$('#dimmer').fadeOut();
 	});
-	
 	$stage.dialog.profileLevel.on('click', function(e){
 		$("#PracticeDiag .dialog-title").html(L['robot']);
 		$("#ai-team").prop('disabled', false);
@@ -932,8 +653,6 @@ $(document).ready(function(){
 		var team = $("#ai-team").val();
 		
 		$stage.dialog.practice.hide();
-		$('#dimmer').fadeOut();
-
 		if($("#PracticeDiag .dialog-title").html() == L['robot']){
 			send('setAI', { target: $data._profiled, level: level, team: team });
 		}else{
@@ -972,23 +691,19 @@ $(document).ready(function(){
 		$stage.dialog.result.hide();
 		delete $data._replay;
 		delete $data._resultRank;
-		$stage.box.room.height(680);
+		$stage.box.room.height(360);
 		playBGM('lobby');
 		forkChat();
 		updateUI();
 	});
 	$stage.dialog.resultSave.on('click', function(e){
 		var date = new Date($rec.time);
-		var jsonData = JSON.stringify($rec);
-	
-		var encryptedData = CryptoJS.AES.encrypt(jsonData, '3GDRwHFgxUvcSvZ49RMXN3GUXsp5amPH').toString();
-	
-		var blob = new Blob([ encryptedData ], { type: "text/plain" });
+		var blob = new Blob([ JSON.stringify($rec) ], { type: "text/plain" });
 		var url = URL.createObjectURL(blob);
-		var fileName = "PlusKKuTu_" + (
-			date.getFullYear() + "_" + (date.getMonth() + 1) + "_" + date.getDate() + "_"
-			+ date.getHours() + "_" + date.getMinutes() + "_" + date.getSeconds()
-		) + ".replay";
+		var fileName = "KKuTu" + (
+			date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + " "
+			+ date.getHours() + "-" + date.getMinutes() + "-" + date.getSeconds()
+		) + ".kkt";
 		var $a = $("<a>").attr({
 			'download': fileName,
 			'href': url
@@ -998,8 +713,6 @@ $(document).ready(function(){
 		$("#Jungle").append($a);
 		$a[0].click();
 	});
-	
-	/*
 	$stage.dialog.dictInjeong.on('click', function(e){
 		var $target = $(e.currentTarget);
 		
@@ -1015,7 +728,7 @@ $(document).ready(function(){
 			
 			$("#dict-output").html(L['wpSuccess'] + "(" + res.message + ")");
 		});
-	});*/
+	});
 	$stage.dialog.dictSearch.on('click', function(e){
 		var $target = $(e.currentTarget);
 		
@@ -1028,7 +741,7 @@ $(document).ready(function(){
 			}, 500);
 			if(res.error) return $("#dict-output").html(res.error + ": " + L['wpFail_' + res.error]);
 			
-			$("#dict-output").html(processWord(res.word, res.mean, res.theme, res.type.split(','), "dictionary"));
+			$("#dict-output").html(processWord(res.word, res.mean, res.theme, res.type.split(',')));
 		});
 	}).hotkey($("#dict-input"), 13);
 	$stage.dialog.wordPlusOK.on('click', function(e){
@@ -1045,10 +758,8 @@ $(document).ready(function(){
 	$stage.dialog.inviteRobot.on('click', function(e){
 		requestInvite("AI");
 	});
-	$stage.dialog.inviteLink.on('click', function(e){
-		  var copyText = "플러스끄투에서 신나는 끄투 한판! 지금 같이 한 판 해요~ \n "+window.location;
-		  navigator.clipboard.writeText(copyText);
-		  alert("초대링크가 복사되었습니다. 원하는 곳에 붙여넣으세요!");
+	$stage.box.me.on('click', function(e){
+		requestProfile($data.id);
 	});
 	$stage.dialog.roomInfoJoin.on('click', function(e){
 		$stage.dialog.roomInfo.hide();
@@ -1073,63 +784,27 @@ $(document).ready(function(){
 		$stage.talk.val("/e " + (o.profile.title || o.profile.name).replace(/\s/g, "") + " ").focus();
 	});
 	$stage.dialog.profileDress.on('click', function(e){
-		// alert(L['error_555']);
+		showDialog($stage.dialog.help);
+		/*
 		if($data.guest) return fail(421);
 		if($data._gaming) return fail(438);
 		if(showDialog($stage.dialog.dress)) $.get("/box", function(res){
-			$('#dimmer').fadeIn();
 			if(res.error) return fail(res.error);
 			
 			$data.box = res;
 			drawMyDress();
-		});
+		});*/
 	});
 	$stage.dialog.dressOK.on('click', function(e){
-		var data = {};
 		$(e.currentTarget).attr('disabled', true);
-
-		if($("#dress-nickname").val() != $data.nickname) data.nickname = $("#dress-nickname").val();
-		if($("#dress-exordial").val() != $data.exordial || ($("#dress-exordial").val() === "" && $data.exordial !== "")) data.exordial = $("#dress-exordial").val();
-
-		var message = "";
-
-		if(data.nickname && data.exordial){
-			message = "닉네임과 소개를 변경하시겠어요? 1주일 내에는 닉네임을 변경할 수 없으며, 변경된 닉네임은 새로고침 후 반영돼요.";
-		}
-		else if (data.exordial){
-			message = "소개를 변경하시겠어요?";
-		}
-		else if (data.nickname){
-			message = "닉네임을 변경하시겠어요? 1주일 내에는 닉네임을 변경할 수 없으며, 변경된 닉네임은 새로고침 후 반영돼요.";
-		}
-		else {
-			message = "프로필을 변경하시겠어요?";
-		}
-		if(confirm(message)){
-			$.post("/profile", data, function(res){
+		$.post("/exordial", { data: $("#dress-exordial").val() }, function(res){
 			$stage.dialog.dressOK.attr('disabled', false);
 			if(res.error) return fail(res.error);
-			if(data.nickname) $data.users[$data.id].nickname = $data.nickname = data.nickname;
-			if(data.exordial || data.exordial === "") $data.users[$data.id].exordial = $data.exordial = data.exordial;
 			
-			if (!data.nickname && !data.exordial){
-				message = "수정되었습니다.";
-			}
-			else if (data.nickname) {
-				if (data.exordial || data.exordial === "") {
-					message = L.nickChanged + data.nickname + L.changed + " " + L.exorChanged + data.exordial + L.changed;
-				} else {
-					message = L.nickChanged + data.nickname + L.changed;
-				}
-			} else {
-				message = L.exorChanged + data.exordial + L.changed;
-			}
-			alert(message);
-			updateUserList(true);
 			$stage.dialog.dress.hide();
-		});}
 		});
-	$("#DressItemDiag .dress-type").on('click', function(e){
+	});
+	$("#DressDiag .dress-type").on('click', function(e){
 		var $target = $(e.currentTarget);
 		var type = $target.attr('id').slice(11);
 		
@@ -1137,12 +812,6 @@ $(document).ready(function(){
 		$target.addClass("selected");
 		
 		drawMyGoods(type == 'all' || $target.attr('value'));
-	});
-	$("#dressitembtn").on('click', function(e){
-		showDialog($stage.dialog.dressitem);
-	});
-	$("#infobtn").on('click', function(e){
-		requestProfile($data.id);
 	});
 	$("#dress-cf").on('click', function(e){
 		if($data._gaming) return fail(438);
@@ -1185,12 +854,6 @@ $(document).ready(function(){
 		}
 		showDialog($stage.dialog.injPick);
 	});
-
-	$('.ko-pick').click(function() {
-        $(this).find('input[type="checkbox"]').prop('checked', function(_, oldProp) {
-            return !oldProp;
-        });
-    });
 	$stage.dialog.injPickAll.on('click', function(e){
 		$("#injpick-list input").prop('checked', true);
 	});
@@ -1240,34 +903,7 @@ $(document).ready(function(){
 		
 		if(obj) drawObtain(obj);
 		else $stage.dialog.obtain.hide();
-
-		$('#dimmer').fadeOut();
 	});
-
-	$stage.dialog.alertOK.on('click', function(e){
-		$stage.dialog.alert.hide();
-		$('#dimmer').fadeOut();
-	});
-
-	$stage.dialog.confirmOK.on('click', function(e){
-		$stage.dialog.confirm.hide();
-	});
-	$stage.dialog.confirmCancel.on('click', function(e){
-		$stage.dialog.confirm.hide();
-	});
-	
-	$stage.dialog.newbieOK.on('click', function(e){
-		$stage.dialog.newbie.hide();
-		$.get("/box", function(res){
-			$('#dimmer').fadeIn();
-			if(res.error) return fail(res.error);
-			
-			$data.box = res;
-			drawMyDress();
-		});
-		showDialog($stage.dialog.dressitem);
-	});
-	
 	for(i=0; i<5; i++) $("#team-" + i).on('click', onTeam);
 	function onTeam(e){
 		if($(".team-selector").hasClass("team-unable")) return;
@@ -1278,7 +914,6 @@ $(document).ready(function(){
 	function initReplayDialog(){
 		$stage.dialog.replayView.attr('disabled', true);
 	}
-
 	$("#replay-file").on('change', function(e){
 		var file = e.target.files[0];
 		var reader = new FileReader();
@@ -1289,54 +924,33 @@ $(document).ready(function(){
 		$rec = false;
 		$stage.dialog.replayView.attr('disabled', true);
 		if(!file) return;
-		
-		// Check if the file extension is .replay or .kkt
-		var fileName = file.name;
-		var isEncrypted = fileName.endsWith('.replay');
-	
-		// Read file as text
 		reader.readAsText(file);
-		
 		reader.onload = function(e){
-			var decryptedData;
-			try {
-				var fileContents = e.target.result;
-	
-				if (isEncrypted) {
-					// Decrypt the data using CryptoJS
-					decryptedData = CryptoJS.AES.decrypt(fileContents, '3GDRwHFgxUvcSvZ49RMXN3GUXsp5amPH').toString(CryptoJS.enc.Utf8);
-				} else {
-					// No need for decryption, use the file content directly
-					decryptedData = fileContents;
-				}
-				
-				// Parse decrypted JSON data
-				var data = JSON.parse(decryptedData);
-	
+			var i, data;
+			
+			try{
+				data = JSON.parse(e.target.result);
 				$date.html((new Date(data.time)).toLocaleString());
 				$version.html(data.version);
 				$players.empty();
-				
-				for(var i in data.players){
+				for(i in data.players){
 					var u = data.players[i];
 					var $p;
-	
+					
 					$players.append($p = $("<div>").addClass("replay-player-bar ellipse")
-						.text(u.title)
+						.html(u.title)
 						.prepend(getLevelImage(u.data.score).addClass("users-level"))
 					);
 					if(u.id == data.me) $p.css('font-weight', "bold");
 				}
 				$rec = data;
 				$stage.dialog.replayView.attr('disabled', false);
-			} catch(ex) {
+			}catch(ex){
 				console.warn(ex);
-				alert(L['replayError']);
+				return alert(L['replayError']);
 			}
 		};
 	});
-	
-	
 	$stage.dialog.replayView.on('click', function(e){
 		replayReady();
 	});

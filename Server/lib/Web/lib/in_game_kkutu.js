@@ -143,8 +143,9 @@ $(document).ready(function(){
 		},
 		dialog: {
 			setting: $("#SettingDiag"),
-				settingServer: $("#setting-server"),
+				settingUi: $("#setting-ui"),
 				settingOK: $("#setting-ok"),
+			uisetting: $("#UISelectDiag"),
 			community: $("#CommunityDiag"),
 				commFriends: $("#comm-friends"),
 				commFriendAdd: $("#comm-friend-add"),
@@ -289,6 +290,10 @@ $(document).ready(function(){
 		{ key: "K"+i, value: "/media/kkutu/K"+i+".mp3" },
 		{ key: "As"+i, value: "/media/kkutu/As"+i+".mp3" }
 	);
+	const uiPref = $.cookie('uipreference');
+	if(uiPref && uiPref == 'classic'){
+		window.location.href = '/o/game?server=0';
+	}
 
 	const options = $.cookie('kks');
 	if(options){
@@ -937,8 +942,16 @@ $(document).ready(function(){
 			drawLeaderboard(res);
 		});
 	});
-	$stage.dialog.settingServer.on('click', function(e){
-		location.href = "/";
+	$stage.dialog.settingUi.on('click', function(e){
+		showDialog($stage.dialog.uisetting);
+		$('#classicUI').click(function(){
+			$.cookie('uipreference', 'classic');
+			location.href='/o/game?server=0';
+		});
+		$('#modernUI').click(function(){
+			$.cookie('uipreference', 'modern');
+			location.href='/game?server=0';
+		});
 	});
 	$stage.dialog.settingOK.on('click', function(e){
 		applyOptions({

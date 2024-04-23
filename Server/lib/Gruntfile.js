@@ -1,19 +1,7 @@
 const LICENSE = [
-	"Rule the words! KKuTu Online",
-	"Copyright (C) 2017 JJoriping(op@jjo.kr)",
-	"",
-	"This program is free software: you can redistribute it and/or modify",
-	"it under the terms of the GNU General Public License as published by",
-	"the Free Software Foundation, either version 3 of the License, or",
-	"(at your option) any later version.",
-	"",
-	"This program is distributed in the hope that it will be useful,",
-	"but WITHOUT ANY WARRANTY; without even the implied warranty of",
-	"MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the",
-	"GNU General Public License for more details.",
-	"",
-	"You should have received a copy of the GNU General Public License",
-	"along with this program. If not, see <http://www.gnu.org/licenses/>."
+	"Everything is Plus! Plus KKuTu",
+	"Copyright (C) 2024 Morem.ME (support@morem.me) - Distributed under AGPL 3.0 License",
+	"If you're interested in, please visit our repo for more information.",
 ].join('\n');
 
 var File = require('fs');
@@ -26,8 +14,12 @@ const LIST = [
 	"in_game_kkutu_help",
 	"in_admin",
 	"in_portal",
-	"in_loginfail"
+	"in_loginfail",
 ];
+const OLD_LIST = [
+	"old_global",
+	"old_in_game_kkutu",
+]
 const KKUTU_LIST = [
 	"Web/lib/kkutu/head.js",
 	"Web/lib/kkutu/ready.js",
@@ -46,28 +38,35 @@ const KKUTU_LIST = [
 ];
 
 const KKUTU_LEGACY_LIST = [
-	"Web/lib/kkutu/old/head.js",
-	"Web/lib/kkutu/old/ready.js",
-	"Web/lib/kkutu/old/rule_classic.js",
-	"Web/lib/kkutu/old/rule_jaqwi.js",
-	"Web/lib/kkutu/old/rule_crossword.js",
-	"Web/lib/kkutu/old/rule_typing.js",
-	"Web/lib/kkutu/old/rule_hunmin.js",
-	"Web/lib/kkutu/old/rule_daneo.js",
-	"Web/lib/kkutu/old/rule_sock.js",
-	"Web/lib/kkutu/old/body.js",
-	"Web/lib/kkutu/old/tail.js"
+	"Web/lib/kkutu/legacy/head.js",
+	"Web/lib/kkutu/legacy/ready.js",
+	"Web/lib/kkutu/legacy/body.js",
+	"Web/lib/kkutu/legacy/tail.js",
+	"Web/lib/kkutu/legacy/rule_classic.js",
+	"Web/lib/kkutu/legacy/rule_jaqwi.js",
+	"Web/lib/kkutu/legacy/rule_crossword.js",
+	"Web/lib/kkutu/legacy/rule_typing.js",
+	"Web/lib/kkutu/legacy/rule_hunmin.js",
+	"Web/lib/kkutu/legacy/rule_daneo.js",
+	"Web/lib/kkutu/legacy/rule_sock.js"
 ];
 
 module.exports = function(grunt){
 	var i, files = {}, cons = {};
 	var KKUTU = "Web/public/js/in_game_kkutu.min.js";
-	
+	var KKUTU_LEGACY = "Web/public/js/old_in_game_kkutu.min.js";
+
 	for(i in LIST){
 		files["Web/public/js/"+LIST[i]+".min.js"] = "Web/lib/"+LIST[i]+".js";
 	}
 	files[KKUTU] = KKUTU_LIST;
 	
+	//create legacy files too
+	for(i in OLD_LIST){
+		files["Web/public/js/"+OLD_LIST[i]+".min.js"] = "Web/lib/"+OLD_LIST[i]+".js";
+	}
+	files[KKUTU_LEGACY] = KKUTU_LEGACY_LIST;
+
 	grunt.initConfig({
 		uglify: {
 			options: {
@@ -81,6 +80,10 @@ module.exports = function(grunt){
 			basic: {
 				src: KKUTU_LIST,
 				dest: "Web/lib/in_game_kkutu.js"
+			},
+			extras: {
+				src: KKUTU_LEGACY_LIST,
+				dest: "Web/lib/old_in_game_kkutu.js"
 			}
 		}
 	});
@@ -99,38 +102,10 @@ module.exports = function(grunt){
 		})
 	});
 
-	/*레거시*/
-/*	i, files = {}, cons = {};
-	KKUTU = "Web/public/js/old/in_game_kkutu.min.js";
-	
-	for(i in LIST){
-		files["Web/public/js/old/"+LIST[i]+".min.js"] = "Web/lib/old/"+LIST[i]+".js";
-	}
-	files[KKUTU] = KKUTU_LEGACY_LIST;
-	
-	grunt.initConfig({
-		uglify: {
-			options: {
-				
-			},
-			build: {
-				files: files
-			}
-		},
-		concat: {
-			basic: {
-				src: KKUTU_LEGACY_LIST,
-				dest: "Web/lib/old/in_game_kkutu.js"
-			}
-		}
-	});
-	grunt.loadNpmTasks('grunt-contrib-uglify');
-	grunt.loadNpmTasks('grunt-contrib-concat');
-	
-	grunt.registerTask('default', ['concat', 'uglify']);
-	grunt.registerTask('pack', 'Log', function(){
+	//do same for legacy
+	grunt.registerTask('pack_legacy', 'Log', function(){
 		var done = this.async();
-		var url = __dirname + "/" + KKUTU;
+		var url = __dirname + "/" + KKUTU_LEGACY;
 		
 		File.readFile(url, function(err, res){
 			File.writeFile(url, "(function(){" + res.toString() + "})();", function(err, res){
@@ -138,4 +113,4 @@ module.exports = function(grunt){
 			});
 		})
 	});
-*/};
+};

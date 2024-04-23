@@ -29,6 +29,7 @@
     "grunt-contrib-concat": "^1.0.1",
     "grunt-contrib-uglify": "^2.1.0",
     "kkutu-server": "file:..",
+    "math.js": "^1.1.46",
     "object.pick": "^1.3.0",
     "passport": "^0.4.0",
     "passport-daldalso": "^1.0.8",
