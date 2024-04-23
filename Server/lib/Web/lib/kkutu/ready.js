@@ -475,6 +475,19 @@ $(document).ready(function(){
 	for (i in $stage.dialog) {
 		if ($stage.dialog[i].children(".dialog-head").hasClass("no-close")) continue;
 	
+		if(mobile){
+		$stage.dialog[i].children(".dialog-head").prepend($("<div>").addClass("closeBtn").on('click', function (e) {
+			var $dialog = $(e.currentTarget).parent().parent();
+			$('#dimmer').fadeOut();
+			// Add the opposite effect class
+			$dialog.addClass("closing-effect");
+			// Set a timeout to hide the dialog after the animation completes
+			setTimeout(function () {
+				$dialog.hide().removeClass("closing-effect");
+			}, 200); // Adjust the time based on your animation duration
+		}).hotkey(false, 27));
+	}
+	else{
 		$stage.dialog[i].children(".dialog-head").append($("<div>").addClass("closeBtn").on('click', function (e) {
 			var $dialog = $(e.currentTarget).parent().parent();
 			$('#dimmer').fadeOut();
@@ -485,6 +498,7 @@ $(document).ready(function(){
 				$dialog.hide().removeClass("closing-effect");
 			}, 200); // Adjust the time based on your animation duration
 		}).hotkey(false, 27));
+	}
 	}
 	
 
@@ -552,9 +566,14 @@ $(document).ready(function(){
 	});
 	$stage.menu.sideMenu.on('click', function(e){
 		$('#dimmer').fadeIn();
+		if(!mobile){
 		$('#sideMenuDiag').fadeIn().css('left', '100%').animate({
 			'left': $(window).width() - 740 // Adjust 740 as per your requirement
 		}, 200);
+		}
+		else{
+		$('#sideMenuDiag').fadeIn();
+		}
 	});
 	
 	$stage.menu.credit.on('click', function(e){

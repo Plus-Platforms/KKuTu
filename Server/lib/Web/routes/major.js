@@ -73,6 +73,59 @@ Server.get("/help", function(req, res){
 	});
 });
 
+Server.get("/sns/cafe/post/:cafeid/:listCnt/:boardid", async function(req, res){
+	if (!req.headers.referer || !req.headers.referer.includes('kkutu.cc')) {
+		return res.status(403).send('Forbidden');
+	}
+
+    const cafeId = req.params.cafeid;
+	var boardId = req.params.boardid;
+	const listCnt = req.params.listCnt;
+
+	if (boardId == "0") {
+		boardId = "";
+	}
+
+	try {
+		const response = await axios.get(`https://apis.naver.com/cafe-web/cafe2/ArticleListV2dot1.json?search.clubid=${cafeId}&search.queryType=lastArticle&search.page=1&search.perPage=${listCnt}&search.menuid=${boardId}`);
+		res.send(response.data);
+	} catch (error) {
+		res.status(403).send('Forbidden');
+	}
+});
+
+Server.get("/sns/cafe/notice/:cafeid", async function(req, res){
+	if (!req.headers.referer || !req.headers.referer.includes('kkutu.cc')) {
+		return res.status(403).send('Forbidden');
+	}
+
+    const cafeId = req.params.cafeid;
+
+	try {
+		const response = await axios.get(`https://apis.naver.com/cafe-web/cafe2/NoticeListV3.json?cafeId=${cafeId}&ad=false&mobileWeb=true&adUnit=MW_CAFE_BOARD&uuid=`);
+		res.send(response.data);
+	} catch (error) {
+		res.status(403).send('Forbidden');
+	}
+});
+
+
+Server.get("/sns/cafe/view/:cafeid/:postid", async function(req, res){
+	if (!req.headers.referer || !req.headers.referer.includes('kkutu.cc')) {
+		return res.status(403).send('Forbidden');
+	}
+
+    const cafeId = req.params.cafeid;
+	const postId = req.params.postid;
+
+	try {
+		const response = await axios.get(`https://apis.naver.com/cafe-web/cafe-articleapi/v2.1/cafes/${cafeId}/articles/${postId}`);
+		res.send(response.data);
+	} catch (error) {
+		res.status(403).send('Forbidden');
+	}
+});
+
 Server.get("/audioProxy", async function(req, res){
 	if (!req.headers.referer || !req.headers.referer.includes('kkutu.cc')) {
 		return res.status(403).send('Forbidden');

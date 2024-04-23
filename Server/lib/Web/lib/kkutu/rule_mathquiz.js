@@ -31,8 +31,10 @@ $lib.MathQuiz.roundReady = function(data){
 		.css('font-size', "")
 		.css('text-align', "center");
 
-	$(".jjo-turn-time").css('width', "760px");
-	$(".jjoDisplayBar").css('width', "760px");
+	if(!mobile){
+		$(".jjo-turn-time").css('width', "760px");
+		$(".jjoDisplayBar").css('width', "760px");
+	}
 	drawRound(data.round);
 	playSound('question');
 	clearInterval($data._tTime);
@@ -41,7 +43,9 @@ $lib.MathQuiz.turnStart = function(data){
 	$(".game-user-current").removeClass("game-user-current");
 	$(".game-user-bomb").removeClass("game-user-bomb");
 	if($data.room.game.seq.indexOf($data.id) >= 0) $stage.game.hereText.show();
+	if(!mobile){
 	$stage.game.display.html($data._char = data.char).css('width', "756px").css('font-size', "20px");
+	}
 	clearInterval($data._tTime);
 	$data._tTime = addInterval(turnGoing, TICK);
 	playBGM('jaqwi');

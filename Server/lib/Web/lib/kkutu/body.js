@@ -1187,6 +1187,7 @@ function roomListBar(o){
 	var $R, $ch;
 	var opts = getOptions(o.mode, o.opts);
 	
+	if(!mobile){
 	$R = $("<div>").attr('id', "room-"+o.id).addClass("rooms-item")
 	.append($ch = $("<div>").addClass("rooms-channel channel-" + o.channel).on('click', function(e){ requestRoomInfo(o.id); }))
 	.append($("<div>").addClass("rooms-number").html(o.id))
@@ -1200,7 +1201,22 @@ function roomListBar(o){
 	.on('click', function(e){
 		if(e.target == $ch.get(0)) return;
 		tryJoin($(e.currentTarget).attr('id').slice(5));
+	});}
+	else{
+		$R = $("<div>").attr('id', "room-"+o.id).addClass("rooms-item")
+	.append($ch = $("<div>").addClass("rooms-channel channel-" + o.channel).on('click', function(e){ requestRoomInfo(o.id); }))
+	.append($("<div>").addClass("rooms-number").html(o.id))
+	.append($("<div>").addClass("rooms-title ellipse").html(o.password ? badWords(o.title)+" <i class='fa fa-lock'></i>" : badWords(o.title)+" <i class='fa fa-unlock'></i>"))
+	.append($("<div>").addClass("rooms-limit").html(o.players.length + " / " + o.limit))
+	.append($("<div>")
+		.append($("<div>").addClass("rooms-mode").html(opts.join(" / ").toString()))
+	)
+	.append($("<div>").addClass("rooms-round").html(L['rounds'] + o.round + " " + o.time + L['SECOND']))
+	.on('click', function(e){
+		if(e.target == $ch.get(0)) return;
+		tryJoin($(e.currentTarget).attr('id').slice(5));
 	});
+	}
 	if(o.gaming) $R.addClass("rooms-gaming");
 	if(o.password) $R.addClass("rooms-locked");
 	
@@ -2992,10 +3008,14 @@ function showDialog($d, noToggle) {
 	} else {
 	  //playSound('dialog');
 	  $(".dialog-front").removeClass("dialog-front");
+	  if(!mobile){
 	  $d.addClass("dialog dialog-front").css({
 		left: (size[0] - $d.width()) * 0.5,
 		top: (size[1] - $d.height()) * 0.5
-	  });
+	  });}
+	  else{
+		$d.addClass("dialog dialog-front");
+	  }
 	  $d.show();
 	  return true;
 	}

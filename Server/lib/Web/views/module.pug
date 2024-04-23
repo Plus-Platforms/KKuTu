@@ -84,7 +84,7 @@ mixin Menu()
 				div.flex
 					img.topIcon(src='/img/kkutu/currency/ping.png')
 					span.my-stat-ping.aISub#accping
-					span.topText= "핑"
+					span.topText= L('ping')
 					//img.topIcon#addBalance(src='/img/kkutu/currency/charge.svg')
 			div.accountItem
 				div.flex
@@ -102,7 +102,9 @@ mixin Menu()
 
 mixin MMenu()
 	div.Menu
-		img(src='/img/kkutu/logo-obt.svg', style='margin-left: 10px;margin-top: 10px;height: 1.7rem;', alt="로고")
+		div#SideMenuBtn
+			+FA('bars')
+		img(src='/img/kkutu/logo-ingame.svg', style='margin-left: 10px;margin-top: 10px;height: 1.7rem;', alt="로고")
 		div#account
 			span#profile= SESSION.profile ? JSON.stringify(SESSION.profile) : '{}'
 			div#account-info

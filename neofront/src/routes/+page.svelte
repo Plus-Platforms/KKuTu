@@ -56,7 +56,7 @@
   const serverName = ["감자", "냉이", "다래", "레몬", "망고", "보리", "상추", "아욱", "20세 이상"];
 
 onMount(async () => {
-      const response = await fetch('https://mapi.pcor.me/api/board/cafe.php');
+      const response = await fetch('https://kkutu.cc/sns/cafe/notice/31109813');
       
       if (!response.ok) {
         throw new Error('Failed to fetch data');
@@ -64,7 +64,7 @@ onMount(async () => {
 
       jsonData = await response.json();
 
-      const responseFull = await fetch('https://mapi.pcor.me/api/board/cafe_free.php');
+      const responseFull = await fetch('https://kkutu.cc/sns/cafe/post/31109813/5/0');
       
       if (!responseFull.ok) {
         throw new Error('Failed to fetch data');
@@ -151,10 +151,46 @@ function calculateTotalConnectedUsers() {
           </a>
           {/if}
 
-          <a class="download-link mt-4 hidden lg:flex inline-flex text-lg px-4 py-2 text-white" href="#" on:click="{() => showModal()}">
+          <a class="download-link mt-4 hidden inline-flex text-lg px-4 py-2 text-white" href="#" on:click="{() => showModal()}">
             클라이언트 다운로드
           </a>
-          
+          <div class="hidden lg:block mx-auto">
+            <div class="max-w-lg mx-auto mt-16 grid grid-cols-3 gap-x-16 items-center jusitfy-center">
+              <div class="flex items-center justify-center">
+              <a href="https://cafe.naver.com/pluskkutu" target="_blank" class="px-4 py-4 rounded-full bg-white">
+              <img
+                class="col-span-2 max-h-8 w-8 object-contain lg:col-span-1"
+                src="/img/cafe.png"
+                alt="NaverCafe"
+                width={48}
+                height={48}
+              /></a>
+            </div>
+    
+            <div class="flex items-center justify-center">
+              <a href="https://youtube.com/@pluskkutu" target="_blank" class="px-4 py-5 rounded-full bg-white">
+              <img
+                class="col-span-2 max-h-8 w-8 object-contain lg:col-span-1"
+                src="/img/youtube.png"
+                alt="YouTube"
+                width={48}
+                height={48}
+              /></a>
+            </div>
+    
+          <div class="flex items-center justify-center">
+            <a href="https://discord.gg/5b8kNZJawd" target="_blank" class="px-4 py-5 rounded-full bg-white">
+            <img
+              class="col-span-2 max-h-8 w-8 object-contain lg:col-span-1"
+              src="/img/discord.png"
+              alt="Discord"
+              width={48}
+              height={48}
+            /></a>
+          </div>
+    
+          </div>
+        </div>
         </div>
       </div>
     </div>
@@ -187,58 +223,16 @@ function calculateTotalConnectedUsers() {
     
   </div>
 </div>
-    <div class="bg-gray-100 dark:bg-gray-800 py-24 sm:py-32">
-      <div class="mx-auto max-w-7xl px-6 lg:px-8">
-        <h2 class="text-center text-3xl font-bold text-gray-900 dark:text-gray-100">
-          공식 SNS에서 만나요!
-        </h2>
-        <div class="max-w-lg mx-auto mt-16 grid grid-cols-3 gap-x-8 items-center jusitfy-center">
-          <div class="flex items-center justify-center">
-          <a href="https://cafe.naver.com/pluskkutu" target="_blank" class="px-4 py-4 rounded-full bg-white">
-          <img
-            class="col-span-2 max-h-8 w-8 object-contain lg:col-span-1"
-            src="/img/cafe.png"
-            alt="NaverCafe"
-            width={48}
-            height={48}
-          /></a>
-        </div>
-
-        <div class="flex items-center justify-center">
-          <a href="https://youtube.com/@pluskkutu" target="_blank" class="px-4 py-5 rounded-full bg-white">
-          <img
-            class="col-span-2 max-h-8 w-8 object-contain lg:col-span-1"
-            src="/img/youtube.png"
-            alt="YouTube"
-            width={48}
-            height={48}
-          /></a>
-        </div>
-
-      <div class="flex items-center justify-center">
-        <a href="https://discord.gg/5b8kNZJawd" target="_blank" class="px-4 py-5 rounded-full bg-white">
-        <img
-          class="col-span-2 max-h-8 w-8 object-contain lg:col-span-1"
-          src="/img/discord.png"
-          alt="Discord"
-          width={48}
-          height={48}
-        /></a>
-      </div>
-
-      </div>
-    </div>
-  </div>
 <section class="max-w-screen-xl mx-auto my-10 p-4 md:grid md:grid-cols-2">
   <div>
-  <h2 class="text-3xl font-bold mb-4">카페 이야기</h2>
-{#if jsonDataFull && jsonDataFull.message && jsonDataFull.message.result}
-{#each jsonDataFull.message.result.articleList as { articleId, subject, writeDateTimestamp, menuName, menuId } (articleId)}
+  <h2 class="text-3xl font-bold mb-4">공지사항</h2>
+{#if jsonData && jsonData.message && jsonData.message.result}
+{#each jsonData.message.result.mainNoticeList  as { menuName, menuId, articleId, subject, aheadOfWriteDate} (articleId)}
 <a href={`https://cafe.naver.com/ArticleRead.nhn?clubid=31109813&page=1&menuid=${menuId}&boardtype=L&articleid=${articleId}&referrerAllArticles=false`} target="_blank" class="hover:text-blue-500 hover:underline">
   <div class="post py-4 border-b dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800">
     <h3 class="truncate">
       <a href={`https://cafe.naver.com/ArticleList.nhn?search.clubid=31109813&search.menuid=${menuId}&search.boardtype=L`} target="_blank"><span class={`boardBg-${menuId} rounded-full px-2 text-white mr-2 hover:bg-blue-600`}>{menuName}</span></a>
-      <strong>{new Date(writeDateTimestamp).toLocaleDateString()}</strong>
+      <strong>{aheadOfWriteDate}</strong>
       {subject}</h3>
   </div>
 </a>
@@ -262,95 +256,25 @@ function calculateTotalConnectedUsers() {
     </a>
     {/each}
   </div>
+  <div class="mt-8">
+    <h2 class="text-3xl font-bold mb-4">공식 카페</h2>
+    {#if jsonDataFull && jsonDataFull.message && jsonDataFull.message.result}
+{#each jsonDataFull.message.result.articleList as { articleId, subject, writeDateTimestamp, menuName, menuId } (articleId)}
+<a href={`https://cafe.naver.com/ArticleRead.nhn?clubid=31109813&page=1&menuid=${menuId}&boardtype=L&articleid=${articleId}&referrerAllArticles=false`} target="_blank" class="hover:text-blue-500 hover:underline">
+<div class="post py-4 border-b dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800">
+  <h3 class="truncate">
+    <a href={`https://cafe.naver.com/ArticleList.nhn?search.clubid=31109813&search.menuid=${menuId}&search.boardtype=L`} target="_blank"><span class={`boardBg-${menuId} rounded-full px-2 text-white mr-2 hover:bg-blue-600`}>{menuName}</span></a>
+    <strong>{new Date(writeDateTimestamp).toLocaleDateString()}</strong>
+    {subject}</h3>
+</div>
+</a>
+{/each}
+{:else}
+<p>불러오는 중</p>
+{/if}
+
+  </div>
 </div>
 </section>
-<!--
-<div class="overflow-hidden bg-gray-100 py-24 dark:bg-gray-800 dark:text-white">
-      <div class="mx-auto max-w-screen-xl px-6 lg:px-8">
-        <div class="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 sm:gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-2">
-          <div class="lg:pr-8 lg:pt-4">
-            <div class="lg:max-w-lg">
-              <h2 class="text-base font-semibold leading-7 text-[#8B5CF6] dark:text-purple-300">플러스끄투에서만 만나다</h2>
-              <p class="mt-2 text-4xl font-bold text-gray-900 sm:text-5xl dark:text-gray-100">당신이 플러스끄투에<br/>정착해야 하는 이유.</p>
-              <p class="mt-6 text-lg leading-8 text-gray-600 dark:text-gray-400">
-                개발사가 아닌 끄투 플레이어 한 명의 시선으로<br>끄투를 바라보고 개발하고 있어요.
-              </p>
-
-              <dl class="mt-10 max-w-xl space-y-8 text-base leading-7 text-gray-600 dark:text-gray-400 lg:max-w-none">
-                <div class="relative pl-9">
-                  <dt class="inline font-semibold text-gray-900 dark:text-gray-100">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="absolute left-1 top-1 h-5 w-5 text-[#3B82F6]">
-                      <path fill-rule="evenodd" d="M15 3.75a.75.75 0 0 1 .75-.75h4.5a.75.75 0 0 1 .75.75v4.5a.75.75 0 0 1-1.5 0V5.56l-3.97 3.97a.75.75 0 1 1-1.06-1.06l3.97-3.97h-2.69a.75.75 0 0 1-.75-.75Zm-12 0A.75.75 0 0 1 3.75 3h4.5a.75.75 0 0 1 0 1.5H5.56l3.97 3.97a.75.75 0 0 1-1.06 1.06L4.5 5.56v2.69a.75.75 0 0 1-1.5 0v-4.5Zm11.47 11.78a.75.75 0 1 1 1.06-1.06l3.97 3.97v-2.69a.75.75 0 0 1 1.5 0v4.5a.75.75 0 0 1-.75.75h-4.5a.75.75 0 0 1 0-1.5h2.69l-3.97-3.97Zm-4.94-1.06a.75.75 0 0 1 0 1.06L5.56 19.5h2.69a.75.75 0 0 1 0 1.5h-4.5a.75.75 0 0 1-.75-.75v-4.5a.75.75 0 0 1 1.5 0v2.69l3.97-3.97a.75.75 0 0 1 1.06 0Z" clip-rule="evenodd" />
-                    </svg>
-                    높은 해상도 지원.
-                  </dt>
-                  <dd class="inline">가로 1600px에서 쾌적하게 플레이하세요.</dd>
-                </div>
-                <div class="relative pl-9">
-                  <dt class="inline font-semibold text-gray-900 dark:text-gray-100">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="absolute left-1 top-1 h-5 w-5 text-[#3B82F6]">
-                      <path fill-rule="evenodd" d="M2.25 5.25a3 3 0 0 1 3-3h13.5a3 3 0 0 1 3 3V15a3 3 0 0 1-3 3h-3v.257c0 .597.237 1.17.659 1.591l.621.622a.75.75 0 0 1-.53 1.28h-9a.75.75 0 0 1-.53-1.28l.621-.622a2.25 2.25 0 0 0 .659-1.59V18h-3a3 3 0 0 1-3-3V5.25Zm1.5 0v7.5a1.5 1.5 0 0 0 1.5 1.5h13.5a1.5 1.5 0 0 0 1.5-1.5v-7.5a1.5 1.5 0 0 0-1.5-1.5H5.25a1.5 1.5 0 0 0-1.5 1.5Z" clip-rule="evenodd" />
-                    </svg>
-                    PC 클라이언트.
-                  </dt>
-                  <dd class="inline">편리하게 접속하고 Discord 상태 공유가 가능해요.</dd>
-                </div>
-                <div class="relative pl-9">
-                  <dt class="inline font-semibold text-gray-900 dark:text-gray-100">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="absolute left-1 top-1 h-5 w-5 text-[#3B82F6]">
-                      <path fill-rule="evenodd" d="M9.528 1.718a.75.75 0 0 1 .162.819A8.97 8.97 0 0 0 9 6a9 9 0 0 0 9 9 8.97 8.97 0 0 0 3.463-.69.75.75 0 0 1 .981.98 10.503 10.503 0 0 1-9.694 6.46c-5.799 0-10.5-4.7-10.5-10.5 0-4.368 2.667-8.112 6.46-9.694a.75.75 0 0 1 .818.162Z" clip-rule="evenodd" />
-                    </svg>
-                    
-                    다크 테마 지원.
-                  </dt>
-                  <dd class="inline">밤이라고 소중한 눈을 버릴 순 없잖아요.</dd>
-                </div>
-              </dl>
-            </div>
-          </div>
-          <img
-            src="/img/web/light.png"
-            alt="인게임 화면"
-            class="dark:hidden w-[48rem] max-w-none shadow-xl sm:w-[57rem] md:-ml-4 lg:-ml-0"
-            width={2432}
-            height={1442}
-          />
-          <img
-            src="/img/web/dark.png"
-            alt="인게임 화면"
-            class="hidden dark:block w-[48rem] max-w-none shadow-xl sm:w-[57rem] md:-ml-4 lg:-ml-0"
-            width={2432}
-            height={1442}
-          />
-        </div>
-      </div>
-    </div>-->
-    
-
-    <section class="max-w-screen-xl mx-auto py-10 p-4 md:grid md:grid-cols-2">
-      <div class="flex flex-col">
-        <a href="https://cafe.naver.com/ArticleRead.nhn?clubid=31109813&page=1&menuid=7&boardtype=L&articleid=118&referrerAllArticles=false"  target="_blank">
-          <img src="/img/2404 업데이트배너.png" alt="2404업데이트배너">
-        </a>
-      </div>
-      <div class="mt-8 lg:mt-0">
-      <h2 class="text-3xl font-bold mb-4">업데이트</h2>
-      {#if jsonData && jsonData.message && jsonData.message.result}
-      {#each jsonData.message.result.articleList as { menuName, menuId, articleId, subject, writeDateTimestamp } (articleId)}
-      <a href={`https://cafe.naver.com/ArticleRead.nhn?clubid=31109813&page=1&menuid=${menuId}&boardtype=L&articleid=${articleId}&referrerAllArticles=false`} target="_blank" class="hover:text-blue-500 hover:underline">
-        <div class="post py-4 border-b dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800">
-          <h3 class="truncate">
-            <a href={`https://cafe.naver.com/ArticleList.nhn?search.clubid=31109813&search.menuid=${menuId}&search.boardtype=L`} target="_blank"><span class={`boardBg-${menuId} rounded-full px-2 text-white mr-2 hover:bg-blue-600`}>{menuName}</span></a>
-            <strong>{new Date(writeDateTimestamp).toLocaleDateString()}</strong>
-            {subject}</h3>
-        </div>
-      </a>
-      {/each}
-      {:else}
-      <p>불러오는 중</p>
-    {/if}
-    </div>
-
-    </section>
 
 </div>

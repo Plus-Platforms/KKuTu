@@ -531,6 +531,19 @@ $(document).ready(function(){
 	for (i in $stage.dialog) {
 		if ($stage.dialog[i].children(".dialog-head").hasClass("no-close")) continue;
 	
+		if(mobile){
+		$stage.dialog[i].children(".dialog-head").prepend($("<div>").addClass("closeBtn").on('click', function (e) {
+			var $dialog = $(e.currentTarget).parent().parent();
+			$('#dimmer').fadeOut();
+			// Add the opposite effect class
+			$dialog.addClass("closing-effect");
+			// Set a timeout to hide the dialog after the animation completes
+			setTimeout(function () {
+				$dialog.hide().removeClass("closing-effect");
+			}, 200); // Adjust the time based on your animation duration
+		}).hotkey(false, 27));
+	}
+	else{
 		$stage.dialog[i].children(".dialog-head").append($("<div>").addClass("closeBtn").on('click', function (e) {
 			var $dialog = $(e.currentTarget).parent().parent();
 			$('#dimmer').fadeOut();
@@ -541,6 +554,7 @@ $(document).ready(function(){
 				$dialog.hide().removeClass("closing-effect");
 			}, 200); // Adjust the time based on your animation duration
 		}).hotkey(false, 27));
+	}
 	}
 	
 
@@ -608,9 +622,14 @@ $(document).ready(function(){
 	});
 	$stage.menu.sideMenu.on('click', function(e){
 		$('#dimmer').fadeIn();
+		if(!mobile){
 		$('#sideMenuDiag').fadeIn().css('left', '100%').animate({
 			'left': $(window).width() - 740 // Adjust 740 as per your requirement
 		}, 200);
+		}
+		else{
+		$('#sideMenuDiag').fadeIn();
+		}
 	});
 	
 	$stage.menu.credit.on('click', function(e){
@@ -1680,8 +1699,10 @@ $lib.MathQuiz.roundReady = function(data){
 		.css('font-size', "")
 		.css('text-align', "center");
 
-	$(".jjo-turn-time").css('width', "760px");
-	$(".jjoDisplayBar").css('width', "760px");
+	if(!mobile){
+		$(".jjo-turn-time").css('width', "760px");
+		$(".jjoDisplayBar").css('width', "760px");
+	}
 	drawRound(data.round);
 	playSound('question');
 	clearInterval($data._tTime);
@@ -1690,7 +1711,9 @@ $lib.MathQuiz.turnStart = function(data){
 	$(".game-user-current").removeClass("game-user-current");
 	$(".game-user-bomb").removeClass("game-user-bomb");
 	if($data.room.game.seq.indexOf($data.id) >= 0) $stage.game.hereText.show();
+	if(!mobile){
 	$stage.game.display.html($data._char = data.char).css('width', "756px").css('font-size', "20px");
+	}
 	clearInterval($data._tTime);
 	$data._tTime = addInterval(turnGoing, TICK);
 	playBGM('jaqwi');
@@ -3942,6 +3965,7 @@ function roomListBar(o){
 	var $R, $ch;
 	var opts = getOptions(o.mode, o.opts);
 	
+	if(!mobile){
 	$R = $("<div>").attr('id', "room-"+o.id).addClass("rooms-item")
 	.append($ch = $("<div>").addClass("rooms-channel channel-" + o.channel).on('click', function(e){ requestRoomInfo(o.id); }))
 	.append($("<div>").addClass("rooms-number").html(o.id))
@@ -3955,7 +3979,22 @@ function roomListBar(o){
 	.on('click', function(e){
 		if(e.target == $ch.get(0)) return;
 		tryJoin($(e.currentTarget).attr('id').slice(5));
+	});}
+	else{
+		$R = $("<div>").attr('id', "room-"+o.id).addClass("rooms-item")
+	.append($ch = $("<div>").addClass("rooms-channel channel-" + o.channel).on('click', function(e){ requestRoomInfo(o.id); }))
+	.append($("<div>").addClass("rooms-number").html(o.id))
+	.append($("<div>").addClass("rooms-title ellipse").html(o.password ? badWords(o.title)+" <i class='fa fa-lock'></i>" : badWords(o.title)+" <i class='fa fa-unlock'></i>"))
+	.append($("<div>").addClass("rooms-limit").html(o.players.length + " / " + o.limit))
+	.append($("<div>")
+		.append($("<div>").addClass("rooms-mode").html(opts.join(" / ").toString()))
+	)
+	.append($("<div>").addClass("rooms-round").html(L['rounds'] + o.round + " " + o.time + L['SECOND']))
+	.on('click', function(e){
+		if(e.target == $ch.get(0)) return;
+		tryJoin($(e.currentTarget).attr('id').slice(5));
 	});
+	}
 	if(o.gaming) $R.addClass("rooms-gaming");
 	if(o.password) $R.addClass("rooms-locked");
 	
@@ -5747,10 +5786,14 @@ function showDialog($d, noToggle) {
 	} else {
 	  //playSound('dialog');
 	  $(".dialog-front").removeClass("dialog-front");
+	  if(!mobile){
 	  $d.addClass("dialog dialog-front").css({
 		left: (size[0] - $d.width()) * 0.5,
 		top: (size[1] - $d.height()) * 0.5
-	  });
+	  });}
+	  else{
+		$d.addClass("dialog dialog-front");
+	  }
 	  $d.show();
 	  return true;
 	}

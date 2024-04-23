@@ -108,8 +108,8 @@ block Middle
 	
 	div#evtpopup(style="display: none;position: absolute;height: 100%;width: 100%;align-items: center;justify-content: center;align-content: center;z-index: 3;background-color: rgba(0, 0, 0, 0.6);")
 		div(style='text-align: center;font-size: 18px;')
-			a(href="https://www.youtube.com/watch?v=Js1xahtabis", target="_blank")
-				img(src="/img/event/4월2주차패치노트.webp", style="height: 500px;")
+			a(href="https://discord.gg/5b8kNZJawd", target="_blank")
+				img(src="/img/event/디스코드100명.webp", style="height: 500px;")
 			div.dialog-bar.d2-bar.tail-button
 				button.primaryBtn#evtpopup-ok= L("close")
 	div#creditpopup(style="display: none;position: absolute;height: 100%;width: 100%;align-items: center;justify-content: center;align-content: center;z-index: 2;background-color:#000;")
@@ -128,7 +128,7 @@ block Middle
 				p DrawingPasu   Dolias10
 				br
 				strong MUSIC
-				p Xpolcore   Yooddunddun   Roman Rajczyk
+				p Xpolcore   Sihyeon Yu   Roman Rajczyk
 				p JJoriping (Original KKuTu)
 				br
 				strong SPECIAL THANKS TO
@@ -571,7 +571,7 @@ block Middle
 		p#confirmcon(style='text-align: center;font-size: 18px;')
 		div.dialog-bar.d2-bar.tail-button
 			button.primaryBtn#confirm-ok= L('OK')
-			button#confirm-cancel= "취소"
+			button#confirm-cancel= L('NO')
 
 	+Dialog('LvEventDiag', 730, 700, "이벤트 안내")
 		div#pre-content(style="background: #fff;")
@@ -604,37 +604,37 @@ block Middle
 	.side-panel#sideMenuDiag(style="display:none;")
 		.panel-content
 			button#SideMenuCloseBtn= "×"
-			h2 전체 메뉴
+			h2= L('menu')
 			div
 				button.sidebtn
 					+FA("trophy")
-					h3 승리 횟수
+					h3= L('WIN')
 					h3.my-stat-record
 				button.sidebtn#SettingBtn
 					+FA("gear")
-					h3 환경설정
+					h3= L('settingsText')
 				button.sidebtn#HelpBtn
 					+FA("circle-question")
-					h3 도움말
+					h3= L('helpText')
 				button.sidebtn#Community2Btn
 					+FA("bullhorn")
-					h3 공지사항
+					h3= L('bulletin')
 				button.sidebtn#CreditBtn
 					+FA("circle-info")
-					h3 제작진
+					h3= L('credit')
 				
 				a(href="https://cafe.naver.com/ArticleRead.nhn?clubid=31109813&page=1&menuid=7&boardtype=L&articleid=110&referrerAllArticles=false", target="_blank")
 					button.sidebtn
 						+FA("file")
-						h3 개인정보 처리방침
+						h3= L('PRIVACY')
 				a(href="https://cafe.naver.com/ArticleRead.nhn?clubid=31109813&page=1&menuid=7&boardtype=L&articleid=109&referrerAllArticles=false", target="_blank")
 					button.sidebtn
 						+FA("file")
-						h3 이용 약관
+						h3= L('AGREEMENT')
 				a(href="https://cafe.naver.com/ArticleRead.nhn?clubid=31109813&page=1&menuid=7&boardtype=L&articleid=108&referrerAllArticles=false", target="_blank")
 					button.sidebtn
 						+FA("file")
-						h3 환불 정책
+						h3= L('REFUND')
 
 				div.sideFooter
 					//img(src="/img/kkutu/moremme_gray.svg")
@@ -646,7 +646,7 @@ block Middle
 
 		div(style="width: 1290px")
 			+Product('RoomList')
-				div 불러오는 중
+				div!= L('LOADING')
 
 
 			+Product('Shop')
@@ -658,7 +658,7 @@ block Middle
 						//div.category-filter.shop-type(id="shop-type-usermarket")!= " 아이템"
 					div.shop-right
 						a(href="https://cafe.naver.com/pluskkutu/119", target="_blank")
-							button#shop-prob.primaryBtn= "확률형 아이템 정보"
+							button#shop-prob.primaryBtn= L('gachaProb')
 				div#shop-shelf(style='padding: 0px 20px 20px 20px; box-sizing: border-box; width: 100%; height: 540px; overflow-y: scroll;')
 			
 		
@@ -724,13 +724,13 @@ block Middle
 							input#game-input.game-inputs(placeholder=L('yourTurn')+' '+L('inputChat'), readonly)
 							div#game-correct.game-inputs
 								+FA("check")
-								span#correct-text 정답입니다!
+								span#correct-text!= L('CORRECT')
 							div#game-wrong.game-inputs
 								+FA("xmark")
-								span#wrong-text 오답입니다.
+								span#wrong-text!= L('WRONG')
 							div#other-enter.game-inputs
 								+FA("pencil")
-								span#other-text 다른 사람이 입력하고 있어요
+								span#other-text!= L('OTHERENTER')
 					div.history-holder
 						div.history
 				div.game-body
@@ -738,10 +738,10 @@ block Middle
 		div(style="width: 310px;flex-direction: column;display: flex;")
 			+Product('UserList')
 				div#megauser
-					p.conn-desc.mfriend(style="display:none;")= "내 친구"
+					p.conn-desc.mfriend(style="display:none;")!= L('friendConn')
 					div#comm-friends(style="display:none;")
-					p.conn-desc= "전체 접속자"
-					div#connList 불러오는 중
+					p.conn-desc!= L('totalConn')
+					div#connList!= L("LOADING")
 			+Product('RoominfoList')
 				div.roomInfo
 				div.replayInfo
@@ -762,7 +762,7 @@ block Middle
 
 			+Product('Chat')
 				div#Chat
-				input#Talk(maxlength=200, placeholder="Enter키를 눌러 입력하세요", autocomplete="off")
+				input#Talk(maxlength=200, placeholder=L('chatHotkey'), autocomplete="off")
 				button#ChatBtn
 					+FA('paper-plane')
 					
