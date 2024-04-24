@@ -273,8 +273,8 @@ Server.get("/o/game", function(req, res){
 			'KO_THEME': Const.KO_THEME,
 			'EN_THEME': Const.EN_THEME,
 			'IJP_EXCEPT': Const.IJP_EXCEPT,
-			'ogImage': "https://kkutu.cc/img/kkutu/og.png",
-			'ogURL': "https://kkutu.cc/",
+			'ogImage': "https://kkutu.plus/img/kkutu/og.png",
+			'ogURL': "https://kkutu.plus/",
 			'ogTitle': "플러스끄투",
 			'ogDescription': "글자로 박진감 넘치는 게임을 즐겨보세요!"
 		});
@@ -323,8 +323,8 @@ Server.get("/game", function(req, res){
 			'KO_THEME': Const.KO_THEME,
 			'EN_THEME': Const.EN_THEME,
 			'IJP_EXCEPT': Const.IJP_EXCEPT,
-			'ogImage': "https://kkutu.cc/img/kkutu/og.png",
-			'ogURL': "https://kkutu.cc/",
+			'ogImage': "https://kkutu.plus/img/kkutu/og.png",
+			'ogURL': "https://kkutu.plus/",
 			'ogTitle': "플러스끄투",
 			'ogDescription': "글자로 박진감 넘치는 게임을 즐겨보세요!"
 		});

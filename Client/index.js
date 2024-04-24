@@ -29,10 +29,10 @@ function createWindow() {
 
   originalSize = screen.getPrimaryDisplay().workAreaSize;
 
-  const gameUrl = 'https://kkutu.cc/game?server=0&clientVer=1';
+  const gameUrl = 'https://kkutu.plus/game?server=0&clientVer=1';
 
   const filter = {
-    urls: ['https://kkutu.cc/']
+    urls: ['https://kkutu.plus/']
   };
 
   session.defaultSession.webRequest.onBeforeRequest(filter, (details, callback) => {

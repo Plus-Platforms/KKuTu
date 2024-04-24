@@ -74,7 +74,7 @@ Server.get("/help", function(req, res){
 });
 
 Server.get("/sns/cafe/post/:cafeid/:listCnt/:boardid", async function(req, res){
-	if (!req.headers.referer || !req.headers.referer.includes('kkutu.cc')) {
+	if (!req.headers.referer || !req.headers.referer.includes('kkutu.plus')) {
 		return res.status(403).send('Forbidden');
 	}
 
@@ -95,7 +95,7 @@ Server.get("/sns/cafe/post/:cafeid/:listCnt/:boardid", async function(req, res){
 });
 
 Server.get("/sns/cafe/notice/:cafeid", async function(req, res){
-	if (!req.headers.referer || !req.headers.referer.includes('kkutu.cc')) {
+	if (!req.headers.referer || !req.headers.referer.includes('kkutu.plus')) {
 		return res.status(403).send('Forbidden');
 	}
 
@@ -111,7 +111,7 @@ Server.get("/sns/cafe/notice/:cafeid", async function(req, res){
 
 
 Server.get("/sns/cafe/view/:cafeid/:postid", async function(req, res){
-	if (!req.headers.referer || !req.headers.referer.includes('kkutu.cc')) {
+	if (!req.headers.referer || !req.headers.referer.includes('kkutu.plus')) {
 		return res.status(403).send('Forbidden');
 	}
 
@@ -127,13 +127,13 @@ Server.get("/sns/cafe/view/:cafeid/:postid", async function(req, res){
 });
 
 Server.get("/audioProxy", async function(req, res){
-	if (!req.headers.referer || !req.headers.referer.includes('kkutu.cc')) {
+	if (!req.headers.referer || !req.headers.referer.includes('kkutu.plus')) {
 		return res.status(403).send('Forbidden');
 	}
 
     const encodedURL = req.query.link;
     var decodedURL = decodeURIComponent(encodedURL);
-	const defaultURL = "https://kkutu.cc/media/kkutu/LobbyBGMS2.mp3";
+	const defaultURL = "https://kkutu.plus/media/kkutu/LobbyBGMS2.mp3";
 
 	if (!decodedURL.match(/\.mp3$|\.ogg$|\.wav$/)) {
 		decodedURL = defaultURL;
@@ -150,7 +150,7 @@ Server.get("/audioProxy", async function(req, res){
 });
 
 Server.get("/ranking", function(req, res){
-	if (!req.headers.referer || !req.headers.referer.includes('kkutu.cc')) {
+	if (!req.headers.referer || !req.headers.referer.includes('kkutu.plus')) {
 		return res.status(403).send('Forbidden');
 	}
 	var pg = Number(req.query.p);

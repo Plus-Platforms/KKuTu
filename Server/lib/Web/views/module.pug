@@ -128,7 +128,12 @@ mixin PageHead(min)
 	script(type='text/javascript', src='/js/jquery.js')
 	script(type='text/javascript', src='/language/'+locals.page.replace("/", "_")+'/'+locals.lang)
   	
-	script.defer(src='https://static.cloudflareinsights.com/beacon.min.js', data-cf-beacon='{"token": "fe1c8aa1783c445caa30aaf4d1c870eb"}')
+	script.async(src='https://www.googletagmanager.com/gtag/js?id=G-LJ4SLJKKF8')
+	script(type='text/javascript')
+		| window.dataLayer = window.dataLayer || [];
+		| function gtag(){dataLayer.push(arguments);}
+		| gtag('js', new Date());
+		| gtag('config', 'G-LJ4SLJKKF8');
 
 
 	if PUBLIC && !SESSION.admin

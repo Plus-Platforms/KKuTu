@@ -892,9 +892,6 @@ iframe{
 	color: #CCCCCC;
 	background-color: inherit;
 }
-.ADBox .product-body{
-	padding-left: 131px;
-}
 
 @keyframes RoundEffect{
 	0%		{ font-size: 16px; color: #FFFF44; background-color: rgba(0, 0, 0, 1); }

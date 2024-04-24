@@ -1,6 +1,6 @@
 Var SystemDrive
 !define MUI_FINISHPAGE_LINK "웹사이트 바로 가기 만들기"
-!define MUI_FINISHPAGE_LINK_LOCATION "https://kkutu.cc" ; 여기에 원하는 웹사이트 주소 입력
+!define MUI_FINISHPAGE_LINK_LOCATION "https://kkutu.plus" ; 여기에 원하는 웹사이트 주소 입력
 
 !macro preInit
     ReadEnvStr $SystemDrive SYSTEMDRIVE

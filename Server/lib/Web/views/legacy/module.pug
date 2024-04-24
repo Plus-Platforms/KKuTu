@@ -19,7 +19,7 @@
 	* Login 을 Passport 로 수행하기 위한 수정
 -
 	const MENU = [
-		{ key: 'HOME', href: "https://kkutu.cc/" },
+		{ key: 'HOME', href: "https://kkutu.plus/" },
 		/*{ key: 'DB', sub: [
 			{ key: 'DB_CHAMP', href: "/db/champion" },
 			{ key: 'DB_ITEM', href: "/db/item" },
@@ -97,7 +97,12 @@ mixin PageHead(min)
 	script(type='text/javascript', src='/js/jquery.js')
 	script(type='text/javascript', src='/language/kkutu/'+locals.lang)
 	script.async(src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3808496003691786", crossorigin="anonymous", onerror="adBlockFunction();")
-	script.defer(src='https://static.cloudflareinsights.com/beacon.min.js', data-cf-beacon='{"token": "fe1c8aa1783c445caa30aaf4d1c870eb"}')
+	script.async(src='https://www.googletagmanager.com/gtag/js?id=G-LJ4SLJKKF8')
+	script(type='text/javascript')
+		| window.dataLayer = window.dataLayer || [];
+		| function gtag(){dataLayer.push(arguments);}
+		| gtag('js', new Date());
+		| gtag('config', 'G-LJ4SLJKKF8');
 
 	if PUBLIC && !SESSION.admin
 		//script(type='text/javascript', src='/js/google.js')

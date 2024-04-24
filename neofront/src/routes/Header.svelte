@@ -14,24 +14,21 @@
 		<button class="-m-1.5 p-1.5 md:flex"><span class="sr-only">플러스끄투</span><img class="h-6" src="/img/logo_dark.png" alt=""/></button>
 		</a>
 		</div>
-		<div class="hidden py-4 lg:flex text-white">
+		<div class="lg:py-4 flex text-white">
 			<a href="/howto"
-					class="mr-6 text-xl flex rounded-xl py-2 px-2 transform ease-in duration-100 active:scale-95 hover:backdrop-blur-lg hover:bg-white/20">
+					class="hidden lg:block mr-6 text-xl flex rounded-xl py-2 px-2 transform ease-in duration-100 active:scale-95 hover:backdrop-blur-lg hover:bg-white/20">
 						게임 소개
 						</a>
-			<a href="https://kkutu.cc/o/game?server=0"
-						class="mr-6 text-xl flex rounded-xl py-2 px-2 transform ease-in duration-100 active:scale-95 hover:backdrop-blur-lg hover:bg-white/20">
-						클래식 모드
-							</a>
 			<a href="/login"
-						class="mr-6 text-xl flex rounded-xl py-2 px-2 transform ease-in duration-100 active:scale-95 hover:backdrop-blur-lg hover:bg-white/20">
+						class="lg:mr-6 text-xl flex rounded-xl py-2 px-2 transform ease-in duration-100 active:scale-95 hover:backdrop-blur-lg hover:bg-white/20">
 						로그인
 							</a>
 					</div>
+					<!--
 		<div class="lg:hidden flex flex-1 justify-end">
 						<div>
 						<a
-		href="https://kkutu.cc/game?server=0"
+		href="https://kkutu.plus/game?server=0"
 		class="flex items-center justify-center text-white text-lg lg:text-3xl h-full px-2 lg:py-4 lg:px-12 transform ease-in duration-100 active:scale-95 bg-white/20"
 		style="transform: skew(-10deg);"
 	>
@@ -40,7 +37,7 @@
 	
 									</div>
 			
-		</div>
+		</div>-->
 		</nav>
 </div>
   </header>

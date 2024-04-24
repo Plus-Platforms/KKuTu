@@ -142,7 +142,17 @@ function route(func, a0, a1, a2, a3, a4){
 	var r = RULE[MODE[$data.room.mode]];
 	
 	if(!r) return null;
-	$lib[r.rule][func].call(this, a0, a1, a2, a3, a4);
+	try{
+		$lib[r.rule][func].call(this, a0, a1, a2, a3, a4);
+	}
+	catch(e){
+		console.error(e);
+		alert("클래식 UI에서는 지원하지 않는 모드입니다.");
+		send('talk', { relay: true, data: $data._sel, value: "클래식 UI를 사용하고 있어 게임을 플레이 할 수 없어요." });
+		clearGame();
+		send('leave');
+		showDialog($stage.dialog.help);
+	}
 }
 function connectToRoom(chan, rid){
 	var url = $data.URL.replace(/:(\d+)/, function(v, p1){
@@ -532,7 +542,7 @@ function onMessage(data){
 }
 function welcome(){
 	notice('로비에서의 친목성 채팅은 제재 대상입니다. 자유로운 채팅은 귓속말 또는 방을 생성하여 이용해주세요.');
-	notice('새로운 기능은 <strong>신규 클라이언트</strong>에서 만나자! 쿠폰, BGM/폰트 커스터마이징, 더 많은 옵션이 기다리고 있어요.<br>확률형 아이템 확률 정보는 신규 클라이언트 상점에서 확인 가능합니다.');
+	notice('새로운 기능은 <strong>모던 UI</strong>에서 만나자! 쿠폰, BGM/폰트 커스터마이징, 더 많은 옵션이 기다리고 있어요.<br>확률형 아이템 확률 정보는 모던 UI 상점에서 확인 가능합니다.<br>적용 방법: 설정 → UI 설정 → 모던 UI 선택');
 	var playtime = 0;
 
 	function showGameAlert() {
