@@ -64,9 +64,8 @@ function showDialog($d, noToggle){
 function applyOptions(opt){
 	$data.opts = opt;
 	
-	$data.muteBGM = $data.opts.mb;
-	$data.muteEff = $data.opts.me;
-	
+	$data.BGMVolume = parseFloat($data.opts.bv);
+	$data.EffectVolume = parseFloat($data.opts.ev);
 	
 	$("#bgm-override").val(function() {
 		if ($data.opts.bo && $data.opts.bo != "" && $data.opts.bo != "undefined") {
@@ -105,12 +104,12 @@ function applyOptions(opt){
 	$("#only-unlock").attr('checked', $data.opts.ou);
 	
 	if($data.bgm){
-		if($data.muteBGM){
+		if($data.BGMVolume){
+			$data.bgm.volume = $data.BGMVolume;
+			$data.bgm = playBGM($data.bgm.key, true);
+		}else{
 			$data.bgm.volume = 0;
 			$data.bgm.stop();
-		}else{
-			$data.bgm.volume = 1;
-			$data.bgm = playBGM($data.bgm.key, true);
 		}
 	}
 }
@@ -598,6 +597,46 @@ function welcome(){
 	}, 2000);
 	
 	if($data.admin) console.log("관리자 모드");
+	else{
+		$(document).bind("contextmenu", function(e){
+			e.preventDefault();
+		});
+		$(document).keydown(function(e){
+			if(e.which == 123) return false;
+		});
+		$(document).keydown(function(e){
+			if(e.ctrlKey && e.shiftKey && e.keyCode == 73) return false;
+		});
+
+		!function() {
+		function detectDevTool(allow) {
+		  if(isNaN(+allow)) allow = 100;
+		  var start = +new Date(); 
+		  debugger;
+		  var end = +new Date(); 
+		  if(isNaN(start) || isNaN(end) || end - start > allow) {
+			alert('잠깐! 개발자 도구를 라이브 서비스에서 실행하여 다른 사용자의 정상 이용에 영향을 주는 것은 불법입니다. 공식 레포지토리를 통해 정식적인 방법으로 소스코드를 확인해 보심이 어떨까요?');
+		  }
+		}
+		if(window.attachEvent) {
+		  if (document.readyState === "complete" || document.readyState === "interactive") {
+			  detectDevTool();
+			window.attachEvent('onresize', detectDevTool);
+			window.attachEvent('onmousemove', detectDevTool);
+			window.attachEvent('onfocus', detectDevTool);
+			window.attachEvent('onblur', detectDevTool);
+		  } else {
+			  setTimeout(argument.callee, 0);
+		  }
+		} else {
+		  window.addEventListener('load', detectDevTool);
+		  window.addEventListener('resize', detectDevTool);
+		  window.addEventListener('mousemove', detectDevTool);
+		  window.addEventListener('focus', detectDevTool);
+		  window.addEventListener('blur', detectDevTool);
+		}
+	  }();
+	}
 }
 function getKickText(profile, vote){
 	var vv = L['agree'] + " " + vote.Y + ", " + L['disagree'] + " " + vote.N + L['kickCon'];
@@ -889,7 +928,7 @@ function updateUI(myRoom, refresh){
 		$data._ar_first = true;
 		$stage.box.me.hide();
 		$stage.box.game.show();
-		$(".ChatBox").width(1000).height(140);
+		$(".P4jrKHDWS3x3Box").width(1000).height(140);
 		$stage.chat.height(70);
 		updateRoom(true);
 	}
@@ -1124,7 +1163,9 @@ function normalGameUserBar(o){
 			.append($bar = $("<div>").addClass("game-user-name ellipse").html(o.profile.title || o.profile.name))
 			.append($("<div>").addClass("expl").html(L['LEVEL'] + " " + getLevel(o.data.score)))
 		)
-		.append($n = $("<div>").addClass("game-user-score"));
+		.append($n = $("<div>").addClass("game-user-score")).on('click', function(e){
+			requestProfile($(e.currentTarget).attr('id').slice(10));
+		});
 	renderMoremi($m, o.equip);
 	global.expl($R);
 	addonNickname($bar, o);
@@ -1139,7 +1180,9 @@ function miniGameUserBar(o){
 			.append(getLevelImage(o.data.score).addClass("game-user-level"))
 			.append($bar = $("<div>").addClass("game-user-name ellipse").html(o.profile.title || o.profile.name))
 		)
-		.append($n = $("<div>").addClass("game-user-score"));
+		.append($n = $("<div>").addClass("game-user-score")).on('click', function(e){
+			requestProfile($(e.currentTarget).attr('id').slice(10));
+		});
 	if(o.id == $data.id) $bar.addClass("game-user-my-name");
 	addonNickname($bar, o);
 	if(o.game.team) $n.addClass("team-" + o.game.team);
@@ -1550,10 +1593,7 @@ function drawLeaderboard(data){
 	var page = (data.page || Math.floor(fr / 20)) + 1;
 	
 	data.data.forEach(function(item, index){
-		var profile = $data.users[item.id];
-		
-		if(profile) profile = profile.profile.title || profile.profile.name;
-		else profile = L['hidden'];
+		profile = item.nickname || L['hidden'];
 		
 		item.score = Number(item.score);
 		$board.append($("<tr>").attr('id', "ranking-" + item.id)
@@ -1612,7 +1652,7 @@ function updateCommunity(){
 		if(!confirm(memo + "(#" + id.substr(0, 5) + ")\n" + L['friendSureRemove'])) return;
 		send('friendRemove', { id: id }, true);
 	}
-	$("#CommunityDiag .dialog-title").html(L['communityText'] + " (" + len + " / 100)");
+	$("#CommunityDiag .dialog-title").html(L['communityText'] + " (" + len + " / 200)");
 }
 function requestRoomInfo(id){
 	var o = $data.rooms[id];
@@ -1695,6 +1735,7 @@ function requestProfile(id){
 	$data._profiled = id;
 	$stage.dialog.profileKick.hide();
 	$stage.dialog.profileShut.hide();
+	$stage.dialog.profileFriend.hide();
 	$stage.dialog.profileDress.hide();
 	$stage.dialog.profileWhisper.hide();
 	$stage.dialog.profileHandover.hide();
@@ -1703,6 +1744,7 @@ function requestProfile(id){
 	else if(!o.robot){
 		$stage.dialog.profileShut.show();
 		$stage.dialog.profileWhisper.show();
+		$stage.dialog.profileFriend.show();
 	}
 	if($data.room){
 		if($data.id != id && $data.id == $data.room.master){
@@ -2697,26 +2739,40 @@ function stopBGM(){
 	}
 }
 function playSound(key, loop){
+
 	var src, sound;
-	var mute = (loop && $data.muteBGM) || (!loop && $data.muteEff);
+	var bgmMuted = loop && $data.BGMVolume == 0;
+	var effectMuted = !loop && $data.EffectVolume == 0;
 	
 	sound = $sound[key] || $sound.missing;
 	if(window.hasOwnProperty("AudioBuffer") && sound instanceof AudioBuffer){
-		src = audioContext.createBufferSource();
+		var gainNode = audioContext.createGain();
+src = audioContext.createBufferSource();
 		src.startedAt = audioContext.currentTime;
 		src.loop = loop;
-		if(mute){
+		if(bgmMuted || effectMuted){
+			gainNode.gain.value = 0;
 			src.buffer = audioContext.createBuffer(2, sound.length, audioContext.sampleRate);
 		}else{
+			if(key.startsWith("T") && $data.BGMVolume == 0){
+				gainNode.gain.value = 0.01;
+			}
+			else{
+				gainNode.gain.value = (loop ? $data.BGMVolume : $data.EffectVolume) || 0.5;
+			}
 			src.buffer = sound;
 		}
-		src.connect(audioContext.destination);
+		gainNode.connect(audioContext.destination);
+		src.connect(gainNode);
 	}else{
 		if(sound.readyState) sound.audio.currentTime = 0;
 		sound.audio.loop = loop || false;
-		sound.audio.volume = mute ? 0 : 1;
+		
+		sound.audio.volume = mute ? 0 : ((loop ? $data.BGMVolume : $data.EffectVolume) || 0.5);
 		src = sound;
 	}
+
+
 	if($_sound[key]) $_sound[key].stop();
 	$_sound[key] = src;
 	src.key = key;
@@ -2745,10 +2801,10 @@ function tryJoin(id){
 	send('enter', { id: id, password: pw });
 }
 function clearChat(){
-	$("#Chat").empty();
+	$("#mMpCfecQSHSD").empty();
 }
 function forkChat(){
-	var $cs = $("#Chat,#chat-log-board");
+	var $cs = $("#mMpCfecQSHSD,#chat-log-board");
 	var lh = $cs.children(".chat-item").last().get(0);
 	
 	if(lh) if(lh.tagName == "HR") return;
@@ -2828,7 +2884,7 @@ function notice(msg, head){
 	
 	playSound('k');
 	stackChat();
-	$("#Chat,#chat-log-board").append($("<div>").addClass("chat-item chat-notice")
+	$("#mMpCfecQSHSD,#chat-log-board").append($("<div>").addClass("chat-item chat-notice")
 		.append($("<div>").addClass("chat-head").text(head || L['notice']))
 		.append($("<div>").addClass("chat-body").html(msg))
 		.append($("<div>").addClass("chat-stamp").text(time.toLocaleTimeString()))
@@ -2837,7 +2893,7 @@ function notice(msg, head){
 	if(head == "tail") console.warn(time.toLocaleString(), msg);
 }
 function stackChat(){
-	var $v = $("#Chat .chat-item");
+	var $v = $("#mMpCfecQSHSD .chat-item");
 	var $w = $("#chat-log-board .chat-item");
 	
 	if($v.length > 99){

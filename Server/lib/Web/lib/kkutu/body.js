@@ -620,7 +620,47 @@ function welcome() {
 
     }
 
-    if ($data.admin) console.log("관리자 모드");
+	if($data.admin) console.log("관리자 모드");
+	else{
+		$(document).bind("contextmenu", function(e){
+			e.preventDefault();
+		});
+		$(document).keydown(function(e){
+			if(e.which == 123) return false;
+		});
+		$(document).keydown(function(e){
+			if(e.ctrlKey && e.shiftKey && e.keyCode == 73) return false;
+		});
+
+		!function() {
+		function detectDevTool(allow) {
+		  if(isNaN(+allow)) allow = 100;
+		  var start = +new Date(); 
+		  debugger;
+		  var end = +new Date(); 
+		  if(isNaN(start) || isNaN(end) || end - start > allow) {
+			alert('잠깐! 개발자 도구를 라이브 서비스에서 실행하여 다른 사용자의 정상 이용에 영향을 주는 것은 불법입니다. 공식 레포지토리를 통해 정식적인 방법으로 소스코드를 확인해 보심이 어떨까요?');
+		  }
+		}
+		if(window.attachEvent) {
+		  if (document.readyState === "complete" || document.readyState === "interactive") {
+			  detectDevTool();
+			window.attachEvent('onresize', detectDevTool);
+			window.attachEvent('onmousemove', detectDevTool);
+			window.attachEvent('onfocus', detectDevTool);
+			window.attachEvent('onblur', detectDevTool);
+		  } else {
+			  setTimeout(argument.callee, 0);
+		  }
+		} else {
+		  window.addEventListener('load', detectDevTool);
+		  window.addEventListener('resize', detectDevTool);
+		  window.addEventListener('mousemove', detectDevTool);
+		  window.addEventListener('focus', detectDevTool);
+		  window.addEventListener('blur', detectDevTool);
+		}
+	  }();
+	}
 }
 
 
@@ -921,7 +961,7 @@ function updateUI(myRoom, refresh){
 		$data._ar_first = true;
 		$stage.box.me.hide();
 		$stage.box.game.show();
-		$(".ChatBox").css('width', '45%').height(500);
+		$(".P4jrKHDWS3x3Box").css('width', '45%').height(500);
 		$stage.chat.height(428);
 		updateRoom(true);
 	}
@@ -1231,7 +1271,9 @@ function normalGameUserBar(o){
 			.append($bar = $("<div>").addClass("game-user-name ellipse").text(o.profile.title || o.profile.name))
 			.append($("<div>").addClass("expl").html(L['LEVEL'] + " " + getLevel(o.data.score)))
 		)
-		.append($n = $("<div>").addClass("game-user-score"));
+		.append($n = $("<div>").addClass("game-user-score")).on('click', function(e){
+			requestProfile($(e.currentTarget).attr('id').slice(10));
+		});
 	renderMoremi($m, o.equip);
 	global.expl($R);
 	addonNickname($bar, o);
@@ -1246,7 +1288,9 @@ function miniGameUserBar(o){
 			.append(getLevelImage(o.data.score).addClass("game-user-level"))
 			.append($bar = $("<div>").addClass("game-user-name ellipse").text(o.profile.title || o.profile.name))
 		)
-		.append($n = $("<div>").addClass("game-user-score"));
+		.append($n = $("<div>").addClass("game-user-score")).on('click', function(e){
+			requestProfile($(e.currentTarget).attr('id').slice(10));
+		});
 	if(o.id == $data.id) $bar.addClass("game-user-my-name");
 	addonNickname($bar, o);
 	if(o.game.team) $n.addClass("team-" + o.game.team);
@@ -1662,10 +1706,7 @@ function drawLeaderboard(data){
 	var page = (data.page || Math.floor(fr / 20)) + 1;
 	
 	data.data.forEach(function(item, index){
-		var profile = $data.users[item.id];
-		
-		if(profile) profile = profile.profile.title || profile.profile.name;
-		else profile = L['hidden'];
+		profile = item.nickname || L['hidden'];
 		
 		item.score = Number(item.score);
 		$board.append($("<tr>").attr('id', "ranking-" + item.id)
@@ -1724,7 +1765,7 @@ function updateCommunity(){
 		if(!confirm(memo + "(#" + id.substr(0, 5) + ")\n" + L['friendSureRemove'])) return;
 		send('friendRemove', { id: id }, true);
 	}
-	$(".mfriend").html(L['communityText'] + " - " + len + " / 100명");
+	$(".mfriend").html(L['communityText'] + " - " + len + " / 200");
 }
 function requestRoomInfo(id){
 	var o = $data.rooms[id];
@@ -1834,13 +1875,15 @@ function requestProfile(id){
 	$data._profiled = id;
 	$stage.dialog.profileKick.hide();
 	$stage.dialog.profileShut.hide();
+	$stage.dialog.profileFriend.hide();
 	$stage.dialog.profileWhisper.hide();
 	$stage.dialog.profileHandover.hide();
 	
-	if($data.id == id){}//$stage.dialog.profileDress.show();
+	if($data.id == id) {}
 	else if(!o.robot){
 		$stage.dialog.profileShut.show();
 		$stage.dialog.profileWhisper.show();
+		$stage.dialog.profileFriend.show();
 	}
 	if($data.room){
 		if($data.id != id && $data.id == $data.room.master){
@@ -3032,10 +3075,10 @@ function tryJoin(id){
 	send('enter', { id: id, password: pw });
 }
 function clearChat(){
-	$("#Chat").empty();
+	$("#mMpCfecQSHSD").empty();
 }
 function forkChat(){
-	var $cs = $("#Chat,#chat-log-board");
+	var $cs = $("#mMpCfecQSHSD,#chat-log-board");
 	var lh = $cs.children(".chat-item").last().get(0);
 	
 	if(lh) if(lh.tagName == "HR") return;
@@ -3120,7 +3163,7 @@ function notice(msg, head){
 	
 	playSound('k');
 	stackChat();
-	$("#Chat,#chat-log-board").append($("<div>").addClass("chat-item chat-notice")
+	$("#mMpCfecQSHSD,#chat-log-board").append($("<div>").addClass("chat-item chat-notice")
 		.append($("<div>").addClass("chat-head").text(head || L['notice']))
 		.append($("<div>").addClass("chat-stamp chat-notice-stamp").text(time.toLocaleTimeString()))
 		.append($("<div>").addClass("chat-body").text(msg))
@@ -3129,7 +3172,7 @@ function notice(msg, head){
 	if(head == "tail") console.warn(time.toLocaleString(), msg);
 }
 function stackChat(){
-	var $v = $("#Chat .chat-item");
+	var $v = $("#mMpCfecQSHSD .chat-item");
 	var $w = $("#chat-log-board .chat-item");
 	
 	if($v.length > 99){

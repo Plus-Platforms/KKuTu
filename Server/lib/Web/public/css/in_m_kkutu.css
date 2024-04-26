@@ -28,7 +28,7 @@ equ{
 html {
 	overflow-x: hidden;
 }
-.ChatBox .product-title{
+.P4jrKHDWS3x3Box .product-title{
 	display:none;
 }
 #Intro{
@@ -1135,15 +1135,15 @@ input[type="checkbox"] {
 			.dress-item-opts{ float: left; padding-top: 4px; border-top: 1px dashed #777777; margin-top: 2px; width: 100%; }
 				.item-opts-head{ color: #EEEE44; }
 					.item-opts-head::after{ content: ": " }
-.ChatBox{
+.P4jrKHDWS3x3Box{
 	width: calc(100% - 10px) !important;
 	height: auto !important;
 }
-#Chat{
+#mMpCfecQSHSD{
 	width: 100%;
 	overflow-y: scroll;
 }
-#Talk{
+#tPDaArKj3B8Y{
 	padding-left: 11px;
     color: #000;
     background-color: #e5e7eb;
@@ -1156,7 +1156,7 @@ input[type="checkbox"] {
     margin-top: 5px;
     font-size: 18px;
 }
-#ChatBtn{
+#aBzxRsN4KgtR{
 	padding: 6px 5px;
     font-weight: 700;
     background: #D8B4FE;
@@ -1169,7 +1169,7 @@ input[type="checkbox"] {
     border-top-right-radius: 8px;
     border-bottom-right-radius: 8px;
 }
-	#Chat hr, #chat-log-board hr{
+#mMpCfecQSHSD hr, #chat-log-board hr{
 		padding-top: 0px;
 		border: 0px;
 		border-bottom: 1px dashed #999999;

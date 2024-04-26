@@ -99,11 +99,13 @@ block Middle
 		button#ReplayBtn.for-lobby(style='display: none; background-color: #D9FF82;')!= L('replay')
 		button#LeaderboardBtn.for-lobby(style='display: none; background-color: #FFADD3;')!= L('leaderboard')
 		//div#facebook-menu.fb-like.for-lobby.for-master.for-normal.for-gaming(data-href='http://kkutu.kr', data-width='300', data-layout='button_count', data-action='like', data-show-faces='true', data-share='true')
-	+Dialog('SettingDiag', 300, 340, L('settingsText'))
+	+Dialog('SettingDiag', 300, 380, L('settingsText'))
 		div.dialog-bar
-			h4= L('mute')
-			+SettingOption('mute-bgm', L('bgm'))
-			+SettingOption('mute-effect', L('effect'))
+			h4.opt!= L("bgmVol")
+			input#bgm-volume.range-input(type='range' min='0' max='1' value='0.5' step='0.01' style='width:50%;')
+		div.dialog-bar
+			h4.opt!= L("effVol")
+			input#effect-volume.range-input(type='range' min='0' max='1' value='0.5' step='0.01' style='width:50%;')
 		div.dialog-bar
 			h4.opt!= L("font")
 			select#fontSelect
@@ -337,6 +339,8 @@ block Middle
 				div.profile-field-score= L('recordScore')
 			div#profile-record
 		div.dialog-bar.tail-button
+			button#profile-friend(style="width:30px;")
+				+FA('user-plus')
 			button#profile-whisper= L('whisper')
 			button#profile-shut= L('shut')
 			button#profile-kick= L('kick')
@@ -512,11 +516,11 @@ block Middle
 		div.my-level
 		+GraphBar('my-gauge')
 		div.bar-text.my-gauge-text
-	+Product('Chat')
-		div#Chat
-		input#Talk(maxlength=200, placeholder=L('chatHotkey'), autocomplete="off")
-		button#ChatBtn= L('send')
-	+Product('AD')
+	+Product('P4jrKHDWS3x3')
+		div#mMpCfecQSHSD
+		input#tPDaArKj3B8Y(maxlength=200, placeholder=L('chatHotkey'), autocomplete="off")
+		button#aBzxRsN4KgtR= L('send')
+	+Product('AC')
 		ins.adsbygoogle(style="display:inline-block;width:1000px;height:90px", data-ad-client="ca-pub-3808496003691786", data-ad-slot="5826947604")
 
 block Bottom

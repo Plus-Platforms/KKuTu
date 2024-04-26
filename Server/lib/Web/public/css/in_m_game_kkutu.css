@@ -147,7 +147,7 @@ iframe{
 	.dialog-bar button{ float: left; }
 		.dialog-opt{ float: left; width: 100px; }
 	.tail-button{ margin-top: 7px; }
-	.tail-button button{ float: right; margin-right: 5px; width: 80px; height: 20px; }
+	.tail-button button{ float: right; margin-right: 5px; min-width: 80px; height: 20px; }
 	.dialog .closeBtn{
 		float: right;
 		border-radius: 6px;
@@ -732,14 +732,14 @@ iframe{
 			.dress-item-opts{ float: left; padding-top: 4px; border-top: 1px dashed #777777; margin-top: 2px; width: 100%; }
 				.item-opts-head{ color: #EEEE44; }
 					.item-opts-head::after{ content: ": " }
-.ChatBox{
+.P4jrKHDWS3x3Box{
 	width: calc(100% - 10px) !important;
 }
-#Chat{
+#mMpCfecQSHSD{
 	width: 100%;
 	overflow-y: scroll;
 }
-#Talk{
+#tPDaArKj3B8Y{
 	float: left;
 	border-right: none;
 	border-top-right-radius: 0px;
@@ -748,7 +748,7 @@ iframe{
 	width: calc(100% - 82px);
 	height: 20px;
 }
-#ChatBtn{
+#aBzxRsN4KgtR{
 	float: left;
 	border-left: none;
 	border-top-left-radius: 0px;
@@ -757,7 +757,7 @@ iframe{
 	width: 60px;
 	height: 20px;
 }
-	#Chat hr, #chat-log-board hr{
+	#mMpCfecQSHSD hr, #chat-log-board hr{
 		padding-top: 0px;
 		border: 0px;
 		border-bottom: 1px dashed #999999;

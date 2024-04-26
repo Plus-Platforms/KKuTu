@@ -27,15 +27,15 @@ var L;
 	var size;
 	var _setTimeout = setTimeout;
 	
-	function setCookie(cName, cValue, cDay){
-        var expire = new Date();
-		
-        expire.setDate(expire.getDate() + cDay);
-        cookies = cName + '=' + escape(cValue) + '; path=/ ';
-        if(typeof cDay != 'undefined') cookies += ';expires=' + expire.toGMTString() + ';';
-		
-        document.cookie = cookies;
-    }
+	function setCookie(name, value, days) {
+		var expires = "";
+		if (days) {
+		  var date = new Date();
+		  date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+		  expires = "; expires=" + date.toUTCString();
+		}
+		document.cookie = name + "=" + (value || "") + expires + "; path=/";
+	  }
     function getCookie(cName) {
         //볕뉘 수정
         var cName = cName+"=";

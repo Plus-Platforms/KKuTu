@@ -781,7 +781,7 @@ min-height: 680px;
 			.cf-rew-rate{ padding-top: 6px; width: 50px; text-align: right; }
 	#cf-cost{ text-align: center; background-color: #DDDDDD; }
 	.cf-composable{ background-color: #FFAD31; }
-.ChatBox{
+.P4jrKHDWS3x3Box{
 	width: 1000px;
 }
 	.chat-balloon{
@@ -810,11 +810,11 @@ min-height: 680px;
 		height: 20px;
 		background-image: url('/img/kkutu/balloonbot.png');
 	}
-#Chat{
+	#mMpCfecQSHSD{
 	width: 100%;
 	overflow-y: scroll;
 }
-#Talk{
+#tPDaArKj3B8Y{
 	float: left;
 	border-right: none;
 	border-top-right-radius: 0px;
@@ -823,7 +823,7 @@ min-height: 680px;
 	width: calc(100% - 82px);
 	height: 20px;
 }
-#ChatBtn{
+#aBzxRsN4KgtR{
 	float: left;
 	border-left: none;
 	border-top-left-radius: 0px;
@@ -832,7 +832,7 @@ min-height: 680px;
 	width: 60px;
 	height: 20px;
 }
-	#Chat hr, #chat-log-board hr{
+#mMpCfecQSHSD hr, #chat-log-board hr{
 		padding-top: 0px;
 		border: 0px;
 		border-bottom: 1px dashed #999999;

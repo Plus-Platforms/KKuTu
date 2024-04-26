@@ -50,11 +50,12 @@ html
 	body(style="font-family: 'Pretendard', sans-serif!important;")
 		div#Top
 			+Menu()
-			div#global-notice
-				div#gn-content
-					include ../../public/global_notice.html
-				+Expl(L('GLOBAL_NOTICE'))
 			block Top
+		
+		div#global-notice
+			div#gn-content
+				include ../../public/global_notice.html
+			+Expl(L('GLOBAL_NOTICE'))
 		div#Jungle
 			span#mobile= locals.mobile
 			span#summonerID= DATA._id

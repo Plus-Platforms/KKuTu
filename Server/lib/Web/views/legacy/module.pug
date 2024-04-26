@@ -54,14 +54,7 @@
 mixin Menu()
 	div.Menu
 		div.Menu-Container
-			- for(i in MENU)
-				- if(MENU[i].href)
-					button.menu-btn(id='menu-item-'+MENU[i].key, onclick='location.href = "'+MENU[i].href+'";')!= L(MENU[i].key)
-				- else if(MENU[i].sub)
-					div.menu-btn(id='menu-item-'+MENU[i].key)!= L(MENU[i].key)
-						div.menu-sub-separator
-						- for(j in MENU[i].sub)
-							div.menu-sub-btn(onclick='location.href = "'+MENU[i].sub[j].href+'";')!= L(MENU[i].sub[j].key)
+			img#logo(src='/img/kkutu/logo-top.svg')
 			div#account
 				span#profile= SESSION.profile ? JSON.stringify(SESSION.profile) : '{}'
 				div#account-info

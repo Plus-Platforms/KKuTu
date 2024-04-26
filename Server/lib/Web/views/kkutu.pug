@@ -436,6 +436,8 @@ block Middle
 				div.profile-field-score= L('recordScore')
 			div#profile-record
 		div.dialog-bar.tail-button.d3-bar
+			button#profile-friend(style="width:30px;")
+				+FA('user-plus')
 			button#profile-whisper= L('whisper')
 			button#profile-shut= L('shut')
 			button#profile-kick= L('kick')
@@ -743,8 +745,8 @@ block Middle
 		div(style="width: 310px;flex-direction: column;display: flex;")
 			+Product('UserList')
 				div#megauser
-					p.conn-desc.mfriend(style="display:none;")!= L('friendConn')
-					div#comm-friends(style="display:none;")
+					p.conn-desc.mfriend!= L('friendConn')
+					div#comm-friends
 					p.conn-desc!= L('totalConn')
 					div#connList!= L("LOADING")
 			+Product('RoominfoList')
@@ -765,10 +767,10 @@ block Middle
 						button.roomBtn.room2row#StartBtn.for-master(style='display: none;')!= L('start')
 
 
-			+Product('Chat')
-				div#Chat
-				input#Talk(maxlength=200, placeholder=L('chatHotkey'), autocomplete="off")
-				button#ChatBtn
+			+Product('P4jrKHDWS3x3')
+				div#mMpCfecQSHSD
+				input#tPDaArKj3B8Y(maxlength=200, placeholder=L('chatHotkey'), autocomplete="off")
+				button#aBzxRsN4KgtR
 					+FA('paper-plane')
 					
 

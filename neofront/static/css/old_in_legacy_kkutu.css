@@ -55,16 +55,31 @@
 	background-color: rgba(0, 0, 0, 0.5);
 	z-index: 5;
 }
-#Top{
-	background-color: #262626;
-	background-image: none;
+
+@media (min-width: 768px){
+	.Menu-Container {
+		width: 750px;
+	}
+}
+@media (min-width: 992px){
+	.Menu-Container {
+		width: 970px;
+	}
+}
+@media (min-width: 1200px){
+	.Menu-Container {
+		width: 1170px;
+	}
 }
 .Menu-Container{
-	max-width: 1170px;
     margin-left: auto;
     margin-right: auto;
     padding-left: 15px;
     padding-right: 15px;
+	
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 #Top .menu-btn{
 	color: #ffffff;
@@ -759,7 +774,7 @@ iframe{
 			padding: 1px 0px;
 			border: 1px solid #AAAAAA;
 			margin: 1px;
-			width: 40px;
+			min-width: 40px;
 		}
 		.category-filter.selected{ color: #EEEEEE; background-color: #111111; }
 		.category-filter:hover{ background-color: #EEEEEE; }
@@ -795,7 +810,7 @@ iframe{
 			.cf-rew-rate{ padding-top: 6px; width: 50px; text-align: right; }
 	#cf-cost{ text-align: center; background-color: #DDDDDD; }
 	.cf-composable{ background-color: #FFAD31; }
-.ChatBox{
+.P4jrKHDWS3x3Box{
 	width: 1000px;
 }
 	.chat-balloon{
@@ -825,11 +840,11 @@ iframe{
 		height: 20px;
 		background-image: url('/img/kkutu/balloonbot.png');
 	}
-#Chat{
+	#mMpCfecQSHSD{
 	width: 100%;
 	overflow-y: scroll;
 }
-#Talk{
+#tPDaArKj3B8Y{
 	float: left;
 	border-right: none;
 	border-top-right-radius: 0px;
@@ -838,7 +853,7 @@ iframe{
 	width: calc(100% - 82px);
 	height: 20px;
 }
-#ChatBtn{
+#aBzxRsN4KgtR{
 	float: left;
 	border-left: none;
 	border-top-left-radius: 0px;
@@ -847,7 +862,7 @@ iframe{
 	width: 60px;
 	height: 20px;
 }
-	#Chat hr, #chat-log-board hr{
+#mMpCfecQSHSD hr, #chat-log-board hr{
 		padding-top: 0px;
 		border: 0px;
 		border-bottom: 1px dashed #999999;
@@ -883,12 +898,12 @@ iframe{
 		}
 			.chat-head:hover{ background-color: #FFF; }
 		.chat-body{ float: left; width: calc(100% - 190px); min-height: 14px; }
-.ADBox{
+.ACBox{
 	width: 1000px;
 	box-shadow: 0px 1px 1px #141414;
 	background-color: #232323;
 }
-.ADBox .product-title{
+.ACBox .product-title{
 	border-bottom-color: #333333;
 	color: #CCCCCC;
 	background-color: inherit;

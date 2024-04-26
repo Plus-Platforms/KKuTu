@@ -725,7 +725,7 @@ function processClientRequest($c, msg) {
 			if (!msg.target) return;
 			if ($c.guest) return;
 			if ($c.id == msg.target) return;
-			if (Object.keys($c.friends).length >= 100) return $c.sendError(452);
+			if (Object.keys($c.friends).length >= 200) return $c.sendError(452);
 			if (temp = DIC[msg.target]) {
 				if (temp.guest) return $c.sendError(453);
 				if ($c._friend) return $c.sendError(454);

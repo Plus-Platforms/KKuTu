@@ -156,11 +156,11 @@
 	.light{
 		display:none;
 	}
-	#Talk {
+	#tPDaArKj3B8Y {
 		color: #fff!important;
 		background-color: #1f2937!important;
 	}
-	#ChatBtn {
+	#aBzxRsN4KgtR {
 		background: #3b0764!important;
 		color: #a855f7!important;
 		border: none;
@@ -1766,10 +1766,10 @@ box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.10), 0px 4px 6px -4px rgba(0, 0, 
 	display:none;
 }
 
-.ChatBox .product-title{
+.P4jrKHDWS3x3Box .product-title{
 	display:none;
 }
-.ChatBox{
+.P4jrKHDWS3x3Box{
     backdrop-filter: none;
     width: 310px!important;
     height: 100%!important;
@@ -1878,14 +1878,14 @@ box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.10), 0px 4px 6px -4px rgba(0, 0, 
 		height: 20px;
 		background-image: url('/img/kkutu/balloonbot.png');
 	}
-#Chat{
+	#mMpCfecQSHSD{
 	padding: 13px 0px;
     width: 100%;
     overflow-y: scroll;
     box-sizing: border-box;
     height: 301px;
 }
-#Talk{
+#tPDaArKj3B8Y{
 	padding-left: 11px;
     color: #000;
     background-color: #e5e7eb;
@@ -1898,7 +1898,7 @@ box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.10), 0px 4px 6px -4px rgba(0, 0, 
     margin-top: 5px;
     font-size: 18px;
 }
-#ChatBtn{
+#aBzxRsN4KgtR{
     padding: 6px 5px;
     font-weight: 700;
 	
@@ -1912,7 +1912,7 @@ box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.10), 0px 4px 6px -4px rgba(0, 0, 
     border-top-right-radius: 8px;
     border-bottom-right-radius: 8px;
 }
-	#Chat hr, #chat-log-board hr{
+#mMpCfecQSHSD hr, #chat-log-board hr{
 		padding-top: 0px;
 		border: 0px;
 		border-bottom: 1px dashed #999999;

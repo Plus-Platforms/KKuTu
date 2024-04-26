@@ -51,10 +51,10 @@ $(document).ready(function(){
 			createBanner: $("<div>").addClass("rooms-item rooms-create").append($("<div>").html("<i class='fa-solid fa-plus'></i>방 만들기")),
 			singleBanner: $("<div>").addClass("rooms-item rooms-single").append($("<div>").html("<i class='fa-solid fa-user'></i>혼자서 놀기"))
 		},
-		chat: $("#Chat"),
+		chat: $("#mMpCfecQSHSD"),
 		chatLog: $("#chat-log-board"),
-		talk: $("#Talk"),
-		chatBtn: $("#ChatBtn"),
+		talk: $("#tPDaArKj3B8Y"),
+		chatBtn: $("#aBzxRsN4KgtR"),
 		menu: {
 			help: $("#HelpBtn"),
 			coupon: $("#CouponBtn"),
@@ -121,6 +121,7 @@ $(document).ready(function(){
 				profileHandover: $("#profile-handover"),
 				profileKick: $("#profile-kick"),
 				profileLevel: $("#profile-level"),
+				profileFriend: $("#profile-friend"),
 				profileDress: $("#profile-dress"),
 				profileWhisper: $("#profile-whisper"),
 			kickVote: $("#KickVoteDiag"),
@@ -165,7 +166,7 @@ $(document).ready(function(){
 			teamSelect: $("#TeamSelectDiag"),
 		},
 		box: {
-			chat: $(".ChatBox"),
+			chat: $(".P4jrKHDWS3x3Box"),
 			userList: $(".UserListBox"),
 			roominfoList: $(".RoominfoListBox"),
 			roomList: $(".RoomListBox"),
@@ -405,12 +406,12 @@ $(document).ready(function(){
 
 	$(document).keydown(function(e) {
 		if(e.keyCode == 13){
-			if(!$("#Talk").is(":focus") && !$("#dict-input").is(":focus")) {
-				$("#Talk").focus();
+			if(!$("#tPDaArKj3B8Y").is(":focus") && !$("#dict-input").is(":focus")) {
+				$("#tPDaArKj3B8Y").focus();
 			}
 		}
 		else if (e.keyCode === 27) {
-			$("#Talk").blur();
+			$("#tPDaArKj3B8Y").blur();
 		}
 	});
 	
@@ -1070,6 +1071,14 @@ $(document).ready(function(){
 		var o = $data.users[$data._profiled];
 		
 		$stage.talk.val("/e " + (o.profile.title || o.profile.name).replace(/\s/g, "") + " ").focus();
+	});
+	$stage.dialog.profileFriend.on('click', function(e){
+		var id = $data._profiled;
+		
+		if(!id) return;
+		if(!$data.users[id]) return fail(450);
+		
+		send('friendAdd', { target: id }, true);
 	});
 	$stage.dialog.profileDress.on('click', function(e){
 		// alert(L['error_555']);

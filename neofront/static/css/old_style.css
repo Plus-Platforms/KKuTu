@@ -135,7 +135,16 @@ span{
 }
 	.autocomp-item{ margin: 1px 0px; }
 	.autocomp-item:hover, .autocomp-select{ color: #FFFFFF; background-color: rgba(50, 50, 50, 0.8); }
-#account{ float: right; margin: 1px; font-size: 11px; color: #FFFFFF; }
+#logo{
+	height: 20px;
+}
+#account{ 
+    float: right;
+    margin: 1px;
+    color: #FFFFFF;
+    height: 50px;
+    font-weight: bold;
+    font-size: 15px; }
 #account-setting{
 	float: left;
 	padding-top: 8px;
@@ -144,15 +153,13 @@ span{
 }
 #account-info{
 	float: left;
-	padding-top: 8px;
-	width: 80px;
-	text-align: center;
-	cursor: pointer;
-	transition: color 300ms ease;
+    margin: 16px 5px;
+    text-align: center;
+    cursor: pointer;
+    transition: color 300ms ease;
 }
 #account-info:hover{ color: #EEEEEE; }
 #global-notice{
-	margin-top: 30px;
 	color: #111111;
 	text-align: center;
 	font-weight: bold;
@@ -165,7 +172,6 @@ span{
 	right: 0;
 	background-color: #EEBB33;
 	padding: 3px 0px;
-	z-index: -1;
 }
 .searching{
 	color: #EEEEEE;
@@ -282,16 +288,13 @@ span{
 .auto-selected{ color: #EEEE44; background-color: #3B3B3B; }
 
 #Top{
-	position: fixed;
-	width: 100%;
-	height: 30px;
-	box-shadow: 0px 2px 2px #111111;
-	background-image: url('/img/topbg.png');
-	z-index: 5;
+    width: 100%;
+    height: 50px;
+    z-index: 5;
 }
 #Middle{
 	float: left;
-	margin-top: 50px;
+	margin-top: 24px;
 	width: 1010px;
 }
 #Bottom{

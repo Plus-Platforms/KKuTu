@@ -47,10 +47,10 @@ $(document).ready(function(){
 			roomList: $(".RoomListBox .product-body"),
 			createBanner: $("<div>").addClass("rooms-item rooms-create").append($("<div>").html(L['newRoom']))
 		},
-		chat: $("#Chat"),
+		chat: $("#mMpCfecQSHSD"),
 		chatLog: $("#chat-log-board"),
-		talk: $("#Talk"),
-		chatBtn: $("#ChatBtn"),
+		talk: $("#tPDaArKj3B8Y"),
+		chatBtn: $("#aBzxRsN4KgtR"),
 		menu: {
 			help: $("#HelpBtn"),
 			setting: $("#SettingBtn"),
@@ -104,6 +104,7 @@ $(document).ready(function(){
 				profileHandover: $("#profile-handover"),
 				profileKick: $("#profile-kick"),
 				profileLevel: $("#profile-level"),
+				profileFriend: $("#profile-friend"),
 				profileDress: $("#profile-dress"),
 				profileWhisper: $("#profile-whisper"),
 			kickVote: $("#KickVoteDiag"),
@@ -137,7 +138,7 @@ $(document).ready(function(){
 			help: $("#HelpDiag")
 		},
 		box: {
-			chat: $(".ChatBox"),
+			chat: $(".P4jrKHDWS3x3Box"),
 			userList: $(".UserListBox"),
 			roomList: $(".RoomListBox"),
 			shop: $(".ShopBox"),
@@ -279,9 +280,30 @@ $(document).ready(function(){
 			return false;
 		}
 	});
-	$data.opts = $.cookie('kks');
-	if($data.opts){
-		applyOptions(JSON.parse($data.opts));
+	
+	if(options){
+		var opts = JSON.parse(options);
+		$("#bgm-volume").val(opts.bv);
+		$("#effect-volume").val(opts.ev);
+		applyOptions(opts);
+	}
+	else{
+		applyOptions({
+			bv: $("#bgm-volume").val(),
+			ev: $("#effect-volume").val(),
+			bo: encodeURI($("#bgm-override").val()).replace(";", ''),
+			io: encodeURI($("#img-override").val()).replace(";", ''),
+			di: $("#deny-invite").is(":checked"),
+			dw: $("#deny-whisper").is(":checked"),
+			df: $("#deny-friend").is(":checked"),
+			ar: $("#auto-ready").is(":checked"),
+			su: $("#sort-user").is(":checked"),
+			ow: $("#only-waiting").is(":checked"),
+			ou: $("#only-unlock").is(":checked")
+		});
+	
+	
+		$.cookie('kks', JSON.stringify($data.opts));
 	}
 	$(".dialog-head .dialog-title").on('mousedown', function(e){
 		var $pd = $(e.currentTarget).parents(".dialog");
@@ -322,12 +344,12 @@ $(document).ready(function(){
 	
 	$(document).keydown(function(e) {
 		if(e.keyCode == 13){
-			if(!$("#Talk").is(":focus") && !$("#dict-input").is(":focus")) {
-				$("#Talk").focus();
+			if(!$("#tPDaArKj3B8Y").is(":focus") && !$("#dict-input").is(":focus")) {
+				$("#tPDaArKj3B8Y").focus();
 			}
 		}
 		else if (e.keyCode === 27) {
-			$("#Talk").blur();
+			$("#tPDaArKj3B8Y").blur();
 		}
 	});
 	
@@ -664,8 +686,8 @@ $(document).ready(function(){
 	});
 	$stage.dialog.settingOK.on('click', function(e){
 		applyOptions({
-			mb: $("#mute-bgm").is(":checked"),
-			me: $("#mute-effect").is(":checked"),
+			bv: $("#bgm-volume").val(),
+			ev: $("#effect-volume").val(),
 			bo: encodeURI($("#bgm-override").val()).replace(";", ''),
 			io: encodeURI($("#img-override").val()).replace(";", ''),
 			di: $("#deny-invite").is(":checked"),
@@ -818,6 +840,14 @@ $(document).ready(function(){
 		var o = $data.users[$data._profiled];
 		
 		$stage.talk.val("/e " + (o.profile.title || o.profile.name).replace(/\s/g, "") + " ").focus();
+	});
+	$stage.dialog.profileFriend.on('click', function(e){
+		var id = $data._profiled;
+		
+		if(!id) return;
+		if(!$data.users[id]) return fail(450);
+		
+		send('friendAdd', { target: id }, true);
 	});
 	$stage.dialog.profileDress.on('click', function(e){
 		if($data.guest) return fail(421);
