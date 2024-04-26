@@ -67,6 +67,33 @@ function applyOptions(opt){
 	$data.muteBGM = $data.opts.mb;
 	$data.muteEff = $data.opts.me;
 	
+	
+	$("#bgm-override").val(function() {
+		if ($data.opts.bo && $data.opts.bo != "" && $data.opts.bo != "undefined") {
+			var decodedBo = decodeURIComponent($data.opts.bo);
+			if (decodedBo === $data.opts.bo) {
+				return $data.opts.bo;
+			} else {
+				return decodedBo;
+			}
+		} else {
+			return "";
+		}
+	});
+	
+	$("#img-override").val(function() {
+		if ($data.opts.io && $data.opts.io != "" && $data.opts.io != "undefined") {
+			var decodedIo = decodeURIComponent($data.opts.io);
+			if (decodedIo === $data.opts.io) {
+				return $data.opts.io;
+			} else {
+				return decodedIo;
+			}
+		} else {
+			return "";
+		}
+	});
+
 	$("#mute-bgm").attr('checked', $data.muteBGM);
 	$("#mute-effect").attr('checked', $data.muteEff);
 	$("#deny-invite").attr('checked', $data.opts.di);
@@ -142,7 +169,9 @@ function route(func, a0, a1, a2, a3, a4){
 	var r = RULE[MODE[$data.room.mode]];
 	
 	if(!r) return null;
-	try{
+
+	$lib[r.rule][func].call(this, a0, a1, a2, a3, a4);
+	/*try{
 		$lib[r.rule][func].call(this, a0, a1, a2, a3, a4);
 	}
 	catch(e){
@@ -152,7 +181,7 @@ function route(func, a0, a1, a2, a3, a4){
 		clearGame();
 		send('leave');
 		showDialog($stage.dialog.help);
-	}
+	}*/
 }
 function connectToRoom(chan, rid){
 	var url = $data.URL.replace(/:(\d+)/, function(v, p1){
@@ -542,7 +571,7 @@ function onMessage(data){
 }
 function welcome(){
 	notice('로비에서의 친목성 채팅은 제재 대상입니다. 자유로운 채팅은 귓속말 또는 방을 생성하여 이용해주세요.');
-	notice('새로운 기능은 <strong>모던 UI</strong>에서 만나자! 쿠폰, BGM/폰트 커스터마이징, 더 많은 옵션이 기다리고 있어요.<br>확률형 아이템 확률 정보는 모던 UI 상점에서 확인 가능합니다.<br>적용 방법: 설정 → UI 설정 → 모던 UI 선택');
+	notice('새로운 기능은 <strong>모던 UI</strong>에서 만나자! 쿠폰, BGM/폰트 커스터마이징, 더 많은 옵션이 기다리고 있어요.<br>확률형 아이템 확률 정보는 꾸미기 창에서 확인 가능합니다.<br>적용 방법: 설정 → UI 설정 → 모던 UI 선택');
 	var playtime = 0;
 
 	function showGameAlert() {
@@ -924,19 +953,41 @@ function updateMe(){
 	var lv = getLevel(my.data.score);
 	var prev = EXP[lv-2] || 0;
 	var goal = EXP[lv-1];
-	
+	var rank;
+
+	if(my.data.rankPoint < 50){
+		rank = 'UNRANKED';
+	} else if(my.data.rankPoint >= 50 && my.data.rankPoint < 500){
+		rank = 'BRONZE';
+	} else if(my.data.rankPoint >= 500 && my.data.rankPoint < 1500){
+		rank = 'SILVER';
+	} else if(my.data.rankPoint >= 1500 && my.data.rankPoint < 2500){
+		rank = 'GOLD';
+	} else if(my.data.rankPoint >= 2500 && my.data.rankPoint < 3500){
+		rank = 'PLATINUM';
+	} else if(my.data.rankPoint >= 3500 && my.data.rankPoint < 5000){
+		rank = 'DIAMOND';
+	} else if(my.data.rankPoint >= 5000){
+		rank = 'MASTER';
+	}
+
+
 	for(i in my.data.record) gw += my.data.record[i][1];
 	renderMoremi(".my-image", my.equip);
 	// $(".my-image").css('background-image', "url('"+my.profile.image+"')");
 	$(".my-stat-level").replaceWith(getLevelImage(my.data.score).addClass("my-stat-level"));
 	$(".my-stat-name").html(my.profile.title || my.profile.name);
 	$(".my-stat-record").html(L['globalWin'] + " " + gw + L['W']);
-	$(".my-stat-ping").html(commify(my.money) + L['ping']);
+	$(".my-stat-ping").html(commify(my.money) + L['ping'] + " " + L[rank] + " " + my.data.rankPoint + "RP");
 	$(".my-okg .graph-bar").width(($data._playTime % 600000) / 6000 + "%");
 	$(".my-okg-text").html(prettyTime($data._playTime));
 	$(".my-level").html(L['LEVEL'] + " " + lv);
 	$(".my-gauge .graph-bar").width((my.data.score-prev)/(goal-prev)*190);
 	$(".my-gauge-text").html(commify(my.data.score) + " / " + commify(goal));
+
+	if(my.profile.title == "닉네임 없음"){
+		showDialog($stage.dialog.newbie);
+	}
 }
 function prettyTime(time){
 	var min = Math.floor(time / 60000) % 60, sec = Math.floor(time * 0.001) % 60;
@@ -1452,6 +1503,13 @@ function drawCharFactory(){
 			if(!res.error) $dict.html(processWord(res.word, res.mean, res.theme, res.type.split(',')));
 		});
 		if(word == "") trayEmpty();
+
+		
+		$("#cf-reset").on('click', function(e){
+			$(".cf-tray-selected").removeClass("cf-tray-selected");
+			$data._tray = [];
+			trayEmpty();
+		});
 	}
 	function viewReward(text, level, blend){
 		$.get("/cf/" + text + "?l=" + level + "&b=" + (blend ? "1" : ""), function(res){
@@ -2698,7 +2756,7 @@ function forkChat(){
 	$stage.chat.scrollTop(999999999);
 }
 function badWords(text){
-	return text.replace(BAD, "♥♥");
+	return text.replace(BAD, "아잉");
 }
 function chatBalloon(text, id, flag){
 	$("#cb-" + id).remove();

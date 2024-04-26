@@ -44,6 +44,7 @@ const KKUTU_LEGACY_LIST = [
 	"Web/lib/kkutu/legacy/tail.js",
 	"Web/lib/kkutu/legacy/rule_classic.js",
 	"Web/lib/kkutu/legacy/rule_jaqwi.js",
+	"Web/lib/kkutu/legacy/rule_mathquiz.js",
 	"Web/lib/kkutu/legacy/rule_crossword.js",
 	"Web/lib/kkutu/legacy/rule_typing.js",
 	"Web/lib/kkutu/legacy/rule_hunmin.js",

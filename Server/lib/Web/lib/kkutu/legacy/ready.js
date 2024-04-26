@@ -69,7 +69,8 @@ $(document).ready(function(){
 			exit: $("#ExitBtn"),
 			notice: $("#NoticeBtn"),
 			replay: $("#ReplayBtn"),
-			leaderboard: $("#LeaderboardBtn")
+			leaderboard: $("#LeaderboardBtn"),
+			coupon: $("#CouponBtn")
 		},
 		dialog: {
 			setting: $("#SettingDiag"),
@@ -130,6 +131,9 @@ $(document).ready(function(){
 			chatLog: $("#ChatLogDiag"),
 			obtain: $("#ObtainDiag"),
 				obtainOK: $("#obtain-ok"),
+			newbie: $("#NewbieDiag"),
+					newbieOK: $("#setNickname"),
+			coupon: $("#CouponRegisterDiag"),
 			help: $("#HelpDiag")
 		},
 		box: {
@@ -175,6 +179,7 @@ $(document).ready(function(){
 		{ key: "lvup", value: "/media/kkutu/lvup.mp3" },
 		{ key: "Al", value: "/media/kkutu/Al.mp3" },
 		{ key: "success", value: "/media/kkutu/success.mp3" },
+		{ key: "question", value: "/media/kkutu/question.mp3" },
 		{ key: "missing", value: "/media/kkutu/missing.mp3" },
 		{ key: "mission", value: "/media/kkutu/mission.mp3" },
 		{ key: "kung", value: "/media/kkutu/kung.mp3" },
@@ -185,6 +190,17 @@ $(document).ready(function(){
 		{ key: "K"+i, value: "/media/kkutu/K"+i+".mp3" },
 		{ key: "As"+i, value: "/media/kkutu/As"+i+".mp3" }
 	);
+
+	const options = $.cookie('kks');
+	if(options){
+		var opts = JSON.parse(options);
+		if (opts.bo && opts.bo != "" && opts.bo != "undefined") {
+			$data._soundList[1].value = "/audioProxy?link="+encodeURI(opts.bo);
+		}
+		if (opts.io && opts.io != "" && opts.io != "undefined") {
+			$('#intro').attr('src', opts.io);
+		}
+	}
 
 	loadSounds($data._soundList, function(){
 		processShop(connect);
@@ -302,6 +318,20 @@ $(document).ready(function(){
 		}
 		$stage.game.hereText.val("");
 	}).hotkey($stage.talk, 13).hotkey($stage.game.hereText, 13);
+
+	
+	$(document).keydown(function(e) {
+		if(e.keyCode == 13){
+			if(!$("#Talk").is(":focus") && !$("#dict-input").is(":focus")) {
+				$("#Talk").focus();
+			}
+		}
+		else if (e.keyCode === 27) {
+			$("#Talk").blur();
+		}
+	});
+	
+	
 	$("#cw-q-input").on('keydown', function(e){
 		if(e.keyCode == 13){
 			var $target = $(e.currentTarget);
@@ -320,7 +350,7 @@ $(document).ready(function(){
 		var $target = $(e.currentTarget);
 		var value = $target.val();
 		
-		if(value < 2 || value > 8){
+		if(value < 2 || value > 25){
 			$target.css('color', "#FF4444");
 		}else{
 			$target.css('color', "");
@@ -378,6 +408,10 @@ $(document).ready(function(){
 	$stage.menu.community.on('click', function(e){
 		if($data.guest) return fail(451);
 		showDialog($stage.dialog.community);
+	});
+	$stage.menu.coupon.on('click', function(e){
+		$("#coupon-board").attr('src', "https://pcor.me/kkutu/coupon");
+		showDialog($stage.dialog.coupon);
 	});
 	$stage.dialog.commFriendAdd.on('click', function(e){
 		var id = prompt(L['friendAddNotice']);
@@ -632,6 +666,8 @@ $(document).ready(function(){
 		applyOptions({
 			mb: $("#mute-bgm").is(":checked"),
 			me: $("#mute-effect").is(":checked"),
+			bo: encodeURI($("#bgm-override").val()).replace(";", ''),
+			io: encodeURI($("#img-override").val()).replace(";", ''),
 			di: $("#deny-invite").is(":checked"),
 			dw: $("#deny-whisper").is(":checked"),
 			df: $("#deny-friend").is(":checked"),
@@ -784,8 +820,6 @@ $(document).ready(function(){
 		$stage.talk.val("/e " + (o.profile.title || o.profile.name).replace(/\s/g, "") + " ").focus();
 	});
 	$stage.dialog.profileDress.on('click', function(e){
-		showDialog($stage.dialog.help);
-		/*
 		if($data.guest) return fail(421);
 		if($data._gaming) return fail(438);
 		if(showDialog($stage.dialog.dress)) $.get("/box", function(res){
@@ -793,17 +827,68 @@ $(document).ready(function(){
 			
 			$data.box = res;
 			drawMyDress();
-		});*/
-	});
-	$stage.dialog.dressOK.on('click', function(e){
-		$(e.currentTarget).attr('disabled', true);
-		$.post("/exordial", { data: $("#dress-exordial").val() }, function(res){
-			$stage.dialog.dressOK.attr('disabled', false);
-			if(res.error) return fail(res.error);
-			
-			$stage.dialog.dress.hide();
 		});
 	});
+	$stage.dialog.dressOK.on('click', function(e){
+		var data = {};
+		$(e.currentTarget).attr('disabled', true);
+
+		if($("#dress-nickname").val() != $data.nickname) data.nickname = $("#dress-nickname").val();
+		if($("#dress-exordial").val() != $data.exordial || ($("#dress-exordial").val() === "" && $data.exordial !== "")) data.exordial = $("#dress-exordial").val();
+
+		var message = "";
+		var askConfirm = false;
+
+		if(data.nickname && data.exordial){
+			message = "닉네임과 소개를 변경하시겠어요? 1주일 내에는 닉네임을 변경할 수 없으며, 변경된 닉네임은 새로고침 후 반영돼요.";
+			askConfirm = true;
+		}
+		else if (data.exordial){
+			message = "소개를 변경하시겠어요?";
+		}
+		else if (data.nickname){
+			message = "닉네임을 변경하시겠어요? 1주일 내에는 닉네임을 변경할 수 없으며, 변경된 닉네임은 새로고침 후 반영돼요.";
+			askConfirm = true;
+		}
+		else {
+			message = "프로필을 변경하시겠어요?";
+		}
+		
+		function saveProfile(){
+			
+			$.post("/profile", data, function(res){
+				$stage.dialog.dressOK.attr('disabled', false);
+				if(res.error) return fail(res.error);
+				if(data.nickname) $data.users[$data.id].nickname = $data.nickname = data.nickname;
+				if(data.exordial || data.exordial === "") $data.users[$data.id].exordial = $data.exordial = data.exordial;
+				
+				if (!data.nickname && !data.exordial){
+					message = "수정되었습니다.";
+				}
+				else if (data.nickname) {
+					if (data.exordial || data.exordial === "") {
+						message = L.nickChanged + data.nickname + L.changed + " " + L.exorChanged + data.exordial + L.changed;
+					} else {
+						message = L.nickChanged + data.nickname + L.changed;
+					}
+				} else {
+					message = L.exorChanged + data.exordial + L.changed;
+				}
+				alert(message);
+				updateUserList(true);
+				$stage.dialog.dress.hide();
+			});
+		}
+
+		if (askConfirm){
+			if (confirm(message)) {
+				saveProfile();
+			}
+		}
+		else{
+			saveProfile();
+		}
+		});
 	$("#DressDiag .dress-type").on('click', function(e){
 		var $target = $(e.currentTarget);
 		var type = $target.attr('id').slice(11);
@@ -904,6 +989,19 @@ $(document).ready(function(){
 		if(obj) drawObtain(obj);
 		else $stage.dialog.obtain.hide();
 	});
+	
+	
+	$stage.dialog.newbieOK.on('click', function(e){
+		$stage.dialog.newbie.hide();
+		$.get("/box", function(res){
+			if(res.error) return fail(res.error);
+			
+			$data.box = res;
+			drawMyDress();
+		});
+		showDialog($stage.dialog.dress);
+	});
+	
 	for(i=0; i<5; i++) $("#team-" + i).on('click', onTeam);
 	function onTeam(e){
 		if($(".team-selector").hasClass("team-unable")) return;

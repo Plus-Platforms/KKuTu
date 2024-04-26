@@ -56,6 +56,7 @@ var ROUTES = [
 //볕뉘 수정 끝
 var page = WebInit.page;
 var gameServers = [];
+const blockedHostname = ["kkutu.co.kr", "kkutu.io", "kkutu.world", "kkutu.org", "rfskkutu.site"];
 
 WebInit.MOBILE_AVAILABLE = [
 	"portal", "main", "kkutu"
@@ -233,6 +234,10 @@ ROUTES.forEach(function(v){
 
 Server.get("/o/game", function(req, res){
 	var server = req.query.server;
+	if(blockedHostname.includes(req.hostname)){
+		res.send("다른 프리서버(끄투코리아, 끄투리오 등)에서 플러스끄투 링크를 도배하는 것에 대한 제보를 받았습니다. 홍보야 물론 좋지만 남에게 피해를 주는 행위는 자제합시다.");
+		return;
+	}
 	
 	//볕뉘 수정 구문삭제(220~229, 240)
 	DB.session.findOne([ '_id', req.session.id ]).on(function($ses){
@@ -283,7 +288,11 @@ Server.get("/o/game", function(req, res){
 
 Server.get("/game", function(req, res){
 	var server = req.query.server;
-	
+	if(blockedHostname.includes(req.hostname)){
+		res.send("다른 프리서버(끄투코리아, 끄투리오 등)에서 플러스끄투 링크를 도배하는 것에 대한 제보를 받았습니다. 홍보야 물론 좋지만 남에게 피해를 주는 행위는 자제합시다.");
+		return;
+	}
+
 	//볕뉘 수정 구문삭제(220~229, 240)
 	DB.session.findOne([ '_id', req.session.id ]).on(function($ses){
 		// var sid = (($ses || {}).profile || {}).sid || "NULL";

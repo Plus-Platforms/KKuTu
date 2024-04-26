@@ -460,11 +460,10 @@ $(document).ready(function(){
 
 
 	$(document).keydown(function(e) {
-		// 만약 눌린 키가 Ctrl 키인 경우
 		if(e.keyCode == 13){
-		if(!$("#Talk").is(":focus")) {
-			$("#Talk").focus();
-        }
+			if(!$("#Talk").is(":focus") && !$("#dict-input").is(":focus")) {
+				$("#Talk").focus();
+			}
 		}
 		else if (e.keyCode === 27) {
 			$("#Talk").blur();

@@ -45,7 +45,7 @@ var $stage;
 var $sound = {};
 var $_sound = {}; // 현재 재생 중인 것들
 var $data = {};
-var $lib = { Classic: {}, Jaqwi: {}, Crossword: {}, Typing: {}, Hunmin: {}, Daneo: {}, Sock: {} };
+var $lib = { Classic: {}, Jaqwi: {}, Crossword: {}, Typing: {}, Hunmin: {}, Daneo: {}, Sock: {}, MathQuiz: {} };
 var $rec;
 var mobile;
 
@@ -124,7 +124,8 @@ $(document).ready(function(){
 			exit: $("#ExitBtn"),
 			notice: $("#NoticeBtn"),
 			replay: $("#ReplayBtn"),
-			leaderboard: $("#LeaderboardBtn")
+			leaderboard: $("#LeaderboardBtn"),
+			coupon: $("#CouponBtn")
 		},
 		dialog: {
 			setting: $("#SettingDiag"),
@@ -185,6 +186,9 @@ $(document).ready(function(){
 			chatLog: $("#ChatLogDiag"),
 			obtain: $("#ObtainDiag"),
 				obtainOK: $("#obtain-ok"),
+			newbie: $("#NewbieDiag"),
+					newbieOK: $("#setNickname"),
+			coupon: $("#CouponRegisterDiag"),
 			help: $("#HelpDiag")
 		},
 		box: {
@@ -230,6 +234,7 @@ $(document).ready(function(){
 		{ key: "lvup", value: "/media/kkutu/lvup.mp3" },
 		{ key: "Al", value: "/media/kkutu/Al.mp3" },
 		{ key: "success", value: "/media/kkutu/success.mp3" },
+		{ key: "question", value: "/media/kkutu/question.mp3" },
 		{ key: "missing", value: "/media/kkutu/missing.mp3" },
 		{ key: "mission", value: "/media/kkutu/mission.mp3" },
 		{ key: "kung", value: "/media/kkutu/kung.mp3" },
@@ -240,6 +245,17 @@ $(document).ready(function(){
 		{ key: "K"+i, value: "/media/kkutu/K"+i+".mp3" },
 		{ key: "As"+i, value: "/media/kkutu/As"+i+".mp3" }
 	);
+
+	const options = $.cookie('kks');
+	if(options){
+		var opts = JSON.parse(options);
+		if (opts.bo && opts.bo != "" && opts.bo != "undefined") {
+			$data._soundList[1].value = "/audioProxy?link="+encodeURI(opts.bo);
+		}
+		if (opts.io && opts.io != "" && opts.io != "undefined") {
+			$('#intro').attr('src', opts.io);
+		}
+	}
 
 	loadSounds($data._soundList, function(){
 		processShop(connect);
@@ -357,6 +373,20 @@ $(document).ready(function(){
 		}
 		$stage.game.hereText.val("");
 	}).hotkey($stage.talk, 13).hotkey($stage.game.hereText, 13);
+
+	
+	$(document).keydown(function(e) {
+		if(e.keyCode == 13){
+			if(!$("#Talk").is(":focus") && !$("#dict-input").is(":focus")) {
+				$("#Talk").focus();
+			}
+		}
+		else if (e.keyCode === 27) {
+			$("#Talk").blur();
+		}
+	});
+	
+	
 	$("#cw-q-input").on('keydown', function(e){
 		if(e.keyCode == 13){
 			var $target = $(e.currentTarget);
@@ -375,7 +405,7 @@ $(document).ready(function(){
 		var $target = $(e.currentTarget);
 		var value = $target.val();
 		
-		if(value < 2 || value > 8){
+		if(value < 2 || value > 25){
 			$target.css('color', "#FF4444");
 		}else{
 			$target.css('color', "");
@@ -433,6 +463,10 @@ $(document).ready(function(){
 	$stage.menu.community.on('click', function(e){
 		if($data.guest) return fail(451);
 		showDialog($stage.dialog.community);
+	});
+	$stage.menu.coupon.on('click', function(e){
+		$("#coupon-board").attr('src', "https://pcor.me/kkutu/coupon");
+		showDialog($stage.dialog.coupon);
 	});
 	$stage.dialog.commFriendAdd.on('click', function(e){
 		var id = prompt(L['friendAddNotice']);
@@ -687,6 +721,8 @@ $(document).ready(function(){
 		applyOptions({
 			mb: $("#mute-bgm").is(":checked"),
 			me: $("#mute-effect").is(":checked"),
+			bo: encodeURI($("#bgm-override").val()).replace(";", ''),
+			io: encodeURI($("#img-override").val()).replace(";", ''),
 			di: $("#deny-invite").is(":checked"),
 			dw: $("#deny-whisper").is(":checked"),
 			df: $("#deny-friend").is(":checked"),
@@ -839,8 +875,6 @@ $(document).ready(function(){
 		$stage.talk.val("/e " + (o.profile.title || o.profile.name).replace(/\s/g, "") + " ").focus();
 	});
 	$stage.dialog.profileDress.on('click', function(e){
-		showDialog($stage.dialog.help);
-		/*
 		if($data.guest) return fail(421);
 		if($data._gaming) return fail(438);
 		if(showDialog($stage.dialog.dress)) $.get("/box", function(res){
@@ -848,17 +882,68 @@ $(document).ready(function(){
 			
 			$data.box = res;
 			drawMyDress();
-		});*/
-	});
-	$stage.dialog.dressOK.on('click', function(e){
-		$(e.currentTarget).attr('disabled', true);
-		$.post("/exordial", { data: $("#dress-exordial").val() }, function(res){
-			$stage.dialog.dressOK.attr('disabled', false);
-			if(res.error) return fail(res.error);
-			
-			$stage.dialog.dress.hide();
 		});
 	});
+	$stage.dialog.dressOK.on('click', function(e){
+		var data = {};
+		$(e.currentTarget).attr('disabled', true);
+
+		if($("#dress-nickname").val() != $data.nickname) data.nickname = $("#dress-nickname").val();
+		if($("#dress-exordial").val() != $data.exordial || ($("#dress-exordial").val() === "" && $data.exordial !== "")) data.exordial = $("#dress-exordial").val();
+
+		var message = "";
+		var askConfirm = false;
+
+		if(data.nickname && data.exordial){
+			message = "닉네임과 소개를 변경하시겠어요? 1주일 내에는 닉네임을 변경할 수 없으며, 변경된 닉네임은 새로고침 후 반영돼요.";
+			askConfirm = true;
+		}
+		else if (data.exordial){
+			message = "소개를 변경하시겠어요?";
+		}
+		else if (data.nickname){
+			message = "닉네임을 변경하시겠어요? 1주일 내에는 닉네임을 변경할 수 없으며, 변경된 닉네임은 새로고침 후 반영돼요.";
+			askConfirm = true;
+		}
+		else {
+			message = "프로필을 변경하시겠어요?";
+		}
+		
+		function saveProfile(){
+			
+			$.post("/profile", data, function(res){
+				$stage.dialog.dressOK.attr('disabled', false);
+				if(res.error) return fail(res.error);
+				if(data.nickname) $data.users[$data.id].nickname = $data.nickname = data.nickname;
+				if(data.exordial || data.exordial === "") $data.users[$data.id].exordial = $data.exordial = data.exordial;
+				
+				if (!data.nickname && !data.exordial){
+					message = "수정되었습니다.";
+				}
+				else if (data.nickname) {
+					if (data.exordial || data.exordial === "") {
+						message = L.nickChanged + data.nickname + L.changed + " " + L.exorChanged + data.exordial + L.changed;
+					} else {
+						message = L.nickChanged + data.nickname + L.changed;
+					}
+				} else {
+					message = L.exorChanged + data.exordial + L.changed;
+				}
+				alert(message);
+				updateUserList(true);
+				$stage.dialog.dress.hide();
+			});
+		}
+
+		if (askConfirm){
+			if (confirm(message)) {
+				saveProfile();
+			}
+		}
+		else{
+			saveProfile();
+		}
+		});
 	$("#DressDiag .dress-type").on('click', function(e){
 		var $target = $(e.currentTarget);
 		var type = $target.attr('id').slice(11);
@@ -959,6 +1044,19 @@ $(document).ready(function(){
 		if(obj) drawObtain(obj);
 		else $stage.dialog.obtain.hide();
 	});
+	
+	
+	$stage.dialog.newbieOK.on('click', function(e){
+		$stage.dialog.newbie.hide();
+		$.get("/box", function(res){
+			if(res.error) return fail(res.error);
+			
+			$data.box = res;
+			drawMyDress();
+		});
+		showDialog($stage.dialog.dress);
+	});
+	
 	for(i=0; i<5; i++) $("#team-" + i).on('click', onTeam);
 	function onTeam(e){
 		if($(".team-selector").hasClass("team-unable")) return;
@@ -1126,6 +1224,33 @@ function applyOptions(opt){
 	$data.muteBGM = $data.opts.mb;
 	$data.muteEff = $data.opts.me;
 	
+	
+	$("#bgm-override").val(function() {
+		if ($data.opts.bo && $data.opts.bo != "" && $data.opts.bo != "undefined") {
+			var decodedBo = decodeURIComponent($data.opts.bo);
+			if (decodedBo === $data.opts.bo) {
+				return $data.opts.bo;
+			} else {
+				return decodedBo;
+			}
+		} else {
+			return "";
+		}
+	});
+	
+	$("#img-override").val(function() {
+		if ($data.opts.io && $data.opts.io != "" && $data.opts.io != "undefined") {
+			var decodedIo = decodeURIComponent($data.opts.io);
+			if (decodedIo === $data.opts.io) {
+				return $data.opts.io;
+			} else {
+				return decodedIo;
+			}
+		} else {
+			return "";
+		}
+	});
+
 	$("#mute-bgm").attr('checked', $data.muteBGM);
 	$("#mute-effect").attr('checked', $data.muteEff);
 	$("#deny-invite").attr('checked', $data.opts.di);
@@ -1201,7 +1326,9 @@ function route(func, a0, a1, a2, a3, a4){
 	var r = RULE[MODE[$data.room.mode]];
 	
 	if(!r) return null;
-	try{
+
+	$lib[r.rule][func].call(this, a0, a1, a2, a3, a4);
+	/*try{
 		$lib[r.rule][func].call(this, a0, a1, a2, a3, a4);
 	}
 	catch(e){
@@ -1211,7 +1338,7 @@ function route(func, a0, a1, a2, a3, a4){
 		clearGame();
 		send('leave');
 		showDialog($stage.dialog.help);
-	}
+	}*/
 }
 function connectToRoom(chan, rid){
 	var url = $data.URL.replace(/:(\d+)/, function(v, p1){
@@ -1601,7 +1728,7 @@ function onMessage(data){
 }
 function welcome(){
 	notice('로비에서의 친목성 채팅은 제재 대상입니다. 자유로운 채팅은 귓속말 또는 방을 생성하여 이용해주세요.');
-	notice('새로운 기능은 <strong>모던 UI</strong>에서 만나자! 쿠폰, BGM/폰트 커스터마이징, 더 많은 옵션이 기다리고 있어요.<br>확률형 아이템 확률 정보는 모던 UI 상점에서 확인 가능합니다.<br>적용 방법: 설정 → UI 설정 → 모던 UI 선택');
+	notice('새로운 기능은 <strong>모던 UI</strong>에서 만나자! 쿠폰, BGM/폰트 커스터마이징, 더 많은 옵션이 기다리고 있어요.<br>확률형 아이템 확률 정보는 꾸미기 창에서 확인 가능합니다.<br>적용 방법: 설정 → UI 설정 → 모던 UI 선택');
 	var playtime = 0;
 
 	function showGameAlert() {
@@ -1983,19 +2110,41 @@ function updateMe(){
 	var lv = getLevel(my.data.score);
 	var prev = EXP[lv-2] || 0;
 	var goal = EXP[lv-1];
-	
+	var rank;
+
+	if(my.data.rankPoint < 50){
+		rank = 'UNRANKED';
+	} else if(my.data.rankPoint >= 50 && my.data.rankPoint < 500){
+		rank = 'BRONZE';
+	} else if(my.data.rankPoint >= 500 && my.data.rankPoint < 1500){
+		rank = 'SILVER';
+	} else if(my.data.rankPoint >= 1500 && my.data.rankPoint < 2500){
+		rank = 'GOLD';
+	} else if(my.data.rankPoint >= 2500 && my.data.rankPoint < 3500){
+		rank = 'PLATINUM';
+	} else if(my.data.rankPoint >= 3500 && my.data.rankPoint < 5000){
+		rank = 'DIAMOND';
+	} else if(my.data.rankPoint >= 5000){
+		rank = 'MASTER';
+	}
+
+
 	for(i in my.data.record) gw += my.data.record[i][1];
 	renderMoremi(".my-image", my.equip);
 	// $(".my-image").css('background-image', "url('"+my.profile.image+"')");
 	$(".my-stat-level").replaceWith(getLevelImage(my.data.score).addClass("my-stat-level"));
 	$(".my-stat-name").html(my.profile.title || my.profile.name);
 	$(".my-stat-record").html(L['globalWin'] + " " + gw + L['W']);
-	$(".my-stat-ping").html(commify(my.money) + L['ping']);
+	$(".my-stat-ping").html(commify(my.money) + L['ping'] + " " + L[rank] + " " + my.data.rankPoint + "RP");
 	$(".my-okg .graph-bar").width(($data._playTime % 600000) / 6000 + "%");
 	$(".my-okg-text").html(prettyTime($data._playTime));
 	$(".my-level").html(L['LEVEL'] + " " + lv);
 	$(".my-gauge .graph-bar").width((my.data.score-prev)/(goal-prev)*190);
 	$(".my-gauge-text").html(commify(my.data.score) + " / " + commify(goal));
+
+	if(my.profile.title == "닉네임 없음"){
+		showDialog($stage.dialog.newbie);
+	}
 }
 function prettyTime(time){
 	var min = Math.floor(time / 60000) % 60, sec = Math.floor(time * 0.001) % 60;
@@ -2511,6 +2660,13 @@ function drawCharFactory(){
 			if(!res.error) $dict.html(processWord(res.word, res.mean, res.theme, res.type.split(',')));
 		});
 		if(word == "") trayEmpty();
+
+		
+		$("#cf-reset").on('click', function(e){
+			$(".cf-tray-selected").removeClass("cf-tray-selected");
+			$data._tray = [];
+			trayEmpty();
+		});
 	}
 	function viewReward(text, level, blend){
 		$.get("/cf/" + text + "?l=" + level + "&b=" + (blend ? "1" : ""), function(res){
@@ -3757,7 +3913,7 @@ function forkChat(){
 	$stage.chat.scrollTop(999999999);
 }
 function badWords(text){
-	return text.replace(BAD, "♥♥");
+	return text.replace(BAD, "아잉");
 }
 function chatBalloon(text, id, flag){
 	$("#cb-" + id).remove();
@@ -4204,6 +4360,97 @@ $lib.Jaqwi.turnHint = function(data){
 	pushHint(data.hint);
 };
 $lib.Jaqwi.turnEnd = function(id, data){
+	var $sc = $("<div>").addClass("deltaScore").html("+" + data.score);
+	var $uc = $("#game-user-" + id);
+
+	if(data.giveup){
+		$uc.addClass("game-user-bomb");
+	}else if(data.answer){
+		$stage.game.here.hide();
+		$stage.game.display.html($("<label>").css('color', "#FFFF44").html(data.answer));
+		stopBGM();
+		playSound('horr');
+	}else{
+		// if(data.mean) turnHint(data);
+		if(id == $data.id) $stage.game.here.hide();
+		addScore(id, data.score);
+		if($data._roundTime > 10000) $data._roundTime = 10000;
+		drawObtainedScore($uc, $sc);
+		updateScore(id, getScore(id)).addClass("game-user-current");
+		playSound('success');
+	}
+};
+
+/**
+ * Rule the words! KKuTu Online
+ * Copyright (C) 2017 JJoriping(op@jjo.kr)
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ */
+
+$lib.MathQuiz.roundReady = function(data){
+	var tv = L['selectLevel'] + ": " + L['level_' + data.theme];
+	
+	clearBoard();
+	$data._roundTime = $data.room.time * 1000;
+	$data._fastTime = 10000;
+	$stage.game.display.html(tv);
+	$stage.game.items.hide();
+	$stage.game.hints.show();
+	$(".jjo-turn-time .graph-bar")
+		.width("100%")
+		.html(tv)
+		.css('text-align', "center");
+	drawRound(data.round);
+	playSound('question');
+	clearInterval($data._tTime);
+};
+$lib.MathQuiz.turnStart = function(data){
+	$(".game-user-current").removeClass("game-user-current");
+	$(".game-user-bomb").removeClass("game-user-bomb");
+	if($data.room.game.seq.indexOf($data.id) >= 0) $stage.game.here.show();
+	$stage.game.display.html($data._char = data.char);
+	clearInterval($data._tTime);
+	$data._tTime = addInterval(turnGoing, TICK);
+	playBGM('jaqwi');
+};
+$lib.MathQuiz.turnGoing = function(){
+	var $rtb = $stage.game.roundBar;
+	var bRate;
+	var tt;
+	
+	if(!$data.room) clearInterval($data._tTime);
+	$data._roundTime -= TICK;
+	
+	tt = $data._spectate ? L['stat_spectate'] : ($data._roundTime*0.001).toFixed(1) + L['SECOND'];
+	$rtb
+		.width($data._roundTime/$data.room.time*0.1 + "%")
+		.html(tt);
+		
+	if(!$rtb.hasClass("round-extreme")) if($data._roundTime <= $data._fastTime){
+		bRate = $data.bgm.currentTime / $data.bgm.duration;
+		if($data.bgm.paused) stopBGM();
+		else playBGM('jaqwiF');
+		$data.bgm.currentTime = $data.bgm.duration * bRate;
+		$rtb.addClass("round-extreme");
+	}
+};
+$lib.MathQuiz.turnHint = function(data){
+	playSound('mission');
+	pushHint(data.hint);
+};
+$lib.MathQuiz.turnEnd = function(id, data){
 	var $sc = $("<div>").addClass("deltaScore").html("+" + data.score);
 	var $uc = $("#game-user-" + id);
 
