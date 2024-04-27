@@ -374,8 +374,14 @@ iframe{
 		.room-user:hover{ cursor: pointer; background-color: #EEEEEE; }
 .GameBox{
 	width: 1000px;
-	height: 410px;
+	height: 450px;
 	background-image: url('/img/kkutu/gamebg.png');
+}
+.SamiBox{
+    justify-content: center;
+    align-content: center;
+    width: 100%;
+    height: 30px;
 }
 	.GameBox .product-title{ height: 12px; }
 	.GameBox .product-title h5{ float: left; }

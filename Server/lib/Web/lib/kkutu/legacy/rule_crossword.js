@@ -24,6 +24,8 @@ $lib.Crossword.roundReady = function(data, spec){
 	$data._roundTime = $data.room.time * 1000;
 	$data._fastTime = 30000;
 	$data.selectedRound = (turn == -1) ? 1 : (turn % $data.room.round + 1);
+	$stage.game.sami.hide();
+	$stage.game.overlay.hide();
 	$stage.game.items.hide();
 	$stage.game.cwcmd.show().css('opacity', 0);
 	drawRound($data.selectedRound);

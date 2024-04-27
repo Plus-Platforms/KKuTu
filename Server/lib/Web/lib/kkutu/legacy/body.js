@@ -1800,7 +1800,7 @@ function gameReady(){
 	$data._spectate = $data.room.game.seq.indexOf($data.id) == -1;
 	$data._gAnim = true;
 	$stage.box.room.show().height(360).animate({ 'height': 1 }, 500);
-	$stage.box.game.height(1).animate({ 'height': 410 }, 500);
+	$stage.box.game.height(1).animate({ 'height': 450 }, 500);
 	stopBGM();
 	$stage.dialog.resultSave.attr('disabled', false);
 	clearBoard();

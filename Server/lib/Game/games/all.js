@@ -193,7 +193,7 @@ exports.turnEnd = function(){
 	}
 	my.game.late = true;
 	if(target) if(target.game){
-		score = Const.getPenalty(my.game.chain, target.game.score);
+		score = Const.getPenalty(my.game.chain, target.game.score, false);
 		target.game.score += score;
 	}
 	getAuto.call(my, my.game.char, my.game.subChar, 0).then(function(w){

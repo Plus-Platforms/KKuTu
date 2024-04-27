@@ -106,7 +106,7 @@ exports.turnEnd = function(){
 	
 	my.game.late = true;
 	if(target) if(target.game){
-		score = Const.getPenalty(my.game.chain, target.game.score);
+		score = Const.getPenalty(my.game.chain, target.game.score, false);
 		target.game.score += score;
 	}
 	getAuto.call(my, my.game.theme, 0).then(function(w){

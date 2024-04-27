@@ -23,6 +23,8 @@ $lib.Jaqwi.roundReady = function(data){
 	$data._roundTime = $data.room.time * 1000;
 	$data._fastTime = 10000;
 	$stage.game.display.html(tv);
+	$stage.game.sami.hide();
+	$stage.game.overlay.hide();
 	$stage.game.items.hide();
 	$stage.game.hints.show();
 	$(".jjo-turn-time .graph-bar")

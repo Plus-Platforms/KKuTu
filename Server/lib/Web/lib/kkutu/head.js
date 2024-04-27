@@ -47,7 +47,7 @@ var $stage;
 var $sound = {};
 var $_sound = {}; // 현재 재생 중인 것들
 var $data = {};
-var $lib = { Classic: {}, Jaqwi: {}, Crossword: {}, Typing: {}, Hunmin: {}, Daneo: {}, Sock: {}, Drawing: {}, MathQuiz: {}, Moum: {}, All: {}, MathType: {} };
+var $lib = { Classic: {}, Jaqwi: {}, Crossword: {}, Typing: {}, Hunmin: {}, Daneo: {}, Sock: {}, Drawing: {}, MathQuiz: {}, Moum: {}, All: {}, MathType: {}, Originkkt: {} };
 var $rec;
 var mobile;
 var audioContext = window.hasOwnProperty("AudioContext") ? (new AudioContext()) : false;

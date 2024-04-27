@@ -27,7 +27,7 @@ $lib.MathType.roundReady = function(data){
 	$data._fastTime = 10000;
 	$data._list = data.list.concat(data.list);
 	$data.chain = 0;
-	drawList();
+	drawListMQ();
 	drawRound(data.round);
 	playSound('round_start');
 	recordEvent('roundReady', { data: data });
@@ -38,21 +38,21 @@ function onSpace(e){
 		e.preventDefault();
 	}
 }
-function drawList(){
+function drawListMQ(){
 	var wl = $data._list.slice($data.chain);
 
 	wl = wl.map(function(v){
 		return v.replace(/\*/g, " × ").replace(/\//g, " ÷ ").replace(/\+/g, " + ").replace(/-/g, " - ");
 	} );
 	
-	var lv = 3;
+	var lv = 5;
 	var pts = "";
 	var w0l = wl[0].length;
 	
 	if(w0l >= 20) pts = "18px";
 	if(w0l >= 50) pts = "15px";
 	$stage.game.display.css('font-size', pts);
-	wl[0] = "<label style='color: #FFFF44; font-weight: bold;'>" + wl[0] + "</label>";
+	wl[0] = "<label style='color: #FFFF44; font-weight: 700;'>" + wl[0] + " = ?</label> | ";
 	$stage.game.display.html(wl.slice(0, lv).join(' '));
 	$stage.game.chain.show().html($data.chain);
 	$(".jjo-turn-time .graph-bar")
@@ -94,12 +94,12 @@ $lib.MathType.turnEnd = function(id, data){
 	
 	if(data.error){
 		$data.chain++;
-		drawList();
+		drawListMQ();
 		playSound('fail');
 	}else if(data.ok){
 		if($data.id == id){
 			$data.chain++;
-			drawList();
+			drawListMQ();
 			playSound('mission');
 			pushHistory(data.value, "");
 		}else if($data._spectate){

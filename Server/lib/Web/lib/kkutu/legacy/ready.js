@@ -151,6 +151,8 @@ $(document).ready(function(){
 			hints: $(".GameBox .hints"),
 			cwcmd: $(".GameBox .cwcmd"),
 			bb: $(".GameBox .bb"),
+			sami: $(".GameBox .SamiBox"),
+			overlay: $("#originOverlay"),
 			items: $(".GameBox .items"),
 			chain: $(".GameBox .chain"),
 			round: $(".rounds"),

@@ -28,6 +28,8 @@ $lib.Sock.roundReady = function(data, spec){
 	$data._maps = [];
 	$data._roundTime = $data.room.time * 1000;
 	$data._fastTime = 10000;
+	$stage.game.sami.hide();
+	$stage.game.overlay.hide();
 	$stage.game.items.hide();
 	$stage.game.bb.show();
 	$lib.Sock.drawDisplay();

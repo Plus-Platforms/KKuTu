@@ -74,7 +74,9 @@ block Middle
 				img(src="/img/event/디스코드100명.webp", style="height: 300px;")
 			div.dialog-bar.d2-bar.tail-button
 				button.primaryBtn#evtpopup-ok= L("close")
-
+	div#originOverlay(style="display: none;position: absolute;margin-top: 70px;height: 200px;width: 1010px;align-items: flex-end;justify-content: center;z-index: 3;")
+		img#originCountdown(src="/img/kkutu/origin_kkt/count-3.png", style="height: 100px;")
+		img#originItem(src="/img/kkutu/origin_kkt/perfect@ko.png", style="height: 60px;")
 	div#Intro
 		img#intro(src='/img/kkutu/intro.png')
 		// img#intro-start(src='/img/kkutu/intro_start.gif')
@@ -211,6 +213,7 @@ block Middle
 					option(value=14)!= L('modeKJH')
 					option(value=16)!= L('modeKMT')
 					option(value=15)!= L('modeKMQ')
+					option(value=17)!= L('modeKOK')
 				optgroup(label=L('mcEnglish'))
 					option(value=1)!= L('modeESH')
 					option(value=0)!= L('modeEKT')
@@ -479,6 +482,9 @@ block Middle
 			div.team-button#team-4.team-4 D
 		div.room-users
 	+Product('Game')
+		div.SamiBox
+			img#Sami1(src='/img/kkutu/origin_kkt/3-left-off.png')
+			img#Sami2(src='/img/kkutu/origin_kkt/3-right-off.png')
 		div.game-head
 			div.items
 			div.hints(style='display: none;')

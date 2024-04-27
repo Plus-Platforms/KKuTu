@@ -43,6 +43,7 @@ exports.OPTIONS = {
 	'prv': { name: "Proverb" },
 	'str': { name: "Strict" },
 	'k32': { name: "Sami" },
+	'prh': { name: "Prohibit" },
 	'no2': { name: "No2" },
 	'rank': { name: "RankGame" },
 	'ulm': { name: "Unlimited" },
@@ -216,6 +217,14 @@ exports.RULE = {
 	ai: false,
 	big: false,
 	ewq: false
+	},
+	'KOK': { lang: "ko",
+		rule: "Originkkt",
+		opts: [ "man", "ext", "loa", "str", "k32", "prh" ],
+		time: 1,
+		ai: true,
+		big: false,
+		ewq: true
 	},/*,
 	'KHQ': { lang: "ko",
 		rule: "HanjaQuiz",
@@ -229,7 +238,10 @@ exports.RULE = {
 exports.getPreScore = function(text, chain, tr){
 	return 2 * (Math.pow(5 + 7 * (text || "").length, 0.74) + 0.88 * (chain || []).length) * ( 0.5 + 0.5 * tr );
 };
-exports.getPenalty = function(chain, score){
+exports.getPenalty = function(chain, score, okt){
+	if(okt == true){
+		return -70;
+	}
 	return -1 * Math.round(Math.min(10 + (chain || []).length * 2.1 + score * 0.15, score));
 };
 exports.GAME_TYPE = Object.keys(exports.RULE);
