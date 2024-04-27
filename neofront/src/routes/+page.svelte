@@ -169,7 +169,7 @@
     
     <!-- 2 cards comparing old and new ui in row -->
     <div class="grid lg:grid-cols-2 gap-4 mt-4">
-      <div class="bg-gray-100 p-4 lg:rounded-xl border-blue-500 border-b-4 lg:border-b-0">
+      <div class="bg-gray-100 p-4 border-blue-500 border-b-4">
         <img src="/img/ui/modern.png" alt="Modern UI" class="w-full h-24 mb-4 object-cover" />
         <h4 class="text-3xl font-bold text-black">모던 UI</h4>
         <p class="mt-2 text-gray-600">
@@ -177,10 +177,10 @@
         </p>
         <button class="bg-blue-500 hover:bg-blue-600 transform ease-in duration-100 active:scale-95 text-white px-4 py-2 lg:rounded-lg mt-4" on:click={() => {
           document.cookie = "uipreference=modern";
-          window.location.href = `https://kkutu.plus/o/game?server=0&locale=${userLang}`;
+          window.location.href = `https://kkutu.plus/game?server=0&locale=${userLang}`;
         }}>선택하기</button>
       </div>
-      <div class="hidden lg:block bg-gray-100 p-4 lg:rounded-xl border-purple-500 border-b-4 lg:border-b-0">
+      <div class="hidden lg:block bg-gray-100 p-4 border-purple-500 border-b-4">
         <img src="/img/ui/classic.png" alt="Classic UI" class="w-full h-24 mb-4 object-cover" />
         <h4 class="text-3xl font-bold text-black">클래식 UI</h4>
         <p class="mt-2 text-gray-600">
@@ -188,7 +188,7 @@
         </p>
         <button class="hidden lg:block bg-purple-500 hover:bg-purple-600 transform ease-in duration-100 active:scale-95 text-white px-4 py-2 lg:rounded-lg mt-4" on:click={() => {
           document.cookie = "uipreference=classic";
-          window.location.href = `https://kkutu.plus/game?server=0&locale=${userLang}`;
+          window.location.href = `https://kkutu.plus/o/game?server=0&locale=${userLang}`;
         }}>선택하기</button>
 
         <button class="lg:hidden bg-gray-500 hover:bg-gray-600 transform ease-in duration-100 active:scale-95 text-white px-4 py-2 lg:rounded-lg mt-4">

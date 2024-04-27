@@ -33,6 +33,7 @@ const KKUTU_LIST = [
 	"Web/lib/kkutu/rule_daneo.js",
 	"Web/lib/kkutu/rule_drawing.js",
 	"Web/lib/kkutu/rule_sock.js",
+	"Web/lib/kkutu/rule_mathtype.js",
 	"Web/lib/kkutu/body.js",
 	"Web/lib/kkutu/tail.js"
 ];
@@ -45,6 +46,7 @@ const KKUTU_LEGACY_LIST = [
 	"Web/lib/kkutu/legacy/rule_classic.js",
 	"Web/lib/kkutu/legacy/rule_jaqwi.js",
 	"Web/lib/kkutu/legacy/rule_mathquiz.js",
+	"Web/lib/kkutu/legacy/rule_mathtype.js",
 	"Web/lib/kkutu/legacy/rule_crossword.js",
 	"Web/lib/kkutu/legacy/rule_typing.js",
 	"Web/lib/kkutu/legacy/rule_hunmin.js",

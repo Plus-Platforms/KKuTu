@@ -155,7 +155,6 @@ Server.get("/ranking", function(req, res){
 	}
 	var pg = Number(req.query.p);
 	var id = req.query.id;
-    var uid = req.session.profile.id;
 	
 	if(id){
 		MainDB.redis.getSurround(id, 15).then(function($body){
@@ -176,7 +175,6 @@ Server.get("/ranking", function(req, res){
 			$body.data.forEach(function($item){
 				MainDB.users.findOne([ '_id', $item.id ]).limit([ 'nickname', true ]).on(function($user){
 					$body.data[idx].nickname = $user.nickname;
-					if( $body.data[idx].id !== uid ) $body.data[idx].id = null;
 					idx++;
 					if(idx == $body.data.length) res.send($body);
 				});
