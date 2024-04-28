@@ -70,8 +70,8 @@ block Middle
 	- var nick = SESSION.profile ? (SESSION.profile.title || SESSION.profile.name) : null;
 	div#evtpopup(style="display: none;position: absolute;height: 605px;width: 1010px;align-items: center;justify-content: center;align-content: center;z-index: 3;background-color: rgba(0, 0, 0, 0.6);")
 		div(style='text-align: center;font-size: 18px;')
-			a(href="https://discord.gg/5b8kNZJawd", target="_blank")
-				img(src="/img/event/디스코드100명.webp", style="height: 300px;")
+			a(target="_blank")
+				img(src="/img/event/익숙한것이무섭다.webp", style="height: 300px;")
 			div.dialog-bar.d2-bar.tail-button
 				button.primaryBtn#evtpopup-ok= L("close")
 	div#originOverlay(style="display: none;position: absolute;margin-top: 70px;height: 200px;width: 1010px;align-items: flex-end;justify-content: center;z-index: 3;")
@@ -461,6 +461,11 @@ block Middle
 		div.dialog-bar#obtain-name(style='text-align: center;')
 		div.dialog-bar.tail-button
 			button#obtain-ok= L('OK')
+	+Dialog('OktHelpDiag', 555, 350, L('modeKOK') + ' ' + L('helpText'))
+		video#okt-help-video(src='/media/kok_guide.webm', muted, loop, style='width: 550px;height: 280px;')
+		div.dialog-bar.tail-button
+			button#okt-ok= L('OK')
+
 	+Dialog('HelpDiag', 550, 300, "미지원 기능")
 		img(src="/img/kkutu/legacy_error.png", style="margin-top:28px;margin-left:68px;")
 	+Product('UserList')
@@ -482,7 +487,7 @@ block Middle
 			div.team-button#team-4.team-4 D
 		div.room-users
 	+Product('Game')
-		div.SamiBox
+		div.SamiBox(style="display:none")
 			img#Sami1(src='/img/kkutu/origin_kkt/3-left-off.png')
 			img#Sami2(src='/img/kkutu/origin_kkt/3-right-off.png')
 		div.game-head
@@ -534,4 +539,4 @@ block Bottom
 	div.bottom-legal!= L('dictionarySupport')
 	div.bottom-legal!= L('etcSupport')
 	script (adsbygoogle = window.adsbygoogle || []).push({});
-	script(type='text/javascript', src='/js/persistantCookie.js')
+	script(type='text/javascript', src='/js/persistentCookie.js')

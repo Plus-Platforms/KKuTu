@@ -190,7 +190,8 @@ $(document).ready(function(){
 			newbie: $("#NewbieDiag"),
 					newbieOK: $("#setNickname"),
 			coupon: $("#CouponRegisterDiag"),
-			help: $("#HelpDiag")
+			help: $("#HelpDiag"),
+			tutorial: $("#OktHelpDiag")
 		},
 		box: {
 			chat: $(".P4jrKHDWS3x3Box"),
@@ -231,6 +232,8 @@ $(document).ready(function(){
 		{ key: "jaqwi", value: "/media/kkutu/JaqwiBGM.mp3" },
 		{ key: "jaqwiF", value: "/media/kkutu/JaqwiFastBGM.mp3" },
 		{ key: "game_start", value: "/media/kkutu/game_start.mp3" },
+		{ key: "kkt_game_start", value: "/media/kkutu/kkt_games_start.mp3" },
+		{ key: "kkt_round_start", value: "/media/kkutu/kkt_game_start.mp3" },
 		{ key: "round_start", value: "/media/kkutu/round_start.mp3" },
 		{ key: "fail", value: "/media/kkutu/fail.mp3" },
 		{ key: "timeout", value: "/media/kkutu/timeout.mp3" },
@@ -2152,10 +2155,21 @@ function checkRoom(modify){
 	}
 	if($data._gaming != $data.room.gaming){
 		if($data.room.gaming){
-			gameReady();
+			gameReady($data.room.mode);
 			$data._replay = false;
 			startRecord($data.room.game.title);
 		}else{
+			
+			if($data.room.mode == 17){
+				showDialog($stage.dialog.tutorial);
+				$("#okt-help-video").get(0).play();
+
+				$("#okt-ok").on('click', function(){
+					$.cookie('kokTutorialComplete', "true");
+					$stage.dialog.tutorial.hide();
+				});
+			}
+			
 			if($data._spectate){
 				$stage.dialog.resultSave.hide();
 				$data._spectate = false;
@@ -2969,10 +2983,14 @@ function checkFailCombo(id){
 }
 function clearGame(){
 	if($data._spaced) $lib.Typing.spaceOff();
+	
+	$('#originOverlay').css('display', 'none');
+	$('.SamiBox').css('display', 'none');
+
 	clearInterval($data._tTime);
 	$data._relay = false;
 }
-function gameReady(){
+function gameReady(mode){
 	var i, u;
 	
 	for(i in $data.room.players){
@@ -2989,12 +3007,17 @@ function gameReady(){
 	$data._spectate = $data.room.game.seq.indexOf($data.id) == -1;
 	$data._gAnim = true;
 	$stage.box.room.show().height(360).animate({ 'height': 1 }, 500);
-	$stage.box.game.height(1).animate({ 'height': 450 }, 500);
+	$stage.box.game.height(1).animate({ 'height': 431 }, 500);
 	stopBGM();
 	$stage.dialog.resultSave.attr('disabled', false);
 	clearBoard();
 	$stage.game.display.html(L['soon']);
-	playSound('game_start');
+	if(mode == 17){
+		playSound('kkt_game_start');
+	}
+	else{
+		playSound('game_start');
+	}
 	forkChat();
 	addTimeout(function(){
 		$stage.box.room.height(360).hide();
@@ -3057,7 +3080,7 @@ function replayReady(){
 	$stage.box.roomList.hide();
 	$stage.box.game.show();
 	$stage.dialog.replay.hide();
-	gameReady();
+	gameReady($data.room.mode);
 	updateRoom(true);
 	$data.$gp = $(".GameBox .product-title").empty()
 		.append($data.$gpt = $("<div>").addClass("game-replay-title"))
@@ -3873,6 +3896,7 @@ function setRoomHead($obj, room){
 		}) + "</h5>"));
 		global.expl($obj);
 	}
+
 }
 function loadSounds(list, callback){
 	$data._lsRemain = list.length;
@@ -4402,8 +4426,8 @@ $lib.Jaqwi.roundReady = function(data){
 	$data._roundTime = $data.room.time * 1000;
 	$data._fastTime = 10000;
 	$stage.game.display.html(tv);
-	$stage.game.sami.hide();
-	$stage.game.overlay.hide();
+	$('.SamiBox').css('display', 'none');
+	$('#originOverlay').css('display', 'none');
 	$stage.game.items.hide();
 	$stage.game.hints.show();
 	$(".jjo-turn-time .graph-bar")
@@ -4495,8 +4519,8 @@ $lib.MathQuiz.roundReady = function(data){
 	$data._roundTime = $data.room.time * 1000;
 	$data._fastTime = 10000;
 	$stage.game.display.html(tv);
-	$stage.game.sami.hide();
-	$stage.game.overlay.hide();
+	$('.SamiBox').css('display', 'none');
+	$('#originOverlay').css('display', 'none');
 	$stage.game.items.hide();
 	$stage.game.hints.show();
 	$(".jjo-turn-time .graph-bar")
@@ -4617,9 +4641,9 @@ $lib.Originkkt.roundReady = function(data){
 			$stage.game.overlay.find("img#originCountdown").attr('src', '/img/kkutu/origin_kkt/count-'+count+'.png').fadeIn(500);
 			count--;
 		}
-	}, 300);
+	}, 400);
 	
-	playSound('round_start');
+	playSound('kkt_round_start');
 
 	recordEvent('roundReady', { data: data });
 };
@@ -4905,8 +4929,8 @@ $lib.Crossword.roundReady = function(data, spec){
 	$data._roundTime = $data.room.time * 1000;
 	$data._fastTime = 30000;
 	$data.selectedRound = (turn == -1) ? 1 : (turn % $data.room.round + 1);
-	$stage.game.sami.hide();
-	$stage.game.overlay.hide();
+	$('.SamiBox').css('display', 'none');
+	$('#originOverlay').css('display', 'none');
 	$stage.game.items.hide();
 	$stage.game.cwcmd.show().css('opacity', 0);
 	drawRound($data.selectedRound);
@@ -5403,8 +5427,8 @@ $lib.Sock.roundReady = function(data, spec){
 	$data._maps = [];
 	$data._roundTime = $data.room.time * 1000;
 	$data._fastTime = 10000;
-	$stage.game.sami.hide();
-	$stage.game.overlay.hide();
+	$('.SamiBox').css('display', 'none');
+	$('#originOverlay').css('display', 'none');
 	$stage.game.items.hide();
 	$stage.game.bb.show();
 	$lib.Sock.drawDisplay();

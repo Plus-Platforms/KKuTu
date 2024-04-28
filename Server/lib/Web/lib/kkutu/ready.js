@@ -164,6 +164,7 @@ $(document).ready(function(){
 				confirmOK: $("#confirm-ok"),
 				confirmCancel: $("#confirm-cancel"),
 			teamSelect: $("#TeamSelectDiag"),
+			tutorial: $("#OktHelpDiag")
 		},
 		box: {
 			chat: $(".P4jrKHDWS3x3Box"),
@@ -183,6 +184,8 @@ $(document).ready(function(){
 			themeisTitle: $('#themeis-title'),
 			cwcmd: $(".GameBox .cwcmd"),
 			bb: $(".GameBox .bb"),
+			sami: $(".GameBox .SamiBox"),
+			overlay: $("#originOverlay"),
 			items: $(".GameBox .items"),
 			chain: $(".GameBox .chain"),
 			round: $(".rounds"),
@@ -218,6 +221,8 @@ $(document).ready(function(){
 		{ key: "jaqwi", value: "/media/kkutu/JaqwiBGM.mp3" },
 		{ key: "jaqwiF", value: "/media/kkutu/JaqwiFastBGM.mp3" },
 		{ key: "game_start", value: "/media/kkutu/game_start.mp3" },
+		{ key: "kkt_game_start", value: "/media/kkutu/kkt_games_start.mp3" },
+		{ key: "kkt_round_start", value: "/media/kkutu/kkt_game_start.mp3" },
 		{ key: "round_start", value: "/media/kkutu/round_start.mp3" },
 		{ key: "fail", value: "/media/kkutu/fail.mp3" },
 		{ key: "timeout", value: "/media/kkutu/timeout.mp3" },

@@ -52,9 +52,9 @@ $lib.Originkkt.roundReady = function(data){
 			$stage.game.overlay.find("img#originCountdown").attr('src', '/img/kkutu/origin_kkt/count-'+count+'.png').fadeIn(500);
 			count--;
 		}
-	}, 300);
+	}, 400);
 	
-	playSound('round_start');
+	playSound('kkt_round_start');
 
 	recordEvent('roundReady', { data: data });
 };

@@ -37,7 +37,7 @@
     var month = today.getMonth() + 1;
     var day = today.getDate();
     var todayStr = year + "" + (month < 10 ? "0" + month : month) + "" + (day < 10 ? "0" + day : day);
-    if (!evtpopup || evtpopup < "20240423") {
+    if (!evtpopup || evtpopup < "20240428") {
       document.getElementById("evtpopup").style.display = "flex";
     }
   };

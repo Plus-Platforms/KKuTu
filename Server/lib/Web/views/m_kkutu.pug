@@ -95,8 +95,8 @@ block Middle
 	div#tost_message
 	div#evtpopup(style="margin-top: -40px;display: none;position: absolute;height: 100%;width: 100%;align-items: center;justify-content: center;align-content: center;z-index: 3;background-color: rgba(0, 0, 0, 0.6);")
 		div(style='text-align: center;font-size: 18px;')
-			a(href="https://discord.gg/5b8kNZJawd", target="_blank")
-				img(src="/img/event/디스코드100명.webp", style="width: 90vw;")
+			a(target="_blank")
+				img(src="/img/event/익숙한것이무섭다.webp", style="width: 90vw;")
 			div.dialog-bar.d2-bar.tail-button
 				button.primaryBtn#evtpopup-ok= L("close")
 	div#creditpopup(style="display: none;position: absolute;height: 100%;width: 100%;align-items: center;justify-content: center;align-content: center;z-index: 2;background-color:#000;")
@@ -615,4 +615,4 @@ block Bottom
 	div.bottom-legal!= L('dictionarySupport')
 	div.bottom-legal!= L('etcSupport')
 	script (adsbygoogle = window.adsbygoogle || []).push({});
-	script(type='text/javascript', src='/js/persistantCookie.js')
+	script(type='text/javascript', src='/js/persistentCookie.js')

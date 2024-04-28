@@ -963,10 +963,21 @@ function checkRoom(modify){
 	}
 	if($data._gaming != $data.room.gaming){
 		if($data.room.gaming){
-			gameReady();
+			gameReady($data.room.mode);
 			$data._replay = false;
 			startRecord($data.room.game.title);
 		}else{
+			
+			if($data.room.mode == 17){
+				showDialog($stage.dialog.tutorial);
+				$("#okt-help-video").get(0).play();
+
+				$("#okt-ok").on('click', function(){
+					$.cookie('kokTutorialComplete', "true");
+					$stage.dialog.tutorial.hide();
+				});
+			}
+			
 			if($data._spectate){
 				$stage.dialog.resultSave.hide();
 				$data._spectate = false;
@@ -1780,10 +1791,14 @@ function checkFailCombo(id){
 }
 function clearGame(){
 	if($data._spaced) $lib.Typing.spaceOff();
+	
+	$('#originOverlay').css('display', 'none');
+	$('.SamiBox').css('display', 'none');
+
 	clearInterval($data._tTime);
 	$data._relay = false;
 }
-function gameReady(){
+function gameReady(mode){
 	var i, u;
 	
 	for(i in $data.room.players){
@@ -1800,12 +1815,17 @@ function gameReady(){
 	$data._spectate = $data.room.game.seq.indexOf($data.id) == -1;
 	$data._gAnim = true;
 	$stage.box.room.show().height(360).animate({ 'height': 1 }, 500);
-	$stage.box.game.height(1).animate({ 'height': 450 }, 500);
+	$stage.box.game.height(1).animate({ 'height': 431 }, 500);
 	stopBGM();
 	$stage.dialog.resultSave.attr('disabled', false);
 	clearBoard();
 	$stage.game.display.html(L['soon']);
-	playSound('game_start');
+	if(mode == 17){
+		playSound('kkt_game_start');
+	}
+	else{
+		playSound('game_start');
+	}
 	forkChat();
 	addTimeout(function(){
 		$stage.box.room.height(360).hide();
@@ -1868,7 +1888,7 @@ function replayReady(){
 	$stage.box.roomList.hide();
 	$stage.box.game.show();
 	$stage.dialog.replay.hide();
-	gameReady();
+	gameReady($data.room.mode);
 	updateRoom(true);
 	$data.$gp = $(".GameBox .product-title").empty()
 		.append($data.$gpt = $("<div>").addClass("game-replay-title"))
@@ -2684,6 +2704,7 @@ function setRoomHead($obj, room){
 		}) + "</h5>"));
 		global.expl($obj);
 	}
+
 }
 function loadSounds(list, callback){
 	$data._lsRemain = list.length;

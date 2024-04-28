@@ -32,6 +32,19 @@ const RIEUL_TO_NIEUN = [4449, 4450, 4457, 4460, 4462, 4467];
 const RIEUL_TO_IEUNG = [4451, 4455, 4456, 4461, 4466, 4469];
 const NIEUN_TO_IEUNG = [4455, 4461, 4466, 4469];
 
+const POWER_KKT = {
+    "ORIGINAL": [
+        "렁", "래", "럽", "는", "른", "렛", "럼", "럴", "냥", "렇", "냐", "렘",
+        "럿", "렙", "렐", "뤄", "녜", "렝", "뤼", "럭", "렉", "냘", "냠", "레",
+        "러", "런", "렌"
+    ],
+    "REPLACE_TO": [
+        "넝", "내", "넙", "은", "은", "넷", "넘", "널", "양", "넣", "야", "넴",
+        "넛", "넵", "넬", "눠", "예", "넹", "뉘", "넉", "넥", "얕", "얌", "네",
+        "너", "넌", "넨"
+    ],
+};
+
 exports.init = function(_DB, _DIC){
 	DB = _DB;
 	DIC = _DIC;
@@ -542,6 +555,10 @@ function getSubChar(char){
 			if(char.length > 2) r = char.slice(1);
 			break;
 		case "KOK": case "KSH": case "KAP":
+			if (my.opts.power && POWER_KKT.ORIGINAL.includes(char)) {
+                r = POWER_KKT.REPLACE_TO[POWER_KKT.ORIGINAL.indexOf(char)];
+                break;
+            }
 			k = c - 0xAC00;
 			if(k < 0 || k > 11171) break;
 			ca = [ Math.floor(k/28/21), Math.floor(k/28)%21, k%28 ];

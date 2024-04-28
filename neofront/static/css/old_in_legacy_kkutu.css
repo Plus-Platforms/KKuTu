@@ -374,7 +374,7 @@ iframe{
 		.room-user:hover{ cursor: pointer; background-color: #EEEEEE; }
 .GameBox{
 	width: 1000px;
-	height: 450px;
+	height: 431px;
 	background-image: url('/img/kkutu/gamebg.png');
 }
 .SamiBox{

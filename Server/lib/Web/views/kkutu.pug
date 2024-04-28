@@ -108,10 +108,13 @@ block Middle
 	
 	div#evtpopup(style="display: none;position: absolute;height: 100%;width: 100%;align-items: center;justify-content: center;align-content: center;z-index: 3;background-color: rgba(0, 0, 0, 0.6);")
 		div(style='text-align: center;font-size: 18px;')
-			a(href="https://discord.gg/5b8kNZJawd", target="_blank")
-				img(src="/img/event/디스코드100명.webp", style="height: 500px;")
+			a(target="_blank")
+				img(src="/img/event/익숙한것이무섭다.webp", style="height: 500px;")
 			div.dialog-bar.d2-bar.tail-button
 				button.primaryBtn#evtpopup-ok= L("close")
+	div#originOverlay(style="display: none;position: absolute;margin-top: 210px;height: 60px;align-items: flex-end;justify-content: center;z-index: 1;width: 100%;")
+		img#originCountdown(src="/img/kkutu/origin_kkt/count-3.png", style="height: 100px;")
+		img#originItem(src="/img/kkutu/origin_kkt/perfect@ko.png", style="height: 60px;")
 	div#creditpopup(style="display: none;position: absolute;height: 100%;width: 100%;align-items: center;justify-content: center;align-content: center;z-index: 2;background-color:#000;")
 		div.topCloseInfo(style="right: 0;position: fixed;bottom: 0;z-index:10;")
 			button#creditpopup-close= "×"
@@ -674,6 +677,9 @@ block Middle
 			+Product('Room')
 				div.room-users
 			+Product('Game')
+				div.SamiBox(style="display:none")
+					img#Sami1(src='/img/kkutu/origin_kkt/3-left-off.png')
+					img#Sami2(src='/img/kkutu/origin_kkt/3-right-off.png')
 				div.game-head
 					div.rounds
 					div.items
@@ -781,4 +787,4 @@ block Middle
 
 	script (adsbygoogle = window.adsbygoogle || []).push({});
 	script(type='text/javascript', src='/js/onboarding.js')
-	script(type='text/javascript', src='/js/persistantCookie.js')
+	script(type='text/javascript', src='/js/persistentCookie.js')

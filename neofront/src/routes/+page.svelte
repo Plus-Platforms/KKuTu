@@ -142,7 +142,7 @@
             </div>
     
           <div class="flex items-center justify-center">
-            <a href="https://discord.gg/5b8kNZJawd" target="_blank" class="px-4 py-5 rounded-full bg-white">
+            <a href="#" target="_blank" class="px-4 py-5 rounded-full bg-white">
             <img
               class="col-span-2 max-h-8 w-8 object-contain lg:col-span-1"
               src="/img/discord.png"

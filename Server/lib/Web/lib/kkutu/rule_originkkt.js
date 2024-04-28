@@ -27,8 +27,35 @@ $lib.Originkkt.roundReady = function(data){
 	if($data.room.opts.mission){
 		$stage.game.items.show().css('opacity', 1).html($data.mission = data.mission);
 	}
+
+	$stage.game.sami.css('display', 'flex');
+	$stage.game.overlay.css('display', 'flex');
+
+	$stage.game.overlay.find("img#originCountdown").hide();
+	$stage.game.overlay.find("img#originItem").hide();
+
+	if($data.room.opts.sami){
+		$stage.game.sami.find("img#Sami1").attr('src', '/img/kkutu/origin_kkt/3-left-off.png');
+		$stage.game.sami.find("img#Sami2").attr('src', '/img/kkutu/origin_kkt/2-right-off.png');
+	} else{
+		$stage.game.sami.find("img#Sami1").attr('src', '/img/kkutu/origin_kkt/3-left-on.png');
+		$stage.game.sami.find("img#Sami2").attr('src', '/img/kkutu/origin_kkt/3-right-on.png');
+	}
+
 	drawRound(data.round);
-	playSound('round_start');
+	var count = 3;
+	var countDown = setInterval(function(){
+		if(count == 0){
+			clearInterval(countDown);
+			$stage.game.overlay.find("img#originCountdown").attr('src', '/img/kkutu/origin_kkt/start@ko.png').fadeOut(500);
+		} else {
+			$stage.game.overlay.find("img#originCountdown").attr('src', '/img/kkutu/origin_kkt/count-'+count+'.png').fadeIn(500);
+			count--;
+		}
+	}, 400);
+	
+	playSound('kkt_round_start');
+
 	recordEvent('roundReady', { data: data });
 };
 $lib.Originkkt.turnStart = function(data){
@@ -38,10 +65,24 @@ $lib.Originkkt.turnStart = function(data){
 	if($data._tid.robot) $data._tid = $data._tid.id;
 	data.id = $data._tid;
 	
+
+	if(data.wordLength == 2 && $data.room.opts.sami){
+		$stage.game.sami.find("img#Sami1").attr('src', '/img/kkutu/origin_kkt/3-left-off.png');
+		$stage.game.sami.find("img#Sami2").attr('src', '/img/kkutu/origin_kkt/2-right-on.png');
+	}
+	else if (data.wordLength == 3 && $data.room.opts.sami){
+		$stage.game.sami.find("img#Sami1").attr('src', '/img/kkutu/origin_kkt/3-left-on.png');
+		$stage.game.sami.find("img#Sami2").attr('src', '/img/kkutu/origin_kkt/2-right-off.png');
+	} else {}
+
 	$stage.game.display.html($data._char = getCharText(data.char, data.subChar));
 	$("#game-user-"+data.id).addClass("game-user-current");
 	if(!$data._replay){
-		$stage.game.here.css('display', (data.id == $data.id) ? "block" : "none");
+		$stage.game.hereText.css('display', (data.id == $data.id) ? "block" : "none");
+		$stage.game.correct.hide();
+		$stage.game.wrong.hide();
+		$stage.game.other.css('display', (data.id == $data.id) ? "none" : "block");
+				
 		if(data.id == $data.id){
 			if(mobile) $stage.game.hereText.val("").focus();
 			else $stage.talk.focus();
@@ -83,6 +124,7 @@ $lib.Originkkt.turnEnd = function(id, data){
 		.html((data.score > 0) ? ("+" + (data.score - data.bonus)) : data.score);
 	var $uc = $(".game-user-current");
 	var hi;
+	var randomDieMessage = 0;
 	
 	if($data._turnSound) $data._turnSound.stop();
 	addScore(id, data.score);
@@ -90,15 +132,37 @@ $lib.Originkkt.turnEnd = function(id, data){
 	if(data.ok){
 		checkFailCombo();
 		clearTimeout($data._fail);
-		$stage.game.here.hide();
+
+		$stage.game.hereText.hide();
+		if (!$stage.game.other.is(":visible")){ $stage.game.correct.show();}
+
 		$stage.game.chain.html(++$data.chain);
 		pushDisplay(data.value, data.mean, data.theme, data.wc);
+
+		$stage.game.overlay.find("img#originItem").show();
+
+		if(data.score > 39){
+			$stage.game.overlay.find("img#originItem").attr('src', '/img/kkutu/origin_kkt/perfect@ko.png').fadeOut(500);
+		}
+		else if (data.score > 20){
+			$stage.game.overlay.find("img#originItem").attr('src', '/img/kkutu/origin_kkt/good@ko.png').fadeOut(500);
+		}
+		else{
+			$stage.game.overlay.find("img#originItem").attr('src', '').fadeOut(1);
+		}
+
 	}else{
 		checkFailCombo(id);
 		$sc.addClass("lost");
 		$(".game-user-current").addClass("game-user-bomb");
-		$stage.game.here.hide();
+		$stage.game.hereText.hide();
+		if (!$stage.game.other.is(":visible")){ $stage.game.wrong.show();
+}
 		playSound('timeout');
+
+		$stage.game.overlay.find("img#originItem").show();
+		randomDieMessage = Math.floor(Math.random() * 5) + 1;
+		$stage.game.overlay.find("img#originItem").attr('src', '/img/kkutu/origin_kkt/die-'+randomDieMessage+'.png').fadeOut(1000);
 	}
 	if(data.hint){
 		data.hint = data.hint._id;
@@ -120,6 +184,7 @@ $lib.Originkkt.turnEnd = function(id, data){
 			
 			drawObtainedScore($uc, $bc);
 		}, 500);
+
 	}
 	drawObtainedScore($uc, $sc).removeClass("game-user-current");
 	updateScore(id, getScore(id));

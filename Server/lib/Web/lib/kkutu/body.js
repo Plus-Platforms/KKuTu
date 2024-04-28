@@ -996,10 +996,19 @@ function checkRoom(modify){
 	}
 	if($data._gaming != $data.room.gaming){
 		if($data.room.gaming){
-			gameReady();
+			gameReady($data.room.mode);
 			$data._replay = false;
 			startRecord($data.room.game.title);
 		}else{
+			if($data.room.mode == 17){
+				showDialog($stage.dialog.tutorial);
+				$("#okt-help-video").get(0).play();
+
+				$("#okt-ok").on('click', function(){
+					$.cookie('kokTutorialComplete', "true");
+					$stage.dialog.tutorial.hide();
+				});
+			}
 			if($data._spectate){
 				$stage.dialog.resultSave.hide();
 				$data._spectate = false;
@@ -1919,10 +1928,14 @@ function checkFailCombo(id){
 }
 function clearGame(){
 	if($data._spaced) $lib.Typing.spaceOff();
+	
+	$('#originOverlay').css('display', 'none');
+	$('.SamiBox').css('display', 'none');
+
 	clearInterval($data._tTime);
 	$data._relay = false;
 }
-function gameReady(){
+function gameReady(mode){
 	var i, u;
 	
 	for(i in $data.room.players){
@@ -1948,7 +1961,12 @@ function gameReady(){
 	$(".jjo-turn-time").css('width', "");
 	$stage.game.display.html(L['soon']).css('font-size', "").css('width', "");
 
-	playSound('game_start');
+	if(mode == 17){
+		playSound('kkt_game_start');
+	}
+	else{
+		playSound('game_start');
+	}
 	forkChat();
 	addTimeout(function(){
 		$stage.box.room.height(680).hide();
@@ -2012,7 +2030,7 @@ function replayReady(){
 	$stage.box.roominfoList.show();
 	$stage.box.game.show();
 	$stage.dialog.replay.hide();
-	gameReady();
+	gameReady($data.room.mode);
 	updateRoom(true);
 	$data.$gp = $(".replayInfo").empty()
 		.append($data.$gpt = $("<div>").addClass("game-replay-title"))

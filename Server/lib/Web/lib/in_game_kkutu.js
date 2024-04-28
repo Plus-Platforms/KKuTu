@@ -220,6 +220,7 @@ $(document).ready(function(){
 				confirmOK: $("#confirm-ok"),
 				confirmCancel: $("#confirm-cancel"),
 			teamSelect: $("#TeamSelectDiag"),
+			tutorial: $("#OktHelpDiag")
 		},
 		box: {
 			chat: $(".P4jrKHDWS3x3Box"),
@@ -239,6 +240,8 @@ $(document).ready(function(){
 			themeisTitle: $('#themeis-title'),
 			cwcmd: $(".GameBox .cwcmd"),
 			bb: $(".GameBox .bb"),
+			sami: $(".GameBox .SamiBox"),
+			overlay: $("#originOverlay"),
 			items: $(".GameBox .items"),
 			chain: $(".GameBox .chain"),
 			round: $(".rounds"),
@@ -274,6 +277,8 @@ $(document).ready(function(){
 		{ key: "jaqwi", value: "/media/kkutu/JaqwiBGM.mp3" },
 		{ key: "jaqwiF", value: "/media/kkutu/JaqwiFastBGM.mp3" },
 		{ key: "game_start", value: "/media/kkutu/game_start.mp3" },
+		{ key: "kkt_game_start", value: "/media/kkutu/kkt_games_start.mp3" },
+		{ key: "kkt_round_start", value: "/media/kkutu/kkt_game_start.mp3" },
 		{ key: "round_start", value: "/media/kkutu/round_start.mp3" },
 		{ key: "fail", value: "/media/kkutu/fail.mp3" },
 		{ key: "timeout", value: "/media/kkutu/timeout.mp3" },
@@ -1615,8 +1620,8 @@ $lib.Jaqwi.roundReady = function(data){
 	$data._roundTime = $data.room.time * 1000;
 	$data._fastTime = 10000;
 	$stage.game.display.html(tv);
-	$stage.game.sami.hide();
-	$stage.game.overlay.hide();
+	$('.SamiBox').css('display', 'none');
+	$('#originOverlay').css('display', 'none');
 	$stage.game.items.hide();
 	$stage.game.hints.show();
 	$(".jjo-turn-time .graph-bar")
@@ -1714,8 +1719,8 @@ $lib.MathQuiz.roundReady = function(data){
 	$data._roundTime = $data.room.time * 1000;
 	$data._fastTime = 10000;
 	$stage.game.display.html(tv);
-	$stage.game.sami.hide();
-	$stage.game.overlay.hide();
+	$('.SamiBox').css('display', 'none');
+	$('#originOverlay').css('display', 'none');
 	$stage.game.items.hide();
 	$stage.game.hints.show();
 	$(".jjo-turn-time .graph-bar")
@@ -1822,8 +1827,8 @@ $lib.Crossword.roundReady = function(data, spec){
 	$data._roundTime = $data.room.time * 1000;
 	$data._fastTime = 30000;
 	$data.selectedRound = (turn == -1) ? 1 : (turn % $data.room.round + 1);
-	$stage.game.sami.hide();
-	$stage.game.overlay.hide();
+	$('.SamiBox').css('display', 'none');
+	$('#originOverlay').css('display', 'none');
 	$stage.game.items.hide();
 	$stage.game.cwcmd.show().css('opacity', 0);
 	drawRound($data.selectedRound);
@@ -2722,8 +2727,8 @@ $lib.Sock.roundReady = function(data, spec){
 	$data._maps = [];
 	$data._roundTime = $data.room.time * 1000;
 	$data._fastTime = 10000;
-	$stage.game.sami.hide();
-	$stage.game.overlay.hide();
+	$('.SamiBox').css('display', 'none');
+	$('#originOverlay').css('display', 'none');
 	$stage.game.items.hide();
 	$stage.game.bb.show();
 	$lib.Sock.drawDisplay();
@@ -2834,8 +2839,35 @@ $lib.Originkkt.roundReady = function(data){
 	if($data.room.opts.mission){
 		$stage.game.items.show().css('opacity', 1).html($data.mission = data.mission);
 	}
+
+	$stage.game.sami.css('display', 'flex');
+	$stage.game.overlay.css('display', 'flex');
+
+	$stage.game.overlay.find("img#originCountdown").hide();
+	$stage.game.overlay.find("img#originItem").hide();
+
+	if($data.room.opts.sami){
+		$stage.game.sami.find("img#Sami1").attr('src', '/img/kkutu/origin_kkt/3-left-off.png');
+		$stage.game.sami.find("img#Sami2").attr('src', '/img/kkutu/origin_kkt/2-right-off.png');
+	} else{
+		$stage.game.sami.find("img#Sami1").attr('src', '/img/kkutu/origin_kkt/3-left-on.png');
+		$stage.game.sami.find("img#Sami2").attr('src', '/img/kkutu/origin_kkt/3-right-on.png');
+	}
+
 	drawRound(data.round);
-	playSound('round_start');
+	var count = 3;
+	var countDown = setInterval(function(){
+		if(count == 0){
+			clearInterval(countDown);
+			$stage.game.overlay.find("img#originCountdown").attr('src', '/img/kkutu/origin_kkt/start@ko.png').fadeOut(500);
+		} else {
+			$stage.game.overlay.find("img#originCountdown").attr('src', '/img/kkutu/origin_kkt/count-'+count+'.png').fadeIn(500);
+			count--;
+		}
+	}, 400);
+	
+	playSound('kkt_round_start');
+
 	recordEvent('roundReady', { data: data });
 };
 $lib.Originkkt.turnStart = function(data){
@@ -2845,10 +2877,24 @@ $lib.Originkkt.turnStart = function(data){
 	if($data._tid.robot) $data._tid = $data._tid.id;
 	data.id = $data._tid;
 	
+
+	if(data.wordLength == 2 && $data.room.opts.sami){
+		$stage.game.sami.find("img#Sami1").attr('src', '/img/kkutu/origin_kkt/3-left-off.png');
+		$stage.game.sami.find("img#Sami2").attr('src', '/img/kkutu/origin_kkt/2-right-on.png');
+	}
+	else if (data.wordLength == 3 && $data.room.opts.sami){
+		$stage.game.sami.find("img#Sami1").attr('src', '/img/kkutu/origin_kkt/3-left-on.png');
+		$stage.game.sami.find("img#Sami2").attr('src', '/img/kkutu/origin_kkt/2-right-off.png');
+	} else {}
+
 	$stage.game.display.html($data._char = getCharText(data.char, data.subChar));
 	$("#game-user-"+data.id).addClass("game-user-current");
 	if(!$data._replay){
-		$stage.game.here.css('display', (data.id == $data.id) ? "block" : "none");
+		$stage.game.hereText.css('display', (data.id == $data.id) ? "block" : "none");
+		$stage.game.correct.hide();
+		$stage.game.wrong.hide();
+		$stage.game.other.css('display', (data.id == $data.id) ? "none" : "block");
+				
 		if(data.id == $data.id){
 			if(mobile) $stage.game.hereText.val("").focus();
 			else $stage.talk.focus();
@@ -2890,6 +2936,7 @@ $lib.Originkkt.turnEnd = function(id, data){
 		.html((data.score > 0) ? ("+" + (data.score - data.bonus)) : data.score);
 	var $uc = $(".game-user-current");
 	var hi;
+	var randomDieMessage = 0;
 	
 	if($data._turnSound) $data._turnSound.stop();
 	addScore(id, data.score);
@@ -2897,15 +2944,37 @@ $lib.Originkkt.turnEnd = function(id, data){
 	if(data.ok){
 		checkFailCombo();
 		clearTimeout($data._fail);
-		$stage.game.here.hide();
+
+		$stage.game.hereText.hide();
+		if (!$stage.game.other.is(":visible")){ $stage.game.correct.show();}
+
 		$stage.game.chain.html(++$data.chain);
 		pushDisplay(data.value, data.mean, data.theme, data.wc);
+
+		$stage.game.overlay.find("img#originItem").show();
+
+		if(data.score > 39){
+			$stage.game.overlay.find("img#originItem").attr('src', '/img/kkutu/origin_kkt/perfect@ko.png').fadeOut(500);
+		}
+		else if (data.score > 20){
+			$stage.game.overlay.find("img#originItem").attr('src', '/img/kkutu/origin_kkt/good@ko.png').fadeOut(500);
+		}
+		else{
+			$stage.game.overlay.find("img#originItem").attr('src', '').fadeOut(1);
+		}
+
 	}else{
 		checkFailCombo(id);
 		$sc.addClass("lost");
 		$(".game-user-current").addClass("game-user-bomb");
-		$stage.game.here.hide();
+		$stage.game.hereText.hide();
+		if (!$stage.game.other.is(":visible")){ $stage.game.wrong.show();
+}
 		playSound('timeout');
+
+		$stage.game.overlay.find("img#originItem").show();
+		randomDieMessage = Math.floor(Math.random() * 5) + 1;
+		$stage.game.overlay.find("img#originItem").attr('src', '/img/kkutu/origin_kkt/die-'+randomDieMessage+'.png').fadeOut(1000);
 	}
 	if(data.hint){
 		data.hint = data.hint._id;
@@ -2927,6 +2996,7 @@ $lib.Originkkt.turnEnd = function(id, data){
 			
 			drawObtainedScore($uc, $bc);
 		}, 500);
+
 	}
 	drawObtainedScore($uc, $sc).removeClass("game-user-current");
 	updateScore(id, getScore(id));
@@ -4066,10 +4136,19 @@ function checkRoom(modify){
 	}
 	if($data._gaming != $data.room.gaming){
 		if($data.room.gaming){
-			gameReady();
+			gameReady($data.room.mode);
 			$data._replay = false;
 			startRecord($data.room.game.title);
 		}else{
+			if($data.room.mode == 17){
+				showDialog($stage.dialog.tutorial);
+				$("#okt-help-video").get(0).play();
+
+				$("#okt-ok").on('click', function(){
+					$.cookie('kokTutorialComplete', "true");
+					$stage.dialog.tutorial.hide();
+				});
+			}
 			if($data._spectate){
 				$stage.dialog.resultSave.hide();
 				$data._spectate = false;
@@ -4989,10 +5068,14 @@ function checkFailCombo(id){
 }
 function clearGame(){
 	if($data._spaced) $lib.Typing.spaceOff();
+	
+	$('#originOverlay').css('display', 'none');
+	$('.SamiBox').css('display', 'none');
+
 	clearInterval($data._tTime);
 	$data._relay = false;
 }
-function gameReady(){
+function gameReady(mode){
 	var i, u;
 	
 	for(i in $data.room.players){
@@ -5018,7 +5101,12 @@ function gameReady(){
 	$(".jjo-turn-time").css('width', "");
 	$stage.game.display.html(L['soon']).css('font-size', "").css('width', "");
 
-	playSound('game_start');
+	if(mode == 17){
+		playSound('kkt_game_start');
+	}
+	else{
+		playSound('game_start');
+	}
 	forkChat();
 	addTimeout(function(){
 		$stage.box.room.height(680).hide();
@@ -5082,7 +5170,7 @@ function replayReady(){
 	$stage.box.roominfoList.show();
 	$stage.box.game.show();
 	$stage.dialog.replay.hide();
-	gameReady();
+	gameReady($data.room.mode);
 	updateRoom(true);
 	$data.$gp = $(".replayInfo").empty()
 		.append($data.$gpt = $("<div>").addClass("game-replay-title"))
