@@ -304,6 +304,13 @@ $(document).ready(function(){
 	const options = $.cookie('kks');
 	if(options){
 		var opts = JSON.parse(options);
+
+		if(opts.mp == true){
+			for(i=0; i<$data._soundList.length; i++){
+				$data._soundList[i].value = $data._soundList[i].value.replace('.ogg', '.mp3');
+			}
+		}
+
 		if (opts.bo && opts.bo != "" && opts.bo != "undefined") {
 			$data._soundList[1].value = "/audioProxy?link="+encodeURI(opts.bo);
 		}
@@ -412,7 +419,8 @@ $(document).ready(function(){
 			ow: $("#only-waiting").is(":checked"),
 			ou: $("#only-unlock").is(":checked"),
 			cp: $("#copyright-hide").is(":checked"),
-			vp: $("#lower-vibration").is(":checked")
+			vp: $("#lower-vibration").is(":checked"),
+			mp: $("#use-mp3").is(":checked")
 		});
 	
 	
@@ -972,7 +980,8 @@ $(document).ready(function(){
 			ow: $("#only-waiting").is(":checked"),
 			ou: $("#only-unlock").is(":checked"),
 			cp: $("#copyright-hide").is(":checked"),
-			vp: $("#lower-vibration").is(":checked")
+			vp: $("#lower-vibration").is(":checked"),
+			mp: $("#use-mp3").is(":checked")
 		});
 	
 	
@@ -3230,6 +3239,7 @@ function applyOptions(opt){
 	$("#sort-user").attr('checked', $data.opts.su);
 	$("#only-waiting").attr('checked', $data.opts.ow);
 	$("#only-unlock").attr('checked', $data.opts.ou);
+	$("#use-mp3").attr('checked', $data.opts.mp);
 	$("#copyright-hide").attr('checked', $data.opts.cp);
 
 	if($data.bgm){
@@ -3700,18 +3710,18 @@ function onMessage(data){
     }
 }
 function welcome() {
-	notice('로비에서의 친목성 채팅은 제재 대상입니다. 자유로운 채팅은 귓속말 또는 방을 생성하여 이용해주세요.');
+	notice(L['chatWarn']);
     var playtime = 0;
 
     function showGameAlert() {
 		if (playtime !== 0){
-        notice('게임을 플레이한지 ' + playtime + '시간이 지났습니다. 과도한 게임 이용은 일상생활에 지장을 줄 수 있습니다. 이 게임물은 전체이용가입니다.');
+        	notice(L['addictionWarning1'] + playtime + L['addictionWarning2']);
 		}
 
         var date = new Date();
 
         if ((date.getHours() >= 19 && date.getHours() <= 23)) {
-            notice('🔥 19시부터 0시는 핫타임! 2배의 XP를 받아보세요.');
+            notice(L['chatHottime']);
         }
 
         playtime++;
@@ -3769,34 +3779,6 @@ function welcome() {
 			if(e.ctrlKey && e.shiftKey && e.keyCode == 73) return false;
 		});
 
-		!function() {
-		function detectDevTool(allow) {
-		  if(isNaN(+allow)) allow = 100;
-		  var start = +new Date(); 
-		  debugger;
-		  var end = +new Date(); 
-		  if(isNaN(start) || isNaN(end) || end - start > allow) {
-			alert('잠깐! 개발자 도구를 라이브 서비스에서 실행하여 다른 사용자의 정상 이용에 영향을 주는 것은 불법입니다. 공식 레포지토리를 통해 정식적인 방법으로 소스코드를 확인해 보심이 어떨까요?');
-		  }
-		}
-		if(window.attachEvent) {
-		  if (document.readyState === "complete" || document.readyState === "interactive") {
-			  detectDevTool();
-			window.attachEvent('onresize', detectDevTool);
-			window.attachEvent('onmousemove', detectDevTool);
-			window.attachEvent('onfocus', detectDevTool);
-			window.attachEvent('onblur', detectDevTool);
-		  } else {
-			  setTimeout(argument.callee, 0);
-		  }
-		} else {
-		  window.addEventListener('load', detectDevTool);
-		  window.addEventListener('resize', detectDevTool);
-		  window.addEventListener('mousemove', detectDevTool);
-		  window.addEventListener('focus', detectDevTool);
-		  window.addEventListener('blur', detectDevTool);
-		}
-	  }();
 	}
 }
 

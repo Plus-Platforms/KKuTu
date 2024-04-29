@@ -200,6 +200,13 @@ $(document).ready(function(){
 	const options = $.cookie('kks');
 	if(options){
 		var opts = JSON.parse(options);
+		
+		if(opts.mp == true){
+			for(i=0; i<$data._soundList.length; i++){
+				$data._soundList[i].value = $data._soundList[i].value.replace('.ogg', '.mp3');
+			}
+		}
+
 		if (opts.bo && opts.bo != "" && opts.bo != "undefined") {
 			$data._soundList[1].value = "/audioProxy?link="+encodeURI(opts.bo);
 		}
@@ -304,7 +311,8 @@ $(document).ready(function(){
 			ar: $("#auto-ready").is(":checked"),
 			su: $("#sort-user").is(":checked"),
 			ow: $("#only-waiting").is(":checked"),
-			ou: $("#only-unlock").is(":checked")
+			ou: $("#only-unlock").is(":checked"),
+			mp: $("#use-mp3").is(":checked")
 		});
 	
 	
@@ -701,7 +709,8 @@ $(document).ready(function(){
 			ar: $("#auto-ready").is(":checked"),
 			su: $("#sort-user").is(":checked"),
 			ow: $("#only-waiting").is(":checked"),
-			ou: $("#only-unlock").is(":checked")
+			ou: $("#only-unlock").is(":checked"),
+			mp: $("#use-mp3").is(":checked")
 		});
 		$.cookie('kks', JSON.stringify($data.opts));
 		$stage.dialog.setting.hide();

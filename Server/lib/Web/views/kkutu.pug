@@ -185,7 +185,7 @@ block Middle
 
 
 
-	+Dialog('SettingDiag', 400, 733, L('settingsText', false))
+	+Dialog('SettingDiag', 400, 755, L('settingsText', false))
 		div.dialog-bar
 			h4.opt!= L("bgmVol")
 			input#bgm-volume.range-input(type='range' min='0' max='1' value='0.5' step='0.01' style='width:50%;')
@@ -227,6 +227,8 @@ block Middle
 			+SettingOption('only-waiting', L('onlyWaiting'), "width: 200px;")
 			h4
 			+SettingOption('only-unlock', L('onlyUnlock'), "width: 200px;")
+			h4
+			+SettingOption('use-mp3', L('bgmQuality'), "width: 200px;")
 		div.dialog-bar.tail-button.d3-bar
 			button.primaryBtn#setting-ok= L('save')
 			button#setting-ui= L('changeServer')

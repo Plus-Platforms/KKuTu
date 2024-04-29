@@ -248,6 +248,13 @@ $(document).ready(function(){
 	const options = $.cookie('kks');
 	if(options){
 		var opts = JSON.parse(options);
+
+		if(opts.mp == true){
+			for(i=0; i<$data._soundList.length; i++){
+				$data._soundList[i].value = $data._soundList[i].value.replace('.ogg', '.mp3');
+			}
+		}
+
 		if (opts.bo && opts.bo != "" && opts.bo != "undefined") {
 			$data._soundList[1].value = "/audioProxy?link="+encodeURI(opts.bo);
 		}
@@ -356,7 +363,8 @@ $(document).ready(function(){
 			ow: $("#only-waiting").is(":checked"),
 			ou: $("#only-unlock").is(":checked"),
 			cp: $("#copyright-hide").is(":checked"),
-			vp: $("#lower-vibration").is(":checked")
+			vp: $("#lower-vibration").is(":checked"),
+			mp: $("#use-mp3").is(":checked")
 		});
 	
 	
@@ -551,7 +559,7 @@ $(document).ready(function(){
 				}
 				catch(err){
 				}
-				alert('화면 해상도가 1600x900 미만입니다.\n정상적인 게임 플레이가 어려울 수 있으므로 외부 디스플레이를 연결하거나 전체화면 (F11)으로 게임을 플레이해주세요.');
+				//alert('화면 해상도가 1600x900 미만입니다.\n정상적인 게임 플레이가 어려울 수 있으므로 외부 디스플레이를 연결하거나 전체화면 (F11)으로 게임을 플레이해주세요.');
 			}
 	}
  
@@ -916,7 +924,8 @@ $(document).ready(function(){
 			ow: $("#only-waiting").is(":checked"),
 			ou: $("#only-unlock").is(":checked"),
 			cp: $("#copyright-hide").is(":checked"),
-			vp: $("#lower-vibration").is(":checked")
+			vp: $("#lower-vibration").is(":checked"),
+			mp: $("#use-mp3").is(":checked")
 		});
 	
 	

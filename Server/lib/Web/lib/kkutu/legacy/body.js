@@ -102,6 +102,7 @@ function applyOptions(opt){
 	$("#sort-user").attr('checked', $data.opts.su);
 	$("#only-waiting").attr('checked', $data.opts.ow);
 	$("#only-unlock").attr('checked', $data.opts.ou);
+	$("#use-mp3").attr('checked', $data.opts.mp);
 	
 	if($data.bgm){
 		if($data.BGMVolume){
@@ -569,19 +570,18 @@ function onMessage(data){
     }
 }
 function welcome(){
-	notice('로비에서의 친목성 채팅은 제재 대상입니다. 자유로운 채팅은 귓속말 또는 방을 생성하여 이용해주세요.');
-	notice('새로운 기능은 <strong>모던 UI</strong>에서 만나자! 쿠폰, BGM/폰트 커스터마이징, 더 많은 옵션이 기다리고 있어요.<br>확률형 아이템 확률 정보는 꾸미기 창에서 확인 가능합니다.<br>적용 방법: 설정 → UI 설정 → 모던 UI 선택');
+	notice(L['chatWarn']);
 	var playtime = 0;
 
 	function showGameAlert() {
 		if (playtime !== 0){
-		notice('게임을 플레이한지 ' + playtime + '시간이 지났습니다. 과도한 게임 이용은 일상생활에 지장을 줄 수 있습니다. 이 게임물은 전체이용가입니다.');
+			notice(L['addictionWarning1'] + playtime + L['addictionWarning2']);
 		}
 
 		var date = new Date();
 
 		if ((date.getHours() >= 19 && date.getHours() <= 23)) {
-			notice('🔥 19시부터 0시는 핫타임! 2배의 XP를 받아보세요.');
+			notice(L['chatHottime']);
 		}
 
 		playtime++;
@@ -607,35 +607,6 @@ function welcome(){
 		$(document).keydown(function(e){
 			if(e.ctrlKey && e.shiftKey && e.keyCode == 73) return false;
 		});
-
-		!function() {
-		function detectDevTool(allow) {
-		  if(isNaN(+allow)) allow = 100;
-		  var start = +new Date(); 
-		  debugger;
-		  var end = +new Date(); 
-		  if(isNaN(start) || isNaN(end) || end - start > allow) {
-			alert('잠깐! 개발자 도구를 라이브 서비스에서 실행하여 다른 사용자의 정상 이용에 영향을 주는 것은 불법입니다. 공식 레포지토리를 통해 정식적인 방법으로 소스코드를 확인해 보심이 어떨까요?');
-		  }
-		}
-		if(window.attachEvent) {
-		  if (document.readyState === "complete" || document.readyState === "interactive") {
-			  detectDevTool();
-			window.attachEvent('onresize', detectDevTool);
-			window.attachEvent('onmousemove', detectDevTool);
-			window.attachEvent('onfocus', detectDevTool);
-			window.attachEvent('onblur', detectDevTool);
-		  } else {
-			  setTimeout(argument.callee, 0);
-		  }
-		} else {
-		  window.addEventListener('load', detectDevTool);
-		  window.addEventListener('resize', detectDevTool);
-		  window.addEventListener('mousemove', detectDevTool);
-		  window.addEventListener('focus', detectDevTool);
-		  window.addEventListener('blur', detectDevTool);
-		}
-	  }();
 	}
 }
 function getKickText(profile, vote){

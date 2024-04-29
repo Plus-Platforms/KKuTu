@@ -60,6 +60,5 @@
     document.getElementById("evtpopup").style.display = "none";
   });
 
-  console.log('%c안내', 'color: blue; font-size: 50px; font-weight: bold; text-shadow: 0 0 5px red;');
-  console.log('%c영자 모두 밥 잘 먹고 있습니다. 여러분들이 굳이 개발자 도구를 안 열어도 잘 먹으니까 걱정해 주지 마세요.', 'color: black; font-size: 20px;');
-  console.log('%c모렘미에서 개발 일을 하고 싶으시다면 공식 디스코드에 문의 해 주세요.', 'color: black; font-size: 20px;');
+  console.log('%c잠깐!', 'color: cyan; font-size: 35px; font-weight: bold; text-shadow: 0 0 5px cyan;');
+  console.log('%c라이브 서비스의 정상적인 이용을 방해하는 행위는 위법입니다. 만약 그러한 행위를 시도하였다면, 즉시 중단하십시오.', 'font-size: 20px;');
