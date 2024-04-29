@@ -267,34 +267,34 @@ $(document).ready(function(){
 	}
 
 	$data._soundList = [
-		{ key: "k", value: "/media/kkutu/k.mp3" },
-		{ key: "lobby", value: "/media/kkutu/LobbyBGMS2.mp3" },
-		{ key: "dialog", value: "/media/kkutu/dialog.mp3" },
-		{ key: "legacylobby", value: "/media/kkutu/LobbyBGM.mp3" },
-		{ key: "ingame", value: "/media/kkutu/LobbyBGMS2.mp3" },
-		{ key: "shop", value: "/media/kkutu/LobbySeolBGM.mp3" },
-		{ key: "credit", value: "/media/kkutu/kkutuEnding.mp3" },
-		{ key: "jaqwi", value: "/media/kkutu/JaqwiBGM.mp3" },
-		{ key: "jaqwiF", value: "/media/kkutu/JaqwiFastBGM.mp3" },
-		{ key: "game_start", value: "/media/kkutu/game_start.mp3" },
-		{ key: "kkt_game_start", value: "/media/kkutu/kkt_games_start.mp3" },
-		{ key: "kkt_round_start", value: "/media/kkutu/kkt_game_start.mp3" },
-		{ key: "round_start", value: "/media/kkutu/round_start.mp3" },
-		{ key: "fail", value: "/media/kkutu/fail.mp3" },
-		{ key: "timeout", value: "/media/kkutu/timeout.mp3" },
-		{ key: "lvup", value: "/media/kkutu/lvup.mp3" },
-		{ key: "Al", value: "/media/kkutu/Al.mp3" },
-		{ key: "success", value: "/media/kkutu/success.mp3" },
-		{ key: "question", value: "/media/kkutu/question.mp3" },
-		{ key: "missing", value: "/media/kkutu/missing.mp3" },
-		{ key: "mission", value: "/media/kkutu/mission.mp3" },
-		{ key: "kung", value: "/media/kkutu/kung.mp3" },
-		{ key: "horr", value: "/media/kkutu/horr.mp3" },
+		{ key: "k", value: "/media/kkutu/k.ogg" },
+		{ key: "lobby", value: "/media/kkutu/LobbyBGMS2.ogg" },
+		{ key: "dialog", value: "/media/kkutu/dialog.ogg" },
+		{ key: "legacylobby", value: "/media/kkutu/LobbyBGM.ogg" },
+		{ key: "ingame", value: "/media/kkutu/LobbyBGMS2.ogg" },
+		{ key: "shop", value: "/media/kkutu/LobbySeolBGM.ogg" },
+		{ key: "credit", value: "/media/kkutu/kkutuEnding.ogg" },
+		{ key: "jaqwi", value: "/media/kkutu/JaqwiBGM.ogg" },
+		{ key: "jaqwiF", value: "/media/kkutu/JaqwiFastBGM.ogg" },
+		{ key: "game_start", value: "/media/kkutu/game_start.ogg" },
+		{ key: "kkt_game_start", value: "/media/kkutu/kkt_games_start.ogg" },
+		{ key: "kkt_round_start", value: "/media/kkutu/kkt_game_start.ogg" },
+		{ key: "round_start", value: "/media/kkutu/round_start.ogg" },
+		{ key: "fail", value: "/media/kkutu/fail.ogg" },
+		{ key: "timeout", value: "/media/kkutu/timeout.ogg" },
+		{ key: "lvup", value: "/media/kkutu/lvup.ogg" },
+		{ key: "Al", value: "/media/kkutu/Al.ogg" },
+		{ key: "success", value: "/media/kkutu/success.ogg" },
+		{ key: "question", value: "/media/kkutu/question.ogg" },
+		{ key: "missing", value: "/media/kkutu/missing.ogg" },
+		{ key: "mission", value: "/media/kkutu/mission.ogg" },
+		{ key: "kung", value: "/media/kkutu/kung.ogg" },
+		{ key: "horr", value: "/media/kkutu/horr.ogg" },
 	];
 	for(i=0; i<=10; i++) $data._soundList.push(
-		{ key: "T"+i, value: "/media/kkutu/T"+i+".mp3" },
-		{ key: "K"+i, value: "/media/kkutu/K"+i+".mp3" },
-		{ key: "As"+i, value: "/media/kkutu/As"+i+".mp3" }
+		{ key: "T"+i, value: "/media/kkutu/T"+i+".ogg" },
+		{ key: "K"+i, value: "/media/kkutu/K"+i+".ogg" },
+		{ key: "As"+i, value: "/media/kkutu/As"+i+".ogg" }
 	);
 	const uiPref = $.cookie('uipreference');
 	if(uiPref && uiPref == 'classic'){
@@ -2847,11 +2847,11 @@ $lib.Originkkt.roundReady = function(data){
 	$stage.game.overlay.find("img#originItem").hide();
 
 	if($data.room.opts.sami){
-		$stage.game.sami.find("img#Sami1").attr('src', '/img/kkutu/origin_kkt/3-left-off.png');
-		$stage.game.sami.find("img#Sami2").attr('src', '/img/kkutu/origin_kkt/2-right-off.png');
+		$stage.game.sami.find("img#Sami1").attr('src', '/img/kkutu/origin_kkt/3-left-off.webp');
+		$stage.game.sami.find("img#Sami2").attr('src', '/img/kkutu/origin_kkt/2-right-off.webp');
 	} else{
-		$stage.game.sami.find("img#Sami1").attr('src', '/img/kkutu/origin_kkt/3-left-on.png');
-		$stage.game.sami.find("img#Sami2").attr('src', '/img/kkutu/origin_kkt/3-right-on.png');
+		$stage.game.sami.find("img#Sami1").attr('src', '/img/kkutu/origin_kkt/3-left-on.webp');
+		$stage.game.sami.find("img#Sami2").attr('src', '/img/kkutu/origin_kkt/3-right-on.webp');
 	}
 
 	drawRound(data.round);
@@ -2859,9 +2859,9 @@ $lib.Originkkt.roundReady = function(data){
 	var countDown = setInterval(function(){
 		if(count == 0){
 			clearInterval(countDown);
-			$stage.game.overlay.find("img#originCountdown").attr('src', '/img/kkutu/origin_kkt/start@ko.png').fadeOut(500);
+			$stage.game.overlay.find("img#originCountdown").attr('src', '/img/kkutu/origin_kkt/start@ko.webp').fadeOut(500);
 		} else {
-			$stage.game.overlay.find("img#originCountdown").attr('src', '/img/kkutu/origin_kkt/count-'+count+'.png').fadeIn(500);
+			$stage.game.overlay.find("img#originCountdown").attr('src', '/img/kkutu/origin_kkt/count-'+count+'.webp').fadeIn(500);
 			count--;
 		}
 	}, 400);
@@ -2879,12 +2879,12 @@ $lib.Originkkt.turnStart = function(data){
 	
 
 	if(data.wordLength == 2 && $data.room.opts.sami){
-		$stage.game.sami.find("img#Sami1").attr('src', '/img/kkutu/origin_kkt/3-left-off.png');
-		$stage.game.sami.find("img#Sami2").attr('src', '/img/kkutu/origin_kkt/2-right-on.png');
+		$stage.game.sami.find("img#Sami1").attr('src', '/img/kkutu/origin_kkt/3-left-off.webp');
+		$stage.game.sami.find("img#Sami2").attr('src', '/img/kkutu/origin_kkt/2-right-on.webp');
 	}
 	else if (data.wordLength == 3 && $data.room.opts.sami){
-		$stage.game.sami.find("img#Sami1").attr('src', '/img/kkutu/origin_kkt/3-left-on.png');
-		$stage.game.sami.find("img#Sami2").attr('src', '/img/kkutu/origin_kkt/2-right-off.png');
+		$stage.game.sami.find("img#Sami1").attr('src', '/img/kkutu/origin_kkt/3-left-on.webp');
+		$stage.game.sami.find("img#Sami2").attr('src', '/img/kkutu/origin_kkt/2-right-off.webp');
 	} else {}
 
 	$stage.game.display.html($data._char = getCharText(data.char, data.subChar));
@@ -2954,10 +2954,10 @@ $lib.Originkkt.turnEnd = function(id, data){
 		$stage.game.overlay.find("img#originItem").show();
 
 		if(data.score > 39){
-			$stage.game.overlay.find("img#originItem").attr('src', '/img/kkutu/origin_kkt/perfect@ko.png').fadeOut(500);
+			$stage.game.overlay.find("img#originItem").attr('src', '/img/kkutu/origin_kkt/perfect@ko.webp').fadeOut(500);
 		}
 		else if (data.score > 20){
-			$stage.game.overlay.find("img#originItem").attr('src', '/img/kkutu/origin_kkt/good@ko.png').fadeOut(500);
+			$stage.game.overlay.find("img#originItem").attr('src', '/img/kkutu/origin_kkt/good@ko.webp').fadeOut(500);
 		}
 		else{
 			$stage.game.overlay.find("img#originItem").attr('src', '').fadeOut(1);
@@ -2974,7 +2974,7 @@ $lib.Originkkt.turnEnd = function(id, data){
 
 		$stage.game.overlay.find("img#originItem").show();
 		randomDieMessage = Math.floor(Math.random() * 5) + 1;
-		$stage.game.overlay.find("img#originItem").attr('src', '/img/kkutu/origin_kkt/die-'+randomDieMessage+'.png').fadeOut(1000);
+		$stage.game.overlay.find("img#originItem").attr('src', '/img/kkutu/origin_kkt/die-'+randomDieMessage+'.webp').fadeOut(1000);
 	}
 	if(data.hint){
 		data.hint = data.hint._id;
@@ -3699,9 +3699,6 @@ function onMessage(data){
         ws.send(JSON.stringify({type: 'recaptcha', token: response}));
     }
 }
-function adBlockFunction(){
-	console.log("TURN OFF");
-}
 function welcome() {
 	notice('로비에서의 친목성 채팅은 제재 대상입니다. 자유로운 채팅은 귓속말 또는 방을 생성하여 이용해주세요.');
     var playtime = 0;
@@ -4220,22 +4217,22 @@ function updateMe(){
 	$.get("/welcomes2/nquery", function(res){
 		if(res.result == "loggedout"){
 			$("#userLevel").html("로그인 후 확인하세요");
-			$("#lockedItem").attr("src","img/event/어서와요S2_데이터x.png");
+			$("#lockedItem").attr("src","img/event/어서와요S2_데이터x.webp");
 		} else if (res.result == "notfound"){
 			$("#userLogic").html("");
 			$("#userLevel").html("0WP");
-			$("#lockedItem").attr("src","img/event/어서와요S2_데이터x.png");
+			$("#lockedItem").attr("src","img/event/어서와요S2_데이터x.webp");
 		} else {
 			$("#userLogic").html("((5000 - 순위: " + res.rank + ") + 레벨: "+ res.level +") * 10 =");
 			$("#userLevel").html(res.wp + "WP");
 			if (res.result == "available"){
-				$("#lockedItem").attr("src","img/event/어서와요S2_통합.png");
+				$("#lockedItem").attr("src","img/event/어서와요S2_통합.webp");
 				$("#lockedItem").click(function(){
 					$.get("/welcomes2/claim", function(res){
 						if(res.result == "claimed"){
 							playSound("lvup");
 							alert("🥳축하합니다! "+res.wp+"XP 적용 완료~! 새로고침해서 지금 확인해보세요.");
-							$("#lockedItem").attr("src","img/event/어서와요S2_리딤.png");
+							$("#lockedItem").attr("src","img/event/어서와요S2_리딤.webp");
 							$("#lockedItem").off("click");
 						}
 						else{
@@ -4245,7 +4242,7 @@ function updateMe(){
 			  	});
 			}
 			else{
-				$("#lockedItem").attr("src","img/event/어서와요S2_리딤.png");
+				$("#lockedItem").attr("src","img/event/어서와요S2_리딤.webp");
 			}
 		}
 	});
@@ -4254,10 +4251,10 @@ function updateMe(){
 		$("#lockedItem").click(function(){
 			window.open('https://docs.google.com/forms/d/e/1FAIpQLSc5uzMe6xxXrBSD_NprdUUP_F_0o5YJU8WNYwsG4D44LZaPcA/viewform?usp=sf_link', '_blank');
 	  });
-		$("#lockedItem").attr("src","img/event/acryll-get.png");
+		$("#lockedItem").attr("src","img/event/acryll-get.webp");
 	}*/
 
-	$(".my-rank-icon").attr("src","img/kkutu/ranking/"+rank+".png");
+	$(".my-rank-icon").attr("src","img/kkutu/ranking/"+rank+".webp");
 	$(".my-rank").html(L[rank] + " " + my.data.rankPoint);
 
 	//$(".my-gauge .graph-bar").width((my.data.score-prev)/(goal-prev)*190);
@@ -4322,7 +4319,7 @@ function userListBar(o, forInvite){
 		$R = $("<div>").attr('id', "invite-item-"+o.id).addClass("invite-item users-item")
 		//.append($("<div>").addClass("jt-image users-image").css('background-image', "url('"+o.profile.image+"')"))
 		.append(getLevelImage(o.data.score).addClass("users-level"))
-		// .append($("<div>").addClass("jt-image users-from").css('background-image', "url('/img/kkutu/"+o.profile.type+".png')"))
+		// .append($("<div>").addClass("jt-image users-from").css('background-image', "url('/img/kkutu/"+o.profile.type+".webp')"))
 		.append($("<div>").addClass("users-name").text(o.profile.title || o.profile.name))
 		.on('click', function(e){
 			requestInvite($(e.currentTarget).attr('id').slice(12));
@@ -4331,7 +4328,7 @@ function userListBar(o, forInvite){
 		$R = $("<div>").attr('id', "users-item-"+o.id).addClass("users-item")
 		//.append($("<div>").addClass("jt-image users-image").css('background-image', "url('"+o.profile.image+"')"))
 		.append(getLevelImage(o.data.score).addClass("users-level"))
-		// .append($("<div>").addClass("jt-image users-from").css('background-image', "url('/img/kkutu/"+o.profile.type+".png')"))
+		// .append($("<div>").addClass("jt-image users-from").css('background-image', "url('/img/kkutu/"+o.profile.type+".webp')"))
 		.append($("<div>").addClass("users-name ellipse").text(o.profile.title || o.profile.name))
 		.on('click', function(e){
 			requestProfile($(e.currentTarget).attr('id').slice(11));
@@ -4449,7 +4446,7 @@ function miniGameUserBar(o){
 function getAIProfile(level){
 	return {
 		title: L['aiLevel' + level] + ' ' + L['robot'],
-		image: "/img/kkutu/robot.png"
+		image: "/img/kkutu/robot.webp"
 	};
 }
 function updateRoom(gaming){
@@ -5537,13 +5534,13 @@ function roundEnd(result, data){
 		
 
 		if ((date.getHours() >= 19 && date.getHours() <= 23)) {
-			$(".result-me-score").html("<img src='/img/kkutu/currency/xp.png' alt='XP' class='resultIcons'>핫타임×2 XP<h3 class='xpCounter'>+"+commify($data._result.reward.score)+"</h3>"+addp);
+			$(".result-me-score").html("<img src='/img/kkutu/currency/xp.webp' alt='XP' class='resultIcons'>핫타임×2 XP<h3 class='xpCounter'>+"+commify($data._result.reward.score)+"</h3>"+addp);
 		}
 		else{
-			$(".result-me-score").html("<img src='/img/kkutu/currency/xp.png' alt='XP' class='resultIcons'>"+L['scoreGain']+"<h3 class='xpCounter'>+"+commify($data._result.reward.score)+"</h3>"+addp);
+			$(".result-me-score").html("<img src='/img/kkutu/currency/xp.webp' alt='XP' class='resultIcons'>"+L['scoreGain']+"<h3 class='xpCounter'>+"+commify($data._result.reward.score)+"</h3>"+addp);
 		}
 		
-		$(".result-me-money").html("<img src='/img/kkutu/currency/ping.png' alt='Money' class='resultIcons'>"+L['moneyGain']+" <h3 class='moneyCounter'>+"+commify($data._result.reward.money)+"</h3>"+addp);
+		$(".result-me-money").html("<img src='/img/kkutu/currency/ping.webp' alt='Money' class='resultIcons'>"+L['moneyGain']+" <h3 class='moneyCounter'>+"+commify($data._result.reward.money)+"</h3>"+addp);
 	}
 	function roundEndAnimation(first){
 		var v, nl;
@@ -6023,10 +6020,10 @@ function getLevelImage(score){
 	var lX = (lv % 25) * -100;
 	var lY = Math.floor(lv * 0.04) * -100;
 	
-	// return getImage("/img/kkutu/lv/lv" + zeroPadding(lv+1, 4) + ".png");
+	// return getImage("/img/kkutu/lv/lv" + zeroPadding(lv+1, 4) + ".webp");
 	return $("<div>").css({
 		'float': "left",
-		'background-image': "url('/img/kkutu/lv/newlv.png')",
+		'background-image': "url('/img/kkutu/lv/newlv.webp')",
 		'background-position': lX + "% " + lY + "%",
 		'background-size': "2560%"
 	});
@@ -6098,7 +6095,7 @@ function getAudio(k, url, cb){
     };
     
     function onErr(err){
-        $sound[k] = new AudioSound('/media/kkutu/LobbyBGMS2.mp3'); // Use /media/m.mp3 on error
+        $sound[k] = new AudioSound('/media/kkutu/LobbyBGMS2.ogg'); // Use /media/m.ogg on error
         done();
     }
     
@@ -6377,11 +6374,11 @@ function iImage(key, sObj){
 		}
 	}else if(typeof sObj == "string") sObj = { _id: "def", group: sObj, options: {} };
 	obj = $data.shop[key] || sObj;
-	gif = obj.options.hasOwnProperty('gif') ? ".gif" : ".png";
+	gif = obj.options.hasOwnProperty('gif') ? ".gif" : ".webp";
 	if(obj.group.slice(0, 3) == "BDG") return "/img/kkutu/moremi/badge/" + obj._id + gif;
 	return (obj.group.charAt(0) == 'M')
 		? "/img/kkutu/moremi/" + obj.group.slice(1) + "/" + obj._id + gif
-		: "/img/kkutu/shop/" + obj._id + ".png";
+		: "/img/kkutu/shop/" + obj._id + ".webp";
 }
 function iDynImage(group, data){
 	var canvas = document.createElement("canvas");
@@ -6444,7 +6441,7 @@ function renderMoremi(target, equip){
 		);
 	}
 	$obj.children(".moremi-back").after($("<img>").addClass("moremies moremi-body")
-		.attr('src', equip.robot ? "/img/kkutu/moremi/robot.png" : "/img/kkutu/moremi/body.png")
+		.attr('src', equip.robot ? "/img/kkutu/moremi/robot.webp" : "/img/kkutu/moremi/body.webp")
 		.css({ 'width': "100%", 'height': "100%" })
 	);
 	$obj.children(".moremi-rhand").css('transform', "scaleX(-1)");

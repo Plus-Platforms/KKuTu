@@ -94,7 +94,7 @@ block Top
 		+Menu()
 		div#global-notice
 			div#gn-content
-				include ../public/global_notice.html
+				include ../public/notice/global_notice.html
 			+Expl(L('GLOBAL_NOTICE'))
 		
 block Middle
@@ -113,8 +113,8 @@ block Middle
 			div.dialog-bar.d2-bar.tail-button
 				button.primaryBtn#evtpopup-ok= L("close")
 	div#originOverlay(style="display: none;position: absolute;margin-top: 210px;height: 60px;align-items: flex-end;justify-content: center;z-index: 1;width: 100%;")
-		img#originCountdown(src="/img/kkutu/origin_kkt/count-3.png", style="height: 100px;")
-		img#originItem(src="/img/kkutu/origin_kkt/perfect@ko.png", style="height: 60px;")
+		img#originCountdown(src="/img/kkutu/origin_kkt/count-3.webp", style="height: 100px;")
+		img#originItem(src="/img/kkutu/origin_kkt/perfect@ko.webp", style="height: 60px;")
 	div#creditpopup(style="display: none;position: absolute;height: 100%;width: 100%;align-items: center;justify-content: center;align-content: center;z-index: 2;background-color:#000;")
 		div.topCloseInfo(style="right: 0;position: fixed;bottom: 0;z-index:10;")
 			button#creditpopup-close= "×"
@@ -231,8 +231,8 @@ block Middle
 			button.primaryBtn#setting-ok= L('save')
 			button#setting-ui= L('changeServer')
 	+Dialog('UISelectDiag', 300, 285, L('changeServer'))
-		img#classicUI(src='/img/kkutu/theme_select/classic.png', style='')
-		img#modernUI(src='/img/kkutu/theme_select/modern.png', style='')
+		img#classicUI(src='/img/kkutu/theme_select/classic.webp', style='')
+		img#modernUI(src='/img/kkutu/theme_select/modern.webp', style='')
 		div.dialog-bar.tail-button.d3-bar
 			button#ui-save= L('save')
 	+Dialog('CommunityDiag', 300, 330)
@@ -338,7 +338,7 @@ block Middle
 				- locals.KO_THEME.concat(locals.KO_INJEONG).forEach(function(item){
 					- var name = "ko-pick-" + item;
 					- if(locals.IJP_EXCEPT.indexOf(item) != -1) return;
-					div(class="ko-pick", style='float: left; border-radius: 10px; width: 250px; margin-bottom: 8px; margin-right: 8px; padding-top: 150px; padding-left: 15px; padding-right: 15px; padding-bottom: 15px; text-align: center; background: #fff; background-image: url(/img/kkutu/theme/' + item + '.png); background-size: cover; background-position: center;')
+					div(class="ko-pick", style='float: left; border-radius: 10px; width: 250px; margin-bottom: 8px; margin-right: 8px; padding-top: 150px; padding-left: 15px; padding-right: 15px; padding-bottom: 15px; text-align: center; background: #fff; background-image: url(/img/kkutu/theme/' + item + '.webp); background-size: cover; background-position: center;')
 						input(id=name, type='checkbox', style='width: auto;')
 						label(for=name, style="color: #000; font-size: 26px;")!= LANG['theme_' + item]
 				- });
@@ -492,12 +492,12 @@ block Middle
 	+Dialog('DressDiag', 1016, 510, L('dress', false))
 		div(style="display:flex;")
 			div
-				img#infobtn(src="/img/kkutu/dress/info.png", alt=L("Me2"))
+				img#infobtn(src="/img/kkutu/dress/info.webp", alt=L("Me2"))
 			div
-				img#dress-cf(src="/img/kkutu/dress/lab.png" alt=L("charFactory"))
+				img#dress-cf(src="/img/kkutu/dress/lab.webp" alt=L("charFactory"))
 			div
-				img#dressitembtn(src="/img/kkutu/dress/deco_new.png", alt=L('dress', false))
-				img#CouponBtn(src="/img/kkutu/dress/coupon.png", alt=L("coupon"))
+				img#dressitembtn(src="/img/kkutu/dress/deco_new.webp", alt=L('dress', false))
+				img#CouponBtn(src="/img/kkutu/dress/coupon.webp", alt=L("coupon"))
 
 	+Dialog('DressItemDiag', 600, 415, L('dress', false))
 		div.dialog-bar
@@ -587,23 +587,23 @@ block Middle
 
 	+Dialog('LvEventDiag', 730, 700, "이벤트 안내")
 		div#pre-content(style="background: #fff;")
-			img(src="/img/event/comingsoon.png")
+			img(src="/img/event/comingsoon.webp")
 		div#event-content(style="display:none;background: #fff;height: 660px;overflow-x: hidden;")
 			div#event-tabs(style="display:none;")
-				img#event1(src="/img/event/이벤트_s2.png")
-				img#event2(src="/img/event/이벤트_mvp.png")
+				img#event1(src="/img/event/이벤트_s2.webp")
+				img#event2(src="/img/event/이벤트_mvp.webp")
 			div#event1-content(style="background: #fff;")
-				img(src="/img/event/어서와요S2_헤더.png", style="width:100%;")
-				img(src="/img/event/어서와요S2_WP.png")
-				img(src="/img/event/어서와요S2_타이틀1.png")
+				img(src="/img/event/어서와요S2_헤더.webp", style="width:100%;")
+				img(src="/img/event/어서와요S2_WP.webp")
+				img(src="/img/event/어서와요S2_타이틀1.webp")
 				div(style="font-size: 20px;text-align: center;color: gray;background-color: #fff;")
 					p#userLogic(style="margin:0px") 
 				div(style="font-size: 40px;font-weight:bold; text-align: center;color: #000;background-color: #fff;")
 					p#userLevel(style="margin:0px") 0WP
-				img#lockedItem(src="/img/event/오픈전.png")
+				img#lockedItem(src="/img/event/오픈전.webp")
 			div#event2-content(style="display:none;background: #fff;")
-				img(src="/img/event/mvp권_헤더.png", style="width:100%;")
-				img(src="/img/event/mvp권_특전.png")
+				img(src="/img/event/mvp권_헤더.webp", style="width:100%;")
+				img(src="/img/event/mvp권_특전.webp")
 
 	+Dialog('TeamSelectDiag', 500, 85, "팀 설정")
 		div.team-selector
@@ -653,7 +653,7 @@ block Middle
 					p Copyright &copy; 2021~ Morem.ME
 			
 	div(style="width: 100%;display: flex;height: 680px;")
-		div.lowreshidden(style="width:160px;height:600px;/*background-image: url('/img/ad/섭종전 마지막 발악.png');*/")
+		div.lowreshidden(style="width:160px;height:600px;/*background-image: url('/img/ad/섭종전 마지막 발악.webp');*/")
 			ins.adsbygoogle(style="display:inline-block;width:160px;height:600px", data-ad-client="ca-pub-3808496003691786", data-ad-slot="5307706929")
 
 		div(style="width: 1290px")
@@ -678,8 +678,8 @@ block Middle
 				div.room-users
 			+Product('Game')
 				div.SamiBox(style="display:none")
-					img#Sami1(src='/img/kkutu/origin_kkt/3-left-off.png')
-					img#Sami2(src='/img/kkutu/origin_kkt/3-right-off.png')
+					img#Sami1(src='/img/kkutu/origin_kkt/3-left-off.webp')
+					img#Sami2(src='/img/kkutu/origin_kkt/3-right-off.webp')
 				div.game-head
 					div.rounds
 					div.items
@@ -782,7 +782,7 @@ block Middle
 					+FA('paper-plane')
 					
 
-		div.lowreshidden(style="width:160px;height:600px;/*background-image: url('/img/ad/섭종전 마지막 발악.png');*/")
+		div.lowreshidden(style="width:160px;height:600px;/*background-image: url('/img/ad/섭종전 마지막 발악.webp');*/")
 			ins.adsbygoogle(style="display:inline-block;width:160px;height:600px", data-ad-client="ca-pub-3808496003691786", data-ad-slot="3446996199")
 
 	script (adsbygoogle = window.adsbygoogle || []).push({});

@@ -1,0 +1,29 @@
+#!/bin/sh
+basedir=$(dirname "$(echo "$0" | sed -e 's,\\,/,g')")
+
+case `uname` in
+    *CYGWIN*) basedir=`cygpath -w "$basedir"`;;
+esac
+
+if [ "$1" = "--skip-webp" ]; then
+  echo "Skipping WebP optimization..."
+else
+  if [ -x "$basedir/node" ]; then
+    "$basedir/node"  "$basedir/optimization/webp.js"
+    ret=$?
+  else 
+    node  "$basedir/optimization/webp.js"
+    ret=$?
+  fi
+fi
+
+if [ "$1" = "--skip-ogg" ]; then
+  echo "Skipping OGG optimization..."
+else
+  cd "../../Front/static/media/kkutu" || exit
+  for file in *.mp3; do
+    ffmpeg -i "$file" -c:a libopus -b:a 96k -ac 1 -map_metadata -1 "${file%.mp3}.ogg"
+  done
+fi
+
+exit $ret

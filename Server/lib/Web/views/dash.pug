@@ -37,7 +37,7 @@ html
 			meta(name='keywords', content=LANG['meta_keys'] || L('META_KEYS'))
 
 		block OpenGraph
-			meta(property='og:image', content=locals.ogImage || "http://JJo.kr/img/ogImage.png")
+			meta(property='og:image', content=locals.ogImage || "http://JJo.kr/img/ogImage.webp")
 			meta(property='og:url', content=locals.ogURL || "http://JJo.kr/")
 			meta(property='og:title', content=locals.ogTitle || "쪼롤 - League of Legends 정보 검색 사이트")
 			meta(property='og:description', content=locals.ogDescription || "롤 전적검색은 JJO.KR")
@@ -50,7 +50,7 @@ html
 	body(style='min-width: 640px; color: #000!important;')
 		header.relative.bg-white.px-5.flex.items-center.justify-between.p-4.border-b
 			a.inline-block.text-2xl.font-bold.tracking-wider.text-blue-700.uppercase(href="/")
-				img.h-6(src="/img/logo.png")
+				img.h-6(src="/img/logo.webp")
 		div#Jungle
 			span#mobile= locals.mobile
 			block Jungle

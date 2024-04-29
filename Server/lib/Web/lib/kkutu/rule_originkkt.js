@@ -35,11 +35,11 @@ $lib.Originkkt.roundReady = function(data){
 	$stage.game.overlay.find("img#originItem").hide();
 
 	if($data.room.opts.sami){
-		$stage.game.sami.find("img#Sami1").attr('src', '/img/kkutu/origin_kkt/3-left-off.png');
-		$stage.game.sami.find("img#Sami2").attr('src', '/img/kkutu/origin_kkt/2-right-off.png');
+		$stage.game.sami.find("img#Sami1").attr('src', '/img/kkutu/origin_kkt/3-left-off.webp');
+		$stage.game.sami.find("img#Sami2").attr('src', '/img/kkutu/origin_kkt/2-right-off.webp');
 	} else{
-		$stage.game.sami.find("img#Sami1").attr('src', '/img/kkutu/origin_kkt/3-left-on.png');
-		$stage.game.sami.find("img#Sami2").attr('src', '/img/kkutu/origin_kkt/3-right-on.png');
+		$stage.game.sami.find("img#Sami1").attr('src', '/img/kkutu/origin_kkt/3-left-on.webp');
+		$stage.game.sami.find("img#Sami2").attr('src', '/img/kkutu/origin_kkt/3-right-on.webp');
 	}
 
 	drawRound(data.round);
@@ -47,9 +47,9 @@ $lib.Originkkt.roundReady = function(data){
 	var countDown = setInterval(function(){
 		if(count == 0){
 			clearInterval(countDown);
-			$stage.game.overlay.find("img#originCountdown").attr('src', '/img/kkutu/origin_kkt/start@ko.png').fadeOut(500);
+			$stage.game.overlay.find("img#originCountdown").attr('src', '/img/kkutu/origin_kkt/start@ko.webp').fadeOut(500);
 		} else {
-			$stage.game.overlay.find("img#originCountdown").attr('src', '/img/kkutu/origin_kkt/count-'+count+'.png').fadeIn(500);
+			$stage.game.overlay.find("img#originCountdown").attr('src', '/img/kkutu/origin_kkt/count-'+count+'.webp').fadeIn(500);
 			count--;
 		}
 	}, 400);
@@ -67,12 +67,12 @@ $lib.Originkkt.turnStart = function(data){
 	
 
 	if(data.wordLength == 2 && $data.room.opts.sami){
-		$stage.game.sami.find("img#Sami1").attr('src', '/img/kkutu/origin_kkt/3-left-off.png');
-		$stage.game.sami.find("img#Sami2").attr('src', '/img/kkutu/origin_kkt/2-right-on.png');
+		$stage.game.sami.find("img#Sami1").attr('src', '/img/kkutu/origin_kkt/3-left-off.webp');
+		$stage.game.sami.find("img#Sami2").attr('src', '/img/kkutu/origin_kkt/2-right-on.webp');
 	}
 	else if (data.wordLength == 3 && $data.room.opts.sami){
-		$stage.game.sami.find("img#Sami1").attr('src', '/img/kkutu/origin_kkt/3-left-on.png');
-		$stage.game.sami.find("img#Sami2").attr('src', '/img/kkutu/origin_kkt/2-right-off.png');
+		$stage.game.sami.find("img#Sami1").attr('src', '/img/kkutu/origin_kkt/3-left-on.webp');
+		$stage.game.sami.find("img#Sami2").attr('src', '/img/kkutu/origin_kkt/2-right-off.webp');
 	} else {}
 
 	$stage.game.display.html($data._char = getCharText(data.char, data.subChar));
@@ -142,10 +142,10 @@ $lib.Originkkt.turnEnd = function(id, data){
 		$stage.game.overlay.find("img#originItem").show();
 
 		if(data.score > 39){
-			$stage.game.overlay.find("img#originItem").attr('src', '/img/kkutu/origin_kkt/perfect@ko.png').fadeOut(500);
+			$stage.game.overlay.find("img#originItem").attr('src', '/img/kkutu/origin_kkt/perfect@ko.webp').fadeOut(500);
 		}
 		else if (data.score > 20){
-			$stage.game.overlay.find("img#originItem").attr('src', '/img/kkutu/origin_kkt/good@ko.png').fadeOut(500);
+			$stage.game.overlay.find("img#originItem").attr('src', '/img/kkutu/origin_kkt/good@ko.webp').fadeOut(500);
 		}
 		else{
 			$stage.game.overlay.find("img#originItem").attr('src', '').fadeOut(1);
@@ -162,7 +162,7 @@ $lib.Originkkt.turnEnd = function(id, data){
 
 		$stage.game.overlay.find("img#originItem").show();
 		randomDieMessage = Math.floor(Math.random() * 5) + 1;
-		$stage.game.overlay.find("img#originItem").attr('src', '/img/kkutu/origin_kkt/die-'+randomDieMessage+'.png').fadeOut(1000);
+		$stage.game.overlay.find("img#originItem").attr('src', '/img/kkutu/origin_kkt/die-'+randomDieMessage+'.webp').fadeOut(1000);
 	}
 	if(data.hint){
 		data.hint = data.hint._id;

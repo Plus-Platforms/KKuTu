@@ -1,0 +1,16 @@
+{
+  "name": "optimization",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "PlusKKuTu Optimization Library",
+  "main": "webp.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Morem.ME",
+  "license": "AGPL-3.0-or-later",
+  "dependencies": {
+    "imagemin": "^8.0.1",
+    "imagemin-webp": "^8.0.0"
+  }
+}

@@ -8,7 +8,7 @@ Server/lib/Web/public/_next/
 Server/lib/sub/auth.json
 Server/lib/sub/global.json
 Server/lib/sub/logging.json
-neofront/static/naver*.html
+Front/static/naver*.html
 node_modules/
 .vscode/
 KKUTU_ERROR.log

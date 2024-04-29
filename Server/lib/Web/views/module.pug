@@ -72,23 +72,23 @@ mixin Menu()
 			span#profile= SESSION.profile ? JSON.stringify(SESSION.profile) : '{}'
 			div.accountItem
 				div.flex
-					img.topIcon(src='/img/kkutu/currency/xp.png')
+					img.topIcon(src='/img/kkutu/currency/xp.webp')
 					span.aISub.my-level
 					span.my-gauge-text.topGauge.topText
 				//+GraphBar('my-gauge')
 			div.accountItem
 				div.flex
-					img.topIcon(src='/img/kkutu/currency/okg.png')
+					img.topIcon(src='/img/kkutu/currency/okg.webp')
 					span.my-okg-text.aISub
 			div.accountItem
 				div.flex
-					img.topIcon(src='/img/kkutu/currency/ping.png')
+					img.topIcon(src='/img/kkutu/currency/ping.webp')
 					span.my-stat-ping.aISub#accping
 					span.topText= L('ping')
 					//img.topIcon#addBalance(src='/img/kkutu/currency/charge.svg')
 			div.accountItem
 				div.flex
-					img.topIcon.my-rank-icon(src='/img/kkutu/currency/rp.png')
+					img.topIcon.my-rank-icon(src='/img/kkutu/currency/rp.webp')
 					span.aISub.my-rank
 					span.topText= "RP"
 			div.accountItem#signin(data-intro='Hello step one!')
@@ -145,7 +145,7 @@ mixin PageHead(min)
 		block
 	link(rel='stylesheet', href='/css/in_'+locals.page.replace("/", "_")+'.css')
 	script(type='text/javascript', src='/js/in_'+locals.page.replace("/", "_")+'.min.js')
-	script.async(src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3808496003691786", crossorigin="anonymous", onerror="adBlockFunction();")
+	script.async(src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3808496003691786", crossorigin="anonymous")
 	script(async, src="https://fundingchoicesmessages.google.com/i/pub-3808496003691786?ers=1", nonce="tNBC-gnEhikuDROI6oyAtw")
 	script(nonce="tNBC-gnEhikuDROI6oyAtw").
 		(function() {function signalGooglefcPresent() {if (!window.frames['googlefcPresent']) {if (document.body) {const iframe = document.createElement('iframe'); iframe.style = 'width: 0; height: 0; border: none; z-index: -1000; left: -1000px; top: -1000px;'; iframe.style.display = 'none'; iframe.name = 'googlefcPresent'; document.body.appendChild(iframe);} else {setTimeout(signalGooglefcPresent, 0);}}}signalGooglefcPresent();})();

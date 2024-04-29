@@ -1,0 +1,118 @@
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css");
+/* Extrabold */  
+
+:root {
+	--font-body: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu,
+		Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+	font-family: var(--font-body);
+}
+
+.font-bold{
+  font-weight:700;
+}
+.font-semibold{
+  font-weight:500;
+}
+.hero{
+	background-size: cover;
+	background-image: url('/img/web/2024Renewal/Frame 1.png');
+	background-repeat: no-repeat;
+	display: flex;
+	justify-content: center; /* 가로 중앙 정렬 */
+	align-items: center;
+}
+
+.layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: fadeIn 1s forwards;
+    transition-timing-function: cubic-bezier(0.49, 0.09, 0.39, 1);
+    opacity: 0;
+    z-index: -999;
+  }
+
+  .gb{
+    z-index: -999;
+  }
+
+  .layer img {
+    max-width: 100%;
+    max-height: 100%;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+	  transform: translateY(-50px);
+    }
+    to {
+      opacity: 1;
+	  transform: translateY(0px);
+    }
+  }
+
+  /* 각 레이어에 시간차를 둠 */
+  .bg-layer2 {
+    animation-delay: 0s;
+  }
+
+  .bg-layer3 {
+    animation-delay: 1s;
+  }
+
+  .bg-layer4 {
+    animation-delay: 2s;
+  }
+
+.modal {
+    @apply fixed inset-0 w-full h-full bg-gray-800 bg-opacity-75 flex items-center justify-center;
+    display: none;
+  }
+
+  .visible {
+    display: flex;
+  }
+
+  .modal-content {
+    @apply bg-white p-8 rounded-xl;
+  }
+
+.boardBg-7{
+	@apply bg-indigo-500;
+}
+.boardBg-8{
+	@apply bg-blue-500;
+}
+.boardBg-14{
+	@apply bg-yellow-500;
+}
+.boardBg-9{
+	@apply bg-green-500;
+}
+.boardBg-6{
+	@apply bg-purple-500;
+}
+.boardBg-1{
+	@apply bg-gray-500;
+}
+.boardBg-10{
+	@apply bg-gray-500;
+}
+.boardBg-11{
+	@apply bg-gray-500;
+}
+.boardBg-12{
+	@apply bg-gray-500;
+}
+.boardBg-13{
+	@apply bg-gray-500;
+}
+.boardBg-22{
+	@apply bg-red-500;
+}

@@ -559,9 +559,6 @@ function onMessage(data){
         ws.send(JSON.stringify({type: 'recaptcha', token: response}));
     }
 }
-function adBlockFunction(){
-	console.log("TURN OFF");
-}
 function welcome() {
 	notice('로비에서의 친목성 채팅은 제재 대상입니다. 자유로운 채팅은 귓속말 또는 방을 생성하여 이용해주세요.');
     var playtime = 0;
@@ -1080,22 +1077,22 @@ function updateMe(){
 	$.get("/welcomes2/nquery", function(res){
 		if(res.result == "loggedout"){
 			$("#userLevel").html("로그인 후 확인하세요");
-			$("#lockedItem").attr("src","img/event/어서와요S2_데이터x.png");
+			$("#lockedItem").attr("src","img/event/어서와요S2_데이터x.webp");
 		} else if (res.result == "notfound"){
 			$("#userLogic").html("");
 			$("#userLevel").html("0WP");
-			$("#lockedItem").attr("src","img/event/어서와요S2_데이터x.png");
+			$("#lockedItem").attr("src","img/event/어서와요S2_데이터x.webp");
 		} else {
 			$("#userLogic").html("((5000 - 순위: " + res.rank + ") + 레벨: "+ res.level +") * 10 =");
 			$("#userLevel").html(res.wp + "WP");
 			if (res.result == "available"){
-				$("#lockedItem").attr("src","img/event/어서와요S2_통합.png");
+				$("#lockedItem").attr("src","img/event/어서와요S2_통합.webp");
 				$("#lockedItem").click(function(){
 					$.get("/welcomes2/claim", function(res){
 						if(res.result == "claimed"){
 							playSound("lvup");
 							alert("🥳축하합니다! "+res.wp+"XP 적용 완료~! 새로고침해서 지금 확인해보세요.");
-							$("#lockedItem").attr("src","img/event/어서와요S2_리딤.png");
+							$("#lockedItem").attr("src","img/event/어서와요S2_리딤.webp");
 							$("#lockedItem").off("click");
 						}
 						else{
@@ -1105,7 +1102,7 @@ function updateMe(){
 			  	});
 			}
 			else{
-				$("#lockedItem").attr("src","img/event/어서와요S2_리딤.png");
+				$("#lockedItem").attr("src","img/event/어서와요S2_리딤.webp");
 			}
 		}
 	});
@@ -1114,10 +1111,10 @@ function updateMe(){
 		$("#lockedItem").click(function(){
 			window.open('https://docs.google.com/forms/d/e/1FAIpQLSc5uzMe6xxXrBSD_NprdUUP_F_0o5YJU8WNYwsG4D44LZaPcA/viewform?usp=sf_link', '_blank');
 	  });
-		$("#lockedItem").attr("src","img/event/acryll-get.png");
+		$("#lockedItem").attr("src","img/event/acryll-get.webp");
 	}*/
 
-	$(".my-rank-icon").attr("src","img/kkutu/ranking/"+rank+".png");
+	$(".my-rank-icon").attr("src","img/kkutu/ranking/"+rank+".webp");
 	$(".my-rank").html(L[rank] + " " + my.data.rankPoint);
 
 	//$(".my-gauge .graph-bar").width((my.data.score-prev)/(goal-prev)*190);
@@ -1182,7 +1179,7 @@ function userListBar(o, forInvite){
 		$R = $("<div>").attr('id', "invite-item-"+o.id).addClass("invite-item users-item")
 		//.append($("<div>").addClass("jt-image users-image").css('background-image', "url('"+o.profile.image+"')"))
 		.append(getLevelImage(o.data.score).addClass("users-level"))
-		// .append($("<div>").addClass("jt-image users-from").css('background-image', "url('/img/kkutu/"+o.profile.type+".png')"))
+		// .append($("<div>").addClass("jt-image users-from").css('background-image', "url('/img/kkutu/"+o.profile.type+".webp')"))
 		.append($("<div>").addClass("users-name").text(o.profile.title || o.profile.name))
 		.on('click', function(e){
 			requestInvite($(e.currentTarget).attr('id').slice(12));
@@ -1191,7 +1188,7 @@ function userListBar(o, forInvite){
 		$R = $("<div>").attr('id', "users-item-"+o.id).addClass("users-item")
 		//.append($("<div>").addClass("jt-image users-image").css('background-image', "url('"+o.profile.image+"')"))
 		.append(getLevelImage(o.data.score).addClass("users-level"))
-		// .append($("<div>").addClass("jt-image users-from").css('background-image', "url('/img/kkutu/"+o.profile.type+".png')"))
+		// .append($("<div>").addClass("jt-image users-from").css('background-image', "url('/img/kkutu/"+o.profile.type+".webp')"))
 		.append($("<div>").addClass("users-name ellipse").text(o.profile.title || o.profile.name))
 		.on('click', function(e){
 			requestProfile($(e.currentTarget).attr('id').slice(11));
@@ -1309,7 +1306,7 @@ function miniGameUserBar(o){
 function getAIProfile(level){
 	return {
 		title: L['aiLevel' + level] + ' ' + L['robot'],
-		image: "/img/kkutu/robot.png"
+		image: "/img/kkutu/robot.webp"
 	};
 }
 function updateRoom(gaming){
@@ -2397,13 +2394,13 @@ function roundEnd(result, data){
 		
 
 		if ((date.getHours() >= 19 && date.getHours() <= 23)) {
-			$(".result-me-score").html("<img src='/img/kkutu/currency/xp.png' alt='XP' class='resultIcons'>핫타임×2 XP<h3 class='xpCounter'>+"+commify($data._result.reward.score)+"</h3>"+addp);
+			$(".result-me-score").html("<img src='/img/kkutu/currency/xp.webp' alt='XP' class='resultIcons'>핫타임×2 XP<h3 class='xpCounter'>+"+commify($data._result.reward.score)+"</h3>"+addp);
 		}
 		else{
-			$(".result-me-score").html("<img src='/img/kkutu/currency/xp.png' alt='XP' class='resultIcons'>"+L['scoreGain']+"<h3 class='xpCounter'>+"+commify($data._result.reward.score)+"</h3>"+addp);
+			$(".result-me-score").html("<img src='/img/kkutu/currency/xp.webp' alt='XP' class='resultIcons'>"+L['scoreGain']+"<h3 class='xpCounter'>+"+commify($data._result.reward.score)+"</h3>"+addp);
 		}
 		
-		$(".result-me-money").html("<img src='/img/kkutu/currency/ping.png' alt='Money' class='resultIcons'>"+L['moneyGain']+" <h3 class='moneyCounter'>+"+commify($data._result.reward.money)+"</h3>"+addp);
+		$(".result-me-money").html("<img src='/img/kkutu/currency/ping.webp' alt='Money' class='resultIcons'>"+L['moneyGain']+" <h3 class='moneyCounter'>+"+commify($data._result.reward.money)+"</h3>"+addp);
 	}
 	function roundEndAnimation(first){
 		var v, nl;
@@ -2883,10 +2880,10 @@ function getLevelImage(score){
 	var lX = (lv % 25) * -100;
 	var lY = Math.floor(lv * 0.04) * -100;
 	
-	// return getImage("/img/kkutu/lv/lv" + zeroPadding(lv+1, 4) + ".png");
+	// return getImage("/img/kkutu/lv/lv" + zeroPadding(lv+1, 4) + ".webp");
 	return $("<div>").css({
 		'float': "left",
-		'background-image': "url('/img/kkutu/lv/newlv.png')",
+		'background-image': "url('/img/kkutu/lv/newlv.webp')",
 		'background-position': lX + "% " + lY + "%",
 		'background-size': "2560%"
 	});
@@ -2958,7 +2955,7 @@ function getAudio(k, url, cb){
     };
     
     function onErr(err){
-        $sound[k] = new AudioSound('/media/kkutu/LobbyBGMS2.mp3'); // Use /media/m.mp3 on error
+        $sound[k] = new AudioSound('/media/kkutu/LobbyBGMS2.ogg'); // Use /media/m.ogg on error
         done();
     }
     
@@ -3237,11 +3234,11 @@ function iImage(key, sObj){
 		}
 	}else if(typeof sObj == "string") sObj = { _id: "def", group: sObj, options: {} };
 	obj = $data.shop[key] || sObj;
-	gif = obj.options.hasOwnProperty('gif') ? ".gif" : ".png";
+	gif = obj.options.hasOwnProperty('gif') ? ".gif" : ".webp";
 	if(obj.group.slice(0, 3) == "BDG") return "/img/kkutu/moremi/badge/" + obj._id + gif;
 	return (obj.group.charAt(0) == 'M')
 		? "/img/kkutu/moremi/" + obj.group.slice(1) + "/" + obj._id + gif
-		: "/img/kkutu/shop/" + obj._id + ".png";
+		: "/img/kkutu/shop/" + obj._id + ".webp";
 }
 function iDynImage(group, data){
 	var canvas = document.createElement("canvas");
@@ -3304,7 +3301,7 @@ function renderMoremi(target, equip){
 		);
 	}
 	$obj.children(".moremi-back").after($("<img>").addClass("moremies moremi-body")
-		.attr('src', equip.robot ? "/img/kkutu/moremi/robot.png" : "/img/kkutu/moremi/body.png")
+		.attr('src', equip.robot ? "/img/kkutu/moremi/robot.webp" : "/img/kkutu/moremi/body.webp")
 		.css({ 'width': "100%", 'height': "100%" })
 	);
 	$obj.children(".moremi-rhand").css('transform', "scaleX(-1)");
