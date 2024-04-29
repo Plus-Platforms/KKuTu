@@ -364,14 +364,11 @@ Server.get("/membercount", function(req, res){
 	res.send({ list: list, max: Const.KKUTU_MAX.slice(0, 1) });
 });
 
-
-//볕뉘 수정 구문 삭제(274~353)
-
-Server.get("/legal/:page", function(req, res){
-	page(req, res, "legal/"+req.params.page);
-});
-
-// 404 page
-Server.use(function(req, res){
-	res.sendFile(path.resolve(__dirname, 'public', '404.html'))
+Server.get('*', function(req, res){
+	var name = req.originalUrl.split('?')[0].slice(1);
+	if(fs.existsSync(path.join(__dirname, 'public', name + '.html'))){
+		res.sendFile(path.join(__dirname, 'public', name + '.html'));
+	} else{
+		res.status(404).sendFile(path.join(__dirname, 'public/404.html'));
+	}
 });

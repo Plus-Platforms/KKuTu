@@ -137,6 +137,9 @@ iframe{
 	width: 98px;
 	height: 20px;
 }
+	.kkutu-menu button fa{
+		margin-right: 7px;
+	}
 	.kkutu-menu button:hover{
 		margin-top: -5px;
 		height: 25px;
