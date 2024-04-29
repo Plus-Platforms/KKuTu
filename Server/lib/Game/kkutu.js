@@ -1488,6 +1488,17 @@ function getRewards(rankScore, mode, score, bonus, rank, all, ss, opts, forestPo
 		case "KKT":
 			rw.score += score * 1.42;
 			break;
+		case "KOK":
+			if(score < 0){
+				rw.score = 0;
+			}
+			else if (opts.powerword){
+				rw.score += score * 1;
+			}
+			else{
+				rw.score += score * 1.42;
+			}
+			break;
 		case "KSH":
 			if(!opts.unknownword){
 				rw.score += score * 0.55;

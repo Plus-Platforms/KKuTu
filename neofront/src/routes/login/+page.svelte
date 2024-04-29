@@ -44,6 +44,11 @@
               디스코드로 로그인
             </button>
           </a>
+          <a href="https://kkutu.plus/login/naver">
+            <button class="bg-[#03C75A] text-white mt-4 flex w-full justify-center rounded-xl px-3 py-2 items-center font-semibold leading-6 shadow-sm transform ease-in duration-100 active:scale-95">
+              네이버 로그인 예정
+            </button>
+          </a>
           <a href="/">
             <button class="bg-gray-500 hover:bg-gray-600 text-white mt-4 flex w-full justify-center rounded-xl px-3 py-2 items-center font-semibold leading-6 shadow-sm transform ease-in duration-100 active:scale-95">
               익명으로 플레이

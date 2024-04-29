@@ -44,6 +44,7 @@ exports.OPTIONS = {
 	'str': { name: "Strict" },
 	'k32': { name: "Sami" },
 	'pwr': { name: "Power" },
+	'pww': { name: "Powerword" },
 	'prh': { name: "Prohibit" },
 	'no2': { name: "No2" },
 	'rank': { name: "RankGame" },
@@ -221,7 +222,7 @@ exports.RULE = {
 	},
 	'KOK': { lang: "ko",
 		rule: "Originkkt",
-		opts: [ "man", "ext", "loa", "str", "k32", "prh", "pwr" ],
+		opts: [ "man", "ext", "loa", "str", "k32", "prh", "pwr", "pww" ],
 		time: 1,
 		ai: true,
 		big: false,
@@ -302,7 +303,8 @@ exports.KOR_FLAG = {
 	SPACED: 4, // 띄어쓰기를 해야 하는 어휘
 	SATURI: 8, // 방언
 	OLD: 16, // 옛말
-	MUNHWA: 32 // 문화어
+	MUNHWA: 32, // 문화어
+	POWERKKT: 64 // 파워쿵쿵따 어휘
 };
 exports.WP_REWARD = function(){
 	return 10 + Math.floor(Math.random() * 91);

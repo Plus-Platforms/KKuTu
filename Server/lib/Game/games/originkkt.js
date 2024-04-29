@@ -22,6 +22,7 @@ var DB;
 var DIC;
 var banWord = "";
 var banWordList = [];
+var attackTarget;
 
 const ROBOT_START_DELAY = [ 1200, 800, 400, 200, 0 ];
 const ROBOT_TYPE_COEF = [ 1250, 750, 500, 250, 0 ];
@@ -206,12 +207,15 @@ exports.turnEnd = function(){
 	if(target) if(target.game){
 		score = Const.getPenalty(my.game.chain, target.game.score, true);
 		target.game.score += score;
+
+		//attackTarget.game.score = attackTarget.game.score + 50;
 	}
 	getAuto.call(my, my.game.char, my.game.subChar, 0).then(function(w){
 		my.byMaster('turnEnd', {
 			ok: false,
 			target: target ? target.id : null,
 			score: score,
+			//attackerScore: attackTarget.game.score,
 			hint: w,
 			banword: banWord
 		}, true);
@@ -272,6 +276,7 @@ exports.submit = function(client, text){
 				}, true);
 
 				banWord = text;
+				attackTarget = DIC[my.game.seq[my.game.turn]] || my.game.seq[my.game.turn];
 
 				if(my.game.mission === true){
 					my.game.mission = getMission(my.rule.lang);
@@ -301,6 +306,7 @@ exports.submit = function(client, text){
 		if($doc){
 			if(my.game.prohibit === true && banWordList.includes(text)) denied(415);
 			if(!my.opts.injeong && ($doc.flag & Const.KOR_FLAG.INJEONG)) denied();
+			else if(!my.opts.powerword && ($doc.flag & Const.KOR_FLAG.POWERKKT)) denied();
 			else if(my.opts.strict && (!$doc.type.match(Const.KOR_STRICT) || $doc.flag >= 4)) denied(406);
 			else if(my.opts.loanword && ($doc.flag & Const.KOR_FLAG.LOANWORD)) denied(405);
 			else preApproved();
@@ -473,7 +479,9 @@ function getAuto(char, subc, type){
 		var aft;
 		var lst;
 		
+		if(my.opts.powerword) aqs.push([ 'flag', { '$nand': Const.KOR_FLAG.POWERKKT } ]);
 		if(!my.opts.injeong) aqs.push([ 'flag', { '$nand': Const.KOR_FLAG.INJEONG } ]);
+
 		if(my.rule.lang == "ko"){
 			if(my.opts.loanword) aqs.push([ 'flag', { '$nand': Const.KOR_FLAG.LOANWORD } ]);
 			if(my.opts.strict) aqs.push([ 'type', Const.KOR_STRICT ], [ 'flag', { $lte: 3 } ]);

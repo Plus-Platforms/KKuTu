@@ -21,8 +21,8 @@ module.exports.strategy = (process, MainDB, Ajae) => {
 
         $p.authType = "naver";
         $p.id = profile.id;
-        $p.name = profile.displayName;
-        $p.title = profile.displayName;
+        $p.name = "닉네임 없음";
+        $p.title = "닉네임 없음";
         $p.image = profile._json.profile_image;
         
         /* 망할 셧다운제
