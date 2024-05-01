@@ -30,7 +30,7 @@ $(document).ready(function(){
 	$data._timers = [];
 	$data._obtain = [];
 	$data._wblock = {};
-	$data._shut = {};
+	$data._shut = [];
 	$data.usersR = {};
 	EXP.push(getRequiredScore(1));
 	for(i=2; i<MAX_LEVEL; i++){
@@ -55,6 +55,7 @@ $(document).ready(function(){
 			help: $("#HelpBtn"),
 			setting: $("#SettingBtn"),
 			community: $("#CommunityBtn"),
+			blackList: $("#BlackListBtn"),
 			newRoom: $("#NewRoomBtn"),
 			setRoom: $("#SetRoomBtn"),
 			quickRoom: $("#QuickRoomBtn"),
@@ -79,7 +80,8 @@ $(document).ready(function(){
 			uisetting: $("#UISelectDiag"),
 			community: $("#CommunityDiag"),
 				commFriends: $("#comm-friends"),
-				commFriendAdd: $("#comm-friend-add"),
+			blackList: $("#BlackListDiag"),
+				blockList: $("#block-list"),
 			room: $("#RoomDiag"),
 				roomOK: $("#room-ok"),
 			quick: $("#QuickDiag"),
@@ -172,38 +174,44 @@ $(document).ready(function(){
 		return;
 	}
 	$data._soundList = [
-		{ key: "k", value: "/media/kkutu/k.ogg" },
-		{ key: "lobby", value: "/media/kkutu/LobbyBGM.ogg" },
-		{ key: "jaqwi", value: "/media/kkutu/JaqwiBGM.ogg" },
-		{ key: "jaqwiF", value: "/media/kkutu/JaqwiFastBGM.ogg" },
-		{ key: "game_start", value: "/media/kkutu/game_start.ogg" },
-		{ key: "kkt_game_start", value: "/media/kkutu/kkt_games_start.ogg" },
-		{ key: "kkt_round_start", value: "/media/kkutu/kkt_game_start.ogg" },
-		{ key: "round_start", value: "/media/kkutu/round_start.ogg" },
-		{ key: "fail", value: "/media/kkutu/fail.ogg" },
-		{ key: "timeout", value: "/media/kkutu/timeout.ogg" },
-		{ key: "lvup", value: "/media/kkutu/lvup.ogg" },
-		{ key: "Al", value: "/media/kkutu/Al.ogg" },
-		{ key: "success", value: "/media/kkutu/success.ogg" },
-		{ key: "question", value: "/media/kkutu/question.ogg" },
-		{ key: "missing", value: "/media/kkutu/missing.ogg" },
-		{ key: "mission", value: "/media/kkutu/mission.ogg" },
-		{ key: "kung", value: "/media/kkutu/kung.ogg" },
-		{ key: "horr", value: "/media/kkutu/horr.ogg" },
+		{ key: "k", value: "/media/kkutu/k.mp3" },
+		{ key: "lobby", value: "/media/kkutu/LobbyBGM.mp3" },
+		{ key: "jaqwi", value: "/media/kkutu/JaqwiBGM.mp3" },
+		{ key: "jaqwiF", value: "/media/kkutu/JaqwiFastBGM.mp3" },
+		{ key: "game_start", value: "/media/kkutu/game_start.mp3" },
+		{ key: "kkt_game_start", value: "/media/kkutu/kkt_games_start.mp3" },
+		{ key: "kkt_round_start", value: "/media/kkutu/kkt_game_start.mp3" },
+		{ key: "round_start", value: "/media/kkutu/round_start.mp3" },
+		{ key: "fail", value: "/media/kkutu/fail.mp3" },
+		{ key: "timeout", value: "/media/kkutu/timeout.mp3" },
+		{ key: "lvup", value: "/media/kkutu/lvup.mp3" },
+		{ key: "Al", value: "/media/kkutu/Al.mp3" },
+		{ key: "success", value: "/media/kkutu/success.mp3" },
+		{ key: "question", value: "/media/kkutu/question.mp3" },
+		{ key: "missing", value: "/media/kkutu/missing.mp3" },
+		{ key: "mission", value: "/media/kkutu/mission.mp3" },
+		{ key: "kung", value: "/media/kkutu/kung.mp3" },
+		{ key: "horr", value: "/media/kkutu/horr.mp3" },
 	];
 	for(i=0; i<=10; i++) $data._soundList.push(
-		{ key: "T"+i, value: "/media/kkutu/T"+i+".ogg" },
-		{ key: "K"+i, value: "/media/kkutu/K"+i+".ogg" },
-		{ key: "As"+i, value: "/media/kkutu/As"+i+".ogg" }
+		{ key: "T"+i, value: "/media/kkutu/T"+i+".mp3" },
+		{ key: "K"+i, value: "/media/kkutu/K"+i+".mp3" },
+		{ key: "As"+i, value: "/media/kkutu/As"+i+".mp3" }
 	);
 
 	const options = $.cookie('kks');
+	const blockList = $.cookie('blockList2');
+
+	if(blockList){
+		$data._shut = JSON.parse(blockList);
+	}
+
 	if(options){
 		var opts = JSON.parse(options);
 		
 		if(opts.mp == true){
 			for(i=0; i<$data._soundList.length; i++){
-				$data._soundList[i].value = $data._soundList[i].value.replace('.ogg', '.mp3');
+				$data._soundList[i].value = $data._soundList[i].value.replace('.mp3', '.mp3');
 			}
 		}
 
@@ -444,17 +452,12 @@ $(document).ready(function(){
 		if($data.guest) return fail(451);
 		showDialog($stage.dialog.community);
 	});
+	$stage.menu.blackList.on('click', function(e){
+		showDialog($stage.dialog.blackList);
+	});
 	$stage.menu.coupon.on('click', function(e){
 		$("#coupon-board").attr('src', "https://pcor.me/kkutu/coupon");
 		showDialog($stage.dialog.coupon);
-	});
-	$stage.dialog.commFriendAdd.on('click', function(e){
-		var id = prompt(L['friendAddNotice']);
-		
-		if(!id) return;
-		if(!$data.users[id]) return fail(450);
-		
-		send('friendAdd', { target: id }, true);
 	});
 	$stage.menu.newRoom.on('click', function(e){
 		var $d;

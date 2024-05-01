@@ -208,9 +208,13 @@ exports.turnEnd = function(){
 		score = Const.getPenalty(my.game.chain, target.game.score, true);
 		target.game.score += score;
 
-		//attackTarget.game.score = attackTarget.game.score + 50;
+		attackTarget.game.score = attackTarget.game.score + 50;
 	}
 	getAuto.call(my, my.game.char, my.game.subChar, 0).then(function(w){
+		my.byMaster('attackBonus', {
+			attackerScore: attackTarget.game.score,
+			attacker: attackTarget ? attackTarget.id : null,
+		}, true);
 		my.byMaster('turnEnd', {
 			ok: false,
 			target: target ? target.id : null,

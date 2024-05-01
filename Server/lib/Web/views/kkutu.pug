@@ -108,8 +108,8 @@ block Middle
 	
 	div#evtpopup(style="display: none;position: absolute;height: 100%;width: 100%;align-items: center;justify-content: center;align-content: center;z-index: 3;background-color: rgba(0, 0, 0, 0.6);")
 		div(style='text-align: center;font-size: 18px;')
-			a(target="_blank")
-				img(src="/img/event/익숙한것이무섭다.webp", style="height: 500px;")
+			a(href="https://discord.gg/bt25WdwzR7", target="_blank")
+				img(src="/img/event/디코이벤트.webp", style="height: 500px;")
 			div.dialog-bar.d2-bar.tail-button
 				button.primaryBtn#evtpopup-ok= L("close")
 	div#originOverlay(style="display: none;position: absolute;margin-top: 210px;height: 60px;align-items: flex-end;justify-content: center;z-index: 1;width: 100%;")
@@ -240,8 +240,6 @@ block Middle
 	+Dialog('CommunityDiag', 300, 330)
 		div.dialog-bar(style='height: 225px; overflow-y: scroll;')
 			
-		div.dialog-bar.tail-button.d3-bar
-			button#comm-friend-add= L('friendAdd')
 	+Dialog('LeaderboardDiag', 300, 550, L('leaderboard', false))
 		div.dialog-bar(style='height: 400px;'): table#ranking(style='text-align: center;')
 			thead(style='font-weight: bold; background-color: #DDDDDD;'): tr

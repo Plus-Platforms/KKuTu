@@ -37,9 +37,9 @@
     var month = today.getMonth() + 1;
     var day = today.getDate();
     var todayStr = year + "" + (month < 10 ? "0" + month : month) + "" + (day < 10 ? "0" + day : day);
-    if (!evtpopup || evtpopup < "20240428") {
+    /*if (!evtpopup || evtpopup < "20296974") {
       document.getElementById("evtpopup").style.display = "flex";
-    }
+    }*/
   };
 
   // 폰트 변경 버튼 클릭 시 이벤트 핸들러

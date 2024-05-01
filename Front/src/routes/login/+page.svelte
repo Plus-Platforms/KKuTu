@@ -12,8 +12,6 @@
   </svelte:head>
   <div class="dark:bg-gray-900 flex min-h-screen flex-col justify-center px-6 py-12 lg:px-8">
     <div class="sm:mx-auto sm:w-full sm:max-w-sm">
-      <img src="/img/kkutu/intro/moremme_light.svg" class="mx-auto dark:hidden h-10" alt="Morem.MELogo"/>
-      <img src="/img/kkutu/intro/moremme_dark.svg" class="mx-auto hidden dark:block h-10" alt="Morem.MELogo"/>
       <h2 class="mt-10 text-center text-3xl font-bold leading-9 tracking-tight text-gray-900 dark:text-gray-100">
         로그인
       </h2>
@@ -34,26 +32,22 @@
           </a>
           <a href="https://kkutu.plus/login/kakao">
             <button class="bg-[#FFDE00] text-[#3C1E1E] mt-4 flex w-full justify-center rounded-xl px-3 py-2 items-center font-semibold leading-6 shadow-sm transform ease-in duration-100 active:scale-95">
-              <img src="/img/web/kakao.svg" class="h-4 mr-2" alt="Google"/>
+              <img src="/img/web/kakao.svg" class="h-4 mr-2" alt="Kakao"/>
               카카오로 로그인
             </button>
           </a>
           <a href="https://kkutu.plus/login/discord">
             <button class="bg-[#5865F2] text-white mt-4 flex w-full justify-center rounded-xl px-3 py-2 items-center font-semibold leading-6 shadow-sm transform ease-in duration-100 active:scale-95">
-              <img src="/img/web/discord.svg" class="h-4 mr-2" alt="Google"/>
+              <img src="/img/web/discord.svg" class="h-4 mr-2" alt="Discord"/>
               디스코드로 로그인
             </button>
           </a>
           <a href="https://kkutu.plus/login/naver">
             <button class="bg-[#03C75A] text-white mt-4 flex w-full justify-center rounded-xl px-3 py-2 items-center font-semibold leading-6 shadow-sm transform ease-in duration-100 active:scale-95">
-              네이버 로그인 예정
+              <img src="/img/web/naver.svg" class="h-4 mr-2" alt="NAVER"/>
+              네이버로 로그인
             </button>
           </a>
-          <a href="/">
-            <button class="bg-gray-500 hover:bg-gray-600 text-white mt-4 flex w-full justify-center rounded-xl px-3 py-2 items-center font-semibold leading-6 shadow-sm transform ease-in duration-100 active:scale-95">
-              익명으로 플레이
-            </button>
-            </a>
         </div>
       <p class="mt-10 text-center text-sm text-gray-500 dark:text-gray-300">
         로그인이 이루어지면 Morem.ME의 

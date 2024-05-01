@@ -1385,6 +1385,9 @@ exports.Room = function(room, channel){
 	my.turnEnd = function(){
 		return my.route("turnEnd");
 	};
+	my.attackBonus = function(){
+		return my.route("attackBonus");
+	};
 	my.submit = function(client, text, data){
 		return my.route("submit", client, text, data);
 	};

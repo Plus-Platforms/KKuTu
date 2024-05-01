@@ -227,14 +227,38 @@ iframe{
 .product-title i{ color: #111111; }
 .dialog-front{ z-index: 3; }
 #comm-friends div{ float: left; }
-	.cf-item{ margin: 2px 0px; width: 100%; }
+.cf-header{
+    background-color: #DDDDDD;
+    text-align: center;}
+.cf-header div {
+	border-right: 2px solid white;
+}
+.cf-header-status{
+	width: 12px;
+}
+.cf-header-server{
+	width: 44px;
+}
+.cf-header-name{
+	width: 60px;
+}
+.cf-header-memo{
+	width:  135px;
+}
+.bf-header-name{
+	width: 256px;
+}
+	.cf-item{ margin: 2px 0px; width: 100%;display: flex; }
 		.cfi-status{ border-radius: 7px; margin-right: 2px; width: 12px; height: 12px; }
 			.cfi-stat-on{ background-color: green; }
 			.cfi-stat-off{ background-color: gray; }
 		.cfi-server{ width: 46px; text-align: center; }
 		.cfi-name{ width: 60px; }
-		.cfi-memo{ width: calc(100% - 150px); }
-		.cfi-menu{ width: 30px; }
+		.bfi-menu{ width: 20px;}
+		.bfi-name{ width: calc(100% - 21px); }
+		.bf-item{ display: flex;}
+		.cfi-memo{ 
+			width: calc(100% - 155.25px); }
 			.cfi-menu>i{ margin-right: 3px; cursor: pointer; }
 			.cfi-menu>i:hover{ background-color: #FFF; }
 #ProfileDiag .dialog-body div{ float: left; }

@@ -114,6 +114,20 @@ $lib.Originkkt.turnGoing = function(){
 	
 	if(!$stage.game.roundBar.hasClass("round-extreme")) if($data._roundTime <= 5000) $stage.game.roundBar.addClass("round-extreme");
 };
+$lib.Originkkt.attackBonus = function(id, data){
+	console.log("DETECT!");
+	
+    var $uc = $(".game-user-current").prev();
+    var $bc = $("<div>")
+        .addClass("deltaScore")
+        .html("+50");
+
+    addScore(data.attacker, 50);
+	$uc.addClass("game-user-bomb");
+	drawObtainedScore($uc, $bc);
+	updateScore(data.attacker, getScore(data.attacker));
+
+}
 $lib.Originkkt.turnEnd = function(id, data){
 	var $sc = $("<div>")
 		.addClass("deltaScore")

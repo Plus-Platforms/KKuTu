@@ -70,8 +70,8 @@ block Middle
 	- var nick = SESSION.profile ? (SESSION.profile.title || SESSION.profile.name) : null;
 	div#evtpopup(style="display: none;position: absolute;height: 605px;width: 1010px;align-items: center;justify-content: center;align-content: center;z-index: 3;background-color: rgba(0, 0, 0, 0.6);")
 		div(style='text-align: center;font-size: 18px;')
-			a(target="_blank")
-				img(src="/img/event/익숙한것이무섭다.webp", style="height: 300px;")
+			a(href="https://discord.gg/bt25WdwzR7", target="_blank")
+				img(src="/img/event/디코이벤트.webp", style="height: 300px;")
 			div.dialog-bar.d2-bar.tail-button
 				button.primaryBtn#evtpopup-ok= L("close")
 	div#originOverlay(style="display: none;position: absolute;margin-top: 170px;max-height: 200px;width: 1010px;align-items: flex-end;justify-content: center;z-index: 3;")
@@ -86,6 +86,8 @@ block Middle
 		button#HelpBtn.tiny-menu.for-lobby.for-master.for-normal.for-gaming(style='display: none; background-color: #BBBBBB;')!= L('help')
 		button#SettingBtn.tiny-menu.for-lobby.for-master.for-normal.for-gaming(style='display: none; background-color: #CCCCCC;')!= L('settings')
 		button#CommunityBtn.tiny-menu.for-lobby.for-master.for-normal.for-gaming(style='display: none; background-color: #DAA9FF;')!= L('community')
+		button#BlackListBtn.tiny-menu.for-lobby.for-master.for-normal.for-gaming(style='display: none; background-color: #FF9B9B;')
+			+FA("user-slash")
 		button#SpectateBtn.for-master.for-normal(style='display: none; background-color: #D19DFF;')!= L('spectate')
 		button#SetRoomBtn.for-master(style='display: none; background-color: #B0D2F3;')!= L('setRoom')
 		button#NewRoomBtn.for-lobby(style='display: none; background-color: #8EC0F3;')!= L('newRoom')
@@ -154,11 +156,13 @@ block Middle
 		div.dialog-bar.tail-button
 			button#ui-save= L('save')
 
+	+Dialog('BlackListDiag', 300, 300)
+		div.dialog-bar(style='height: 245px; overflow-y: scroll;')
+			div#block-list
+
 	+Dialog('CommunityDiag', 300, 300)
-		div.dialog-bar(style='height: 225px; overflow-y: scroll;')
+		div.dialog-bar(style='height: 245px; overflow-y: scroll;')
 			div#comm-friends
-		div.dialog-bar.tail-button
-			button#comm-friend-add= L('friendAdd')
 	+Dialog('LeaderboardDiag', 300, 450, L('leaderboard'))
 		div.dialog-bar(style='height: 350px;'): table#ranking(style='text-align: center;')
 			thead(style='font-weight: bold; background-color: #DDDDDD;'): tr

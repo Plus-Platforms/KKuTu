@@ -17,13 +17,4 @@ else
   fi
 fi
 
-if [ "$1" = "--skip-ogg" ]; then
-  echo "Skipping OGG optimization..."
-else
-  cd "../../Front/static/media/kkutu" || exit
-  for file in *.mp3; do
-    ffmpeg -i "$file" -c:a libopus -b:a 96k -ac 1 -map_metadata -1 "${file%.mp3}.ogg"
-  done
-fi
-
 exit $ret

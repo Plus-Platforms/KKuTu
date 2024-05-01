@@ -421,6 +421,20 @@ function onMessage(data){
 				}
 			}
 			break;
+		case 'attackBonus':
+			data.attacker = data.attacker;
+			data.attackerScore = Number(data.Score);
+			if($data.room){
+				$data._tid = data.target || $data.room.game.seq[$data.room.game.turn];
+				if($data._tid){
+					if($data._tid.robot) $data._tid = $data._tid.id;
+					attackBonus($data._tid, data);
+				}
+				if(data.baby){
+					playSound('success');
+				}
+			}
+			break;
 		case 'roundEnd':
 			for(i in data.users){
 				$data.setUser(i, data.users[i]);
@@ -627,7 +641,14 @@ function runCommand(cmd){
 		'/ㄷㄷ': L['cmd_ee'],
 		'/무시': L['cmd_wb'],
 		'/차단': L['cmd_shut'],
-		'/id': L['cmd_id']
+		'/id': L['cmd_id'],
+		'/방제': L['cmd_tt'],
+		'/비번': L['cmd_roompw'],
+		'/인원': L['cmd_u'],
+		//'/모드': L['cmd_md'],
+		'/시간': L['cmd_t'],
+		'/라운드': L['cmd_rd'],
+		//'/주제': L['cmd_th']
 	};
 	
 	switch(cmd[0].toLowerCase()){
@@ -668,7 +689,145 @@ function runCommand(cmd){
 		case "/차단":
 		case "/shut":
 			toggleShutBlock(cmd.slice(1).join(' '));
+			updateCommunity();
 			break;
+		case "/방제":
+		case "/tt":
+			if($data.room){
+				if(!cmd[1]){ 
+					$("#room-title").val("");
+					$("#room-ok").trigger('click');
+				}
+				else{
+					$("#room-title").val(cmd.slice(1).join(' '));
+					$("#room-ok").trigger('click');
+				}
+			}
+			else{
+				alert(L['error_outroom']);
+			}
+			break;
+		case "/비번":
+		case "/pw":
+			if($data.room){
+				if(!cmd[1]){ 
+					$("#room-pw").val("");
+					$("#room-ok").trigger('click');
+				}
+				else{
+					$("#room-pw").val(cmd[1]);
+					$("#room-ok").trigger('click');
+				}
+			}
+			else{
+				alert(L['error_outroom']);
+			}
+			break;
+		case "/인원":
+		case "/u":
+			if(!cmd[1]){ alert(L['error_incomplete']); break; }
+			if($data.room){
+				$("#room-limit").val(cmd[1]);
+				if(parseInt(cmd[1]) < 2 || parseInt(cmd[1]) > 25){
+					alert(L['error_wronglimit']);
+					break;
+				}
+				$("#room-ok").trigger('click');
+			}
+			else{
+				alert(L['error_outroom']);
+			}
+			break;
+		case "/모드":
+		case "/md":
+			if(!cmd[1]){ alert(L['error_incomplete']); break; }
+			if($data.room){
+				var mode = Object.keys(L).find(function(key) {
+					return L[key] === cmd.slice(1).join(' ');
+				});
+				if(mode && mode.startsWith("mode")){
+					var $option = $("#room-mode option").filter(function() {
+						return $(this).text() === mode;
+					});
+					$("#room-mode").val($option.val()).prop("selected", true);
+					$("#room-ok").trigger('click');
+				}
+				else{
+					var mode = Object.keys(L).find(function(key) {
+						if (typeof L[key] === 'string') {
+							return L[key].replace(/ /g, '') === cmd.slice(1).join(' ');
+						} else {
+							return false;
+						}
+					});
+					if(mode && mode.startsWith("mode")){
+						var $option = $("#room-mode option").filter(function() {
+							return $(this).text() === mode;
+						});
+						$("#room-mode").val($option.val()).prop("selected", true);
+						$("#room-ok").trigger('click');
+					}
+					else{alert(L['error_wrongmode']);}
+				}
+			}
+			else{
+				alert(L['error_outroom']);
+			}
+			break;
+		case "/시간":
+		case "/t":
+			if(!cmd[1]){ alert(L['error_incomplete']); break; }
+			if($data.room){
+				if(isNaN(cmd[1])){alert(L['error_wrongtime']); break;}
+				if([3, 5, 10, 30, 60, 90, 120, 150].indexOf(parseInt(cmd[1])) == -1){alert(L['error_wrongtime']); break;}
+
+				$("#room-time").val(cmd[1]);
+				$("#room-ok").trigger('click');
+			}
+			else{
+				alert(L['error_outroom']);
+			}
+			break;
+		case "/라운드":
+		case "/rd":
+			if(!cmd[1]){ alert(L['error_incomplete']); break; }
+			if($data.room){
+				if(isNaN(cmd[1])){alert(L['error_wronground']); break;}
+				if(parseInt(cmd[1]) < 1 || parseInt(cmd[1]) > 10){alert(L['error_wronground']); break;}
+
+				$("#room-round").val(cmd[1]);
+				$("#room-ok").trigger('click');
+			}
+			else{
+				alert(L['error_outroom']);
+			}
+			break;
+		case "/주제":
+		case "/th":
+			if(!cmd[1]){ alert(L['error_incomplete']); break; }
+			if($data.room){
+				cmd.forEach(function (cmdItem, i) {
+					if (i != 0) {
+						var mode = Object.keys(L).find(function(key) {
+							if (typeof L[key] === 'string') {
+								return L[key].replace(/ /g, '') === cmdItem;
+							} else {
+								return false;
+							}
+						});
+						if (mode && mode.startsWith("theme_")) {
+							mode = mode.replace("theme_", "ko-pick-");
+							$("#" + mode).prop("checked", true);
+						}
+						else { 
+							alert(L['error_wrongmode']); 
+						}
+					}
+				});
+				
+				$("#room-ok").trigger('click');
+			}
+		break;
 		case "/id":
 			if(cmd[1]){
 				c = 0;
@@ -705,13 +864,15 @@ function toggleWhisperBlock(target){
 	}
 }
 function toggleShutBlock(target){
-	if($data._shut.hasOwnProperty(target)){
-		delete $data._shut[target];
+	if($data._shut.includes(target)){
+		$data._shut.splice($data._shut.indexOf(target), 1);
 		notice(target + L['userNShut']);
 	}else{
-		$data._shut[target] = true;
+		$data._shut.push(target);
 		notice(target + L['userShut']);
 	}
+	$.cookie('blockList2', JSON.stringify($data._shut));
+	updateCommunity();
 }
 function tryDict(text, callback){
 	var text = text.replace(/[^\sa-zA-Zㄱ-ㅎ0-9가-힣]/g, "");
@@ -1599,8 +1760,24 @@ function drawLeaderboard(data){
 function updateCommunity(){
 	var i, o, p, memo;
 	var len = 0;
+	var blen = 0;
 	
+	$stage.dialog.blockList.empty();
 	$stage.dialog.commFriends.empty();
+
+	$stage.dialog.commFriends.append($("<div>").addClass("cf-item cf-header")
+		.append($("<div>").addClass("cf-header-status").html("#"))
+		.append($("<div>").addClass("cf-header-server").html(L['friendServer']))
+		.append($("<div>").addClass("cf-header-name").html(L['myNickname']))
+		.append($("<div>").addClass("cf-header-memo").html(L['friendMemo']))
+		.append($("<div>").addClass("cf-header-menu").html(L['SETTING']))
+	);
+	$stage.dialog.blockList.append($("<div>").addClass("cf-item cf-header")
+		.append($("<div>").addClass("bf-header-name").html(L['myNickname']))
+		.append($("<div>").addClass("cf-header-menu").html(L['SETTING']))
+	);
+
+
 	for(i in $data.friends){
 		len++;
 		memo = $data.friends[i];
@@ -1614,9 +1791,27 @@ function updateCommunity(){
 			.append($("<div>").addClass("cfi-memo ellipse").text(memo))
 			.append($("<div>").addClass("cfi-menu")
 				.append($("<i>").addClass("fa fa-pencil").on('click', requestEditMemo))
-				.append($("<i>").addClass("fa fa-remove").on('click', requestRemoveFriend))
+				.append($("<i>").addClass("fa fa-user-xmark").on('click', requestRemoveFriend))
 			)
 		);
+	}
+
+	for(i in $data._shut){
+		blen++;
+		$stage.dialog.blockList.append($("<div>").addClass("bf-item").attr('id', "bfi-" + i)
+			.append($("<div>").addClass("bfi-name ellipse").html($data._shut[i]))
+			.append($("<div>").addClass("bfi-menu")
+				.append($("<i>").addClass("fa fa-user-xmark").on('click', requestUnblock))
+			)
+		);
+	}
+
+	function requestUnblock(e){
+		var blockIndex = Number($(e.currentTarget).parent().parent().attr('id').slice(4));
+		var blockName = $data._shut[blockIndex];
+
+		if(!confirm(blockName + L['userNShut'])) return;
+		toggleShutBlock(blockName);
 	}
 	function requestEditMemo(e){
 		var id = $(e.currentTarget).parent().parent().attr('id').slice(4);
@@ -1635,6 +1830,7 @@ function updateCommunity(){
 		send('friendRemove', { id: id }, true);
 	}
 	$("#CommunityDiag .dialog-title").html(L['communityText'] + " (" + len + " / 200)");
+	$("#BlackListDiag .dialog-title").html(L['shut'] + " (" + len + ")");
 }
 function requestRoomInfo(id){
 	var o = $data.rooms[id];
@@ -2095,6 +2291,9 @@ function drawObtainedScore($uc, $sc){
 }
 function turnEnd(id, data){
 	route("turnEnd", id, data);
+}
+function attackBonus(id, data){
+	route("attackBonus", id, data);
 }
 function roundEnd(result, data){
 	if(!data) data = {};
@@ -2833,7 +3032,7 @@ function chat(profile, msg, from, timestamp){
 	var $bar, $msg, $item;
 	var link;
 	
-	if($data._shut[profile.title || profile.name]) return;
+	if($data._shut.includes(profile.title || profile.name)) return;
 	if(from){
 		if($data.opts.dw) return;
 		if($data._wblock[from]) return;

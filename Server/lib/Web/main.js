@@ -68,6 +68,7 @@ PLLog.info("<< KKuTu Web >>");
 Server.set("trust proxy", true);
 Server.set('views', __dirname + "/views");
 Server.set('view engine', "pug");
+Server.disable( 'x-powered-by' );
 Server.use(Express.json({ limit: "8mb" }));
 Server.use(Express.static(__dirname + "/public"));
 Server.use(Express.urlencoded({ extended: true, limit: "8mb" }));
@@ -85,14 +86,19 @@ Server.use(Exession({
 //볕뉘 수정
 Server.use(passport.initialize());
 Server.use(passport.session());
+
 Server.use((req, res, next) => {
 	if(req.session.passport) {
 		delete req.session.passport;
 	}
-	
-	res.set("X-Powered-By", "Morem.ME");
 	next();
 });
+
+Server.use(function (req, res, next) {
+	res.setHeader( 'X-Powered-By', 'Viichan' );
+	next();
+});
+
 Server.use((req, res, next) => {
 	if(Const.IS_SECURED) {
 		if(req.protocol == 'http') {

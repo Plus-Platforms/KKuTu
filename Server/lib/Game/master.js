@@ -515,7 +515,20 @@ exports.init = function(_SID, CHAN){
 					}
 					
 					/* Enhanced User Block System [E] */						
-					
+					$c.remoteAddress = (info.headers['x-forwarded-for'] || info.connection.remoteAddress);
+					MainDB.ip_block.findOne([ '_id', $c.remoteAddress ]).on(function($body){
+						if ($body) {
+							$c.socket.send(JSON.stringify({
+								type: 'error',
+								code: 446,
+								reasonBlocked: !$body.reasonBlocked ? GLOBAL.USER_BLOCK_OPTIONS.DEFAULT_BLOCKED_TEXT : $body.reasonBlocked,
+								ipBlockedUntil: !$body.ipBlockedUntil ? GLOBAL.USER_BLOCK_OPTIONS.BLOCKED_FOREVER : $body.ipBlockedUntil
+							}));
+							$c.socket.close();
+							return;
+						}
+					});
+
 					/* Enhanced User Block System [S] */
 					if(ref.result == 200 || isBlockRelease){
 					/* Enhanced User Block System [E] */

@@ -133,9 +133,9 @@ Server.get("/audioProxy", async function(req, res){
 
     const encodedURL = req.query.link;
     var decodedURL = decodeURIComponent(encodedURL);
-	const defaultURL = "https://kkutu.plus/media/kkutu/LobbyBGMS2.ogg";
+	const defaultURL = "https://kkutu.plus/media/kkutu/LobbyBGMS2.mp3";
 
-	if (!decodedURL.match(/\.ogg$|\.ogg$|\.wav$/)) {
+	if (!decodedURL.match(/\.mp3$|\.ogg$|\.wav$/)) {
 		decodedURL = defaultURL;
 	}
 
