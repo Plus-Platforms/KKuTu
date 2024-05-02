@@ -1,8 +1,0 @@
-{
-    "schedule": "daily",
-    "ignoredFiles": [
-        "Server/lib/Web/public/img/*"
-    ],
-    "aggressiveCompression": "true",
-    "compressWiki": "true"
-}
