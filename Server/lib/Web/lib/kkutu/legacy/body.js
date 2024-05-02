@@ -1770,7 +1770,7 @@ function updateCommunity(){
 		.append($("<div>").addClass("cf-header-server").html(L['friendServer']))
 		.append($("<div>").addClass("cf-header-name").html(L['myNickname']))
 		.append($("<div>").addClass("cf-header-memo").html(L['friendMemo']))
-		.append($("<div>").addClass("cf-header-menu").html(L['SETTING']))
+		.append($("<div>").addClass("cf-header-menu").html(""))
 	);
 	$stage.dialog.blockList.append($("<div>").addClass("cf-item cf-header")
 		.append($("<div>").addClass("bf-header-name").html(L['myNickname']))
