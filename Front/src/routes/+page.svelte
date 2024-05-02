@@ -6,6 +6,8 @@
   let jsonData = {"message":{"status":"200","error":{"code":"","msg":""},"result":{"cafeId":31109813,"cafeName":"모렘미","cafeStaff":false,"cafeMember":false,"manageMenus":{"showArticleDelete":false,"showReportBadArticle":false,"showBoardNotice":false,"showOneBoardNotice":false,"showActivityStop":false,"showSecede":false,"showArticleMove":false,"showLevelUp":false,"showRequiredNotice":false,"showPopularArticleHide":false},"requiredNoticeList":[{"articleId":35,"title":"필독공지","isCafeBook":false,"isNewNotice":false}],"mainNoticeList":[{"cafeId":31109813,"articleId":206,"refArticleId":206,"replyListOrder":"","menuId":8,"menuName":"Loading","menuType":"B","restrictMenu":false,"boardType":"L","subject":"불러오는 중","summary":"","writerId":"","writerNickname":"","memberLevel":999,"memberLevelIconId":1,"profileImage":"","newArticle":true,"replyArticle":false,"blindArticle":false,"openArticle":true,"marketArticle":false,"useSafetyPayment":false,"escrow":false,"onSale":false,"cost":0,"formattedCost":"","productSale":{"saleStatus":"NONE","cost":""},"attachImage":true,"attachMusic":false,"attachMovie":false,"attachFile":false,"attachMap":false,"attachGpx":false,"attachPoll":false,"attachLink":false,"attachCalendar":false,"popular":false,"representImage":"","representImageType":"I","imageAttachCount":1,"useHead":true,"headId":12,"headName":"","enableComment":true,"hasNewComment":false,"refArticleCount":0,"readCount":14,"commentCount":0,"writeDateTimestamp":1714362828690,"aheadOfWriteDate":"24.04.29.","formattedReadCount":"14","formattedCommentCount":"0","noticeType":"N","showNoticeDelete":false,"delParent":false,"blogScrap":false,"enableRecommendation":true}]}}};
   let jsonDataFull = {"message":{"status":"200","error":{"code":"","msg":""},"result":{"cafeId":31109813,"cafeName":"모렘미","cafeStaff":false,"cafeMember":false,"blockMemberList":[],"hasNext":true,"articleList":[{"cafeId":31109813,"articleId":209,"refArticleId":209,"replyListOrder":"","menuId":12,"menuName":"Loading","menuType":"B","restrictMenu":false,"boardType":"L","subject":"불러오는 중","memberKey":"","writerNickname":"","memberLevel":110,"memberLevelIconId":1,"memberLiked":false,"profileImage":"","newArticle":true,"replyArticle":false,"blindArticle":false,"openArticle":true,"marketArticle":false,"useSafetyPayment":false,"escrow":false,"onSale":false,"cost":0,"formattedCost":"","productSale":{"saleStatus":"NONE","cost":""},"attachImage":true,"attachMusic":false,"attachMovie":false,"attachFile":false,"attachMap":false,"attachGpx":false,"attachPoll":false,"attachLink":false,"attachCalendar":false,"popular":false,"representImage":"","representImageType":"I","imageAttachCount":20,"useHead":true,"headId":4,"headName":"","enableComment":true,"hasNewComment":false,"refArticleCount":0,"readCount":6,"commentCount":0,"likeItCount":0,"writeDateTimestamp":1714385210767,"delParent":false,"blogScrap":false,"enableRecommendation":false}],"manageMenus":{},"recentNoticeAddDate":1714362828780,"requiredNoticeList":[],"managerDelegate":{},"exposePlugReservation":false,"homeDaAdvertVisible":false,"adFreeGameCafe":false}}};
   let jsonDataServers = { list: [0], max: 0 };
+  let randomMessageArray = ["혼자서도 즐겨 보세요!", "클래식과 모던, 두 가지 맛!", "동접 늘려주세요...T.T", "지금 접속하기!", "오리진 쿵쿵따 모드 업데이트!", "수학 대결 모드 업데이트!", "아무도 이 버튼을 안 눌러!", "내 버튼에 있는 내 끄투"];
+  const randomMessage = randomMessageArray[Math.floor(Math.random() * randomMessageArray.length)];
   const serverName = ["감자", "냉이", "다래", "레몬", "망고", "보리", "상추", "아욱", "20세 이상"];
   let showModal = false; // 모달 표시 여부를 나타내는 변수
 
@@ -133,7 +135,12 @@
             <div class="balloon-tail"></div>
             <div class="balloon-wrapper bg-black/70 text-lg text-white rounded-2xl px-4 py-2">
               <div class="flex items-center">
-                <img src="/img/web/눈 Left.svg" alt="모레미 눈입" class="h-4 mr-2"> 지금&nbsp;<strong>{jsonDataServers.list[0]}</strong>명이 함께하는 중!
+                <img src="/img/web/눈 Left.svg" alt="모레미 눈입" class="h-4 mr-2">
+                {#if jsonDataServers.list[0] > 0}
+                지금&nbsp;<strong>{jsonDataServers.list[0]}</strong>명이 함께하는 중!
+                {:else}
+                {randomMessage}
+                {/if}
               </div>
             </div>
           </div>
