@@ -81,7 +81,8 @@ Pub.ready = function(isPub){
 			DB.kkutu_injeong = new mainAgent.Table("kkutu_injeong");
 			DB.kkutu_shop = new mainAgent.Table("kkutu_shop");
 			DB.kkutu_shop_desc = new mainAgent.Table("kkutu_shop_desc");
-			DB.welcome_kkutu_s2 = new mainAgent.Table("pink_users");
+			DB.kkutu_coupon = new mainAgent.Table("kkutu_coupon");
+			DB.kkutu_coupon_log = new mainAgent.Table("kkutu_coupon_log");
 
 			DB.session = new mainAgent.Table("session");
 			DB.users = new mainAgent.Table("users");

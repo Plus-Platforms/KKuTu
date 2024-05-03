@@ -20,8 +20,6 @@
  * 볕뉘 수정사항:
  * getCookie 코드오류로 인한 코드 수정
  */
-var global = {};
-var L;
 
 (function(){
 	var size;
@@ -102,9 +100,9 @@ var L;
 		var explSize;
 		var gn = $("#gn-content").html() || "";
 		
-		global.profile = $("#profile").html();
-		if(global.profile) global.profile = JSON.parse(global.profile);
-		else global.profile = {};
+		globalThis.profile = $("#profile").html();
+		if(globalThis.profile) globalThis.profile = JSON.parse(globalThis.profile);
+		else globalThis.profile = {};
 		
 		$.cookie('test', "good");
 		if($.cookie('test') != "good"){
@@ -128,8 +126,8 @@ var L;
 	// 계정
 		if($.cookie('lc') == "") $.cookie('lc', "ko_KR");
 		
-		if (global.profile.token) {
-			$("#account-info").html((global.profile.nickname || global.profile.title || global.profile.name) + '<span class="topText">님</span>').on('click', function(e){
+		if (globalThis.profile.token) {
+			$("#account-info").html((globalThis.profile.nickname || globalThis.profile.title || globalThis.profile.name) + '<span class="topText">님</span>').on('click', function(e){
 				if (confirm(L['ASK_LOGOUT'])) requestLogout(e);
 			});
 		}else{
@@ -145,8 +143,8 @@ var L;
 		/*if($.cookie('forlogout')){
 			requestLogout();
 		}*/
-		global.watchInput($("#quick-search-tf"));
-		(global.expl = function($mother){
+		globalThis.watchInput($("#quick-search-tf"));
+		(globalThis.expl = function($mother){
 			var $q = $mother ? $mother.find(".expl") : $(".expl");
 			
 			$q.parent().addClass("expl-mother").on('mouseenter', function(e){
@@ -214,7 +212,7 @@ var L;
 		}
 		_setTimeout(onWatchInput, 200, $o, prev);
 	}
-	global.watchInput = function($tf){
+	globalThis.watchInput = function($tf){
 		var cid = $tf.attr('id');
 		
 		$tf.after($("<div>")
@@ -243,8 +241,8 @@ var L;
 		});
 		return _setTimeout(onWatchInput, 200, $tf, $tf.val());
 	};
-	global.zeroPadding = function(num, len){ var s = num.toString(); return "000000000000000".slice(0, Math.max(0, len - s.length)) + s; };
-	global.onPopup = function(url){
+	globalThis.zeroPadding = function(num, len){ var s = num.toString(); return "000000000000000".slice(0, Math.max(0, len - s.length)) + s; };
+	globalThis.onPopup = function(url){
 		location.href = url;
 	};
 })();

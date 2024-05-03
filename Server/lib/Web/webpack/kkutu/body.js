@@ -630,6 +630,17 @@ function welcome() {
 
         $(document).on("keydown", keydownHandler);
 
+		
+		var evtpopup = $.cookie("evtpopup");
+		var today = new Date();
+		var year = today.getFullYear();
+		var month = today.getMonth() + 1;
+		var day = today.getDate();
+		var todayStr = year + "" + (month < 10 ? "0" + month : month) + "" + (day < 10 ? "0" + day : day);
+		if (!evtpopup || evtpopup < "19996974") {
+		  $stage.dialog.evtPopup.style.display = "flex";
+		}
+
     }
 
 	if($data.admin) console.log("관리자 모드");
@@ -1197,48 +1208,6 @@ function updateMe(){
 	if(my.profile.title || my.profile.name !== "닉네임 없음"){
 		$("#usernameCredit").text(my.profile.title || my.profile.name);
 	}
-	//200레벨이벤트
-	var startDate = new Date('2024-04-19');
-    var endDate = new Date('2025-01-01');
-    var today = new Date();
-
-    if (today >= startDate && today <= endDate) {
-	$("#event-content").show();
-	$("#pre-content").hide();
-    }
-
-	$.get("/welcomes2/nquery", function(res){
-		if(res.result == "loggedout"){
-			$("#userLevel").html("로그인 후 확인하세요");
-			$("#lockedItem").attr("src","img/event/어서와요S2_데이터x.webp");
-		} else if (res.result == "notfound"){
-			$("#userLogic").html("");
-			$("#userLevel").html("0WP");
-			$("#lockedItem").attr("src","img/event/어서와요S2_데이터x.webp");
-		} else {
-			$("#userLogic").html("((5000 - 순위: " + res.rank + ") + 레벨: "+ res.level +") * 10 =");
-			$("#userLevel").html(res.wp + "WP");
-			if (res.result == "available"){
-				$("#lockedItem").attr("src","img/event/어서와요S2_통합.webp");
-				$("#lockedItem").click(function(){
-					$.get("/welcomes2/claim", function(res){
-						if(res.result == "claimed"){
-							playSound("lvup");
-							alert("🥳축하합니다! "+res.wp+"XP 적용 완료~! 새로고침해서 지금 확인해보세요.");
-							$("#lockedItem").attr("src","img/event/어서와요S2_리딤.webp");
-							$("#lockedItem").off("click");
-						}
-						else{
-							alert("적용 중 오류가 발생하였습니다.");
-						}
-					});
-			  	});
-			}
-			else{
-				$("#lockedItem").attr("src","img/event/어서와요S2_리딤.webp");
-			}
-		}
-	});
 
 	/*if(my.data.rankPoint >= 1500){
 		$("#lockedItem").click(function(){
@@ -1414,7 +1383,7 @@ function normalGameUserBar(o){
 			requestProfile($(e.currentTarget).attr('id').slice(10));
 		});
 	renderMoremi($m, o.equip);
-	global.expl($R);
+	globalThis.expl($R);
 	addonNickname($bar, o);
 	if(o.game.team) $n.addClass("team-" + o.game.team);
 	
@@ -1662,7 +1631,7 @@ function renderGoods($target, preId, filter, equip, onClick){
 		$item.attr('id', preId + "-" + obj._id).on('click', onClick);
 		if(equipped) $item.addClass("dress-equipped");
 	}
-	global.expl($target);
+	globalThis.expl($target);
 }
 function drawMyGoods(avGroup){
 	var equip = $data.users[$data.id].equip || {};
@@ -2032,7 +2001,7 @@ function requestProfile(id){
 	}
 	showDialog($stage.dialog.profile);
 	$stage.dialog.profile.show();
-	global.expl($ex);
+	globalThis.expl($ex);
 }
 function requestInvite(id){
 	var nick;
@@ -2681,7 +2650,7 @@ function loadShop(){
 				.append(explainGoods(item, false))
 			.on('click', onGoods));
 		});
-		global.expl($body);
+		globalThis.expl($body);
 	});
 	$(".shop-type.selected").removeClass("selected");
 	$("#shop-type-all").addClass("selected");
@@ -2886,7 +2855,7 @@ function pushHint(hint){
 			.append($("<div>").addClass("expl").css({ 'white-space': "normal", 'width': 200 }).html(v.html()))
 	);
 	if(!mobile) $obj.width(0).animate({ width: 215 });
-	global.expl($obj);
+	globalThis.expl($obj);
 }
 function pushHistory(text, mean, theme, wc){
 	var $v, $w, $x;
@@ -2917,7 +2886,7 @@ function pushHistory(text, mean, theme, wc){
 		.append($x = $("<div>").addClass("expl").css({ 'width': 200, 'white-space': "normal" })
 			.html("<h5 style='color: #BBBBBB;'>" + processWord(text, mean, theme, wcs, "tooltip").html() + "</h5>")
 		);
-	global.expl($v);
+	globalThis.expl($v);
 }
 function processNormal(word, mean){
 	return $("<label>").addClass("word").html(mean);
@@ -3058,7 +3027,7 @@ function setRoomHead($obj, room){
 		$rm.append($("<div>").addClass("expl").html("<h5>" + room.opts.injpick.map(function(item){
 			return L["theme_" + item];
 		}) + "</h5>"));
-		global.expl($obj);
+		globalThis.expl($obj);
 	}
 }function loadSounds(list, callback){
 	/*if (list.length != 0) {

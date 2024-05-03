@@ -1,4 +1,8 @@
 /**
+Copyright (C) 2023~2024 Morem.ME
+*/
+(function(){
+/**
  * Rule the words! KKuTu Online
  * Copyright (C) 2017 JJoriping(op@jjo.kr)
  * 
@@ -145,6 +149,8 @@ $(document).ready(function(){
 			setting: $("#SettingDiag"),
 				settingUi: $("#setting-ui"),
 				settingOK: $("#setting-ok"),
+			evtPopup: $("#evtpopup"),
+				evtPopupOK: $("#evtpopup-ok"),
 			uisetting: $("#UISelectDiag"),
 			community: $("#CommunityDiag"),
 				commFriends: $("#comm-friends"),
@@ -306,8 +312,17 @@ $(document).ready(function(){
 		}
 	}
 
+	console.log('%cWait!', 'color: cyan; font-size: 35px; font-weight: bold; text-shadow: 0 0 5px cyan;');
+  	console.log('%cUnauthorized modding of live service is illegal by law. If you want to know our internals, don`t hesitate checking out our GitHub repository! https://github.com/Plus-Platforms/KKuTu', 'font-size: 20px;');
+
 	const options = $.cookie('kks');
 	const blockList = $.cookie('blockList2');
+	const selectedFont = $.cookie('selectedFont');
+	
+	if (selectedFont) {
+		document.body.style.fontFamily = selectedFont;
+		document.getElementById("fontSelect").value = selectedFont;
+	}
 
 	if(blockList){
 		$data._shut = JSON.parse(blockList);
@@ -991,10 +1006,22 @@ $(document).ready(function(){
 		// $.cookie() 함수에 expires 옵션을 추가하여 쿠키의 저장 기한을 1년으로 설정
 		$.cookie('kks', JSON.stringify($data.opts));
 	
+		var selectedFontOpt = document.getElementById("fontSelect").value;
+		document.body.style.fontFamily = selectedFont;
+		$.cookie("selectedFont", selectedFontOpt);
+		
 		$stage.dialog.setting.hide();
 		$('#dimmer').fadeOut();
 	});
-	
+	$stage.dialog.evtPopupOK.on('click', function(e){
+		$stage.dialog.evtPopup.hide();
+		var today = new Date();
+		var year = today.getFullYear();
+		var month = today.getMonth() + 1;
+		var day = today.getDate();
+		var todayStr = year + "" + (month < 10 ? "0" + month : month) + "" + (day < 10 ? "0" + day : day);
+		$.cookie('evtpopup', todayStr);
+	});
 	$stage.dialog.profileLevel.on('click', function(e){
 		$("#PracticeDiag .dialog-title").html(L['robot']);
 		$("#ai-team").prop('disabled', false);
@@ -1725,6 +1752,755 @@ $lib.Jaqwi.turnEnd = function(id, data){
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+$lib.MathType.roundReady = function(data){
+	var i, len = $data.room.game.title.length;
+	var $l;
+	
+	$data._chatter = mobile ? $stage.game.hereText : $stage.talk;
+	clearBoard();
+	$data._round = data.round;
+	$data._roundTime = $data.room.time * 1000;
+	$data._fastTime = 10000;
+	$data._list = data.list.concat(data.list);
+	$data.chain = 0;
+	drawListMQ();
+	drawRound(data.round);
+	playSound('round_start');
+	recordEvent('roundReady', { data: data });
+};
+function onSpace(e){
+	if(e.keyCode == 32){
+		$stage.chatBtn.trigger('click');
+		e.preventDefault();
+	}
+}
+function drawListMQ(){
+	var wl = $data._list.slice($data.chain);
+	
+	wl = wl.map(function(v){
+		return v.replace(/\*/g, " × ").replace(/\//g, " ÷ ").replace(/\+/g, " + ").replace(/-/g, " - ");
+	} );
+	
+	var lv = 1;
+	var pts = "";
+	var w0l = wl[0].length;
+	
+	if(w0l >= 20) pts = "18px";
+	if(w0l >= 50) pts = "15px";
+	$stage.game.display.css('font-size', pts);
+	wl[0] = "<label style='color: #FFFF44;'>" + wl[0] + " = ?</label> | ";
+	$stage.game.display.html(wl.slice(0, lv).join(' '));
+	$stage.game.chain.show().html($data.chain);
+	$(".jjo-turn-time .graph-bar")
+		.width("100%")
+		.html(wl.slice(lv, 2 * lv).join(' '))
+		.css({ 'text-align': "center", 'background-color': "#70712D" });
+}
+$lib.MathType.spaceOn = function(){
+	if($data.room.opts.proverb) return;
+	$data._spaced = true;
+	$("body").on('keydown', "#" + $data._chatter.attr('id'), onSpace);
+};
+$lib.MathType.spaceOff = function(){
+	delete $data._spaced;
+	$("body").off('keydown', "#" + $data._chatter.attr('id'), onSpace);
+};
+$lib.MathType.turnStart = function(data){
+	if(!$data._spectate){
+		$stage.game.hereText.show();
+		if(mobile) $stage.game.hereText.val("").focus();
+		else $stage.talk.val("").focus();
+		$lib.MathType.spaceOn();
+	}
+	ws.onmessage = _onMessage;
+	clearInterval($data._tTime);
+	clearTrespasses();
+	$data._tTime = addInterval(turnGoing, TICK);
+	$data._roundTime = data.roundTime;
+	playBGM('jaqwi');
+	recordEvent('turnStart', {
+		data: data
+	});
+};
+$lib.MathType.turnGoing = $lib.Jaqwi.turnGoing;
+$lib.MathType.turnEnd = function(id, data){
+	var $sc = $("<div>")
+		.addClass("deltaScore")
+		.html("+" + data.score);
+	var $uc = $("#game-user-" + id);
+	
+	if(data.error){
+		$data.chain++;
+		drawListMQ();
+		playSound('fail');
+	}else if(data.ok){
+		if($data.id == id){
+			$data.chain++;
+			drawListMQ();
+			playSound('mission');
+			pushHistory(data.value, "");
+		}else if($data._spectate){
+			playSound('mission');
+		}
+		addScore(id, data.score);
+		drawObtainedScore($uc, $sc);
+		updateScore(id, getScore(id));
+	}else{
+		clearInterval($data._tTime);
+		$lib.MathType.spaceOff();
+		$stage.game.hereText.hide();
+		if (!$stage.game.other.is(":visible")){ $stage.game.wrong.show();
+}
+		stopBGM();
+		playSound('horr');
+		if($data._round < $data.room.round) restGoing(10);
+	}
+};
+function restGoing(rest){
+	$(".jjo-turn-time .graph-bar")
+		.html(rest + L['afterRun']);
+	if(rest > 0) addTimeout(restGoing, 1000, rest - 1);
+}
+function drawSpeed(table){
+	var i;
+	
+	for(i in table){
+		$("#game-user-" + i + " .game-user-score").empty()
+			.append($("<div>").css({ 'float': "none", 'color': "#4444FF", 'text-align': "center" }).html(table[i] + "<label style='font-size: 11px;'>" + L['kpm'] + "</label>"));
+	}
+}
+
+/**
+ * Rule the words! KKuTu Online
+ * Copyright (C) 2017 JJoriping(op@jjo.kr)
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ */
+
+$lib.Moum.roundReady = function(data){
+	var i, len = $data.room.game.title.length;
+	var $l;
+	
+	clearBoard();
+	$data._roundTime = $data.room.time * 1000;
+	$stage.game.display.html($data._char = "&lt;" + data.theme + "&gt;");
+	$stage.game.chain.show().html($data.chain = 0);
+	if($data.room.opts.mission){
+		$stage.game.items.show().css('opacity', 1).html($data.mission = data.mission);
+	}
+	drawRound(data.round);
+	playSound('round_start');
+	recordEvent('roundReady', { data: data });
+};
+$lib.Moum.turnStart = function(data){
+	$data.room.game.turn = data.turn;
+	if(data.seq) $data.room.game.seq = data.seq;
+	$data._tid = $data.room.game.seq[data.turn];
+	if($data._tid.robot) $data._tid = $data._tid.id;
+	data.id = $data._tid;
+	
+	$stage.game.display.html($data._char);
+	$("#game-user-"+data.id).addClass("game-user-current");
+	if(!$data._replay){
+		$stage.game.hereText.css('display', (data.id == $data.id) ? "block" : "none");
+$stage.game.correct.hide();
+$stage.game.wrong.hide();
+$stage.game.other.css('display', (data.id == $data.id) ? "none" : "block");
+		if(data.id == $data.id){
+			if(mobile) $stage.game.hereText.val("").focus();
+			else $stage.talk.focus();
+		}
+	}
+	$stage.game.items.html($data.mission = data.mission);
+	
+	ws.onmessage = _onMessage;
+	clearInterval($data._tTime);
+	clearTrespasses();
+	$data._chars = [ data.char, data.subChar ];
+	$data._speed = data.speed;
+	$data._tTime = addInterval(turnGoing, TICK);
+	$data.turnTime = data.turnTime;
+	$data._turnTime = data.turnTime;
+	$data._roundTime = data.roundTime;
+	$data._turnSound = playSound("T"+data.speed);
+	recordEvent('turnStart', {
+		data: data
+	});
+};
+$lib.Moum.turnGoing = $lib.Classic.turnGoing;
+$lib.Moum.turnEnd = function(id, data){
+	var $sc = $("<div>")
+		.addClass("deltaScore")
+		.html((data.score > 0) ? ("+" + (data.score - data.bonus)) : data.score);
+	var $uc = $(".game-user-current");
+	var hi;
+	
+	$data._turnSound.stop();
+	addScore(id, data.score);
+	clearInterval($data._tTime);
+	if(data.ok){
+		clearTimeout($data._fail);
+		$stage.game.hereText.hide();
+		if (!$stage.game.other.is(":visible")){ $stage.game.correct.show();
+}
+		$stage.game.chain.html(++$data.chain);
+		pushDisplay(data.value, data.mean, data.theme, data.wc);
+	}else{
+		$sc.addClass("lost");
+		$(".game-user-current").addClass("game-user-bomb");
+		$stage.game.hereText.hide();
+		if (!$stage.game.other.is(":visible")){ $stage.game.wrong.show();
+}
+		playSound('timeout');
+	}
+	if(data.hint){
+		data.hint = data.hint._id;
+		hi = data.hint.indexOf($data._chars[0]);
+		if(hi == -1) hi = data.hint.indexOf($data._chars[1]);
+		
+		$stage.game.display.empty()
+			.append($("<label>").html(data.hint.slice(0, hi + 1)))
+			.append($("<label>").css('color', "#AAAAAA").html(data.hint.slice(hi + 1)));
+	}
+	if(data.bonus){
+		mobile ? $sc.html("+" + (b.score - b.bonus) + "+" + b.bonus) : addTimeout(function(){
+			var $bc = $("<div>")
+				.addClass("deltaScore bonus")
+				.html("+" + data.bonus);
+			
+			drawObtainedScore($uc, $bc);
+		}, 500);
+	}
+	drawObtainedScore($uc, $sc).removeClass("game-user-current");
+	updateScore(id, getScore(id));
+};
+
+/**
+ * Rule the words! KKuTu Online
+ * Copyright (C) 2017 JJoriping(op@jjo.kr)
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ */
+
+$lib.Originkkt.roundReady = function(data){
+	var i, len = $data.room.game.title.length;
+	var $l;
+	
+	clearBoard();
+	$data._roundTime = $data.room.time * 1000;
+	$stage.game.display.html(getCharText(data.char, data.subChar));
+	$stage.game.chain.show().html($data.chain = 0);
+	if($data.room.opts.mission){
+		$stage.game.items.show().css('opacity', 1).html($data.mission = data.mission);
+	}
+
+	$stage.game.sami.css('display', 'flex');
+	$stage.game.overlay.css('display', 'flex');
+
+	$stage.game.overlay.find("img#originCountdown").hide();
+	$stage.game.overlay.find("img#originItem").hide();
+
+	if($data.room.opts.sami){
+		$stage.game.sami.find("img#Sami1").attr('src', '/img/kkutu/origin_kkt/3-left-off.webp');
+		$stage.game.sami.find("img#Sami2").attr('src', '/img/kkutu/origin_kkt/2-right-off.webp');
+	} else{
+		$stage.game.sami.find("img#Sami1").attr('src', '/img/kkutu/origin_kkt/3-left-on.webp');
+		$stage.game.sami.find("img#Sami2").attr('src', '/img/kkutu/origin_kkt/3-right-on.webp');
+	}
+
+	drawRound(data.round);
+	var count = 3;
+	var countDown = setInterval(function(){
+		if(count == 0){
+			clearInterval(countDown);
+			$stage.game.overlay.find("img#originCountdown").attr('src', '/img/kkutu/origin_kkt/start@ko.webp').fadeOut(500);
+		} else {
+			$stage.game.overlay.find("img#originCountdown").attr('src', '/img/kkutu/origin_kkt/count-'+count+'.webp').fadeIn(500);
+			count--;
+		}
+	}, 400);
+	
+	playSound('kkt_round_start');
+
+	recordEvent('roundReady', { data: data });
+};
+$lib.Originkkt.turnStart = function(data){
+	$data.room.game.turn = data.turn;
+	if(data.seq) $data.room.game.seq = data.seq;
+	if(!($data._tid = $data.room.game.seq[data.turn])) return;
+	if($data._tid.robot) $data._tid = $data._tid.id;
+	data.id = $data._tid;
+	
+
+	if(data.wordLength == 2 && $data.room.opts.sami){
+		$stage.game.sami.find("img#Sami1").attr('src', '/img/kkutu/origin_kkt/3-left-off.webp');
+		$stage.game.sami.find("img#Sami2").attr('src', '/img/kkutu/origin_kkt/2-right-on.webp');
+	}
+	else if (data.wordLength == 3 && $data.room.opts.sami){
+		$stage.game.sami.find("img#Sami1").attr('src', '/img/kkutu/origin_kkt/3-left-on.webp');
+		$stage.game.sami.find("img#Sami2").attr('src', '/img/kkutu/origin_kkt/2-right-off.webp');
+	} else {}
+
+	$stage.game.display.html($data._char = getCharText(data.char, data.subChar));
+	$("#game-user-"+data.id).addClass("game-user-current");
+	if(!$data._replay){
+		$stage.game.hereText.css('display', (data.id == $data.id) ? "block" : "none");
+		$stage.game.correct.hide();
+		$stage.game.wrong.hide();
+		$stage.game.other.css('display', (data.id == $data.id) ? "none" : "block");
+				
+		if(data.id == $data.id){
+			if(mobile) $stage.game.hereText.val("").focus();
+			else $stage.talk.focus();
+		}
+	}
+	$stage.game.items.html($data.mission = data.mission);
+	
+	ws.onmessage = _onMessage;
+	clearInterval($data._tTime);
+	clearTrespasses();
+	$data._chars = [ data.char, data.subChar ];
+	$data._speed = data.speed;
+	$data._tTime = addInterval(turnGoing, TICK);
+	$data.turnTime = data.turnTime;
+	$data._turnTime = data.turnTime;
+	$data._roundTime = data.roundTime;
+	$data._turnSound = playSound("T"+data.speed);
+	recordEvent('turnStart', {
+		data: data
+	});
+};
+$lib.Originkkt.turnGoing = function(){
+	if(!$data.room) clearInterval($data._tTime);
+	$data._turnTime -= TICK;
+	$data._roundTime -= TICK;
+	
+	$stage.game.turnBar
+		.width($data._timePercent())
+		.html(($data._turnTime*0.001).toFixed(1) + L['SECOND']);
+	$stage.game.roundBar
+		.width($data._roundTime/$data.room.time*0.1 + "%")
+		.html(($data._roundTime*0.001).toFixed(1) + L['SECOND']);
+	
+	if(!$stage.game.roundBar.hasClass("round-extreme")) if($data._roundTime <= 5000) $stage.game.roundBar.addClass("round-extreme");
+};
+$lib.Originkkt.attackBonus = function(id, data){
+    var $uc = $(".game-user-current").prev();
+    var $bc = $("<div>")
+        .addClass("deltaScore")
+        .html("+50");
+
+    addScore(data.attacker, 50);
+	$uc.addClass("game-user-bomb");
+	drawObtainedScore($uc, $bc);
+	updateScore(data.attacker, getScore(data.attacker));
+
+}
+
+$lib.Originkkt.turnEnd = function(id, data){
+	var $sc = $("<div>")
+		.addClass("deltaScore")
+		.html((data.score > 0) ? ("+" + (data.score - data.bonus)) : data.score);
+	var $uc = $(".game-user-current");
+	var hi;
+	var randomDieMessage = 0;
+	
+	if($data._turnSound) $data._turnSound.stop();
+	addScore(id, data.score);
+	clearInterval($data._tTime);
+	if(data.ok){
+		checkFailCombo();
+		clearTimeout($data._fail);
+
+		$stage.game.hereText.hide();
+		if (!$stage.game.other.is(":visible")){ $stage.game.correct.show();}
+
+		$stage.game.chain.html(++$data.chain);
+		pushDisplay(data.value, data.mean, data.theme, data.wc);
+
+		$stage.game.overlay.find("img#originItem").show();
+
+		if(data.score > 39){
+			$stage.game.overlay.find("img#originItem").attr('src', '/img/kkutu/origin_kkt/perfect@ko.webp').fadeOut(500);
+		}
+		else if (data.score > 20){
+			$stage.game.overlay.find("img#originItem").attr('src', '/img/kkutu/origin_kkt/good@ko.webp').fadeOut(500);
+		}
+		else{
+			$stage.game.overlay.find("img#originItem").attr('src', '').fadeOut(1);
+		}
+
+	}else{
+		checkFailCombo(id);
+		$sc.addClass("lost");
+		$(".game-user-current").addClass("game-user-bomb");
+		$stage.game.hereText.hide();
+		if (!$stage.game.other.is(":visible")){ $stage.game.wrong.show();
+}
+		playSound('timeout');
+
+		$stage.game.overlay.find("img#originItem").show();
+		randomDieMessage = Math.floor(Math.random() * 5) + 1;
+		$stage.game.overlay.find("img#originItem").attr('src', '/img/kkutu/origin_kkt/die-'+randomDieMessage+'.webp').fadeOut(1000);
+	}
+	if(data.hint){
+		data.hint = data.hint._id;
+		hi = data.hint.indexOf($data._chars[0]);
+		if(hi == -1) hi = data.hint.indexOf($data._chars[1]);
+		
+		if(MODE[$data.room.mode] == "KAP") $stage.game.display.empty()
+			.append($("<label>").css('color', "#AAAAAA").html(data.hint.slice(0, hi)))
+			.append($("<label>").html(data.hint.slice(hi)));
+		else $stage.game.display.empty()
+			.append($("<label>").html(data.hint.slice(0, hi + 1)))
+			.append($("<label>").css('color', "#AAAAAA").html(data.hint.slice(hi + 1)));
+	}
+	if(data.bonus){
+		mobile ? $sc.html("+" + (b.score - b.bonus) + "+" + b.bonus) : addTimeout(function(){
+			var $bc = $("<div>")
+				.addClass("deltaScore bonus")
+				.html("+" + data.bonus);
+			
+			drawObtainedScore($uc, $bc);
+		}, 500);
+
+	}
+	drawObtainedScore($uc, $sc).removeClass("game-user-current");
+	updateScore(id, getScore(id));
+};
+
+/**
+ * Rule the words! KKuTu Online
+ * Copyright (C) 2017 JJoriping(op@jjo.kr)
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ */
+
+$lib.All.roundReady = $lib.Daneo.roundReady;
+$lib.All.turnStart = $lib.Daneo.turnStart;
+$lib.All.turnGoing = $lib.Classic.turnGoing;
+$lib.All.turnEnd = $lib.Daneo.turnEnd;
+/**
+ * Rule the words! KKuTu Online
+ * Copyright (C) 2017 JJoriping(op@jjo.kr)
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ */
+
+$lib.Drawing.roundReady = function (data, spec) {
+  var tv = L['jqTheme'] + ': ' + L['theme_' + data.theme]
+
+  clearBoard()
+  $('.luod,.rounds,.game-body').addClass('cw')
+  $('.luod,.rounds').addClass('dg')
+  $('.game-user-drawing').removeClass('game-user-drawing')
+  $stage.game.tools.hide()
+  $data._relay = false
+  $data._roundTime = $data.room.time * 1000
+  $data._fastTime = 10000
+  $data._fullImageString = ""
+  $stage.game.items.hide()
+  $stage.game.hints.show()
+  $stage.game.cwcmd.show().css('opacity', 0)
+  if ($data.id === data.painter) {
+    console.log('i\'m painter!')
+    $data._isPainter = true
+  } else {
+    $data._isPainter = false
+  }
+  $('#game-user-' + data.painter).addClass('game-user-drawing')
+  drawRound(data.round)
+  playSound('round_start')
+  clearInterval($data._tTime)
+}
+$lib.Drawing.turnStart = function (data, spec) {
+  $('.game-user-current').removeClass('game-user-current')
+  $('.game-user-bomb').removeClass('game-user-bomb')
+  if ($data.room.game.seq.indexOf($data.id) >= 0) {
+    if (!$data._isPainter) {
+      $stage.game.hints.show()
+      $stage.game.tools.hide()
+
+      $data._relay = true
+    } else {
+      $('#drawing-line-width').change(function () {
+        console.log(this.value)
+        $stage.game.canvas.freeDrawingBrush.width = this.value
+        var canvasStr = JSON.stringify($stage.game.canvas)
+        send('drawingCanvas', {data: canvasStr}, false)
+      })
+      $('#drawing-color').change(function () {
+        console.log(this.value)
+        $stage.game.canvas.freeDrawingBrush.color = this.value
+        var canvasStr = JSON.stringify($stage.game.canvas)
+        send('drawingCanvas', {data: canvasStr}, false)
+      })
+      $('#drawing-clear').click(function () {
+        console.log('clear')
+        $stage.game.canvas.clear()
+        var canvasStr = JSON.stringify($stage.game.canvas)
+        send('drawingCanvas', {data: canvasStr}, false)
+      })
+      $('.button-color#color-red').click(function() {
+        console.log('change red')
+        $stage.game.canvas.freeDrawingBrush.color = '#FF0000'
+        var canvasStr = JSON.stringify($stage.game.canvas)
+        send('drawingCanvas', {data: canvasStr}, false)
+      })
+      $('.button-color#color-orange').click(function() {
+        console.log('change orange')
+        $stage.game.canvas.freeDrawingBrush.color = '#FFA500'
+        var canvasStr = JSON.stringify($stage.game.canvas)
+        send('drawingCanvas', {data: canvasStr}, false)
+      })
+      $('.button-color#color-yellow').click(function() {
+        console.log('change yellow')
+        $stage.game.canvas.freeDrawingBrush.color = '#FFFF00'
+        var canvasStr = JSON.stringify($stage.game.canvas)
+        send('drawingCanvas', {data: canvasStr}, false)
+      })
+      $('.button-color#color-green').click(function() {
+        console.log('change green')
+        $stage.game.canvas.freeDrawingBrush.color = '#008000'
+        var canvasStr = JSON.stringify($stage.game.canvas)
+        send('drawingCanvas', {data: canvasStr}, false)
+      })
+      $('.button-color#color-blue').click(function() {
+        console.log('change blue')
+        $stage.game.canvas.freeDrawingBrush.color = '#0000FF'
+        var canvasStr = JSON.stringify($stage.game.canvas)
+        send('drawingCanvas', {data: canvasStr}, false)
+      })
+      $('.button-color#color-indigo').click(function() {
+        console.log('change indigo')
+        $stage.game.canvas.freeDrawingBrush.color = '#4B0082'
+        var canvasStr = JSON.stringify($stage.game.canvas)
+        send('drawingCanvas', {data: canvasStr}, false)
+      })
+      $('.button-color#color-violet').click(function() {
+        console.log('change red')
+        $stage.game.canvas.freeDrawingBrush.color = '#9400D3'
+        var canvasStr = JSON.stringify($stage.game.canvas)
+        send('drawingCanvas', {data: canvasStr}, false)
+      })
+      $('.button-color#color-black').click(function() {
+        console.log('change black')
+        $stage.game.canvas.freeDrawingBrush.color = '#000000'
+        var canvasStr = JSON.stringify($stage.game.canvas)
+        send('drawingCanvas', {data: canvasStr}, false)
+      })
+      $('.button-color#color-white').click(function() {
+        console.log('change white')
+        $stage.game.canvas.freeDrawingBrush.color = '#FFFFFF'
+        var canvasStr = JSON.stringify($stage.game.canvas)
+        send('drawingCanvas', {data: canvasStr}, false)
+      })
+
+      $stage.game.drawingTitle.text(data.word)
+      $stage.game.themeisTitle.text(L['theme_' + data.theme])
+
+      $stage.game.hints.hide()
+      $stage.game.tools.show()
+
+      $('.rounds').removeClass('dg')
+      $('.rounds').addClass('painter')
+    }
+  }
+  $lib.Drawing.drawDisplay()
+  clearInterval($data._tTime)
+  $data._tTime = addInterval(turnGoing, TICK)
+  playBGM('jaqwi')
+}
+$lib.Drawing.turnHint = function (data) {
+  var hint
+  if (Array.isArray(data.hint)) {
+    hint = L['theme_' + data.hint[0]]
+  } else {
+    hint = data.hint
+  }
+  playSound('mission')
+  pushHint(hint)
+}
+$lib.Drawing.turnEnd = function (id, data) {
+  var $sc = $('<div>').addClass('deltaScore').html('+' + data.score)
+  var $uc = $('#game-user-' + id)
+
+  if (data.giveup) {
+    $uc.addClass('game-user-bomb')
+    $data._relay = false
+  } else if (data.answer) {
+    $stage.game.hereText.hide()
+    if (!$stage.game.other.is(":visible")){ $stage.game.correct.show();
+}
+    $stage.game.display.html($('<label>').css('color', '#FFFF44').html(data.answer))
+    stopBGM()
+    playSound('horr')
+    $data._relay = false
+  } else {
+    // if(data.mean) turnHint(data);
+    if (id == $data.id) $stage.game.hereText.hide()
+    if (!$stage.game.other.is(":visible")){ $stage.game.wrong.show();
+}
+    addScore(id, data.score)
+    if ($data._roundTime > 10000) $data._roundTime = 10000
+    drawObtainedScore($uc, $sc)
+    updateScore(id, getScore(id)).addClass('game-user-current')
+    playSound('success')
+  }
+}
+$lib.Drawing.drawDisplay = function () {
+  var $pane = $stage.game.display.empty()
+
+  $pane.append($('<canvas>')
+    .attr('id', 'canvas')
+    .css({
+      width: '300',
+      height: '300',
+      left: 0,
+      top: 0
+    })
+    .addClass('canvas')
+  )
+
+  var canvas = window._canvas = new fabric.Canvas('canvas')
+  canvas.backgroundColor = '#ffffff'
+  canvas.isDrawingMode = $data._isPainter
+  canvas.setHeight(300)
+  canvas.setWidth(300)
+  canvas.selection = false
+
+  $('#drawing-line-width').val(20)
+  $('#drawing-color').val('#000000')
+
+  if ($data._isPainter) {
+    canvas.on('mouse:up', function (e) {
+      // $data._fullImageString -> old canvas data
+      var canvasStr = JSON.stringify(canvas)
+      var diffRes= window.differ.patch_make($data._fullImageString, canvasStr)
+      diffRes = window.differ.patch_toText(diffRes)
+
+      // { type: "drawingCanvas", diffed: Boolean, data: String }
+      send('drawingCanvas', {diffed: true, data: diffRes}, false)
+      $data._fullImageString = canvasStr
+    })
+  }
+  canvas.renderAll()
+  $stage.game.canvas = canvas
+}
+$lib.Drawing.turnGoing = function () {
+  var $rtb = $stage.game.roundBar
+  var bRate
+  var tt
+
+  if (!$data.room) clearInterval($data._tTime)
+  $data._roundTime -= TICK
+
+  tt = $data._spectate ? L['stat_spectate'] : ($data._roundTime * 0.001).toFixed(1) + L['SECOND']
+  $rtb
+    .width($data._roundTime / $data.room.time * 0.1 + '%')
+    .html(tt)
+
+  if (!$rtb.hasClass('round-extreme')) {
+    if ($data._roundTime <= $data._fastTime) {
+      bRate = $data.bgm.currentTime / $data.bgm.duration
+      if ($data.bgm.paused) stopBGM()
+      else playBGM('jaqwiF')
+      $data.bgm.currentTime = $data.bgm.duration * bRate
+      $rtb.addClass('round-extreme')
+    }
+  }
+}
+$lib.Drawing.drawCanvas = function (msg) {
+  // { type: "drawCanvas", diffed: Boolean, data: String }
+  if (!$data._isPainter) {
+    var data = ""
+    if(msg.diffed) {
+      var diff = window.differ.patch_fromText(msg.data)
+			var diffResult = window.differ.patch_apply(diff, $data._fullImageString)
+
+			if(diffResult[1]) {
+				data = diffResult[0]
+			} else {
+				send('canvasNotValid', {}, false)
+			}
+    } else {
+      data = msg.data
+    }
+
+    $stage.game.canvas.clear()
+    $stage.game.canvas.loadFromJSON(data, $stage.game.canvas.renderAll.bind($stage.game.canvas))
+    $data._fullImageString = data
+  }
+}
+
+$lib.Drawing.diffNotValid = function (msg) {
+  // msg -> {}
+  if ($data._isPainter) {
+    send('drawingCanvas', {diffed: false, data: $data._fullImageString}, false)
+  }
+}
+/**
+ * Rule the words! KKuTu Online
+ * Copyright (C) 2017 JJoriping(op@jjo.kr)
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ */
+
 $lib.MathQuiz.roundReady = function(data){
 	var tv = L['selectLevel'] + ": " + L['level_' + data.theme];
 	$stage.game.wrongText.html("오답입니다!");
@@ -2226,122 +3002,6 @@ $lib.Hunmin.turnEnd = function(id, data){
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-$lib.Moum.roundReady = function(data){
-	var i, len = $data.room.game.title.length;
-	var $l;
-	
-	clearBoard();
-	$data._roundTime = $data.room.time * 1000;
-	$stage.game.display.html($data._char = "&lt;" + data.theme + "&gt;");
-	$stage.game.chain.show().html($data.chain = 0);
-	if($data.room.opts.mission){
-		$stage.game.items.show().css('opacity', 1).html($data.mission = data.mission);
-	}
-	drawRound(data.round);
-	playSound('round_start');
-	recordEvent('roundReady', { data: data });
-};
-$lib.Moum.turnStart = function(data){
-	$data.room.game.turn = data.turn;
-	if(data.seq) $data.room.game.seq = data.seq;
-	$data._tid = $data.room.game.seq[data.turn];
-	if($data._tid.robot) $data._tid = $data._tid.id;
-	data.id = $data._tid;
-	
-	$stage.game.display.html($data._char);
-	$("#game-user-"+data.id).addClass("game-user-current");
-	if(!$data._replay){
-		$stage.game.hereText.css('display', (data.id == $data.id) ? "block" : "none");
-$stage.game.correct.hide();
-$stage.game.wrong.hide();
-$stage.game.other.css('display', (data.id == $data.id) ? "none" : "block");
-		if(data.id == $data.id){
-			if(mobile) $stage.game.hereText.val("").focus();
-			else $stage.talk.focus();
-		}
-	}
-	$stage.game.items.html($data.mission = data.mission);
-	
-	ws.onmessage = _onMessage;
-	clearInterval($data._tTime);
-	clearTrespasses();
-	$data._chars = [ data.char, data.subChar ];
-	$data._speed = data.speed;
-	$data._tTime = addInterval(turnGoing, TICK);
-	$data.turnTime = data.turnTime;
-	$data._turnTime = data.turnTime;
-	$data._roundTime = data.roundTime;
-	$data._turnSound = playSound("T"+data.speed);
-	recordEvent('turnStart', {
-		data: data
-	});
-};
-$lib.Moum.turnGoing = $lib.Classic.turnGoing;
-$lib.Moum.turnEnd = function(id, data){
-	var $sc = $("<div>")
-		.addClass("deltaScore")
-		.html((data.score > 0) ? ("+" + (data.score - data.bonus)) : data.score);
-	var $uc = $(".game-user-current");
-	var hi;
-	
-	$data._turnSound.stop();
-	addScore(id, data.score);
-	clearInterval($data._tTime);
-	if(data.ok){
-		clearTimeout($data._fail);
-		$stage.game.hereText.hide();
-		if (!$stage.game.other.is(":visible")){ $stage.game.correct.show();
-}
-		$stage.game.chain.html(++$data.chain);
-		pushDisplay(data.value, data.mean, data.theme, data.wc);
-	}else{
-		$sc.addClass("lost");
-		$(".game-user-current").addClass("game-user-bomb");
-		$stage.game.hereText.hide();
-		if (!$stage.game.other.is(":visible")){ $stage.game.wrong.show();
-}
-		playSound('timeout');
-	}
-	if(data.hint){
-		data.hint = data.hint._id;
-		hi = data.hint.indexOf($data._chars[0]);
-		if(hi == -1) hi = data.hint.indexOf($data._chars[1]);
-		
-		$stage.game.display.empty()
-			.append($("<label>").html(data.hint.slice(0, hi + 1)))
-			.append($("<label>").css('color', "#AAAAAA").html(data.hint.slice(hi + 1)));
-	}
-	if(data.bonus){
-		mobile ? $sc.html("+" + (b.score - b.bonus) + "+" + b.bonus) : addTimeout(function(){
-			var $bc = $("<div>")
-				.addClass("deltaScore bonus")
-				.html("+" + data.bonus);
-			
-			drawObtainedScore($uc, $bc);
-		}, 500);
-	}
-	drawObtainedScore($uc, $sc).removeClass("game-user-current");
-	updateScore(id, getScore(id));
-};
-
-/**
- * Rule the words! KKuTu Online
- * Copyright (C) 2017 JJoriping(op@jjo.kr)
- * 
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- * 
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- * 
- * You should have received a copy of the GNU General Public License
- * along with this program. If not, see <http://www.gnu.org/licenses/>.
- */
-
 $lib.Daneo.roundReady = function(data){
 	var i, len = $data.room.game.title.length;
 	var $l;
@@ -2440,276 +3100,6 @@ $lib.Daneo.turnEnd = function(id, data){
 	updateScore(id, getScore(id));
 };
 
-/**
- * Rule the words! KKuTu Online
- * Copyright (C) 2017 JJoriping(op@jjo.kr)
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program. If not, see <http://www.gnu.org/licenses/>.
- */
-
-$lib.Drawing.roundReady = function (data, spec) {
-  var tv = L['jqTheme'] + ': ' + L['theme_' + data.theme]
-
-  clearBoard()
-  $('.luod,.rounds,.game-body').addClass('cw')
-  $('.luod,.rounds').addClass('dg')
-  $('.game-user-drawing').removeClass('game-user-drawing')
-  $stage.game.tools.hide()
-  $data._relay = false
-  $data._roundTime = $data.room.time * 1000
-  $data._fastTime = 10000
-  $data._fullImageString = ""
-  $stage.game.items.hide()
-  $stage.game.hints.show()
-  $stage.game.cwcmd.show().css('opacity', 0)
-  if ($data.id === data.painter) {
-    console.log('i\'m painter!')
-    $data._isPainter = true
-  } else {
-    $data._isPainter = false
-  }
-  $('#game-user-' + data.painter).addClass('game-user-drawing')
-  drawRound(data.round)
-  playSound('round_start')
-  clearInterval($data._tTime)
-}
-$lib.Drawing.turnStart = function (data, spec) {
-  $('.game-user-current').removeClass('game-user-current')
-  $('.game-user-bomb').removeClass('game-user-bomb')
-  if ($data.room.game.seq.indexOf($data.id) >= 0) {
-    if (!$data._isPainter) {
-      $stage.game.hints.show()
-      $stage.game.tools.hide()
-
-      $data._relay = true
-    } else {
-      $('#drawing-line-width').change(function () {
-        console.log(this.value)
-        $stage.game.canvas.freeDrawingBrush.width = this.value
-        var canvasStr = JSON.stringify($stage.game.canvas)
-        send('drawingCanvas', {data: canvasStr}, false)
-      })
-      $('#drawing-color').change(function () {
-        console.log(this.value)
-        $stage.game.canvas.freeDrawingBrush.color = this.value
-        var canvasStr = JSON.stringify($stage.game.canvas)
-        send('drawingCanvas', {data: canvasStr}, false)
-      })
-      $('#drawing-clear').click(function () {
-        console.log('clear')
-        $stage.game.canvas.clear()
-        var canvasStr = JSON.stringify($stage.game.canvas)
-        send('drawingCanvas', {data: canvasStr}, false)
-      })
-      $('.button-color#color-red').click(function() {
-        console.log('change red')
-        $stage.game.canvas.freeDrawingBrush.color = '#FF0000'
-        var canvasStr = JSON.stringify($stage.game.canvas)
-        send('drawingCanvas', {data: canvasStr}, false)
-      })
-      $('.button-color#color-orange').click(function() {
-        console.log('change orange')
-        $stage.game.canvas.freeDrawingBrush.color = '#FFA500'
-        var canvasStr = JSON.stringify($stage.game.canvas)
-        send('drawingCanvas', {data: canvasStr}, false)
-      })
-      $('.button-color#color-yellow').click(function() {
-        console.log('change yellow')
-        $stage.game.canvas.freeDrawingBrush.color = '#FFFF00'
-        var canvasStr = JSON.stringify($stage.game.canvas)
-        send('drawingCanvas', {data: canvasStr}, false)
-      })
-      $('.button-color#color-green').click(function() {
-        console.log('change green')
-        $stage.game.canvas.freeDrawingBrush.color = '#008000'
-        var canvasStr = JSON.stringify($stage.game.canvas)
-        send('drawingCanvas', {data: canvasStr}, false)
-      })
-      $('.button-color#color-blue').click(function() {
-        console.log('change blue')
-        $stage.game.canvas.freeDrawingBrush.color = '#0000FF'
-        var canvasStr = JSON.stringify($stage.game.canvas)
-        send('drawingCanvas', {data: canvasStr}, false)
-      })
-      $('.button-color#color-indigo').click(function() {
-        console.log('change indigo')
-        $stage.game.canvas.freeDrawingBrush.color = '#4B0082'
-        var canvasStr = JSON.stringify($stage.game.canvas)
-        send('drawingCanvas', {data: canvasStr}, false)
-      })
-      $('.button-color#color-violet').click(function() {
-        console.log('change red')
-        $stage.game.canvas.freeDrawingBrush.color = '#9400D3'
-        var canvasStr = JSON.stringify($stage.game.canvas)
-        send('drawingCanvas', {data: canvasStr}, false)
-      })
-      $('.button-color#color-black').click(function() {
-        console.log('change black')
-        $stage.game.canvas.freeDrawingBrush.color = '#000000'
-        var canvasStr = JSON.stringify($stage.game.canvas)
-        send('drawingCanvas', {data: canvasStr}, false)
-      })
-      $('.button-color#color-white').click(function() {
-        console.log('change white')
-        $stage.game.canvas.freeDrawingBrush.color = '#FFFFFF'
-        var canvasStr = JSON.stringify($stage.game.canvas)
-        send('drawingCanvas', {data: canvasStr}, false)
-      })
-
-      $stage.game.drawingTitle.text(data.word)
-      $stage.game.themeisTitle.text(L['theme_' + data.theme])
-
-      $stage.game.hints.hide()
-      $stage.game.tools.show()
-
-      $('.rounds').removeClass('dg')
-      $('.rounds').addClass('painter')
-    }
-  }
-  $lib.Drawing.drawDisplay()
-  clearInterval($data._tTime)
-  $data._tTime = addInterval(turnGoing, TICK)
-  playBGM('jaqwi')
-}
-$lib.Drawing.turnHint = function (data) {
-  var hint
-  if (Array.isArray(data.hint)) {
-    hint = L['theme_' + data.hint[0]]
-  } else {
-    hint = data.hint
-  }
-  playSound('mission')
-  pushHint(hint)
-}
-$lib.Drawing.turnEnd = function (id, data) {
-  var $sc = $('<div>').addClass('deltaScore').html('+' + data.score)
-  var $uc = $('#game-user-' + id)
-
-  if (data.giveup) {
-    $uc.addClass('game-user-bomb')
-    $data._relay = false
-  } else if (data.answer) {
-    $stage.game.hereText.hide()
-    if (!$stage.game.other.is(":visible")){ $stage.game.correct.show();
-}
-    $stage.game.display.html($('<label>').css('color', '#FFFF44').html(data.answer))
-    stopBGM()
-    playSound('horr')
-    $data._relay = false
-  } else {
-    // if(data.mean) turnHint(data);
-    if (id == $data.id) $stage.game.hereText.hide()
-    if (!$stage.game.other.is(":visible")){ $stage.game.wrong.show();
-}
-    addScore(id, data.score)
-    if ($data._roundTime > 10000) $data._roundTime = 10000
-    drawObtainedScore($uc, $sc)
-    updateScore(id, getScore(id)).addClass('game-user-current')
-    playSound('success')
-  }
-}
-$lib.Drawing.drawDisplay = function () {
-  var $pane = $stage.game.display.empty()
-
-  $pane.append($('<canvas>')
-    .attr('id', 'canvas')
-    .css({
-      width: '300',
-      height: '300',
-      left: 0,
-      top: 0
-    })
-    .addClass('canvas')
-  )
-
-  var canvas = window._canvas = new fabric.Canvas('canvas')
-  canvas.backgroundColor = '#ffffff'
-  canvas.isDrawingMode = $data._isPainter
-  canvas.setHeight(300)
-  canvas.setWidth(300)
-  canvas.selection = false
-
-  $('#drawing-line-width').val(20)
-  $('#drawing-color').val('#000000')
-
-  if ($data._isPainter) {
-    canvas.on('mouse:up', function (e) {
-      // $data._fullImageString -> old canvas data
-      var canvasStr = JSON.stringify(canvas)
-      var diffRes= window.differ.patch_make($data._fullImageString, canvasStr)
-      diffRes = window.differ.patch_toText(diffRes)
-
-      // { type: "drawingCanvas", diffed: Boolean, data: String }
-      send('drawingCanvas', {diffed: true, data: diffRes}, false)
-      $data._fullImageString = canvasStr
-    })
-  }
-  canvas.renderAll()
-  $stage.game.canvas = canvas
-}
-$lib.Drawing.turnGoing = function () {
-  var $rtb = $stage.game.roundBar
-  var bRate
-  var tt
-
-  if (!$data.room) clearInterval($data._tTime)
-  $data._roundTime -= TICK
-
-  tt = $data._spectate ? L['stat_spectate'] : ($data._roundTime * 0.001).toFixed(1) + L['SECOND']
-  $rtb
-    .width($data._roundTime / $data.room.time * 0.1 + '%')
-    .html(tt)
-
-  if (!$rtb.hasClass('round-extreme')) {
-    if ($data._roundTime <= $data._fastTime) {
-      bRate = $data.bgm.currentTime / $data.bgm.duration
-      if ($data.bgm.paused) stopBGM()
-      else playBGM('jaqwiF')
-      $data.bgm.currentTime = $data.bgm.duration * bRate
-      $rtb.addClass('round-extreme')
-    }
-  }
-}
-$lib.Drawing.drawCanvas = function (msg) {
-  // { type: "drawCanvas", diffed: Boolean, data: String }
-  if (!$data._isPainter) {
-    var data = ""
-    if(msg.diffed) {
-      var diff = window.differ.patch_fromText(msg.data)
-			var diffResult = window.differ.patch_apply(diff, $data._fullImageString)
-
-			if(diffResult[1]) {
-				data = diffResult[0]
-			} else {
-				send('canvasNotValid', {}, false)
-			}
-    } else {
-      data = msg.data
-    }
-
-    $stage.game.canvas.clear()
-    $stage.game.canvas.loadFromJSON(data, $stage.game.canvas.renderAll.bind($stage.game.canvas))
-    $data._fullImageString = data
-  }
-}
-
-$lib.Drawing.diffNotValid = function (msg) {
-  // msg -> {}
-  if ($data._isPainter) {
-    send('drawingCanvas', {diffed: false, data: $data._fullImageString}, false)
-  }
-}
 /**
  * Rule the words! KKuTu Online
  * Copyright (C) 2017 JJoriping(op@jjo.kr)
@@ -2822,347 +3212,6 @@ $lib.Sock.turnGoing = $lib.Jaqwi.turnGoing;
 $lib.Sock.turnHint = function(data){
 	playSound('fail');
 };
-
-/**
- * Rule the words! KKuTu Online
- * Copyright (C) 2017 JJoriping(op@jjo.kr)
- * 
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- * 
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- * 
- * You should have received a copy of the GNU General Public License
- * along with this program. If not, see <http://www.gnu.org/licenses/>.
- */
-
-$lib.Originkkt.roundReady = function(data){
-	var i, len = $data.room.game.title.length;
-	var $l;
-	
-	clearBoard();
-	$data._roundTime = $data.room.time * 1000;
-	$stage.game.display.html(getCharText(data.char, data.subChar));
-	$stage.game.chain.show().html($data.chain = 0);
-	if($data.room.opts.mission){
-		$stage.game.items.show().css('opacity', 1).html($data.mission = data.mission);
-	}
-
-	$stage.game.sami.css('display', 'flex');
-	$stage.game.overlay.css('display', 'flex');
-
-	$stage.game.overlay.find("img#originCountdown").hide();
-	$stage.game.overlay.find("img#originItem").hide();
-
-	if($data.room.opts.sami){
-		$stage.game.sami.find("img#Sami1").attr('src', '/img/kkutu/origin_kkt/3-left-off.webp');
-		$stage.game.sami.find("img#Sami2").attr('src', '/img/kkutu/origin_kkt/2-right-off.webp');
-	} else{
-		$stage.game.sami.find("img#Sami1").attr('src', '/img/kkutu/origin_kkt/3-left-on.webp');
-		$stage.game.sami.find("img#Sami2").attr('src', '/img/kkutu/origin_kkt/3-right-on.webp');
-	}
-
-	drawRound(data.round);
-	var count = 3;
-	var countDown = setInterval(function(){
-		if(count == 0){
-			clearInterval(countDown);
-			$stage.game.overlay.find("img#originCountdown").attr('src', '/img/kkutu/origin_kkt/start@ko.webp').fadeOut(500);
-		} else {
-			$stage.game.overlay.find("img#originCountdown").attr('src', '/img/kkutu/origin_kkt/count-'+count+'.webp').fadeIn(500);
-			count--;
-		}
-	}, 400);
-	
-	playSound('kkt_round_start');
-
-	recordEvent('roundReady', { data: data });
-};
-$lib.Originkkt.turnStart = function(data){
-	$data.room.game.turn = data.turn;
-	if(data.seq) $data.room.game.seq = data.seq;
-	if(!($data._tid = $data.room.game.seq[data.turn])) return;
-	if($data._tid.robot) $data._tid = $data._tid.id;
-	data.id = $data._tid;
-	
-
-	if(data.wordLength == 2 && $data.room.opts.sami){
-		$stage.game.sami.find("img#Sami1").attr('src', '/img/kkutu/origin_kkt/3-left-off.webp');
-		$stage.game.sami.find("img#Sami2").attr('src', '/img/kkutu/origin_kkt/2-right-on.webp');
-	}
-	else if (data.wordLength == 3 && $data.room.opts.sami){
-		$stage.game.sami.find("img#Sami1").attr('src', '/img/kkutu/origin_kkt/3-left-on.webp');
-		$stage.game.sami.find("img#Sami2").attr('src', '/img/kkutu/origin_kkt/2-right-off.webp');
-	} else {}
-
-	$stage.game.display.html($data._char = getCharText(data.char, data.subChar));
-	$("#game-user-"+data.id).addClass("game-user-current");
-	if(!$data._replay){
-		$stage.game.hereText.css('display', (data.id == $data.id) ? "block" : "none");
-		$stage.game.correct.hide();
-		$stage.game.wrong.hide();
-		$stage.game.other.css('display', (data.id == $data.id) ? "none" : "block");
-				
-		if(data.id == $data.id){
-			if(mobile) $stage.game.hereText.val("").focus();
-			else $stage.talk.focus();
-		}
-	}
-	$stage.game.items.html($data.mission = data.mission);
-	
-	ws.onmessage = _onMessage;
-	clearInterval($data._tTime);
-	clearTrespasses();
-	$data._chars = [ data.char, data.subChar ];
-	$data._speed = data.speed;
-	$data._tTime = addInterval(turnGoing, TICK);
-	$data.turnTime = data.turnTime;
-	$data._turnTime = data.turnTime;
-	$data._roundTime = data.roundTime;
-	$data._turnSound = playSound("T"+data.speed);
-	recordEvent('turnStart', {
-		data: data
-	});
-};
-$lib.Originkkt.turnGoing = function(){
-	if(!$data.room) clearInterval($data._tTime);
-	$data._turnTime -= TICK;
-	$data._roundTime -= TICK;
-	
-	$stage.game.turnBar
-		.width($data._timePercent())
-		.html(($data._turnTime*0.001).toFixed(1) + L['SECOND']);
-	$stage.game.roundBar
-		.width($data._roundTime/$data.room.time*0.1 + "%")
-		.html(($data._roundTime*0.001).toFixed(1) + L['SECOND']);
-	
-	if(!$stage.game.roundBar.hasClass("round-extreme")) if($data._roundTime <= 5000) $stage.game.roundBar.addClass("round-extreme");
-};
-$lib.Originkkt.attackBonus = function(id, data){
-    var $uc = $(".game-user-current").prev();
-    var $bc = $("<div>")
-        .addClass("deltaScore")
-        .html("+50");
-
-    addScore(data.attacker, 50);
-	$uc.addClass("game-user-bomb");
-	drawObtainedScore($uc, $bc);
-	updateScore(data.attacker, getScore(data.attacker));
-
-}
-
-$lib.Originkkt.turnEnd = function(id, data){
-	var $sc = $("<div>")
-		.addClass("deltaScore")
-		.html((data.score > 0) ? ("+" + (data.score - data.bonus)) : data.score);
-	var $uc = $(".game-user-current");
-	var hi;
-	var randomDieMessage = 0;
-	
-	if($data._turnSound) $data._turnSound.stop();
-	addScore(id, data.score);
-	clearInterval($data._tTime);
-	if(data.ok){
-		checkFailCombo();
-		clearTimeout($data._fail);
-
-		$stage.game.hereText.hide();
-		if (!$stage.game.other.is(":visible")){ $stage.game.correct.show();}
-
-		$stage.game.chain.html(++$data.chain);
-		pushDisplay(data.value, data.mean, data.theme, data.wc);
-
-		$stage.game.overlay.find("img#originItem").show();
-
-		if(data.score > 39){
-			$stage.game.overlay.find("img#originItem").attr('src', '/img/kkutu/origin_kkt/perfect@ko.webp').fadeOut(500);
-		}
-		else if (data.score > 20){
-			$stage.game.overlay.find("img#originItem").attr('src', '/img/kkutu/origin_kkt/good@ko.webp').fadeOut(500);
-		}
-		else{
-			$stage.game.overlay.find("img#originItem").attr('src', '').fadeOut(1);
-		}
-
-	}else{
-		checkFailCombo(id);
-		$sc.addClass("lost");
-		$(".game-user-current").addClass("game-user-bomb");
-		$stage.game.hereText.hide();
-		if (!$stage.game.other.is(":visible")){ $stage.game.wrong.show();
-}
-		playSound('timeout');
-
-		$stage.game.overlay.find("img#originItem").show();
-		randomDieMessage = Math.floor(Math.random() * 5) + 1;
-		$stage.game.overlay.find("img#originItem").attr('src', '/img/kkutu/origin_kkt/die-'+randomDieMessage+'.webp').fadeOut(1000);
-	}
-	if(data.hint){
-		data.hint = data.hint._id;
-		hi = data.hint.indexOf($data._chars[0]);
-		if(hi == -1) hi = data.hint.indexOf($data._chars[1]);
-		
-		if(MODE[$data.room.mode] == "KAP") $stage.game.display.empty()
-			.append($("<label>").css('color', "#AAAAAA").html(data.hint.slice(0, hi)))
-			.append($("<label>").html(data.hint.slice(hi)));
-		else $stage.game.display.empty()
-			.append($("<label>").html(data.hint.slice(0, hi + 1)))
-			.append($("<label>").css('color', "#AAAAAA").html(data.hint.slice(hi + 1)));
-	}
-	if(data.bonus){
-		mobile ? $sc.html("+" + (b.score - b.bonus) + "+" + b.bonus) : addTimeout(function(){
-			var $bc = $("<div>")
-				.addClass("deltaScore bonus")
-				.html("+" + data.bonus);
-			
-			drawObtainedScore($uc, $bc);
-		}, 500);
-
-	}
-	drawObtainedScore($uc, $sc).removeClass("game-user-current");
-	updateScore(id, getScore(id));
-};
-
-/**
- * Rule the words! KKuTu Online
- * Copyright (C) 2017 JJoriping(op@jjo.kr)
- * 
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- * 
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- * 
- * You should have received a copy of the GNU General Public License
- * along with this program. If not, see <http://www.gnu.org/licenses/>.
- */
-
-$lib.MathType.roundReady = function(data){
-	var i, len = $data.room.game.title.length;
-	var $l;
-	
-	$data._chatter = mobile ? $stage.game.hereText : $stage.talk;
-	clearBoard();
-	$data._round = data.round;
-	$data._roundTime = $data.room.time * 1000;
-	$data._fastTime = 10000;
-	$data._list = data.list.concat(data.list);
-	$data.chain = 0;
-	drawListMQ();
-	drawRound(data.round);
-	playSound('round_start');
-	recordEvent('roundReady', { data: data });
-};
-function onSpace(e){
-	if(e.keyCode == 32){
-		$stage.chatBtn.trigger('click');
-		e.preventDefault();
-	}
-}
-function drawListMQ(){
-	var wl = $data._list.slice($data.chain);
-	
-	wl = wl.map(function(v){
-		return v.replace(/\*/g, " × ").replace(/\//g, " ÷ ").replace(/\+/g, " + ").replace(/-/g, " - ");
-	} );
-	
-	var lv = 1;
-	var pts = "";
-	var w0l = wl[0].length;
-	
-	if(w0l >= 20) pts = "18px";
-	if(w0l >= 50) pts = "15px";
-	$stage.game.display.css('font-size', pts);
-	wl[0] = "<label style='color: #FFFF44;'>" + wl[0] + " = ?</label> | ";
-	$stage.game.display.html(wl.slice(0, lv).join(' '));
-	$stage.game.chain.show().html($data.chain);
-	$(".jjo-turn-time .graph-bar")
-		.width("100%")
-		.html(wl.slice(lv, 2 * lv).join(' '))
-		.css({ 'text-align': "center", 'background-color': "#70712D" });
-}
-$lib.MathType.spaceOn = function(){
-	if($data.room.opts.proverb) return;
-	$data._spaced = true;
-	$("body").on('keydown', "#" + $data._chatter.attr('id'), onSpace);
-};
-$lib.MathType.spaceOff = function(){
-	delete $data._spaced;
-	$("body").off('keydown', "#" + $data._chatter.attr('id'), onSpace);
-};
-$lib.MathType.turnStart = function(data){
-	if(!$data._spectate){
-		$stage.game.hereText.show();
-		if(mobile) $stage.game.hereText.val("").focus();
-		else $stage.talk.val("").focus();
-		$lib.MathType.spaceOn();
-	}
-	ws.onmessage = _onMessage;
-	clearInterval($data._tTime);
-	clearTrespasses();
-	$data._tTime = addInterval(turnGoing, TICK);
-	$data._roundTime = data.roundTime;
-	playBGM('jaqwi');
-	recordEvent('turnStart', {
-		data: data
-	});
-};
-$lib.MathType.turnGoing = $lib.Jaqwi.turnGoing;
-$lib.MathType.turnEnd = function(id, data){
-	var $sc = $("<div>")
-		.addClass("deltaScore")
-		.html("+" + data.score);
-	var $uc = $("#game-user-" + id);
-	
-	if(data.error){
-		$data.chain++;
-		drawListMQ();
-		playSound('fail');
-	}else if(data.ok){
-		if($data.id == id){
-			$data.chain++;
-			drawListMQ();
-			playSound('mission');
-			pushHistory(data.value, "");
-		}else if($data._spectate){
-			playSound('mission');
-		}
-		addScore(id, data.score);
-		drawObtainedScore($uc, $sc);
-		updateScore(id, getScore(id));
-	}else{
-		clearInterval($data._tTime);
-		$lib.MathType.spaceOff();
-		$stage.game.hereText.hide();
-		if (!$stage.game.other.is(":visible")){ $stage.game.wrong.show();
-}
-		stopBGM();
-		playSound('horr');
-		if($data._round < $data.room.round) restGoing(10);
-	}
-};
-function restGoing(rest){
-	$(".jjo-turn-time .graph-bar")
-		.html(rest + L['afterRun']);
-	if(rest > 0) addTimeout(restGoing, 1000, rest - 1);
-}
-function drawSpeed(table){
-	var i;
-	
-	for(i in table){
-		$("#game-user-" + i + " .game-user-score").empty()
-			.append($("<div>").css({ 'float': "none", 'color': "#4444FF", 'text-align': "center" }).html(table[i] + "<label style='font-size: 11px;'>" + L['kpm'] + "</label>"));
-	}
-}
 
 /**
  * Rule the words! KKuTu Online
@@ -3796,6 +3845,17 @@ function welcome() {
 
         $(document).on("keydown", keydownHandler);
 
+		
+		var evtpopup = $.cookie("evtpopup");
+		var today = new Date();
+		var year = today.getFullYear();
+		var month = today.getMonth() + 1;
+		var day = today.getDate();
+		var todayStr = year + "" + (month < 10 ? "0" + month : month) + "" + (day < 10 ? "0" + day : day);
+		if (!evtpopup || evtpopup < "19996974") {
+		  $stage.dialog.evtPopup.style.display = "flex";
+		}
+
     }
 
 	if($data.admin) console.log("관리자 모드");
@@ -4363,48 +4423,6 @@ function updateMe(){
 	if(my.profile.title || my.profile.name !== "닉네임 없음"){
 		$("#usernameCredit").text(my.profile.title || my.profile.name);
 	}
-	//200레벨이벤트
-	var startDate = new Date('2024-04-19');
-    var endDate = new Date('2025-01-01');
-    var today = new Date();
-
-    if (today >= startDate && today <= endDate) {
-	$("#event-content").show();
-	$("#pre-content").hide();
-    }
-
-	$.get("/welcomes2/nquery", function(res){
-		if(res.result == "loggedout"){
-			$("#userLevel").html("로그인 후 확인하세요");
-			$("#lockedItem").attr("src","img/event/어서와요S2_데이터x.webp");
-		} else if (res.result == "notfound"){
-			$("#userLogic").html("");
-			$("#userLevel").html("0WP");
-			$("#lockedItem").attr("src","img/event/어서와요S2_데이터x.webp");
-		} else {
-			$("#userLogic").html("((5000 - 순위: " + res.rank + ") + 레벨: "+ res.level +") * 10 =");
-			$("#userLevel").html(res.wp + "WP");
-			if (res.result == "available"){
-				$("#lockedItem").attr("src","img/event/어서와요S2_통합.webp");
-				$("#lockedItem").click(function(){
-					$.get("/welcomes2/claim", function(res){
-						if(res.result == "claimed"){
-							playSound("lvup");
-							alert("🥳축하합니다! "+res.wp+"XP 적용 완료~! 새로고침해서 지금 확인해보세요.");
-							$("#lockedItem").attr("src","img/event/어서와요S2_리딤.webp");
-							$("#lockedItem").off("click");
-						}
-						else{
-							alert("적용 중 오류가 발생하였습니다.");
-						}
-					});
-			  	});
-			}
-			else{
-				$("#lockedItem").attr("src","img/event/어서와요S2_리딤.webp");
-			}
-		}
-	});
 
 	/*if(my.data.rankPoint >= 1500){
 		$("#lockedItem").click(function(){
@@ -4580,7 +4598,7 @@ function normalGameUserBar(o){
 			requestProfile($(e.currentTarget).attr('id').slice(10));
 		});
 	renderMoremi($m, o.equip);
-	global.expl($R);
+	globalThis.expl($R);
 	addonNickname($bar, o);
 	if(o.game.team) $n.addClass("team-" + o.game.team);
 	
@@ -4828,7 +4846,7 @@ function renderGoods($target, preId, filter, equip, onClick){
 		$item.attr('id', preId + "-" + obj._id).on('click', onClick);
 		if(equipped) $item.addClass("dress-equipped");
 	}
-	global.expl($target);
+	globalThis.expl($target);
 }
 function drawMyGoods(avGroup){
 	var equip = $data.users[$data.id].equip || {};
@@ -5198,7 +5216,7 @@ function requestProfile(id){
 	}
 	showDialog($stage.dialog.profile);
 	$stage.dialog.profile.show();
-	global.expl($ex);
+	globalThis.expl($ex);
 }
 function requestInvite(id){
 	var nick;
@@ -5847,7 +5865,7 @@ function loadShop(){
 				.append(explainGoods(item, false))
 			.on('click', onGoods));
 		});
-		global.expl($body);
+		globalThis.expl($body);
 	});
 	$(".shop-type.selected").removeClass("selected");
 	$("#shop-type-all").addClass("selected");
@@ -6052,7 +6070,7 @@ function pushHint(hint){
 			.append($("<div>").addClass("expl").css({ 'white-space': "normal", 'width': 200 }).html(v.html()))
 	);
 	if(!mobile) $obj.width(0).animate({ width: 215 });
-	global.expl($obj);
+	globalThis.expl($obj);
 }
 function pushHistory(text, mean, theme, wc){
 	var $v, $w, $x;
@@ -6083,7 +6101,7 @@ function pushHistory(text, mean, theme, wc){
 		.append($x = $("<div>").addClass("expl").css({ 'width': 200, 'white-space': "normal" })
 			.html("<h5 style='color: #BBBBBB;'>" + processWord(text, mean, theme, wcs, "tooltip").html() + "</h5>")
 		);
-	global.expl($v);
+	globalThis.expl($v);
 }
 function processNormal(word, mean){
 	return $("<label>").addClass("word").html(mean);
@@ -6224,7 +6242,7 @@ function setRoomHead($obj, room){
 		$rm.append($("<div>").addClass("expl").html("<h5>" + room.opts.injpick.map(function(item){
 			return L["theme_" + item];
 		}) + "</h5>"));
-		global.expl($obj);
+		globalThis.expl($obj);
 	}
 }function loadSounds(list, callback){
 	/*if (list.length != 0) {
@@ -6655,3 +6673,4 @@ function yell(msg){
 
 delete window.WebSocket;
 //delete window.setInterval;
+})();
