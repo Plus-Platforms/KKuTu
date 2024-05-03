@@ -332,6 +332,9 @@ function onMessage(data){
 				chat(data.profile || { title: L['robot'] }, data.value, data.from, data.timestamp);
 			}
 			break;
+		case 'sticker':
+			chat(data.profile || { title: L['robot'] }, "<img src='/img/kkutu/sticker/" + data.value + ".webp' class='sticker'>", data.from, data.timestamp, true);
+			break;
 		case 'roomStuck':
 			rws.close();
 			break;
@@ -1369,7 +1372,7 @@ function updateRoom(gaming){
 				o = $data.users[$data.room.game.seq[i]] || $data.robots[$data.room.game.seq[i].id] || $data.room.game.seq[i];
 			}
 			if(o.robot && !o.profile){
-				o.profile = getAIProfile();
+				o.profile = getAIProfile(o.level);
 				$data.robots[o.id] = o;
 			}
 			if($data.room.opts.rankgame == true){
@@ -1395,7 +1398,7 @@ function updateRoom(gaming){
 			var spec = (o.game.form == "S") ? ('/' + L['stat_spectate']) : false;
 			
 			if(o.robot){
-				o.profile = getAIProfile();
+				o.profile = getAIProfile(o.level);
 				$data.robots[o.id] = o;
 			}
 
@@ -2233,7 +2236,7 @@ function startRecord(title){
 			o.id = u.id;
 			o.robot = true;
 			o.data = { score: 0 };
-			u = { profile: getAIProfile() };
+			u = { profile: getAIProfile(o.level) };
 		}
 		else{
 			o.data = u.data;
@@ -2540,16 +2543,30 @@ function loadShop(){
 			$stage.menu.shop.trigger('click');
 			return fail(res.error);
 		}
+
+		var i = 0;
 		res.goods.sort(function(a, b){ return b.updatedAt - a.updatedAt; }).forEach(function(item, index, my){
 			if(item.cost < 0) return;
 			var url = iImage(false, item);
 			
-			$body.append($("<div>").attr('id', "goods_" + item._id).addClass("goods")
-				.append($("<div>").addClass("jt-image goods-image").css('background-image', "url(" + url + ")"))
-				.append($("<div>").addClass("goods-title").html(iName(item._id)))
-				.append($("<div>").addClass("goods-cost").html(commify(item.cost) + L['ping']))
-				.append(explainGoods(item, false))
-			.on('click', onGoods));
+			i++;
+
+			if(i < 4){
+				$body.append($("<div>").attr('id', "goods_" + item._id).addClass("goods goods-featured")
+					.append($("<div>").addClass("jt-image goods-image").css('background-image', "url(" + url + ")"))
+					.append($("<div>").addClass("goods-title").html(iName(item._id)))
+					.append($("<div>").addClass("goods-cost").html(commify(item.cost) + L['ping']))
+					.append(explainGoods(item, false))
+				.on('click', onGoods));
+			}
+			else{
+				$body.append($("<div>").attr('id', "goods_" + item._id).addClass("goods")
+					.append($("<div>").addClass("jt-image goods-image").css('background-image', "url(" + url + ")"))
+					.append($("<div>").addClass("goods-title").html(iName(item._id)))
+					.append($("<div>").addClass("goods-cost").html(commify(item.cost) + L['ping']))
+					.append(explainGoods(item, false))
+				.on('click', onGoods));
+			}
 		});
 		globalThis.expl($body);
 	});
@@ -3041,14 +3058,26 @@ function forkChat(){
 function badWords(text){
 	return text.replace(BAD, "아잉");
 }
-function chatBalloon(text, id, flag){
+function chatBalloon(text, id, flag, isSticker){
 	$("#cb-" + id).remove();
 	var offset = ((flag & 2) ? $("#game-user-" + id) : $("#room-user-" + id)).offset();
 	var img = (flag == 2) ? "chat-balloon-bot" : "chat-balloon-tip";
-	var $obj = $("<div>").addClass("chat-balloon")
+
+	var textVal = text.replace(/:/g, "");
+	if(text.startsWith(":") && stickers.includes(textVal)){
+		var stickerHtml = "<img src='/img/kkutu/sticker/" + textVal + ".webp' style='width: 100px; height:100px;'>";
+		var $obj = $("<div>").addClass("chat-balloon")
+		.attr('id', "cb-" + id)
+		.append($("<div>").addClass("jt-image " + img))
+		[(flag == 2) ? 'prepend' : 'append']($("<h4>").html(stickerHtml));
+	}
+	else{
+		var $obj = $("<div>").addClass("chat-balloon")
 		.attr('id', "cb-" + id)
 		.append($("<div>").addClass("jt-image " + img))
 		[(flag == 2) ? 'prepend' : 'append']($("<h4>").text(text));
+	}
+	
 	var ot, ol;
 	
 	if(!offset) return;
@@ -3062,7 +3091,7 @@ function chatBalloon(text, id, flag){
 		$obj.animate({ 'opacity': 0 }, 500, function(){ $obj.remove(); });
 	}, 2500);
 }
-function chat(profile, msg, from, timestamp){
+function chat(profile, msg, from, timestamp, isSticker){
 	var time = timestamp ? new Date(timestamp) : new Date();
 	var equip = $data.users[profile.id] ? $data.users[profile.id].equip : {};
 	var $bar, $msg, $item;
@@ -3078,13 +3107,25 @@ function chat(profile, msg, from, timestamp){
 	stackChat();
 	if(!mobile && $data.room){
 		$bar = ($data.room.gaming ? 2 : 0) + ($(".jjoriping").hasClass("cw") ? 1 : 0);
-		chatBalloon(msg, profile.id, $bar);
+		chatBalloon(msg, profile.id, $bar, isSticker);
 	}
-	$stage.chat.append($item = $("<div>").addClass("chat-item")
-		.append($bar = $("<div>").addClass("chat-head ellipse").text(profile.title || profile.name))
-		.append($msg = $("<div>").addClass("chat-body").text(msg))
-		.append($("<div>").addClass("chat-stamp").text(time.toLocaleTimeString()))
-	);
+
+	if(msg.startsWith(":") && stickers.includes(msg.replace(/:/g, ""))){
+		var textVal = msg.replace(/:/g, "");
+		var stickerHtml = "<img src='/img/kkutu/sticker/" + textVal + ".webp' style='width: 100px; height:100px;'>";
+		$stage.chat.append($item = $("<div>").addClass("chat-item")
+			.append($bar = $("<div>").addClass("chat-head ellipse").text(profile.title || profile.name))
+			.append($msg = $("<div>").addClass("chat-body").html(stickerHtml))
+			.append($("<div>").addClass("chat-stamp").html(time.toLocaleTimeString()))
+		);
+	}
+	else{
+		$stage.chat.append($item = $("<div>").addClass("chat-item")
+			.append($bar = $("<div>").addClass("chat-head ellipse").text(profile.title || profile.name))
+			.append($msg = $("<div>").addClass("chat-body").text(msg))
+			.append($("<div>").addClass("chat-stamp").text(time.toLocaleTimeString()))
+		);
+	}
 	if(timestamp) $bar.prepend($("<i>").addClass("fa fa-video-camera"));
 	$bar.on('click', function(e){
 		requestProfile(profile.id);
@@ -3095,7 +3136,7 @@ function chat(profile, msg, from, timestamp){
 	if(link = msg.match(/https?:\/\/[\w\.\?\/&#%=-_\+]+/g)){
 		msg = $msg.html();
 		link.forEach(function(item){
-			msg = msg.replace(item, "<a href='#' style='color: #2222FF;' onclick='if(confirm(\"" + L['linkWarning'] + "\")) window.open(\"" + item + "\");'>" + item + "</a>");
+			msg = msg.replace(item, "<a href='#' style='color: #2222FF;' onclick='if(confirm(\"" + L['linkWarning'] + "\")) window.open(\"" + item + "\", '_blank');'>" + item + "</a>");
 		});
 		$msg.html(msg);
 	}

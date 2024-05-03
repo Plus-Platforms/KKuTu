@@ -312,6 +312,9 @@ function onMessage(data){
 				chat(data.profile || { title: L['robot'] }, data.value, data.from, data.timestamp);
 			}
 			break;
+		case 'sticker':
+			chat(data.profile || { title: L['robot'] }, "<img src='/img/kkutu/sticker/" + data.value + ".webp' class='sticker'>", data.from, data.timestamp, true);
+			break;
 		case 'drawCanvas':
 			if ($stage.game.canvas) {
 				drawCanvas(data);
@@ -2631,16 +2634,30 @@ function loadShop(){
 			$stage.menu.shop.trigger('click');
 			return fail(res.error);
 		}
+
+		var i = 0;
 		res.goods.sort(function(a, b){ return b.updatedAt - a.updatedAt; }).forEach(function(item, index, my){
 			if(item.cost < 0) return;
 			var url = iImage(false, item);
-			
-			$body.append($("<div>").attr('id', "goods_" + item._id).addClass("goods")
-				.append($("<div>").addClass("jt-image goods-image").css('background-image', "url(" + url + ")"))
-				.append($("<div>").addClass("goods-title").html(iName(item._id)))
-				.append($("<div>").addClass("goods-cost").html(commify(item.cost) + L['ping']))
-				.append(explainGoods(item, false))
-			.on('click', onGoods));
+					
+			i++;
+
+			if(i < 4){
+				$body.append($("<div>").attr('id', "goods_" + item._id).addClass("goods goods-featured")
+					.append($("<div>").addClass("jt-image goods-image").css('background-image', "url(" + url + ")"))
+					.append($("<div>").addClass("goods-title").html(iName(item._id)))
+					.append($("<div>").addClass("goods-cost").html(commify(item.cost) + L['ping']))
+					.append(explainGoods(item, false))
+				.on('click', onGoods));
+			}
+			else{
+				$body.append($("<div>").attr('id', "goods_" + item._id).addClass("goods")
+					.append($("<div>").addClass("jt-image goods-image").css('background-image', "url(" + url + ")"))
+					.append($("<div>").addClass("goods-title").html(iName(item._id)))
+					.append($("<div>").addClass("goods-cost").html(commify(item.cost) + L['ping']))
+					.append(explainGoods(item, false))
+				.on('click', onGoods));
+			}
 		});
 		globalThis.expl($body);
 	});
@@ -3208,41 +3225,70 @@ function chatBalloon(text, id, flag){
 		.attr('id', "cb-" + id)
 		.append($("<div>").addClass("jt-image " + img))
 		[(flag == 2) ? 'prepend' : 'append']($("<h4>").text(text));
-	var ot, ol;
-	
-	if(!offset) return;
-	$stage.balloons.append($obj);
-	if(flag == 1) ot = 0, ol = 220;
-	else if(flag == 2) ot = 35 - $obj.height(), ol = -2;
-	else if(flag == 3) ot = 5, ol = 210;
-	else ot = 40, ol = 110;
-	$obj.css({ top: offset.top + ot, left: offset.left + ol });
-	addTimeout(function(){
-		$obj.animate({ 'opacity': 0 }, 500, function(){ $obj.remove(); });
-	}, 2500);
-}
-function chat(profile, msg, from, timestamp){
-	var time = timestamp ? new Date(timestamp) : new Date();
-	var equip = $data.users[profile.id] ? $data.users[profile.id].equip : {};
-	var $bar, $msg, $item;
-	var link;
-	
-	if($data._shut.includes(profile.title || profile.name)) return;
-	if(from){
-		if($data.opts.dw) return;
-		if($data._wblock[from]) return;
+		var textVal = text.replace(/:/g, "");
+		if(text.startsWith(":") && stickers.includes(textVal)){
+			var textVal = text.replace(/:/g, "");
+			var stickerHtml = "<img src='/img/kkutu/sticker/" + textVal + ".webp' style='width: 100px; height:100px;'>";
+			var $obj = $("<div>").addClass("chat-balloon")
+			.attr('id', "cb-" + id)
+			.append($("<div>").addClass("jt-image " + img))
+			[(flag == 2) ? 'prepend' : 'append']($("<h4>").html(stickerHtml));
+		}
+		else{
+			var $obj = $("<div>").addClass("chat-balloon")
+			.attr('id', "cb-" + id)
+			.append($("<div>").addClass("jt-image " + img))
+			[(flag == 2) ? 'prepend' : 'append']($("<h4>").text(text));
+		}
+		
+		var ot, ol;
+		
+		if(!offset) return;
+		$stage.balloons.append($obj);
+		if(flag == 1) ot = 0, ol = 220;
+		else if(flag == 2) ot = 35 - $obj.height(), ol = -2;
+		else if(flag == 3) ot = 5, ol = 210;
+		else ot = 40, ol = 110;
+		$obj.css({ top: offset.top + ot, left: offset.left + ol });
+		addTimeout(function(){
+			$obj.animate({ 'opacity': 0 }, 500, function(){ $obj.remove(); });
+		}, 2500);
 	}
-	msg = badWords(msg);
-	playSound('k');
-	stackChat();
-	if(!mobile && $data.room){
-		$bar = ($data.room.gaming ? 2 : 0) + ($(".luod").hasClass("cw") ? 1 : 0);
-		chatBalloon(msg, profile.id, $bar);
-	}
-	$stage.chat.append($item = $("<div>").addClass("chat-item")
-		.append($bar = $("<div>").addClass("chat-head ellipse").text(profile.title || profile.name).append($("<div>").addClass("chat-stamp").text(time.toLocaleTimeString())))
-		.append($msg = $("<div>").addClass("chat-body").text(msg))
-	);
+	function chat(profile, msg, from, timestamp, isSticker){
+		var time = timestamp ? new Date(timestamp) : new Date();
+		var equip = $data.users[profile.id] ? $data.users[profile.id].equip : {};
+		var $bar, $msg, $item;
+		var link;
+		
+		if($data._shut.includes(profile.title || profile.name)) return;
+		if(from){
+			if($data.opts.dw) return;
+			if($data._wblock[from]) return;
+		}
+		msg = badWords(msg);
+		playSound('k');
+		stackChat();
+		if(!mobile && $data.room){
+			$bar = ($data.room.gaming ? 2 : 0) + ($(".jjoriping").hasClass("cw") ? 1 : 0);
+			chatBalloon(msg, profile.id, $bar, isSticker);
+		}
+	
+		if(msg.startsWith(":") && stickers.includes(msg.replace(/:/g, ""))){
+			var textVal = msg.replace(/:/g, "");
+			var stickerHtml = "<img src='/img/kkutu/sticker/" + textVal + ".webp' style='width: 100px; height:100px;'>";
+			$stage.chat.append($item = $("<div>").addClass("chat-item")
+				.append($bar = $("<div>").addClass("chat-head ellipse").text(profile.title || profile.name))
+				.append($msg = $("<div>").addClass("chat-body").html(stickerHtml))
+				.append($("<div>").addClass("chat-stamp").html(time.toLocaleTimeString()))
+			);
+		}
+		else{
+			$stage.chat.append($item = $("<div>").addClass("chat-item")
+				.append($bar = $("<div>").addClass("chat-head ellipse").text(profile.title || profile.name))
+				.append($msg = $("<div>").addClass("chat-body").text(msg))
+				.append($("<div>").addClass("chat-stamp").text(time.toLocaleTimeString()))
+			);
+		}
 	if(timestamp) $bar.prepend($("<i>").addClass("fa fa-video-camera"));
 	$bar.on('click', function(e){
 		requestProfile(profile.id);

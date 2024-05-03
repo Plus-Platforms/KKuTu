@@ -134,8 +134,14 @@
 	.dark {
 		display: inline-block!important;
 	}
+	.goods-featured{
+		background-image: url('/img/kkutu/newproduct_modern.webp');
+		background-size: 100% 100%;
+		background-repeat: no-repeat;
+		color: #fff!important;
+	}
 	.goods {
-		background-color: #1f2937!important;
+		background: #1f2937;
 	}
 	.goods:hover {
 		background: #111827!important;

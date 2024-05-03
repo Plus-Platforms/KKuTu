@@ -253,6 +253,7 @@ $(document).ready(function(){
 	
 	MOREMI_PART = $("#MOREMI_PART").html().split(',');
 	AVAIL_EQUIP = $("#AVAIL_EQUIP").html().split(',');
+	stickers = ["molru", "easy", "ready"];
 	RULE = JSON.parse($("#RULE").html());
 	OPTIONS = JSON.parse($("#OPTIONS").html());
 	MODE = Object.keys(RULE);
@@ -385,7 +386,6 @@ $(document).ready(function(){
 		$stage.game.hereText.val("");
 	}).hotkey($stage.talk, 13).hotkey($stage.game.hereText, 13);
 
-	
 	$(document).keydown(function(e) {
 		if(e.keyCode == 13){
 			if(!$("#tPDaArKj3B8Y").is(":focus") && !$("#dict-input").is(":focus")) {
