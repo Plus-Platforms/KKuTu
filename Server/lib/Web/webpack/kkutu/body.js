@@ -1167,7 +1167,7 @@ function updateMe(){
 	var goal = EXP[lv-1];
 	var rank;
 
-	/*if(my.data.rankPoint < 50){
+	if(my.data.rankPoint < 50){
 		rank = 'UNRANKED';
 	} else if(my.data.rankPoint >= 50 && my.data.rankPoint < 500){
 		rank = 'BRONZE';
@@ -1183,9 +1183,9 @@ function updateMe(){
 		rank = 'MASTER';
 	}
 	
-	$(".my-rank-icon").attr("src","img/kkutu/ranking/"+rank+".webp");
 	$(".my-rank").html(L[rank] + " " + my.data.rankPoint);
-	*/
+	
+	$(".my-rank-icon").attr("src","img/kkutu/ranking/"+rank+".webp");
 
 	for(i in my.data.record) gw += my.data.record[i][1];
 	//renderMoremi(".my-image", my.equip);
@@ -1211,7 +1211,6 @@ function updateMe(){
 
 
 	$(".my-rank-icon").attr("src","img/kkutu/ranking/UNRANKED.webp");
-	$(".my-rank").html("시즌2 준비중");
 	//$(".my-gauge .graph-bar").width((my.data.score-prev)/(goal-prev)*190);
 	var progress = Math.round((my.data.score-prev)/(goal-prev)*100); // 진행도 계산
 	$(".my-gauge-text").html(commify(my.data.score) + "/" + commify(goal)); // 진행도 추가하여 표시

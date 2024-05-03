@@ -811,11 +811,13 @@ $(document).ready(function(){
 				if(res.error == 400) alert(L['couponFail_400']);
 				else if(res.error == 404) alert(L['couponFail_404']);
 				else if(res.error == 406) alert(L['couponFail_406']);
+				else if(res.error == 405) alert(L['couponFail_405']);
 			} else{
 				playSound('success');
 				$("#obtain-image").css('background-image', "url(/img/kkutu/currency/ping.webp)");
 				$("#obtain-name").html(res.value + " " + L['ping']);
 				showDialog($stage.dialog.obtain);
+				updateMe();
 			}
 		});
 	});
@@ -3650,7 +3652,7 @@ function updateMe(){
 	var goal = EXP[lv-1];
 	var rank;
 
-	/*if(my.data.rankPoint < 50){
+	if(my.data.rankPoint < 50){
 		rank = 'UNRANKED';
 	} else if(my.data.rankPoint >= 50 && my.data.rankPoint < 500){
 		rank = 'BRONZE';
@@ -3667,8 +3669,6 @@ function updateMe(){
 	}
 	
 	
-	$(".my-stat-ping").html(commify(my.money) + L['ping'] + " " + L[rank] + " " + my.data.rankPoint + "RP");
-	*/
 
 
 	for(i in my.data.record) gw += my.data.record[i][1];
@@ -3678,7 +3678,7 @@ function updateMe(){
 	$(".my-stat-name").html(my.profile.title || my.profile.name);
 	$(".my-stat-record").html(L['globalWin'] + " " + gw + L['W']);
 	$(".my-okg .graph-bar").width(($data._playTime % 600000) / 6000 + "%");
-	$(".my-stat-ping").html(commify(my.money) + L['ping'] + " 시즌2 준비중");
+	$(".my-stat-ping").html(commify(my.money) + L['ping'] + " " + L[rank] + " " + my.data.rankPoint + "RP");
 	$(".my-okg-text").html(prettyTime($data._playTime));
 	$(".my-level").html(L['LEVEL'] + " " + lv);
 	$(".my-gauge .graph-bar").width((my.data.score-prev)/(goal-prev)*190);

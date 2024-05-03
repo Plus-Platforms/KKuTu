@@ -214,6 +214,8 @@ $(document).ready(function(){
 				obtainOK: $("#obtain-ok"),
 			newbie: $("#NewbieDiag"),
 				newbieOK: $("#setNickname"),
+			coupon: $("#CouponRegisterDiag"),
+				couponOK: $("#coupon-ok"),
 			help: $("#HelpDiag"),
 			coupon: $("#CouponRegisterDiag"),
 			pingShop: $("#PingShopDiag"),
@@ -1023,6 +1025,23 @@ $(document).ready(function(){
 		
 		$stage.dialog.setting.hide();
 		$('#dimmer').fadeOut();
+	});
+	$stage.dialog.couponOK.on('click', function(e){
+		var code = $("#coupon-code").val();
+		$.get("/coupon/" + code, function(res){
+			if(res.error){
+				if(res.error == 400) alert(L['couponFail_400']);
+				else if(res.error == 404) alert(L['couponFail_404']);
+				else if(res.error == 406) alert(L['couponFail_406']);
+				else if(res.error == 405) alert(L['couponFail_405']);
+			} else{
+				playSound('success');
+				$("#obtain-image").css('background-image', "url(/img/kkutu/currency/ping.webp)");
+				$("#obtain-name").html(res.value + " " + L['ping']);
+				showDialog($stage.dialog.obtain);
+				updateMe();
+			}
+		});
 	});
 	$stage.dialog.evtPopupOK.on('click', function(e){
 		$stage.dialog.evtPopup.hide();
@@ -4393,7 +4412,7 @@ function updateMe(){
 	var goal = EXP[lv-1];
 	var rank;
 
-	/*if(my.data.rankPoint < 50){
+	if(my.data.rankPoint < 50){
 		rank = 'UNRANKED';
 	} else if(my.data.rankPoint >= 50 && my.data.rankPoint < 500){
 		rank = 'BRONZE';
@@ -4409,9 +4428,9 @@ function updateMe(){
 		rank = 'MASTER';
 	}
 	
-	$(".my-rank-icon").attr("src","img/kkutu/ranking/"+rank+".webp");
 	$(".my-rank").html(L[rank] + " " + my.data.rankPoint);
-	*/
+	
+	$(".my-rank-icon").attr("src","img/kkutu/ranking/"+rank+".webp");
 
 	for(i in my.data.record) gw += my.data.record[i][1];
 	//renderMoremi(".my-image", my.equip);
@@ -4437,7 +4456,6 @@ function updateMe(){
 
 
 	$(".my-rank-icon").attr("src","img/kkutu/ranking/UNRANKED.webp");
-	$(".my-rank").html("시즌2 준비중");
 	//$(".my-gauge .graph-bar").width((my.data.score-prev)/(goal-prev)*190);
 	var progress = Math.round((my.data.score-prev)/(goal-prev)*100); // 진행도 계산
 	$(".my-gauge-text").html(commify(my.data.score) + "/" + commify(goal)); // 진행도 추가하여 표시

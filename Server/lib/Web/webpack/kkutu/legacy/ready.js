@@ -758,6 +758,7 @@ $(document).ready(function(){
 				$("#obtain-image").css('background-image', "url(/img/kkutu/currency/ping.webp)");
 				$("#obtain-name").html(res.value + " " + L['ping']);
 				showDialog($stage.dialog.obtain);
+				updateMe();
 			}
 		});
 	});

@@ -85,11 +85,11 @@ Server.get("/coupon/:id", function(req, res){
 			if($log) return res.send({ error: 406 });
 		});
 		MainDB.users.findOne([ '_id', uid ]).on(function($user){
-			$user.money += $coupon.value;
+			var updatedMoney = Number($user.money) + Number($coupon.value);
 
 			MainDB.kkutu_coupon.update([ '_id', cid ]).set([ 'hit', $coupon.hit + 1 ]).on();
-			MainDB.kkutu_coupon_log.insert([ 'uid', uid ], [ 'cid', cid ], [ 'obtained', Date.now() ]).on();
-			MainDB.users.update([ '_id', uid ]).set([ 'money', $user.money ]).on();
+			MainDB.kkutu_coupon_log.insert([ 'uid', uid ], [ 'cid', cid ], [ 'obtained', new Date(Date.now()) ]).on();
+			MainDB.users.update([ '_id', uid ]).set([ 'money', updatedMoney ]).on();
 			return res.send({ result: 200, value: $coupon.value, type: $coupon.type });
 		});
 	});

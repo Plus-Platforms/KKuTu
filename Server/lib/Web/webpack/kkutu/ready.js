@@ -154,6 +154,8 @@ $(document).ready(function(){
 				obtainOK: $("#obtain-ok"),
 			newbie: $("#NewbieDiag"),
 				newbieOK: $("#setNickname"),
+			coupon: $("#CouponRegisterDiag"),
+				couponOK: $("#coupon-ok"),
 			help: $("#HelpDiag"),
 			coupon: $("#CouponRegisterDiag"),
 			pingShop: $("#PingShopDiag"),
@@ -963,6 +965,23 @@ $(document).ready(function(){
 		
 		$stage.dialog.setting.hide();
 		$('#dimmer').fadeOut();
+	});
+	$stage.dialog.couponOK.on('click', function(e){
+		var code = $("#coupon-code").val();
+		$.get("/coupon/" + code, function(res){
+			if(res.error){
+				if(res.error == 400) alert(L['couponFail_400']);
+				else if(res.error == 404) alert(L['couponFail_404']);
+				else if(res.error == 406) alert(L['couponFail_406']);
+				else if(res.error == 405) alert(L['couponFail_405']);
+			} else{
+				playSound('success');
+				$("#obtain-image").css('background-image', "url(/img/kkutu/currency/ping.webp)");
+				$("#obtain-name").html(res.value + " " + L['ping']);
+				showDialog($stage.dialog.obtain);
+				updateMe();
+			}
+		});
 	});
 	$stage.dialog.evtPopupOK.on('click', function(e){
 		$stage.dialog.evtPopup.hide();

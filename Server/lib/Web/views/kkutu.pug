@@ -546,8 +546,15 @@ block Middle
 		iframe#help-board(width=1000, height=500)
 	+Dialog('PingShopDiag', 400, 760, L("mvpPurchase"))
 		iframe#ping-board(width=400, height=700)
-	+Dialog('CouponRegisterDiag', 400, 210, L("coupon"))
-		iframe#coupon-board(width=400, height=180)
+	+Dialog('CouponRegisterDiag', 400, 260, L("coupon"))
+		div.dialog-bar
+			h4= L("couponCode")
+			input#coupon-code(type="textfield", placeholder=L("couponCode"))
+		div.dialog-bar
+			h4#coupon-desc
+			p!= L("couponUseText")
+		div.dialog-bar.tail-button.d3-bar
+			button.primaryBtn#coupon-ok= L("couponUse")
 	+Dialog('Community2Diag', 1280, 750, L("officialSNS"))
 		iframe#community2(width=1280, height=700)
 	+Dialog('NewbieDiag', 390, 230, L("getStarted"), true)
