@@ -109,7 +109,7 @@ exports.RULE = {
 	},
 	'KSH': { lang: "ko",
 		rule: "Classic",
-		opts: [ "man", "ext", "mis", "loa", "str", "rank", "reu", "ukn", "oij" ],
+		opts: [ "man", "ext", "mis", "loa", "str", "reu", "ukn", "oij"/*, "rank"*/ ],
 		time: 1,
 		ai: true,
 		big: false,

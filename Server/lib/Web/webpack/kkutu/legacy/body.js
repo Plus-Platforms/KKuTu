@@ -1138,7 +1138,7 @@ function updateMe(){
 	var goal = EXP[lv-1];
 	var rank;
 
-	if(my.data.rankPoint < 50){
+	/*if(my.data.rankPoint < 50){
 		rank = 'UNRANKED';
 	} else if(my.data.rankPoint >= 50 && my.data.rankPoint < 500){
 		rank = 'BRONZE';
@@ -1153,6 +1153,10 @@ function updateMe(){
 	} else if(my.data.rankPoint >= 5000){
 		rank = 'MASTER';
 	}
+	
+	
+	$(".my-stat-ping").html(commify(my.money) + L['ping'] + " " + L[rank] + " " + my.data.rankPoint + "RP");
+	*/
 
 
 	for(i in my.data.record) gw += my.data.record[i][1];
@@ -1161,8 +1165,8 @@ function updateMe(){
 	$(".my-stat-level").replaceWith(getLevelImage(my.data.score).addClass("my-stat-level"));
 	$(".my-stat-name").html(my.profile.title || my.profile.name);
 	$(".my-stat-record").html(L['globalWin'] + " " + gw + L['W']);
-	$(".my-stat-ping").html(commify(my.money) + L['ping'] + " " + L[rank] + " " + my.data.rankPoint + "RP");
 	$(".my-okg .graph-bar").width(($data._playTime % 600000) / 6000 + "%");
+	$(".my-stat-ping").html(commify(my.money) + L['ping'] + " 시즌2 준비중");
 	$(".my-okg-text").html(prettyTime($data._playTime));
 	$(".my-level").html(L['LEVEL'] + " " + lv);
 	$(".my-gauge .graph-bar").width((my.data.score-prev)/(goal-prev)*190);
@@ -1339,6 +1343,12 @@ function getAIProfile(level){
 		image: "/img/kkutu/robot.webp"
 	};
 }
+function getRPProfile(){
+	return {
+		title: "???",
+		image: "/img/kkutu/robot.webp"
+	};
+}
 function updateRoom(gaming){
 	var i, o, $r;
 	var $y, $z;
@@ -1361,8 +1371,14 @@ function updateRoom(gaming){
 				o = $data.users[$data.room.game.seq[i]] || $data.robots[$data.room.game.seq[i].id] || $data.room.game.seq[i];
 			}
 			if(o.robot && !o.profile){
-				o.profile = getAIProfile(o.level);
+				o.profile = getAIProfile();
 				$data.robots[o.id] = o;
+			}
+			if($data.room.opts.rankgame == true){
+				o.profile = getRPProfile();
+				o.data = { score: 3000000 };
+				o.id = "경쟁전모드";
+				o.equip = {};
 			}
 			$r.append(renderer(o));
 			updateScore(o.id, o.game.score || 0);
@@ -1381,8 +1397,15 @@ function updateRoom(gaming){
 			var spec = (o.game.form == "S") ? ('/' + L['stat_spectate']) : false;
 			
 			if(o.robot){
-				o.profile = getAIProfile(o.level);
+				o.profile = getAIProfile();
 				$data.robots[o.id] = o;
+			}
+
+			if($data.room.opts.rankgame == true){
+				o.profile = getRPProfile();
+				o.data = { score: 3000000 };
+				o.id = "경쟁전모드";
+				o.equip = {};
 			}
 			$r.append($("<div>").attr('id', "room-user-"+o.id).addClass("room-user")
 				.append($m = $("<div>").addClass("moremi room-user-image"))
@@ -1731,7 +1754,7 @@ function drawCharFactory(){
 	}
 	trayEmpty();
 }
-function drawLeaderboard(data){
+function drawLeaderboard(data, isRankGame){
 	var $board = $stage.dialog.lbTable.empty();
 	var fr = data.data[0] ? data.data[0].rank : 0;
 	var page = (data.page || Math.floor(fr / 20)) + 1;
@@ -1848,10 +1871,18 @@ function requestRoomInfo(id){
 		var rd = o.readies[p] || {};
 		
 		p = $data.users[p] || NULL_USER;
+
 		if(o.players[i].robot){
 			p.profile = { title: L['robot'] };
 			p.equip = { robot: true };
-		}else rd.t = rd.t || 0;
+		} else rd.t = rd.t || 0;
+
+		if(o.opts.rankgame == true){
+			p.profile = { title: "???", image: "/img/kkutu/ranking/UNRANKED.webp" };
+			p.data = { score: 3000000 };
+			p.id = "경쟁전모드";
+			p.equip = {};
+		}
 		
 		$pls.append($("<div>").addClass("ri-player")
 			.append($moremi = $("<div>").addClass("moremi rip-moremi"))
@@ -2195,12 +2226,18 @@ function startRecord(title){
 		
 		u = $data.users[$data.room.players[i]] || $data.room.players[i];
 		o = { id: u.id, score: 0 };
-		if(u.robot){
+		if($data.room.opts.rankgame == true){
+			u = { profile: getRPProfile()};
+			o.data = { score: 3000000 };
+			o.id = "경쟁전모드";
+		}
+		else if(u.robot){
 			o.id = u.id;
 			o.robot = true;
 			o.data = { score: 0 };
-			u = { profile: getAIProfile(u.level) };
-		}else{
+			u = { profile: getAIProfile() };
+		}
+		else{
 			o.data = u.data;
 			o.equip = u.equip;
 		}

@@ -77,6 +77,8 @@ $(document).ready(function(){
 			setting: $("#SettingDiag"),
 				settingUi: $("#setting-ui"),
 				settingOK: $("#setting-ok"),
+			evtPopup: $("#evtpopup"),
+				evtPopupOK: $("#evtpopup-ok"),
 			uisetting: $("#UISelectDiag"),
 			community: $("#CommunityDiag"),
 				commFriends: $("#comm-friends"),
@@ -137,6 +139,7 @@ $(document).ready(function(){
 			newbie: $("#NewbieDiag"),
 					newbieOK: $("#setNickname"),
 			coupon: $("#CouponRegisterDiag"),
+				couponOK: $("#coupon-ok"),
 			help: $("#HelpDiag"),
 			tutorial: $("#OktHelpDiag")
 		},
@@ -476,7 +479,6 @@ $(document).ready(function(){
 		showDialog($stage.dialog.blackList);
 	});
 	$stage.menu.coupon.on('click', function(e){
-		$("#coupon-board").attr('src', "https://pcor.me/kkutu/coupon");
 		showDialog($stage.dialog.coupon);
 	});
 	$stage.menu.newRoom.on('click', function(e){
@@ -742,6 +744,22 @@ $(document).ready(function(){
 		$.cookie("selectedFont", selectedFontOpt);
 
 		$stage.dialog.setting.hide();
+	});
+	$stage.dialog.couponOK.on('click', function(e){
+		var code = $("#coupon-code").val();
+		$.get("/coupon/" + code, function(res){
+			if(res.error){
+				if(res.error == 400) alert(L['couponFail_400']);
+				else if(res.error == 404) alert(L['couponFail_404']);
+				else if(res.error == 406) alert(L['couponFail_406']);
+				else if(res.error == 405) alert(L['couponFail_405']);
+			} else{
+				playSound('success');
+				$("#obtain-image").css('background-image', "url(/img/kkutu/currency/ping.webp)");
+				$("#obtain-name").html(res.value + " " + L['ping']);
+				showDialog($stage.dialog.obtain);
+			}
+		});
 	});
 	$stage.dialog.evtPopupOK.on('click', function(e){
 		$stage.dialog.evtPopup.hide();

@@ -606,7 +606,7 @@ $(document).ready(function(){
 	});
 	$stage.menu.coupon.on('click', function(e){
 		$('#sideMenuDiag').fadeOut();
-		$("#coupon-board").attr('src', "https://pcor.me/kkutu/coupon");
+		
 		showDialog($stage.dialog.coupon);
 	});
 	$stage.menu.community2.on('click', function(e){

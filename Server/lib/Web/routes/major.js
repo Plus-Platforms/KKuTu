@@ -73,6 +73,28 @@ Server.get("/help", function(req, res){
 	});
 });
 
+Server.get("/coupon/:id", function(req, res){
+	if(!req.session.profile) return res.send({ error: 400 });
+	var uid = req.session.profile.id;
+	var cid = req.params.id;
+
+	MainDB.kkutu_coupon.findOne([ '_id', cid ]).on(function($coupon){
+		if(!$coupon) return res.send({ error: 404 });
+		if($coupon.expire < Date.now()) return res.send({ error: 405 });
+		MainDB.kkutu_coupon_log.findOne([ 'uid', uid ], [ 'cid', cid ]).on(function($log){
+			if($log) return res.send({ error: 406 });
+		});
+		MainDB.users.findOne([ '_id', uid ]).on(function($user){
+			$user.money += $coupon.value;
+
+			MainDB.kkutu_coupon.update([ '_id', cid ]).set([ 'hit', $coupon.hit + 1 ]).on();
+			MainDB.kkutu_coupon_log.insert([ 'uid', uid ], [ 'cid', cid ], [ 'obtained', Date.now() ]).on();
+			MainDB.users.update([ '_id', uid ]).set([ 'money', $user.money ]).on();
+			return res.send({ result: 200, value: $coupon.value, type: $coupon.type });
+		});
+	});
+});
+
 Server.get("/sns/cafe/post/:cafeid/:listCnt/:boardid", async function(req, res){
 	if (!req.headers.referer || !req.headers.referer.includes('kkutu.plus')) {
 		return res.status(403).send('Forbidden');

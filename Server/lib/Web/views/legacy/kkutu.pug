@@ -423,7 +423,14 @@ block Middle
 				button#shop-prob(style="width:120px;")= L('gachaProb')
 
 	+Dialog('CouponRegisterDiag', 400, 210, L("coupon"))
-		iframe#coupon-board(width=400, height=180)
+		div.dialog-bar
+			h4= L("couponCode")
+			input#coupon-code(type="textfield", placeholder=L("couponCode"))
+		div.dialog-bar
+			h4#coupon-desc
+			p!= L("couponUseText")
+		div.dialog-bar.tail-button
+			button#coupon-ok= L("couponUse")
 
 	+Dialog('NewbieDiag', 390, 205, L("getStarted"), true)
 		div(style="font-size: 16px; text-align: center;")
