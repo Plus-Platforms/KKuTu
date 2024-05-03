@@ -17,7 +17,7 @@
 		<nav class="max-w-screen-xl mx-auto flex items-center justify-between px-4 lg:px-8 lg:py-0" aria-label="Global">
 		<div class="flex lg:flex-1">
 			<a href="/">
-		<button class="-m-1.5 p-1.5 md:flex"><span class="sr-only">플러스끄투</span><img class="h-6" src="/img/web/logo_dark.svg" alt=""/></button>
+		<button class="-m-1.5 p-1.5 md:flex"><span class="sr-only">플러스끄투</span><img class="h-6" src="/img/kkutu/logo-top.svg" alt=""/></button>
 		</a>
 		</div>
 		<!-- svelte-ignore a11y-misplaced-role -->
