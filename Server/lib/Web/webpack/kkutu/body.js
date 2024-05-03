@@ -630,17 +630,6 @@ function welcome() {
 
         $(document).on("keydown", keydownHandler);
 
-		
-		var evtpopup = $.cookie("evtpopup");
-		var today = new Date();
-		var year = today.getFullYear();
-		var month = today.getMonth() + 1;
-		var day = today.getDate();
-		var todayStr = year + "" + (month < 10 ? "0" + month : month) + "" + (day < 10 ? "0" + day : day);
-		if (!evtpopup || evtpopup < "19996974") {
-		  $stage.dialog.evtPopup.style.display = "flex";
-		}
-
     }
 
 	if($data.admin) console.log("관리자 모드");
