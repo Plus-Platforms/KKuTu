@@ -600,6 +600,8 @@ function welcome(){
 		if ((date.getHours() >= 19 && date.getHours() <= 23)) {
 			notice(L['chatHottime']);
 		}
+		notice("어린이날, 대체공휴일, 부처님오신날(스승의날)은 하루종일 핫타임~! 카페 '인게임 이벤트'를 확인해보세요!! (기존 핫타임과 중복 적용되지 않습니다.)");
+
 
 		playtime++;
 		setTimeout(showGameAlert, 3600000);
@@ -1020,13 +1022,56 @@ function updateUI(myRoom, refresh){
 	
 	if(only == "for-lobby"){
 		$data._ar_first = true;
-		$stage.box.userList.show();
+		
 		if($data._shop){
 			$stage.box.roomList.hide();
+			$stage.box.userList.show();
+			$stage.box.eventList.hide();
 			$stage.box.shop.show();
-		}else{
-			$stage.box.roomList.show();
+			$stage.box.event.hide();
+		}
+		else if($data._event){
+			$stage.box.roomList.hide();
+			$stage.box.userList.hide();
+			$stage.box.eventList.show();
 			$stage.box.shop.hide();
+			$stage.box.event.show();
+
+					
+			$.get("/welcomebox/check", function(res){
+				if (!res.result){
+					alert('이미 사용했거나 로그인이 필요한 이벤트입니다.');
+					$("#lockedItem").attr("src","/img/event/2405이벤트/신규evt/신규evt_off.webp");
+				} else {
+					if (res.result == 200){
+						$("#lockedItem").attr("src","/img/event/2405이벤트/신규evt/신규evt_on.webp");
+						$("#lockedItem").click(function(){
+							$.get("/welcomebox", function(res){
+								if(res.value == "welcomebox"){
+									playSound("lvup");
+									alert("🥳축하합니다! 웰컴박스x5 적용 완료~! 지금 확인해보세요.");
+									$("#lockedItem").attr("src","/img/event/2405이벤트/신규evt/신규evt_off.webp");
+									$("#lockedItem").off("click");
+								}
+								else{
+									alert("적용 중 오류가 발생하였습니다.");
+								}
+							});
+						});
+					}
+					else{
+						$("#lockedItem").attr("src","/img/event/2405이벤트/신규evt/신규evt_off.webp");
+					}
+				}
+			});
+
+		}
+		else{
+			$stage.box.roomList.show();
+			$stage.box.userList.show();
+			$stage.box.eventList.hide();
+			$stage.box.shop.hide();
+			$stage.box.event.hide();
 		}
 		updateUserList(refresh || only != $data._only);
 		updateRoomList(refresh || only != $data._only);
@@ -1051,6 +1096,7 @@ function updateUI(myRoom, refresh){
 			}
 		}
 		$data._shop = false;
+		$data._event = false;
 		$stage.box.room.show().height(360);
 		if(only == "for-master") if($stage.dialog.inviteList.is(':visible')) updateUserList();
 		updateRoom(false);
@@ -1061,6 +1107,7 @@ function updateUI(myRoom, refresh){
 			$data._gAnim = false;
 		}
 		$data._shop = false;
+		$data._event = false;
 		$data._ar_first = true;
 		$stage.box.me.hide();
 		$stage.box.game.show();
@@ -2085,6 +2132,7 @@ function replayReady(){
 		$data.room.events.push($rec.events[i]);
 	}
 	$stage.box.userList.hide();
+	$stage.box.eventList.hide();
 	$stage.box.roomList.hide();
 	$stage.box.game.show();
 	$stage.dialog.replay.hide();

@@ -91,9 +91,9 @@
       <div class="mx-auto max-w-screen-xl container px-4 md:px-6 lg:grid lg:grid-cols-3">
         <div class="col-span-2 pt-48 pb-28 justify-center flex flex-col items-center lg:items-start">
          
-          <a href="https://cafe.naver.com/pluskkutu/204" target="_blank">
+          <a href="https://cafe.naver.com/pluskkutu/226" target="_blank">
               <p class="rounded-full lg:border-white lg:border-4 lg:px-4 lg:py-2 text-white mb-8 text-center sm:text-4xl  transform ease-in duration-100 active:scale-95 lg:hover:bg-white lg:hover:text-black">
-                <strong>NEW!</strong>&nbsp;오리진 업데이트 →
+                <strong>NEW!</strong>&nbsp;가정의 달 이벤트 →
               </p>
           </a>
 

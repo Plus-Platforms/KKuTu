@@ -66,6 +66,15 @@ function useItem($user, $item, gid){
 		case 'box2017':
 			got(pick(['bokjori', 'rio_seongwha', 'spanner']), 1, 604800);
 			break;
+		case 'boxmay':
+			got(pick(['danbal', 'school_g', 'school_b', 'head_g', 'head_b', 'kinder_g', 'kinder_b', 'head_g', 'head_b']), 1, "unexpire");
+			break;
+		case 'welcomemay':
+			var picks = Math.random() * 15;
+			if(picks < 1) got(pick(['spanner', 'bokjori', 'rio_seongwha', 'memorial', 'brown_oxford', 'miljip']), 1, "unexpire");
+			else if(picks < 3) got(pick(['dictPage']), 1, "unexpire");
+			else if(picks < 6) got(pick(['$WPC아', '$WPC다', '$WPC산', '$WPC한']), 1, "unexpire");
+			else got(pick(['hair', 'selfie', 'picnic_bag', 'danbal', 'school_g', 'school_b', 'kinder_g', 'kinder_b', 'bamyanggang', 'green_name']), 1, "unexpire");
 		case 'boxspring':
 			got(pick(['picnic_bag', 'sakura', 'selfie', 'spring_bg', 'hair']), 1, "unexpire");
 			break;

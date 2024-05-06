@@ -73,24 +73,79 @@ Server.get("/help", function(req, res){
 	});
 });
 
+Server.get("/welcomebox", function(req, res){
+	if(!req.session.profile) res.send({ error: 400 });
+	var uid = req.session.profile.id;
+	var cid = "WELCOME20240511";
+
+		MainDB.kkutu_coupon_log.findOne([ 'uid', uid ], [ 'cid', cid ]).on(function($log){
+			if($log) {
+				if (!res.headersSent) {
+					res.send({ error: 406 });
+				}
+			}
+		});
+		MainDB.users.findOne([ '_id', uid ]).on(function($user){
+			if (!res.headersSent) {
+				var kkutuBox = $user.box;
+				if(!kkutuBox) kkutuBox = {};
+				if(kkutuBox["welcomemay"]) kkutuBox["welcomemay"] += 5;
+				else kkutuBox["welcomemay"] = 5;
+
+				MainDB.kkutu_coupon_log.insert([ 'uid', uid ], [ 'cid', cid ], [ 'obtained', new Date(Date.now()) ]).on();
+				MainDB.users.update([ '_id', uid ]).set([ 'box', kkutuBox ]).on();
+				res.send({ result: 200, value: "welcomebox" });
+			}
+		});
+});
+
+Server.get("/welcomebox/check", function(req, res){
+	if(!req.session.profile) res.send({ error: 406 });
+	var uid = req.session.profile.id;
+	var cid = "WELCOME20240511";
+
+	MainDB.kkutu_coupon_log.findOne([ 'uid', uid ], [ 'cid', cid ]).on(function($log){
+		if($log) {
+			if (!res.headersSent) {
+				res.send({ error: 406 });
+			}
+		}
+	});
+		if (!res.headersSent) {
+		res.send({ result: 200 });
+		}
+});
+
 Server.get("/coupon/:id", function(req, res){
-	if(!req.session.profile) return res.send({ error: 400 });
+	if(!req.session.profile) res.send({ error: 400 });
 	var uid = req.session.profile.id;
 	var cid = req.params.id;
 
 	MainDB.kkutu_coupon.findOne([ '_id', cid ]).on(function($coupon){
-		if(!$coupon) return res.send({ error: 404 });
-		if($coupon.expire < Date.now()) return res.send({ error: 405 });
+		if(!$coupon){res.send({ error: 404 });return;}
+		if($coupon.expire < Date.now()) {
+			if (!res.headersSent) {
+				res.send({ error: 405 });
+			}
+			return;
+		}
 		MainDB.kkutu_coupon_log.findOne([ 'uid', uid ], [ 'cid', cid ]).on(function($log){
-			if($log) return res.send({ error: 406 });
+			if($log) {
+				if (!res.headersSent) {
+					res.send({ error: 406 });
+				}
+			}
 		});
 		MainDB.users.findOne([ '_id', uid ]).on(function($user){
-			var updatedMoney = Number($user.money) + Number($coupon.value);
-
+			
+			if (!res.headersSent) {
+				var updatedMoney = Number($user.money) + Number($coupon.value);
+		
 			MainDB.kkutu_coupon.update([ '_id', cid ]).set([ 'hit', $coupon.hit + 1 ]).on();
 			MainDB.kkutu_coupon_log.insert([ 'uid', uid ], [ 'cid', cid ], [ 'obtained', new Date(Date.now()) ]).on();
 			MainDB.users.update([ '_id', uid ]).set([ 'money', updatedMoney ]).on();
-			return res.send({ result: 200, value: $coupon.value, type: $coupon.type });
+				res.send({ result: 200, value: $coupon.value, type: $coupon.type });
+			}
 		});
 	});
 });

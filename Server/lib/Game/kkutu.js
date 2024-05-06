@@ -1564,9 +1564,9 @@ function getRewards(rankScore, mode, score, bonus, rank, all, ss, opts, forestPo
 	//핫타임
 	var date = new Date();
 
-	if ((date.getHours() >= 19 && date.getHours() <= 23)) {
+	//if ((date.getHours() >= 19 && date.getHours() <= 23)) {
 		rw.score *= 2;
-	}
+	//}
 
 	if(all < 2){
 		rw.score = rw.score * 0.05;

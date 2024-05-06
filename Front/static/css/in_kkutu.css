@@ -134,14 +134,14 @@
 	.dark {
 		display: inline-block!important;
 	}
-	.goods-featured{
-		background-image: url('/img/kkutu/newproduct_modern.webp');
+	/*.goods-featured{
+		background: url('/img/kkutu/newproduct_modern.webp');
 		background-size: 100% 100%;
 		background-repeat: no-repeat;
 		color: #fff!important;
-	}
+	}*/
 	.goods {
-		background: #1f2937;
+		background: #1f2937!important;
 	}
 	.goods:hover {
 		background: #111827!important;

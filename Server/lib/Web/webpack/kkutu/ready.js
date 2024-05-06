@@ -846,6 +846,32 @@ $(document).ready(function(){
 		showDialog($stage.dialog.dict);
 	});
 	$stage.menu.event.on('click', function(e){
+		$.get("/welcomebox/check", function(res){
+			if (!res.result){
+				alert('이미 사용했거나 로그인이 필요한 이벤트입니다.');
+				$("#lockedItem").attr("src","/img/event/2405이벤트/신규evt/신규evt_off.webp");
+			} else {
+				if (res.result == 200){
+					$("#lockedItem").attr("src","/img/event/2405이벤트/신규evt/신규evt_on.webp");
+					$("#lockedItem").click(function(){
+						$.get("/welcomebox", function(res){
+							if(res.value == "welcomebox"){
+								playSound("lvup");
+								alert("🥳축하합니다! 웰컴박스x5 적용 완료~! 지금 확인해보세요.");
+								$("#lockedItem").attr("src","/img/event/2405이벤트/신규evt/신규evt_off.webp");
+								$("#lockedItem").off("click");
+							}
+							else{
+								alert("적용 중 오류가 발생하였습니다.");
+							}
+						});
+					});
+				}
+				else{
+					$("#lockedItem").attr("src","/img/event/2405이벤트/신규evt/신규evt_off.webp");
+				}
+			}
+		});
 		showDialog($stage.dialog.event);
 	});
 	
@@ -961,7 +987,7 @@ $(document).ready(function(){
 		$.cookie('kks', JSON.stringify($data.opts));
 	
 		var selectedFontOpt = document.getElementById("fontSelect").value;
-		document.body.style.fontFamily = selectedFont;
+		document.body.style.fontFamily = selectedFontOpt;
 		$.cookie("selectedFont", selectedFontOpt);
 		
 		$stage.dialog.setting.hide();
@@ -973,7 +999,7 @@ $(document).ready(function(){
 			if(res.error){
 				if(res.error == 400) alert(L['couponFail_400']);
 				else if(res.error == 404) alert(L['couponFail_404']);
-				else if(res.error == 406) alert(L['couponFail_406']);
+				else if(!res.result) alert(L['couponFail_406']);
 				else if(res.error == 405) alert(L['couponFail_405']);
 			} else{
 				playSound('success');

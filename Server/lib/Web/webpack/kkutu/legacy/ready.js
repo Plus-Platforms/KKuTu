@@ -61,6 +61,7 @@ $(document).ready(function(){
 			quickRoom: $("#QuickRoomBtn"),
 			spectate: $("#SpectateBtn"),
 			shop: $("#ShopBtn"),
+			event: $("#EventBtn"),
 			dict: $("#DictionaryBtn"),
 			wordPlus: $("#WordPlusBtn"),
 			invite: $("#InviteBtn"),
@@ -146,8 +147,10 @@ $(document).ready(function(){
 		box: {
 			chat: $(".P4jrKHDWS3x3Box"),
 			userList: $(".UserListBox"),
+			eventList: $(".EventListBox"),
 			roomList: $(".RoomListBox"),
 			shop: $(".ShopBox"),
+			event: $(".EventBox"),
 			room: $(".RoomBox"),
 			game: $(".GameBox"),
 			me: $(".MeBox")
@@ -633,6 +636,24 @@ $(document).ready(function(){
 		}
 		updateUI();
 	});
+	$stage.menu.event.on('click', function(e){
+		if($data._event = !$data._event){
+			$stage.menu.event.addClass("toggled");
+		}else{
+			$stage.menu.event.removeClass("toggled");
+		}
+		updateUI();
+	});
+
+	$('#event1').click(function(){
+		$('#event1-content').show();
+		$('#event2-content').hide();
+	});
+	$('#event2').click(function(){
+		$('#event2-content').show();
+		$('#event1-content').hide();
+	});
+
 	$(".shop-type").on('click', function(e){
 		var $target = $(e.currentTarget);
 		var type = $target.attr('id').slice(10);
@@ -740,7 +761,7 @@ $(document).ready(function(){
 		$.cookie('kks', JSON.stringify($data.opts));
 
 		var selectedFontOpt = document.getElementById("fontSelect").value;
-		document.body.style.fontFamily = selectedFont;
+		document.body.style.fontFamily = selectedFontOpt;
 		$.cookie("selectedFont", selectedFontOpt);
 
 		$stage.dialog.setting.hide();
@@ -751,7 +772,7 @@ $(document).ready(function(){
 			if(res.error){
 				if(res.error == 400) alert(L['couponFail_400']);
 				else if(res.error == 404) alert(L['couponFail_404']);
-				else if(res.error == 406) alert(L['couponFail_406']);
+				else if(!res.result) alert(L['couponFail_406']);
 				else if(res.error == 405) alert(L['couponFail_405']);
 			} else{
 				playSound('success');
