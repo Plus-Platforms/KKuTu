@@ -591,7 +591,7 @@ function welcome() {
         if ((date.getHours() >= 19 && date.getHours() <= 23)) {
             notice(L['chatHottime']);
         }
-		notice("어린이날, 대체공휴일, 부처님오신날(스승의날)은 하루종일 핫타임~! 카페 '인게임 이벤트'를 확인해보세요!! (기존 핫타임과 중복 적용되지 않습니다.)");
+		//notice("어린이날, 대체공휴일, 부처님오신날(스승의날)은 하루종일 핫타임~! 카페 '인게임 이벤트'를 확인해보세요!! (기존 핫타임과 중복 적용되지 않습니다.)");
 
         playtime++;
         setTimeout(showGameAlert, 3600000);
@@ -2484,9 +2484,9 @@ function roundEnd(result, data){
 		var date = new Date();
 		
 		notice(L['scoreGain'] + ": " + commify($data._result.reward.score) + ", " + L['moneyGain'] + ": " + commify($data._result.reward.money) + ", " + L['rankPointGain'] + ": " + commify($data._result.reward.rankPoint));
-		//if ((date.getHours() >= 19 && date.getHours() <= 23)) {
+		if ((date.getHours() >= 19 && date.getHours() <= 23)) {
 			notice("핫타임이 적용되어 XP가 2배 되었습니다.");
-		//}
+		}
 		if($data._result.reward.forestPoint !== 0){
 			notice("🌳 2024 '식목일 기부 이벤트'에 "+ commify($data._result.reward.forestPoint)+"원의 기부금액이 모아졌습니다.");
 		}
@@ -2494,12 +2494,12 @@ function roundEnd(result, data){
 		$(".result-me").css('opacity', 1);
 		
 
-		//if ((date.getHours() >= 19 && date.getHours() <= 23)) {
+		if ((date.getHours() >= 19 && date.getHours() <= 23)) {
 			$(".result-me-score").html("<img src='/img/kkutu/currency/xp.webp' alt='XP' class='resultIcons'>핫타임×2 XP<h3 class='xpCounter'>+"+commify($data._result.reward.score)+"</h3>"+addp);
-		/*}
+		}
 		else{
 			$(".result-me-score").html("<img src='/img/kkutu/currency/xp.webp' alt='XP' class='resultIcons'>"+L['scoreGain']+"<h3 class='xpCounter'>+"+commify($data._result.reward.score)+"</h3>"+addp);
-		}*/
+		}
 		
 		$(".result-me-money").html("<img src='/img/kkutu/currency/ping.webp' alt='Money' class='resultIcons'>"+L['moneyGain']+" <h3 class='moneyCounter'>+"+commify($data._result.reward.money)+"</h3>"+addp);
 	}

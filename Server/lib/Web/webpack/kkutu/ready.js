@@ -862,7 +862,7 @@ $(document).ready(function(){
 								$("#lockedItem").off("click");
 							}
 							else{
-								alert("적용 중 오류가 발생하였습니다.");
+								alert("이미 적용하였거나 오류가 발생했습니다.");
 							}
 						});
 					});

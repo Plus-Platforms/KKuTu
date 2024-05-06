@@ -600,7 +600,7 @@ function welcome(){
 		if ((date.getHours() >= 19 && date.getHours() <= 23)) {
 			notice(L['chatHottime']);
 		}
-		notice("어린이날, 대체공휴일, 부처님오신날(스승의날)은 하루종일 핫타임~! 카페 '인게임 이벤트'를 확인해보세요!! (기존 핫타임과 중복 적용되지 않습니다.)");
+		//notice("어린이날, 대체공휴일, 부처님오신날(스승의날)은 하루종일 핫타임~! 카페 '인게임 이벤트'를 확인해보세요!! (기존 핫타임과 중복 적용되지 않습니다.)");
 
 
 		playtime++;
@@ -1054,7 +1054,7 @@ function updateUI(myRoom, refresh){
 									$("#lockedItem").off("click");
 								}
 								else{
-									alert("적용 중 오류가 발생하였습니다.");
+									alert("이미 적용하였거나 오류가 발생했습니다.");
 								}
 							});
 						});
