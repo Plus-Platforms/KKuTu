@@ -1,6 +1,6 @@
 {
   "name": "kkutu-server",
-  "version": "k3.4.1",
+  "version": "k3.5",
   "description": "Rule the words! KKuTu Online Server",
   "main": "main.js",
   "scripts": {

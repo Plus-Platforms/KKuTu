@@ -81,9 +81,24 @@ function useItem($user, $item, gid){
 			got('b4_ktx', 1, "unexpire");
 			got('b4_korail', 1, "unexpire");
 			got('back_train', 1, "unexpire");
-			got('$WPC서', 1, "unexpire");
-			got('$WPC울', 1, "unexpire");
-			got('$WPC역', 1, "unexpire");
+
+			var picks = Math.random() * 3;
+			if(picks == 0){
+				got('$WPC서', 1, "unexpire");
+				got('$WPC울', 1, "unexpire");
+				got('$WPC역', 1, "unexpire");
+			}
+			else if(picks == 1){
+				got('$WPC용', 1, "unexpire");
+				got('$WPC산', 1, "unexpire");
+				got('$WPC역', 1, "unexpire");
+			}
+			else{
+				got('$WPC수', 1, "unexpire");
+				got('$WPC서', 1, "unexpire");
+				got('$WPC역', 1, "unexpire");
+			}
+			
 			break;
 		case 'boxspring':
 			got(pick(['picnic_bag', 'sakura', 'selfie', 'spring_bg', 'hair']), 1, "unexpire");
