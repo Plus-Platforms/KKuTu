@@ -75,6 +75,16 @@ function useItem($user, $item, gid){
 			else if(picks < 3) got(pick(['dictPage']), 1, "unexpire");
 			else if(picks < 6) got(pick(['$WPC아', '$WPC다', '$WPC산', '$WPC한']), 1, "unexpire");
 			else got(pick(['hair', 'selfie', 'picnic_bag', 'danbal', 'school_g', 'school_b', 'kinder_g', 'kinder_b', 'bamyanggang', 'green_name']), 1, "unexpire");
+			break;
+		case 'packagerail':
+			got('b4_gtx', 1, "unexpire");
+			got('b4_ktx', 1, "unexpire");
+			got('b4_korail', 1, "unexpire");
+			got('back_train', 1, "unexpire");
+			got('$WPC서', 1, "unexpire");
+			got('$WPC울', 1, "unexpire");
+			got('$WPC역', 1, "unexpire");
+			break;
 		case 'boxspring':
 			got(pick(['picnic_bag', 'sakura', 'selfie', 'spring_bg', 'hair']), 1, "unexpire");
 			break;

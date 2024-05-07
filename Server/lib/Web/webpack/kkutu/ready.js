@@ -307,7 +307,7 @@ $(document).ready(function(){
 	
 	MOREMI_PART = $("#MOREMI_PART").html().split(',');
 	AVAIL_EQUIP = $("#AVAIL_EQUIP").html().split(',');
-	stickers = ["molru", "easy", "ready"];
+	stickers = ["molru", "easy", "ready", "rip", "food"];
 	RULE = JSON.parse($("#RULE").html());
 	OPTIONS = JSON.parse($("#OPTIONS").html());
 	MODE = Object.keys(RULE);
