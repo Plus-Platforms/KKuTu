@@ -1,6 +1,6 @@
 {
   "name": "kkutu-core",
-  "version": "k3.5",
+  "version": "k3.5.1",
   "description": "Rule the words! KKuTu Online Core",
   "repository": "https://github.com/JJoriping/KKuTu",
   "keywords": [
@@ -22,6 +22,7 @@
     "diff-match-patch": "^1.0.5",
     "express": "^4.14.0",
     "express-session": "^1.14.2",
+    "fluent-ffmpeg": "^2.1.2",
     "fs": "^0.0.1-security",
     "glob": "^7.1.2",
     "glob-promise": "^3.3.0",
@@ -51,7 +52,8 @@
     "request": "^2.88.2",
     "terser-webpack-plugin": "^5.3.10",
     "webpack": "^5.91.0",
-    "ws": "^3.3.1"
+    "ws": "^3.3.1",
+    "ytdl-core": "^4.11.5"
   },
   "license": "AGPL-3.0",
   "devDependencies": {

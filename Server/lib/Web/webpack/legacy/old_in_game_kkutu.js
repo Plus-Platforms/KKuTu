@@ -287,7 +287,10 @@ $(document).ready(function(){
 	var month = today.getMonth() + 1;
 	var day = today.getDate();
 	var todayStr = year + "" + (month < 10 ? "0" + month : month) + "" + (day < 10 ? "0" + day : day);
-	if (!evtpopup || evtpopup < "19996974") {
+	if (!evtpopup){
+		$("#evtpopup").show();
+	}
+	else if(evtpopup < "19996974"){
 	  $("#evtpopup").show();
 	}
 
@@ -397,7 +400,7 @@ $(document).ready(function(){
 		applyOptions({
 			bv: $("#bgm-volume").val(),
 			ev: $("#effect-volume").val(),
-			bo: encodeURI($("#bgm-override").val()).replace(";", ''),
+			bo: encodeURI($("#bgm-override").val()).replace(";", '').replace("youtube.com/watch?v=", 'youtu.be/').replace("www.", ''),
 			io: encodeURI($("#img-override").val()).replace(";", ''),
 			di: $("#deny-invite").is(":checked"),
 			dw: $("#deny-whisper").is(":checked"),
@@ -806,7 +809,7 @@ $(document).ready(function(){
 		applyOptions({
 			bv: $("#bgm-volume").val(),
 			ev: $("#effect-volume").val(),
-			bo: encodeURI($("#bgm-override").val()).replace(";", ''),
+			bo: encodeURI($("#bgm-override").val()).replace(";", '').replace("youtube.com/watch?v=", 'youtu.be/').replace("www.", ''),
 			io: encodeURI($("#img-override").val()).replace(";", ''),
 			di: $("#deny-invite").is(":checked"),
 			dw: $("#deny-whisper").is(":checked"),
@@ -3575,6 +3578,8 @@ function updateUI(myRoom, refresh){
 			$stage.box.userList.hide();
 			$stage.box.eventList.show();
 			$stage.box.shop.hide();
+			
+			if($data.guest) res.error = 423;
 			$stage.box.event.show();
 
 					

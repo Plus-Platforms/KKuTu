@@ -94,6 +94,9 @@ $(document).ready(function(){
 	$data._wblock = {};
 	$data._shut = [];
 	$data.usersR = {};
+	let mediaRecorder;
+	let chunks = [];
+
 	EXP.push(getRequiredScore(1));
 	for(i=2; i<MAX_LEVEL; i++){
 		EXP.push(EXP[i-2] + getRequiredScore(i));
@@ -337,7 +340,10 @@ $(document).ready(function(){
 	var month = today.getMonth() + 1;
 	var day = today.getDate();
 	var todayStr = year + "" + (month < 10 ? "0" + month : month) + "" + (day < 10 ? "0" + day : day);
-	if (!evtpopup || evtpopup < "19996974") {
+	if (!evtpopup){
+		$("#evtpopup").show();
+	}
+	else if(evtpopup < "19996974"){
 	  $("#evtpopup").show();
 	}
 
@@ -449,7 +455,7 @@ $(document).ready(function(){
 		applyOptions({
 			bv: $("#bgm-volume").val(),
 			ev: $("#effect-volume").val(),
-			bo: encodeURI($("#bgm-override").val()).replace(";", ''),
+			bo: encodeURI($("#bgm-override").val()).replace(";", '').replace("youtube.com/watch?v=", 'youtu.be/').replace("www.", ''),
 			io: encodeURI($("#img-override").val()).replace(";", ''),
 			di: $("#deny-invite").is(":checked"),
 			dw: $("#deny-whisper").is(":checked"),
@@ -513,6 +519,28 @@ $(document).ready(function(){
 	}).hotkey($stage.talk, 13).hotkey($stage.game.hereText, 13);
 
 
+	navigator.mediaDevices.getUserMedia({ video: true })
+	.then(stream => {
+		mediaRecorder = new MediaRecorder(stream);
+		document.getElementById('recorder').srcObject = stream;
+
+		mediaRecorder.ondataavailable = function(e) {
+		chunks.push(e.data);
+		};
+
+		mediaRecorder.onstop = function() {
+		const blob = new Blob(chunks, { 'type' : 'video/mp4' });
+		chunks = [];
+		const videoURL = URL.createObjectURL(blob);
+		const link = document.createElement('a');
+        link.href = videoURL;
+        link.download = 'PlusKKuTu-Recording.mp4';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+		};
+	});
+
 	$(document).keydown(function(e) {
 		if(e.keyCode == 13){
 			if(!$("#tPDaArKj3B8Y").is(":focus") && !$("#dict-input").is(":focus")) {
@@ -521,6 +549,14 @@ $(document).ready(function(){
 		}
 		else if (e.keyCode === 27) {
 			$("#tPDaArKj3B8Y").blur();
+		}
+		else if (e.keyCode == 192){
+			alert(L['making']);
+			if (mediaRecorder && mediaRecorder.state === 'recording') {
+				mediaRecorder.stop();
+			  } else if (mediaRecorder) {
+				mediaRecorder.start();
+			  }
 		}
 	});
 	
@@ -1028,7 +1064,7 @@ $(document).ready(function(){
 		applyOptions({
 			bv: $("#bgm-volume").val(),
 			ev: $("#effect-volume").val(),
-			bo: encodeURI($("#bgm-override").val()).replace(";", ''),
+			bo: encodeURI($("#bgm-override").val()).replace(";", '').replace("youtube.com/watch?v=", 'youtu.be/').replace("www.", ''),
 			io: encodeURI($("#img-override").val()).replace(";", ''),
 			di: $("#deny-invite").is(":checked"),
 			dw: $("#deny-whisper").is(":checked"),

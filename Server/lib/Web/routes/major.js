@@ -23,6 +23,8 @@ var GLOBAL	 = require("../../sub/global.json");
 var Const	 = require("../../const");
 const axios = require('axios');
 const fs = require('fs');
+const ytdl = require('ytdl-core');
+const ffmpeg = require('fluent-ffmpeg');
 
 function obtain($user, key, value, term, addValue){
 	var now = (new Date()).getTime();
@@ -204,25 +206,39 @@ Server.get("/sns/cafe/view/:cafeid/:postid", async function(req, res){
 });
 
 Server.get("/audioProxy", async function(req, res){
-	if (!req.headers.referer || !req.headers.referer.includes('kkutu.plus')) {
-		return res.status(403).send('Forbidden');
-	}
+    if (!req.headers.referer || !req.headers.referer.includes('kkutu.plus')) {
+        return res.status(403).send('Forbidden');
+    }
 
     const encodedURL = req.query.link;
     var decodedURL = decodeURIComponent(encodedURL);
-	const defaultURL = "https://kkutu.plus/media/kkutu/LobbyBGMS2.mp3";
+    const defaultURL = "https://kkutu.plus/media/kkutu/LobbyBGMS2.mp3";
 
-	if (!decodedURL.match(/\.mp3$|\.ogg$|\.wav$/)) {
-		decodedURL = defaultURL;
-	}
-
-    try {
-        const response = await axios.get(decodedURL, { responseType: 'arraybuffer' });
-        res.send(response.data);
-    } catch (error) {
-		decodedURL = defaultURL;
-		const response = await axios.get(decodedURL, { responseType: 'arraybuffer' });
-        res.send(response.data);
+    if (!decodedURL.match(/\.mp3$|\.ogg$|\.wav$/)) {
+        if (ytdl.validateURL(decodedURL)) {
+            // If it's a YouTube URL, stream the audio
+            const stream = ytdl(decodedURL, { filter: 'audioonly' });
+            const ffmpegStream = ffmpeg(stream)
+                .audioBitrate(128)
+                .format('mp3')
+                .on('end', () => console.log('YT Video Request on AudioProxy ('+decodedURL+')'))
+                .on('error', (error) => console.error(error));
+            res.setHeader('Content-Type', 'audio/mpeg');
+            ffmpegStream.pipe(res);
+        } else {
+            decodedURL = defaultURL;
+            const response = await axios.get(decodedURL, { responseType: 'arraybuffer' });
+            res.send(response.data);
+        }
+    } else {
+        try {
+            const response = await axios.get(decodedURL, { responseType: 'arraybuffer' });
+            res.send(response.data);
+        } catch (error) {
+            decodedURL = defaultURL;
+            const response = await axios.get(decodedURL, { responseType: 'arraybuffer' });
+            res.send(response.data);
+        }
     }
 });
 

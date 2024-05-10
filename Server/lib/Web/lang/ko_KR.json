@@ -1,6 +1,7 @@
 {
 	"GLOBAL": {
-		"GPL": "<div style='color: #666;'>플러스끄투 Copyright (C) 2021~ Morem.ME (support@morem.me)<br>이 프로그램은 제품에 대한 어떠한 형태의 보증도 제공되지 않습니다.<br>이 프로그램은 자유 소프트웨어이며 배포 규정을 만족시키는 조건 아래 자유롭게 재배포할 수 있습니다.<br>이에 대한 자세한 사항은 본 프로그램의 구현을 담은 다음 레포지토리에서 확인하십시오: <a target='_blank' href='https://github.com/10kwon/KKuTu'>확인하기</a></div>",
+		"LANG": "ko_KR",
+		"GPL": "<div style='color: #666;'>플러스끄투 Copyright (C) 2021~ Morem.ME (support@morem.me)<br>이 프로그램은 제품에 대한 어떠한 형태의 보증도 제공되지 않습니다.<br>이 프로그램은 자유 소프트웨어이며 배포 규정을 만족시키는 조건 아래 자유롭게 재배포할 수 있습니다.<br>이에 대한 자세한 사항은 본 프로그램의 구현을 담은 다음 레포지토리에서 확인하십시오: <a target='_blank' href='https://github.com/Plus-Platforms/KKuTu'>확인하기</a></div>",
 
 		"CREATOR":	"개발자 블로그",
 		"HOME":		"FA{home}",
@@ -68,6 +69,8 @@
 		"AGREEMENT": "서비스 이용 약관",
 		"REFUND": "환불 정책",
 		"PRIVACY": "개인정보 취급 방침",
+		"THIRDPARTY": "개인정보 제3자 제공 동의 (필수)",
+		"OVERSEAS": "해외 개인정보 이전 동의 (필수)",
 		"OK": "확인",
 		"NO": "취소",
 		"ITEM_FROM": "재료 아이템",
@@ -132,7 +135,7 @@
 	},
 	"kkutu": {
 		"title": "플러스끄투",
-		"version": "k3.5",
+		"version": "k3.5.1",
 		
 		"meta_desc": "웹에서 즐기는 끝말잇기 온라인, 쿵쿵따, 수학퀴즈, 앞말잇기, 자음퀴즈, 모음퀴즈, 십자말풀이! 플러스끄투에서 모두 즐겨보세요.",
 		"meta_keys": "끄투,kkutu,끝말잇기,온라인,웹,쿵쿵따,영어끝말잇기,영어쿵쿵따,시리토리,끝말잇기사이트,자음퀴즈,초성퀴즈,자퀴,십자말풀이,가로세로,타자,타자연습,앞말잇기",
@@ -232,6 +235,13 @@
 		"error_459": "부적절한 닉네임입니다. (비속어가 포함된 닉네임)",
 		"error_500": "서버 점검 혹은 업데이트가 진행 중입니다.",
 		"error_555": "공사 중입니다! ㅠㅠ",
+
+		"migrationFail_407": "PlusCoin 마이그레이션 기간에만 사용 가능합니다.",
+		"migrationFail_408": "PlusCoin 마이그레이션 기간이 종료됐습니다.",
+		"migrationSuccess_plco": "이젠 플코 아이템을 플끄에서도 만나보세요~!",
+		"migrationSuccess_cease": "앞으로 새로운 곳에서 더 자주 만나요~!",
+		
+		"migrationInfo_plco": "PlusCoin은 핑으로 0.5배 전환되어 제공됩니다.",
 
 		"couponFail_400": "로그인 후 이용 가능합니다.",
 		"couponFail_404": "쿠폰이 존재하지 않습니다.",
@@ -459,10 +469,11 @@
 		"theme_NSK": "니세코이",
 		"theme_KOT": "대한민국 철도역",
 		"theme_JOT": "일본 철도역",
-		"theme_KOR": "대한민국 명소",
+		"theme_KOR": "대한민국 명소/행사",
 		"theme_DOT": "도타 2",
 		"theme_DRR": "듀라라라!!",
 		"theme_DGM": "디지몬",
+		"theme_DRM": "도라에몽",
 		"theme_RAG": "라면/과자/아이스크림",
 		"theme_LVL": "러브 라이브!",
 		"theme_LOL": "리그 오브 레전드",
@@ -529,6 +540,9 @@
 		"theme_DBP": "동방 프로젝트",
 		"theme_PKM": "포켓몬스터",
 		"theme_PWR": "파워 단어",
+		"theme_CAR": "자동차",
+		"theme_SEO": "성어",
+		"theme_EMD": "행정 구역",
 		
 		"class_1": "명",
 		"class_2": "대명",
@@ -760,9 +774,9 @@
 		"mute": "음소거",
 		"save": "저장",
 		"denyReq": "요청 거부",
-		"bgmOverrideClassic": "BGM URL",
-		"bgmOverride": "배경 음악 URL (MP3, OGG, WAV / 재접속시 반영)",
-		"overrideUrl": "URL 입력 (YouTube 미지원)",
+		"bgmOverrideClassic": "BGM URL/<br>YouTube",
+		"bgmOverride": "배경 음악 (다이렉트 또는 YouTube / 재접속시 반영)",
+		"overrideUrl": "URL 입력 (일부 YouTube 동영상 미지원)",
 		"bgmQuality": "음질 높이기 (재접속시 반영)",
 		"splashOverride": "로딩 이미지 URL",
 		"splashOverrideClassic": "로딩 URL",
@@ -897,7 +911,8 @@
 		"CORRECT": "정답입니다!",
 		"WRONG": "오답입니다.",
 		"OTHERENTER": "다른 사람이 입력하고 있어요",
-		"gachaProb": "확률형 아이템 정보"
+		"gachaProb": "확률형 아이템 정보",
+		"accountMigration": "계정 마이그레이션"
 	},
 	"game/fates": {
 		"title": "카드 뽑기",

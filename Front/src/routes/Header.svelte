@@ -139,10 +139,6 @@
 					  고객지원
 					</p>
 					<ul role="list" class="mt-6 space-y-6 sm:mt-4 sm:space-y-4">
-					  <li class="flex">
-						  <a href="https://pcor.me/kkutu/coupon" target="_blank" class="text-gray-200 hover:text-gray-400">
-						  쿠폰 등록</a>
-						</li>
 						<li class="flex">
 							<a href="mailto:support@kkutu.plus" target="_blank" class="text-gray-200 hover:text-gray-400">
 						  이메일 문의</a>
