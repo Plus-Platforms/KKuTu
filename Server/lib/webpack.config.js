@@ -4,7 +4,7 @@ const { BannerPlugin } = require("webpack");
 const TerserPlugin = require('terser-webpack-plugin');
 
 const LICENSE = [
-	"Copyright (C) 2023~2024 Morem.ME",
+	"Copyright (C) 2023~2024 Plus KKuTu Team",
 ].join('\n');
 
 class ConcatPlugin{

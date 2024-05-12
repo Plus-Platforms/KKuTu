@@ -2003,8 +2003,12 @@ function requestProfile(id){
 	$stage.dialog.profileDress.hide();
 	$stage.dialog.profileWhisper.hide();
 	$stage.dialog.profileHandover.hide();
+	$stage.dialog.profileSecurity.hide();
 	
-	if($data.id == id) $stage.dialog.profileDress.show();
+	if($data.id == id){
+		$stage.dialog.profileDress.show();
+		$stage.dialog.profileSecurity.show();
+	}
 	else if(!o.robot){
 		$stage.dialog.profileShut.show();
 		$stage.dialog.profileWhisper.show();

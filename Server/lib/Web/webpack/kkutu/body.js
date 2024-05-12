@@ -1987,8 +1987,11 @@ function requestProfile(id){
 	$stage.dialog.profileFriend.hide();
 	$stage.dialog.profileWhisper.hide();
 	$stage.dialog.profileHandover.hide();
+	$stage.dialog.profileSecurity.hide();
 	
-	if($data.id == id) {}
+	if($data.id == id) {
+		$stage.dialog.profileSecurity.show();
+	}
 	else if(!o.robot){
 		$stage.dialog.profileShut.show();
 		$stage.dialog.profileWhisper.show();

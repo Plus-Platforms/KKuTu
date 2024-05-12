@@ -3,15 +3,15 @@
   <div class="max-w-screen-xl mx-auto md:flex md:justify-between my-6 lg:my-12">
     <div class="">
       <div>
-        <img src="/img/kkutu/intro/moremme_light.svg" class="dark:hidden h-10 mr-4" alt="Morem.MELogo"/>
-        <img src="/img/kkutu/intro/moremme_dark.svg" class="hidden dark:block h-10 mr-4" alt="Morem.MELogo"/>
+        <img src="/img/kkutu/intro/moremme_light.svg" class="dark:hidden h-10 mr-4" alt="Plus KKuTu TeamLogo"/>
+        <img src="/img/kkutu/intro/moremme_dark.svg" class="hidden dark:block h-10 mr-4" alt="Plus KKuTu TeamLogo"/>
 
-        <p class="font-semibold tracking-wider mt-2 text-2xl dark:text-white">모렘미</p>
+        <p class="font-semibold tracking-wider mt-2 text-2xl dark:text-white">플러스끄투</p>
       </div>
 
       <div class="text-gray-500 dark:text-gray-400 mt-4">
-         문의 : support@morem.me<br>
-         &copy; 2023~2024 Morem.ME<br>
+         문의 : support@kkutu.plus<br>
+         &copy; 2023~2024 Plus KKuTu Team<br>
          <span class="text-xs lg:text-md">Moremi and KKuTu is distributed by JJoriping with CC-BY license.</span>
         <br><br>
         확률형 아이템 포함<br>

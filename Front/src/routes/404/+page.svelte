@@ -21,6 +21,6 @@
         <a href="/" class="font-semibold leading-6 text-purple-600 hover:text-purple-500 dark:text-purple-300 dark:hover:text-purple-500">
           메인으로 돌아가기
         </a><br><br>
-        Copyright © 2024 Morem.ME. All rights reserved.
+        Copyright © 2024 Plus KKuTu Team. All rights reserved.
       </p>
   </div>

@@ -127,6 +127,7 @@ $(document).ready(function(){
 				profileLevel: $("#profile-level"),
 				profileFriend: $("#profile-friend"),
 				profileDress: $("#profile-dress"),
+				profileSecurity: $("#profile-security"),
 				profileWhisper: $("#profile-whisper"),
 			kickVote: $("#KickVoteDiag"),
 				kickVoteY: $("#kick-vote-yes"),
@@ -170,7 +171,8 @@ $(document).ready(function(){
 				confirmOK: $("#confirm-ok"),
 				confirmCancel: $("#confirm-cancel"),
 			teamSelect: $("#TeamSelectDiag"),
-			tutorial: $("#OktHelpDiag")
+			tutorial: $("#OktHelpDiag"),
+			security: $("#SecurityDiag")
 		},
 		box: {
 			chat: $(".P4jrKHDWS3x3Box"),
@@ -283,7 +285,7 @@ $(document).ready(function(){
 	if (!evtpopup){
 		$("#evtpopup").show();
 	}
-	else if(evtpopup < "19996974"){
+	else if(evtpopup < "20240512"){
 	  $("#evtpopup").show();
 	}
 
@@ -1178,6 +1180,16 @@ $(document).ready(function(){
 		var o = $data.users[$data._profiled];
 		
 		$stage.talk.val("/e " + (o.profile.title || o.profile.name).replace(/\s/g, "") + " ").focus();
+	});
+	$stage.dialog.profileSecurity.on('click', function(e){
+		$.get("/securityCode", function(res){
+			if(res.error){
+				if(res.error == 400) alert(L['couponFail_400']);
+			} else{
+				$("#security-code").val(res.value);
+				showDialog($stage.dialog.security);
+			}
+		});
 	});
 	$stage.dialog.profileFriend.on('click', function(e){
 		var id = $data._profiled;

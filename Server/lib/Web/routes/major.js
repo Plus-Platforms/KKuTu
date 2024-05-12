@@ -120,6 +120,7 @@ Server.get("/welcomebox/check", function(req, res){
 
 Server.get("/coupon/:id", function(req, res){
 	if(!req.session.profile) res.send({ error: 400 });
+	if (!res.headersSent) {
 	var uid = req.session.profile.id;
 	var cid = req.params.id;
 
@@ -149,7 +150,26 @@ Server.get("/coupon/:id", function(req, res){
 				res.send({ result: 200, value: $coupon.value, type: $coupon.type });
 			}
 		});
-	});
+	});}
+});
+
+Server.get("/securityCode", function(req, res){
+	if(!req.session.profile) res.send({ error: 400 });
+	if (!res.headersSent) {
+	var uid = req.session.profile.id;
+
+	MainDB.users.findOne([ '_id', uid ]).on(function($user){
+		if(!$user.eventuid || $user.eventuid == "unset"){
+			//8 character a-z, A-Z, 0-9
+			var code = "";
+			var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+			for (var i = 0; i < 8; i++) code += possible.charAt(Math.floor(Math.random() * possible.length));
+			MainDB.users.update([ '_id', uid ]).set([ 'eventuid', code ]).on();
+			res.send({ result: 200, value: code });
+		}
+
+		else res.send({ result: 200, value: $user.eventuid });
+	});}
 });
 
 Server.get("/sns/cafe/post/:cafeid/:listCnt/:boardid", async function(req, res){

@@ -70,15 +70,15 @@ block Middle
 	- var nick = SESSION.profile ? (SESSION.profile.title || SESSION.profile.name) : null;
 	div#evtpopup(style="display: none;position: absolute;height: 605px;width: 1010px;align-items: center;justify-content: center;align-content: center;z-index: 3;background-color: rgba(0, 0, 0, 0.6);")
 		div(style='text-align: center;font-size: 18px;')
-			a(href="https://discord.gg/bt25WdwzR7", target="_blank")
-				img(src="/img/event/디코이벤트.webp", style="height: 300px;")
+			a(href="https://www.youtube.com/channel/UCS4JHtLk8zsxgsSzVIrUZZA", target="_blank")
+				img(src="/img/event/페이즈업리오.webp", style="height: 300px;")
 			div.dialog-bar.d2-bar.tail-button
 				button.primaryBtn#evtpopup-ok= L("close")
 	div#originOverlay(style="display: none;position: absolute;margin-top: 170px;max-height: 200px;width: 1010px;align-items: flex-end;justify-content: center;z-index: 3;")
 		img#originCountdown(src="/img/kkutu/origin_kkt/count-3.webp", style="height: 100px;")
 		img#originItem(src="/img/kkutu/origin_kkt/perfect@ko.webp", style="height: 60px;")
 	div#Intro
-		img#intro(src='/img/kkutu/intro.webp')
+		img#intro(src='/img/kkutu/Desk Loading.webp')
 		// img#intro-start(src='/img/kkutu/intro_start.gif')
 		div#version= VERSION
 		div#intro-text= L('LOADING')
@@ -353,6 +353,7 @@ block Middle
 			button#profile-friend(style="width:30px;")
 				+FA('user-plus')
 			button#profile-whisper= L('whisper')
+			button#profile-security= L('securityCode')
 			button#profile-shut= L('shut')
 			button#profile-kick= L('kick')
 			button#profile-level= L('aiSetting')
@@ -432,6 +433,14 @@ block Middle
 			p!= L("couponUseText")
 		div.dialog-bar.tail-button
 			button#coupon-ok= L("couponUse")
+	
+	+Dialog('SecurityDiag', 400, 210, L("securityCode"))
+		div.dialog-bar
+			h4#security-desc
+			p!= L("securityCodeText")
+		div.dialog-bar
+			h4= L("securityCode")
+			input#security-code(type="textfield", disabled, readonly)
 
 	+Dialog('NewbieDiag', 390, 205, L("getStarted"), true)
 		div(style="font-size: 16px; text-align: center;")
@@ -449,7 +458,7 @@ block Middle
 				| 에서 게임 정보를 받아볼 수 있어요.
 				br
 				br
-				small 계속하시면 Morem.ME의 개인정보처리방침 및 이용약관에 동의합니다.
+				small 계속하시면 Plus KKuTu Team의 개인정보처리방침 및 이용약관에 동의합니다.
 		div.dialog-bar.d2-bar.tail-button
 			button.primaryBtn#setNickname(style="width:150px;")!= L("acceptContinue")
 	+Dialog('CharFactoryDiag', 500, 410, L('charFactory'))

@@ -50,7 +50,7 @@
             </a>
         </div>
       <p class="mt-10 text-center text-sm text-gray-500 dark:text-gray-300">
-        로그인이 이루어지면 Morem.ME의 
+        로그인이 이루어지면 Plus KKuTu Team의 
         <a href="https://cafe.naver.com/pluskkutu/109" class="font-semibold leading-6 text-purple-600 hover:text-purple-500 dark:text-purple-300 dark:hover:text-purple-500">이용약관</a>과 <a href="https://cafe.naver.com/pluskkutu/110" class="font-semibold leading-6 text-purple-600 hover:text-purple-500 dark:text-purple-300 dark:hover:text-purple-500">개인정보처리방침</a>에 동의하게 됩니다.
         
       </p>

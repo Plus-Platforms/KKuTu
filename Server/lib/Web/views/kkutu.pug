@@ -111,8 +111,8 @@ block Middle
 	
 	div#evtpopup(style="display: none;position: absolute;height: 100%;width: 100%;align-items: center;justify-content: center;align-content: center;z-index: 3;background-color: rgba(0, 0, 0, 0.6);")
 		div(style='text-align: center;font-size: 18px;')
-			a(href="https://discord.gg/bt25WdwzR7", target="_blank")
-				img(src="/img/event/디코이벤트.webp", style="height: 500px;")
+			a(href="https://www.youtube.com/channel/UCS4JHtLk8zsxgsSzVIrUZZA", target="_blank")
+				img(src="/img/event/페이즈업리오.webp", style="height: 500px;")
 			div.dialog-bar.d2-bar.tail-button
 				button.primaryBtn#evtpopup-ok= L("close")
 	div#originOverlay(style="display: none;position: absolute;margin-top: 210px;height: 60px;align-items: flex-end;justify-content: center;z-index: 1;width: 100%;")
@@ -123,7 +123,7 @@ block Middle
 			button#creditpopup-close= "×"
 		div#creditpopup-content
 			div(style="width:50%;font-size: 24px; text-align: center;color:#fff;")
-				p(style="font-size: 36px;font-weight: 700;") Morem.ME Team
+				p(style="font-size: 36px;font-weight: 700;") Plus KKuTu Team Team
 				strong LEADER
 				p Hanseon&nbsp;&nbsp;&nbsp;Gyubin
 				br
@@ -448,6 +448,7 @@ block Middle
 			button#profile-friend(style="width:30px;")
 				+FA('user-plus')
 			button#profile-whisper= L('whisper')
+			button#profile-security= L('securityCode')
 			button#profile-shut= L('shut')
 			button#profile-kick= L('kick')
 			button#profile-level= L('aiSetting')
@@ -558,6 +559,13 @@ block Middle
 			p!= L("couponUseText")
 		div.dialog-bar.tail-button.d3-bar
 			button.primaryBtn#coupon-ok= L("couponUse")
+	+Dialog('SecurityDiag', 400, 210, L("securityCode"))
+			div.dialog-bar
+				h4#security-desc
+				p!= L("securityCodeText")
+			div.dialog-bar
+				h4= L("securityCode")
+				input#security-code(type="textfield", disabled, readonly)
 	+Dialog('Community2Diag', 1280, 750, L("officialSNS"))
 		iframe#community2(width=1280, height=700)
 	+Dialog('NewbieDiag', 390, 230, L("getStarted"), true)
@@ -576,7 +584,7 @@ block Middle
 				| 에서 게임 정보를 받아볼 수 있어요.
 				br
 				br
-				small 계속하시면 Morem.ME의 개인정보처리방침 및 이용약관에 동의합니다.
+				small 계속하시면 Plus KKuTu Team의 개인정보처리방침 및 이용약관에 동의합니다.
 		div.dialog-bar.d2-bar.tail-button
 			button.primaryBtn#setNickname(style="width:300px;")!= L("acceptContinue")
 
@@ -656,7 +664,7 @@ block Middle
 
 				div.sideFooter
 					//img(src="/img/kkutu/moremme_gray.svg")
-					p Copyright &copy; 2021~ Morem.ME
+					p Copyright &copy; 2021~ Plus KKuTu Team
 			
 	div(style="width: 100%;display: flex;height: 680px;")
 		div.lowreshidden(style="width:160px;height:600px;/*background-image: url('/img/ad/섭종전 마지막 발악.webp');*/")

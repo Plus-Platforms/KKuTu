@@ -7,7 +7,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Morem.ME",
+  "author": "Plus KKuTu Team",
   "license": "AGPL-3.0-or-later",
   "dependencies": {
     "imagemin": "^8.0.1",

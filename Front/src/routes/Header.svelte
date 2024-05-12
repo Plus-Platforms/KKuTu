@@ -144,8 +144,8 @@
 						  이메일 문의</a>
 						</li>
 						<li class="flex">
-							<a href="https://morem.me" target="_blank" class="text-gray-200 hover:text-gray-400">
-						  모렘미 소개</a>
+							<a href="https://kkutu.plus" target="_blank" class="text-gray-200 hover:text-gray-400">
+						  플러스끄투 소개</a>
 						</li>
 						<li class="flex">
 							<a href="https://cafe.naver.com/ArticleRead.nhn?clubid=31109813&menuid=7&boardtype=L&page=1&specialmenutype=&userDisplay=15&articleid=119" target="_blank" class="text-gray-200 hover:text-gray-400">
