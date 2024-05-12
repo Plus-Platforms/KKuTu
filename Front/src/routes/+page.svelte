@@ -1,6 +1,6 @@
 <script>
   import { onMount } from 'svelte';
-	const title = '모든 것이 플러스';
+	const title = 'kkutu.plus';
   var userLang = "";
 
   let jsonData = {"message":{"status":"200","error":{"code":"","msg":""},"result":{"cafeId":31109813,"cafeName":"모렘미","cafeStaff":false,"cafeMember":false,"manageMenus":{"showArticleDelete":false,"showReportBadArticle":false,"showBoardNotice":false,"showOneBoardNotice":false,"showActivityStop":false,"showSecede":false,"showArticleMove":false,"showLevelUp":false,"showRequiredNotice":false,"showPopularArticleHide":false},"requiredNoticeList":[{"articleId":35,"title":"필독공지","isCafeBook":false,"isNewNotice":false}],"mainNoticeList":[{"cafeId":31109813,"articleId":206,"refArticleId":206,"replyListOrder":"","menuId":8,"menuName":"Loading","menuType":"B","restrictMenu":false,"boardType":"L","subject":"불러오는 중","summary":"","writerId":"","writerNickname":"","memberLevel":999,"memberLevelIconId":1,"profileImage":"","newArticle":true,"replyArticle":false,"blindArticle":false,"openArticle":true,"marketArticle":false,"useSafetyPayment":false,"escrow":false,"onSale":false,"cost":0,"formattedCost":"","productSale":{"saleStatus":"NONE","cost":""},"attachImage":true,"attachMusic":false,"attachMovie":false,"attachFile":false,"attachMap":false,"attachGpx":false,"attachPoll":false,"attachLink":false,"attachCalendar":false,"popular":false,"representImage":"","representImageType":"I","imageAttachCount":1,"useHead":true,"headId":12,"headName":"","enableComment":true,"hasNewComment":false,"refArticleCount":0,"readCount":14,"commentCount":0,"writeDateTimestamp":1714362828690,"aheadOfWriteDate":"24.04.29.","formattedReadCount":"14","formattedCommentCount":"0","noticeType":"N","showNoticeDelete":false,"delParent":false,"blogScrap":false,"enableRecommendation":true}]}}};
@@ -91,15 +91,15 @@
       <div class="mx-auto max-w-screen-xl container px-4 md:px-6 lg:grid lg:grid-cols-3">
         <div class="col-span-2 pt-48 pb-28 justify-center flex flex-col items-center lg:items-start">
          
-          <a href="https://cafe.naver.com/pluskkutu/226" target="_blank">
+          <a href="https://cafe.naver.com/pluskkutu/228" target="_blank">
               <p class="rounded-full lg:border-white lg:border-4 lg:px-4 lg:py-2 text-white mb-8 text-center sm:text-4xl  transform ease-in duration-100 active:scale-95 lg:hover:bg-white lg:hover:text-black">
-                <strong>NEW!</strong>&nbsp;가정의 달 이벤트 →
+                <strong>🌱</strong>&nbsp;쑥쑥 자라라 신규유저! →
               </p>
           </a>
 
           <h1 class="text-hero lg:text-left text-center text-purple-200 text-5xl lg:text-8xl font-extrabold text-black sm:text-4xl md:text-5xl lg:text-6xl">
-            모든 것이 플러스<br>
-            <span class="text-white border-b-8 border-purple-500">플러스끄투</span><span class="text-purple-500">.</span>
+            플러스끄투에 오신<br>
+            것을 <span class="text-white border-b-8 border-purple-500">환영합니다</span><span class="text-purple-500">.</span>
           </h1>
 
           <p class="lg:text-left text-center text-white mt-8 sm:text-4xl text-black">
@@ -124,7 +124,7 @@
           {#if jsonDataServers.list[0] == null}
           <div class="balloon-wrapper">
             <div class="mt-12 lg:flex inline-flex text-lg text-white bg-black/70 backdrop-blue-lg rounded-2xl px-4 py-2">
-              현재 서버 점검 진행 중으로, 서버 접속이 불가능합니다.
+              현재 채널 점검 진행 중으로, 채널 접속이 불가능합니다.
             </div>
           </div>
           <a class="mt-4 bg-white rounded-full text-gray-800 shadow-lg px-8 py-2 font-bold text-3xl" href="https://cafe.naver.com/ArticleList.nhn?search.clubid=31109813&search.menuid=9&search.boardtype=L">
@@ -139,7 +139,7 @@
                 {#if jsonDataServers.list[0] > 0}
                 지금&nbsp;<strong>{jsonDataServers.list[0]}</strong>명이 함께하는 중!
                 {:else}
-                {randomMessage}
+                하단의 게임시작 버튼을 눌러 게임을 시작 해 보세요.
                 {/if}
               </div>
             </div>
@@ -150,12 +150,13 @@
           {/if}
           <div class="mx-auto lg:mx-0">
             <div class="max-w-lg mx-auto mt-16 grid grid-cols-3 gap-x-8 lg:gap-x-12 items-center jusitfy-center">
-              <div class="flex items-center justify-center">
-              <a href="https://cafe.naver.com/pluskkutu" target="_blank" class="px-3 py-3 lg:px-4 lg:py-4 rounded-full bg-white  transform ease-in duration-100 active:scale-95 lg:hover:scale-110 lg:hover:bg-green-200">
+    
+            <div class="flex items-center justify-center">
+              <a href="https://discord.gg/bt25WdwzR7" target="_blank" class="px-3 py-4 lg:px-4 lg:py-5 rounded-full bg-white transform ease-in duration-100 active:scale-95 lg:hover:scale-110 lg:hover:bg-indigo-200">
               <img
                 class="col-span-2 max-h-6 w-6 lg:max-h-8 lg:w-8 object-contain lg:col-span-1"
-                src="/img/cafe.png"
-                alt="NaverCafe"
+                src="/img/discord.png"
+                alt="Discord"
                 width={48}
                 height={48}
               /></a>
@@ -171,13 +172,13 @@
                 height={48}
               /></a>
             </div>
-    
-          <div class="flex items-center justify-center">
-            <a href="https://discord.gg/bt25WdwzR7" target="_blank" class="px-3 py-4 lg:px-4 lg:py-5 rounded-full bg-white transform ease-in duration-100 active:scale-95 lg:hover:scale-110 lg:hover:bg-indigo-200">
+            
+            <div class="flex items-center justify-center">
+            <a href="https://cafe.naver.com/pluskkutu" target="_blank" class="px-3 py-3 lg:px-4 lg:py-4 rounded-full bg-white  transform ease-in duration-100 active:scale-95 lg:hover:scale-110 lg:hover:bg-green-200">
             <img
               class="col-span-2 max-h-6 w-6 lg:max-h-8 lg:w-8 object-contain lg:col-span-1"
-              src="/img/discord.png"
-              alt="Discord"
+              src="/img/cafe.png"
+              alt="NaverCafe"
               width={48}
               height={48}
             /></a>
@@ -230,7 +231,8 @@
 
 <section class="max-w-screen-xl mx-auto my-10 lg:my-24 p-4">
   <div>
-  <h2 class="text-3xl lg:text-5xl font-bold mb-4 lg:mb-12">📢 새로운 소식</h2>
+  <h2 class="text-3xl lg:text-5xl font-bold mb-4 lg:mb-4">📢 새로운 소식</h2>
+  <h2 class="text-lg lg:text-xl text-gray-500 dark:text-gray-300 mb-4 lg:mb-12">플러스끄투는 연중무휴 업데이트 & 운영 중입니다.</h2>
 {#if jsonData && jsonData.message && jsonData.message.result}
 {#each jsonData.message.result.mainNoticeList  as { headName, menuName, menuId, articleId, subject, aheadOfWriteDate} (articleId)}
 <a href={`https://cafe.naver.com/ArticleRead.nhn?clubid=31109813&page=1&menuid=${menuId}&boardtype=L&articleid=${articleId}&referrerAllArticles=false`} target="_blank" class="hover:text-blue-500">

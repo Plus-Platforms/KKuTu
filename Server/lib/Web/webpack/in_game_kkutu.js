@@ -519,28 +519,6 @@ $(document).ready(function(){
 	}).hotkey($stage.talk, 13).hotkey($stage.game.hereText, 13);
 
 
-	navigator.mediaDevices.getUserMedia({ video: true })
-	.then(stream => {
-		mediaRecorder = new MediaRecorder(stream);
-		document.getElementById('recorder').srcObject = stream;
-
-		mediaRecorder.ondataavailable = function(e) {
-		chunks.push(e.data);
-		};
-
-		mediaRecorder.onstop = function() {
-		const blob = new Blob(chunks, { 'type' : 'video/mp4' });
-		chunks = [];
-		const videoURL = URL.createObjectURL(blob);
-		const link = document.createElement('a');
-        link.href = videoURL;
-        link.download = 'PlusKKuTu-Recording.mp4';
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-		};
-	});
-
 	$(document).keydown(function(e) {
 		if(e.keyCode == 13){
 			if(!$("#tPDaArKj3B8Y").is(":focus") && !$("#dict-input").is(":focus")) {
@@ -552,11 +530,6 @@ $(document).ready(function(){
 		}
 		else if (e.keyCode == 192){
 			alert(L['making']);
-			if (mediaRecorder && mediaRecorder.state === 'recording') {
-				mediaRecorder.stop();
-			  } else if (mediaRecorder) {
-				mediaRecorder.start();
-			  }
 		}
 	});
 	

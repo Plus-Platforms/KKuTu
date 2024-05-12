@@ -1041,7 +1041,6 @@ function updateUI(myRoom, refresh){
 			$stage.box.eventList.show();
 			$stage.box.shop.hide();
 			
-			if($data.guest) res.error = 423;
 			$stage.box.event.show();
 
 					
