@@ -46,20 +46,97 @@
     transition-timing-function: cubic-bezier(0.49, 0.09, 0.39, 1);
   }
 
-  /* Desktop */
-  @media (min-width: 1024px) {
     .text-hero{
       animation: fadeIn 1s forwards;
       transition-timing-function: cubic-bezier(0.49, 0.09, 0.39, 1);
     }
-  }
-  /* Mobile */
-  @media (max-width: 1024px) {
-    .text-hero{
-      animation: fadeInTop 1s forwards;
+    .delayedFadeIn-200ms{
+      animation: fadeIn 1s forwards;
       transition-timing-function: cubic-bezier(0.49, 0.09, 0.39, 1);
+      animation-delay: 0.2s;
+      opacity: 0;
     }
-  }
+
+    .delayedFadeIn-500ms{
+      animation: fadeIn 1s forwards;
+      transition-timing-function: cubic-bezier(0.49, 0.09, 0.39, 1);
+      animation-delay: 0.5s;
+      opacity: 0;
+    }
+
+    .delayedFadeIn-600ms{
+      animation: fadeIn 1s forwards;
+      transition-timing-function: cubic-bezier(0.49, 0.09, 0.39, 1);
+      animation-delay: 0.6s;
+      opacity: 0;
+    }
+
+    .glassFraction-1{
+      animation: leftGlass 1s forwards;
+      transition-timing-function: cubic-bezier(0.49, 0.09, 0.39, 1);
+      opacity: 0;
+    }
+
+    .glassFraction-2{
+      animation: rightGlass 1s forwards;
+      transition-timing-function: cubic-bezier(0.49, 0.09, 0.39, 1);
+      opacity: 0;
+    }
+
+    @keyframes leftGlass {
+      from {
+        opacity: 0;
+        transform: translateX(-50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0px);
+      }
+    }
+
+    @keyframes rightGlass {
+      from {
+        opacity: 0;
+        transform: translateX(50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0px);
+      }
+    }
+    .starfield {
+      position: absolute;
+      width: 50px;
+      height: 4px;
+      background: linear-gradient(45deg, #3b82f6, #7c3aed);
+      animation: shootingStar 2s infinite;
+    }
+  
+    .starfield:nth-child(2n) {
+      animation-delay: 1s;
+    }
+    
+    .starfield:nth-child(3n) {
+      animation-delay: 1.5s;
+    }
+    
+    .starfield:nth-child(4n) {
+      animation-delay: 2s;
+    }
+    
+    @keyframes shootingStar {
+      0% {
+        transform: translate(0, 0);
+        opacity: 0;
+      }
+      10% {
+        opacity: 1;
+      }
+      100% {
+        transform: translate(100px, 100px);
+        opacity: 0;
+      }
+    }
 
   .layer img {
     max-width: 100%;
@@ -69,11 +146,11 @@
   @keyframes fadeIn {
     from {
       opacity: 0;
-	  transform: translateX(-50px);
+	    transform: translateY(50px);
     }
     to {
       opacity: 1;
-	  transform: translateX(0px);
+	  transform: translateY(0px);
     }
   }
 
@@ -102,12 +179,12 @@
   @keyframes fadeInRight {
     from {
       opacity: 0;
-      transform: translateX(50px);
+      transform: translateY(50px);
       filter: brightness(0);
     }
     to {
       opacity: 1;
-      transform: translateX(0px);
+      transform: translateY(0px);
       filter: brightness(1) drop-shadow(0px -36px 36px #a955f762);
     }
   }
