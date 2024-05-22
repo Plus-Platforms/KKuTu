@@ -1,0 +1,26 @@
+@font-face {
+    font-family: 'NanumBarunGothic';
+    src: url('/webfonts/NanumBarunGothicLight.woff') format('woff');
+}
+
+*{
+    font-family: 'NanumBarunGothic'!important;
+}
+
+.userMessage{
+    animation: fadeInUp 0.5s forwards;
+    transition-timing-function: cubic-bezier(0.49, 0.09, 0.39, 1);
+    animation-delay: 0s;
+    opacity: 0;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0px);
+    }
+}

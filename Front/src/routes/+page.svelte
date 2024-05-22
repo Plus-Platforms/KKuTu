@@ -187,6 +187,14 @@
     </div>
   </div></div>
   <!-- FAQ -->
+
+<!-- Right bottom overlay button to move to /moremtalk -->
+<div class="fixed right-0 bottom-4 z-50 p-4">
+  <a href="/moremtalk" target="_blank" class="bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-xl p-4 shadow-lg transform ease-in duration-100 hover:scale-105">
+    모레미에게 물어보기
+  </a>
+</div>
+
 <div class="popup hidden fixed inset-0 z-50 overflow-auto bg-black/50 backdrop-blur-sm flex justify-center items-center">
   <div class="bg-white dark:bg-gray-800 pt-6 pb-8 px-4 lg:px-8 max-w-screen-xl">
     <button class="modal-close top-0 right-0 text-4xl text-gray-500" on:click={() => closeUI()}>&times;</button>

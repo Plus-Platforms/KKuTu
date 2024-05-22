@@ -1,4 +1,6 @@
 <script>
+  	import { page } from '$app/stores';
+	
 	import Header from './Header.svelte';
 	import Footer from './Footer.svelte';
 	import './styles.css';
@@ -6,11 +8,13 @@
 </script>
 
 <div class="app">
-	<Header />
-
-	<main>
+	{#if $page.url.pathname.includes('moremtalk')}
+	<slot />
+  {:else}
+  	<Header/>
+		<main>
 		<slot />
-	</main>
-
+		</main>  
 	<Footer />
+  {/if}
 </div>

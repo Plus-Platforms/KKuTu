@@ -488,9 +488,8 @@ block Middle
 		video#okt-help-video(src='/media/kok_guide.webm', muted, loop, style='width: 550px;height: 280px;')
 		div.dialog-bar.tail-button
 			button#okt-ok= L('OK')
-
-	+Dialog('HelpDiag', 550, 300, "미지원 기능")
-		img(src="/img/kkutu/legacy_error.webp", style="margin-top:28px;margin-left:68px;")
+	+Dialog('HelpDiag', 1000, 550, "(1) 모레미 - 모렘톡")
+		iframe#help-board(width=1000, height=530)
 	+Product('UserList')
 		div 불러오는 중
 	+Product('RoomList')

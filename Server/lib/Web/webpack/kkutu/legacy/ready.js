@@ -474,6 +474,7 @@ $(document).ready(function(){
 		}).hotkey(false, 27));
 	}
 	$stage.menu.help.on('click', function(e){
+		$("#help-board").attr('src', "/moremtalk");
 		showDialog($stage.dialog.help);
 	});
 	$stage.menu.setting.on('click', function(e){
