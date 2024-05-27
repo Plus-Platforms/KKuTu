@@ -579,6 +579,7 @@ function onMessage(data){
 }
 function welcome() {
 	notice(L['chatWarn']);
+	notice(L['chatIOMigration']);
 	var stickerInfo = L['emojiInfo'];
 	for (var i = 0; i < stickers.length; i++) {
 		stickerInfo = stickerInfo + " :" + stickers[i] + ":";

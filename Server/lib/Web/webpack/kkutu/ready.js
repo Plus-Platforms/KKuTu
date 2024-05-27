@@ -285,7 +285,7 @@ $(document).ready(function(){
 	if (!evtpopup){
 		$("#evtpopup").show();
 	}
-	else if(evtpopup < "20240512"){
+	else if(evtpopup < "0"){
 	  $("#evtpopup").show();
 	}
 
