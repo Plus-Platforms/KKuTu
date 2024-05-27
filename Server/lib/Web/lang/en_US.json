@@ -712,7 +712,7 @@
 		"couponUse": "쿠폰 사용",
 		"couponUseText": "<strong>쿠폰 사용 시 확인하세요!</strong><br>- 쿠폰은 계정당 1회만 사용 가능합니다.<br>- 쿠폰에 사용 제한 횟수가 있는 경우, 사용이 불가능할 수 있습니다.<br>- 기한이 지난 쿠폰은 사용할 수 없습니다.",
 		"securityCode": "보안 코드",
-		"securityCodeText": "<strong>보안 코드는 계정 마이그레이션 절차에서 사용됩니다</strong><br>자세한 내용은 Phase UP 업데이트에서 공개될 예정입니다.<br>제3자가 이 코드를 알게 되면 계정이 탈취될 수 있으니 주의하세요.",
+		"securityCodeText": "<strong>보안 코드는 계정 마이그레이션 절차에서 사용됩니다</strong><br>끄투리오 계정 이전 기간 내에 사용 가능합니다.<br>제3자가 이 코드를 알게 되면 계정이 탈취될 수 있으니 주의하세요.",
 		"mvpPurchase": "Buy MVP ticket",
 		"officialSNS": "Official Community",
 		"cmd_r": "(/r) 준비 단추를 누릅니다. 방장일 경우 시작 단추를 누릅니다.",
